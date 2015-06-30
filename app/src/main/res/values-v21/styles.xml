@@ -1,0 +1,21 @@
+<resources>
+	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+		<item name="colorAccent">@color/primaryDark</item>
+		<item name="colorPrimary">@color/primary</item>
+		<item name="colorPrimaryDark">@color/primaryDark</item>
+
+		<item name="android:windowBackground">@color/window_background</item>
+		<item name="android:windowDrawsSystemBarBackgrounds">true</item>
+		<item name="android:windowContentOverlay">@null</item>
+
+		<item name="android:statusBarColor">@android:color/transparent</item>
+	</style>
+
+	<style name="AppTheme.Activity" parent="Theme.AppCompat.Light.DarkActionBar">
+		<item name="colorAccent">@color/primaryDark</item>
+		<item name="colorPrimary">@color/primary</item>
+		<item name="colorPrimaryDark">@color/primaryDark</item>
+
+		<item name="android:windowContentOverlay">@null</item>
+	</style>
+</resources>

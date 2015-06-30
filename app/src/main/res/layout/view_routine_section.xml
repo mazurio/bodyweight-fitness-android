@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.devspark.robototextview.widget.RobotoTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/routine_section_text_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="?attr/actionBarSize"
+    android:background="@color/primary"
+    android:gravity="center"
+    android:textColor="@color/white"
+    android:textSize="16sp"
+    app:typeface="roboto_light" />

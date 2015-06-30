@@ -1,0 +1,89 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId 'io.mazur.fit'
+        minSdkVersion 14
+        targetSdkVersion 22
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+
+    productFlavors {
+        pro {
+            applicationId 'io.mazur.fit.pro'
+            versionCode 100
+            versionName "1.0.0"
+        }
+
+        free {
+            applicationId 'io.mazur.fit.free'
+            versionCode 100
+            versionName "1.0.0"
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:recyclerview-v7:22.0.0'
+    compile 'com.android.support:design:22.2.0'
+
+    compile 'com.google.code.gson:gson:2.3.1'
+
+    compile 'net.danlew:android.joda:2.7.1'
+
+    compile 'com.github.mazurio:glacier:0.0.2'
+    compile 'com.jakewharton:butterknife:6.1.0'
+
+    compile 'com.netflix.rxjava:rxjava-core:0.20.7'
+    compile 'com.netflix.rxjava:rxjava-android:0.20.7'
+
+    compile 'frankiesardo:icepick:3.0.2'
+    provided 'frankiesardo:icepick-processor:3.0.2'
+
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
+    compile 'com.github.johnkil.android-robototextview:robototextview:2.3.0'
+
+    compile('com.crashlytics.sdk.android:crashlytics:2.4.0@aar') {
+        transitive = true;
+    }
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Developed by">
+
+        <Preference
+            android:title="Reddit community, see FAQ"
+            android:summary="reddit.com/r/bodyweightfitness"/>
+
+        <Preference
+            android:title="Damian Mazurkiewicz"
+            android:summary="github.com/mazurio"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="About the app">
+
+        <Preference
+            android:title="@string/app_name"
+            android:summary="@string/app_version"/>
+    </PreferenceCategory>
+</PreferenceScreen>
