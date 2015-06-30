@@ -13,6 +13,9 @@ public class App extends Application {
         super.onCreate();
 
         Fabric.with(this, new Crashlytics());
+        if (!BuildConfig.DEBUG) {
+            Fabric.with(this, new Crashlytics());
+        }
 
         mContext = getApplicationContext();
     }

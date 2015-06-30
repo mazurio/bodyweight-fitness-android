@@ -57,6 +57,12 @@ android {
             versionName "1.0.0"
         }
     }
+
+    buildTypes {
+        debug {
+            ext.enableCrashlytics = false
+        }
+    }
 }
 
 dependencies {
