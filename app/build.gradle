@@ -22,7 +22,7 @@ android {
 
     defaultConfig {
         applicationId 'io.mazur.fit'
-        minSdkVersion 14
+        minSdkVersion 9
         targetSdkVersion 22
     }
 
@@ -71,7 +71,7 @@ dependencies {
 
     compile 'net.danlew:android.joda:2.7.1'
 
-    compile 'com.github.mazurio:glacier:0.0.2'
+    compile 'commons-io:commons-io:2.4'
     compile 'com.jakewharton:butterknife:6.1.0'
 
     compile 'com.netflix.rxjava:rxjava-core:0.20.7'
