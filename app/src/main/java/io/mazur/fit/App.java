@@ -17,7 +17,7 @@ public class App extends Application {
         super.onCreate();
 
         JodaTimeAndroid.init(this);
-        if (!BuildConfig.DEBUG) {
+        if(!BuildConfig.DEBUG) {
             Fabric.with(this, new Crashlytics());
         }
 
