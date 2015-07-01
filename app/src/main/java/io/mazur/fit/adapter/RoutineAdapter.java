@@ -8,22 +8,17 @@ import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-
 import io.mazur.fit.R;
 import io.mazur.fit.model.Routine;
+import io.mazur.fit.model.RoutineType;
 import io.mazur.fit.stream.RoutineStream;
-import io.mazur.fit.utils.Logger;
 
 public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutinePresenter> {
-    private final int CATEGORY = 0;
-    private final int SECTION = 1;
-    private final int EXERCISE = 2;
-
     private Routine mRoutine;
 
     @Override
     public RoutinePresenter onCreateViewHolder(ViewGroup parent, int viewType) {
-        switch(viewType) {
+        switch(RoutineType.fromInt(viewType)) {
             case CATEGORY: return new RoutineCategoryPresenter(
                     LayoutInflater.from(parent.getContext()).inflate(R.layout.view_routine_category, parent, false)
             );
@@ -54,14 +49,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineP
 
     @Override
     public int getItemViewType(int position) {
-        switch(mRoutine.getPartRoutines().get(position).getType()) {
-            case CATEGORY:
-                return CATEGORY;
-            case SECTION:
-                return SECTION;
-            default:
-                return EXERCISE;
-        }
+        return mRoutine.getPartRoutines().get(position).getType().ordinal();
     }
 
     public void setRoutine(Routine routine) {
@@ -73,6 +61,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineP
     public abstract class RoutinePresenter extends RecyclerView.ViewHolder {
         public RoutinePresenter(View itemView) {
             super(itemView);
+            ButterKnife.inject(this, itemView);
         }
 
         public abstract void onBindView(Routine.PartRoutine partRoutine);
@@ -83,8 +72,6 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineP
 
         public RoutineCategoryPresenter(View itemView) {
             super(itemView);
-
-            ButterKnife.inject(this, itemView);
         }
 
         @Override
@@ -98,8 +85,6 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineP
 
         public RoutineSectionPresenter(View itemView) {
             super(itemView);
-
-            ButterKnife.inject(this, itemView);
         }
 
         @Override
@@ -113,8 +98,6 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineP
 
         public RoutineExercisePresenter(View itemView) {
             super(itemView);
-
-            ButterKnife.inject(this, itemView);
         }
 
         @Override

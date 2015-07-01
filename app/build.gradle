@@ -1,20 +1,6 @@
-buildscript {
-    repositories {
-        maven { url 'https://maven.fabric.io/public' }
-    }
-
-    dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
-    }
-}
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
-
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-}
-
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 22
@@ -57,6 +43,12 @@ android {
             versionName "1.0.0"
         }
     }
+
+    buildTypes {
+        debug {
+            ext.enableCrashlytics = false
+        }
+    }
 }
 
 dependencies {
@@ -64,7 +56,7 @@ dependencies {
 
     compile 'com.android.support:support-v4:22.2.0'
     compile 'com.android.support:appcompat-v7:22.2.0'
-    compile 'com.android.support:recyclerview-v7:22.0.0'
+    compile 'com.android.support:recyclerview-v7:22.2.0'
     compile 'com.android.support:design:22.2.0'
 
     compile 'com.google.code.gson:gson:2.3.1'
