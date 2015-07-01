@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'io.fabric'
+//apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 22
@@ -33,14 +33,14 @@ android {
     productFlavors {
         pro {
             applicationId 'io.mazur.fit.pro'
-            versionCode 100
-            versionName "1.0.0"
+            versionCode 101
+            versionName "1.0.1"
         }
 
         free {
             applicationId 'io.mazur.fit.free'
-            versionCode 100
-            versionName "1.0.0"
+            versionCode 101
+            versionName "1.0.1"
         }
     }
 
