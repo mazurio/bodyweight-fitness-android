@@ -1,6 +1,7 @@
 package io.mazur.fit.presenter;
 
 import android.app.TimePickerDialog;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.view.View;
 
@@ -38,6 +39,10 @@ public class TimerPresenter implements Serializable {
 
     public void onCreateView(TimerView timerView) {
         mTimerView = timerView;
+
+//        MediaPlayer p = MediaPlayer.create(mTimerView.getContext(), R.raw.timer);
+//        p.setLooping(true);
+//        p.start();
 
         RoutineStream.getInstance().getExerciseObservable().subscribe(routine -> {
             if(routine.isPrevious()) {

@@ -59,10 +59,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
 		switch(item.getItemId()) {
-			case (R.id.action_settings):
+            case(R.id.action_exercise): {
+                startActivity(new Intent(getApplicationContext(), ExerciseActivity.class));
+
+                return true;
+            }
+
+			case (R.id.action_settings): {
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
 
-				return true;
+                return true;
+            }
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -76,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         if(actionBar != null) {
             RoutineStream.getInstance().getExerciseObservable().subscribe(exercise -> {
                 actionBar.setTitle(exercise.getTitle());
+                actionBar.setSubtitle(exercise.getDescription());
             });
 
             actionBar.setElevation(0);

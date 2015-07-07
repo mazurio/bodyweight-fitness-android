@@ -1,26 +1,25 @@
 package io.mazur.fit.ui;
 
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import io.mazur.fit.R;
 
-public class SettingsActivity extends AppCompatActivity {
+import io.mazur.fit.R;
+import io.mazur.fit.stream.RoutineStream;
+
+public class ExerciseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setActionBar();
+        setContentView(R.layout.activity_exercise);
 
-        if(getFragmentManager().findFragmentById(android.R.id.content) == null) {
-            getFragmentManager().beginTransaction().add(android.R.id.content, new SettingsFragment()).commit();
-        }
+        setActionBar();
     }
 
     @Override
-         public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
@@ -34,19 +33,14 @@ public class SettingsActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
 
         if(actionBar != null) {
-            actionBar.setTitle(R.string.action_settings);
+            RoutineStream.getInstance().getExerciseObservable().subscribe(exercise -> {
+                actionBar.setTitle(exercise.getTitle());
+                actionBar.setSubtitle(exercise.getDescription());
+            });
+
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    public static class SettingsFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            addPreferencesFromResource(R.xml.settings);
         }
     }
 }

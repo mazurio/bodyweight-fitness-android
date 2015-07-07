@@ -61,6 +61,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineP
     public abstract class RoutinePresenter extends RecyclerView.ViewHolder {
         public RoutinePresenter(View itemView) {
             super(itemView);
+
             ButterKnife.inject(this, itemView);
         }
 

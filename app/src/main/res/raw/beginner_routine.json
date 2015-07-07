@@ -6,7 +6,8 @@
     },
     {
       "title": "Dynamic Stretches (Do all, 5-10 reps each)",
-      "type": "section"
+      "type": "section",
+      "mode": "all"
     },
     {
       "id": "wall_extensions",
@@ -51,8 +52,9 @@
       "type": "exercise"
     },
     {
-    "title": "Bodyline Drills (Do all, 10-60s hold each)",
-    "type": "section"
+      "title": "Bodyline Drills (Do all, 10-60s hold each)",
+      "type": "section",
+      "mode": "all"
     },
     {
       "id": "plank",
@@ -62,13 +64,13 @@
     },
     {
       "id": "side_plank",
-      "title": "Side Plank (Do both sides)",
+      "title": "Side Plank (Both sides)",
       "description": "10-60s hold",
       "type": "exercise"
     },
     {
       "id": "reverse_plank",
-      "title": "Reverse Plank (Do both sides)",
+      "title": "Reverse Plank",
       "description": "10-60s hold",
       "type": "exercise"
     },
@@ -86,7 +88,8 @@
     },
     {
       "title": "Activity (Pick one, 10-20 reps)",
-      "type": "section"
+      "type": "section",
+      "mode": "pick"
     },
     {
       "id": "squat_jumps",
@@ -106,7 +109,8 @@
     },
     {
       "title": "Handstand (5 min)",
-      "type": "section"
+      "type": "section",
+      "mode": "levels"
     },
     {
       "id": "wall_plank",
@@ -128,7 +132,8 @@
     },
     {
       "title": "Support Practice (2-3 min)",
-      "type": "section"
+      "type": "section",
+      "mode": "levels"
     },
     {
       "id": "parallel_bar_hold",
@@ -154,7 +159,8 @@
     },
     {
       "title": "Pullup Progression 3x(5-8)",
-      "type": "section"
+      "type": "section",
+      "mode": "levels"
     },
     {
       "id": "negative_pullup",
@@ -182,7 +188,8 @@
     },
     {
       "title": "Dipping Progression 3x(5-8)",
-      "type": "section"
+      "type": "section",
+      "mode": "levels"
     },
     {
       "id": "parallel_bar_dips",
@@ -204,7 +211,8 @@
     },
     {
       "title": "Squat Progression 3x(5-8)",
-      "type": "section"
+      "type": "section",
+      "mode": "levels"
     },
     {
       "id": "assisted_squat",
@@ -226,7 +234,8 @@
     },
     {
       "title": "L-sit Progression 3x(10-30s)",
-      "type": "section"
+      "type": "section",
+      "mode": "levels"
     },
     {
       "id": "floor_l_sit",
@@ -248,19 +257,14 @@
     },
     {
       "id": "l_sit",
-      "title": "Level 4: One-leg L-sit",
-      "description": "3x(10-30s)",
-      "type": "exercise"
-    },
-    {
-      "id": "l_sit",
-      "title": "Level 5: L-sit",
+      "title": "Level 4: L-sit",
       "description": "3x(10-30s)",
       "type": "exercise"
     },
     {
       "title": "Pushing 3x(5-8)",
-      "type": "section"
+      "type": "section",
+      "mode": "levels"
     },
     {
       "id": "wall_pushup",
@@ -312,7 +316,8 @@
     },
     {
       "title": "Row Progression 3x(5-8)",
-      "type": "section"
+      "type": "section",
+      "mode": "levels"
     },
     {
       "id": "vertical_row",

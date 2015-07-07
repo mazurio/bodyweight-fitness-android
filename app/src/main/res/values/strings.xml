@@ -2,7 +2,7 @@
 	<string name="app_name">Bodyweight Fitness</string>
 	<string name="app_version">1.0.1</string>
 
-	<string name="action_help">Help</string>
+	<string name="action_exercise">About Exercise</string>
 	<string name="action_about">About</string>
 	<string name="action_settings">Settings</string>
 

@@ -41,9 +41,18 @@ public class RoutineStream {
              * and next buttons inside the application.
              */
             Routine.PartRoutine prev = null;
+            int index = 0, currentSectionPosition = 0;
+
             for(Routine.PartRoutine partRoutine : mRoutine.getPartRoutines()) {
+                if(partRoutine.getType() == RoutineType.SECTION) {
+                    currentSectionPosition = index;
+                }
+
                 if(partRoutine.getType() == RoutineType.EXERCISE) {
+
+
                     if(prev != null) {
+                        partRoutine.setSectionPosition(currentSectionPosition);
                         partRoutine.setPrevious(prev);
 
                         prev.setNext(partRoutine);
@@ -51,6 +60,8 @@ public class RoutineStream {
 
                     prev = partRoutine;
                 }
+
+                index++;
             }
 
             mExercise = mRoutine.getFirstExercise();

@@ -51,7 +51,7 @@
             <com.devspark.robototextview.widget.RobotoTextView
                 android:id="@+id/timer_seconds"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/timer_spacing"
                 android:gravity="center"
                 android:textSize="60sp"
@@ -110,5 +110,4 @@
         android:background="@drawable/view_action_exercise_drawable"
         android:scaleType="center"
         android:src="@drawable/ic_next"/>
-
 </io.mazur.fit.view.TimerView>

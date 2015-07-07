@@ -3,7 +3,6 @@ package io.mazur.fit.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class Routine {
     @SerializedName("routine")
@@ -44,6 +43,17 @@ public class Routine {
         @SerializedName("type")
         private String mType;
 
+        /**
+         * Mode can be one of those: All, Pick, Levels
+         */
+        @SerializedName("mode")
+        private String mMode;
+
+        /**
+         * Position of the section where exercise belongs to.
+         */
+        private int mSectionPosition = 0;
+
         private PartRoutine mPrevious;
 
         private PartRoutine mNext;
@@ -70,16 +80,34 @@ public class Routine {
             }
         }
 
-        public void setPrevious(PartRoutine mPrevious) {
-            this.mPrevious = mPrevious;
+        public SectionMode getMode() {
+            if(mMode.matches("all")) {
+                return SectionMode.ALL;
+            } else if(mMode.matches("pick")) {
+                return SectionMode.PICK;
+            } else {
+                return SectionMode.LEVELS;
+            }
+        }
+
+        public void setSectionPosition(int sectionPosition) {
+            mSectionPosition = sectionPosition;
+        }
+
+        public int getSectionPosition() {
+            return mSectionPosition;
+        }
+
+        public void setPrevious(PartRoutine previous) {
+            mPrevious = previous;
         }
 
         public PartRoutine getPrevious() {
             return mPrevious;
         }
 
-        public void setNext(PartRoutine mNext) {
-            this.mNext = mNext;
+        public void setNext(PartRoutine next) {
+            mNext = next;
         }
 
         public PartRoutine getNext() {
