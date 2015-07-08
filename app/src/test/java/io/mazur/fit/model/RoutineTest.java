@@ -8,16 +8,16 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-public class BeginnerRoutineTest {
-    private Routine mJSONRoutine;
-    private BeginnerRoutine mBeginnerRoutine;
+public class RoutineTest {
+    private JSONRoutine mJSONJSONRoutine;
+    private Routine mRoutine;
 
     @Before
     public void before() throws Exception {
         /**
          * TODO: Load from file.
          */
-        mJSONRoutine = new Gson().fromJson("{\n" +
+        mJSONJSONRoutine = new Gson().fromJson("{\n" +
                 "  \"routine\" : [\n" +
                 "    {\n" +
                 "      \"title\": \"Warmup\",\n" +
@@ -387,51 +387,51 @@ public class BeginnerRoutineTest {
                 "      \"type\": \"exercise\"\n" +
                 "    }\n" +
                 "  ]\n" +
-                "}", Routine.class);
+                "}", JSONRoutine.class);
 
-        mBeginnerRoutine = new BeginnerRoutine(mJSONRoutine);
+        mRoutine = new Routine(mJSONJSONRoutine);
     }
 
     @Test
     public void jsonRoutineIsSetTest() {
-        assertNotNull(mJSONRoutine);
-        assertEquals(mJSONRoutine.getSize(), 64);
+        assertNotNull(mJSONJSONRoutine);
+        assertEquals(mJSONJSONRoutine.getSize(), 64);
     }
 
     @Test
     public void routineIsCreatedTest() {
-        assertNotNull(mBeginnerRoutine);
+        assertNotNull(mRoutine);
     }
 
     @Test
     public void categoriesAreInsertedTest() {
-        assertEquals(mBeginnerRoutine.getCategories().size(), 3);
+        assertEquals(mRoutine.getCategories().size(), 3);
     }
 
     @Test
     public void sectionsAreInsertedTest() {
-        Category category0 = mBeginnerRoutine.getCategories().get(0);
-        Category category1 = mBeginnerRoutine.getCategories().get(1);
-        Category category2 = mBeginnerRoutine.getCategories().get(2);
+        Category category0 = mRoutine.getCategories().get(0);
+        Category category1 = mRoutine.getCategories().get(1);
+        Category category2 = mRoutine.getCategories().get(2);
 
         assertEquals(category0.getSections().size(), 3);
         assertEquals(category1.getSections().size(), 2);
         assertEquals(category2.getSections().size(), 6);
 
-        assertEquals(mBeginnerRoutine.getSections().size(), 11);
+        assertEquals(mRoutine.getSections().size(), 11);
     }
 
     @Test
     public void exercisesAreInsertedTest() {
-        Section section0 = mBeginnerRoutine.getCategories().get(0).getSections().get(0);
+        Section section0 = mRoutine.getCategories().get(0).getSections().get(0);
 
         assertEquals(section0.getExercises().size(), 7);
-        assertEquals(mBeginnerRoutine.getExercises().size(), 50);
+        assertEquals(mRoutine.getExercises().size(), 50);
     }
 
     @Test
     public void linkedExercisesAreInsertedTest() {
-        ArrayList<Exercise> linkedExercises = mBeginnerRoutine.getLinkedExercises();
+        ArrayList<Exercise> linkedExercises = mRoutine.getLinkedExercises();
 
         assertEquals(linkedExercises.size(), 22);
 
@@ -455,12 +455,12 @@ public class BeginnerRoutineTest {
 
     @Test
     public void linkedRoutineIsInsertedTest() {
-        assertEquals(mBeginnerRoutine.getLinkedRoutine().size(), 64);
+        assertEquals(mRoutine.getLinkedRoutine().size(), 64);
     }
 
     @Test
     public void sectionsAreUpdatedWhenChangingLevelsTest() {
-        Section levelsSection = mBeginnerRoutine.getCategories().get(2).getSections().get(0);
+        Section levelsSection = mRoutine.getCategories().get(2).getSections().get(0);
 
         assertEquals(levelsSection.getSectionMode(), SectionMode.LEVELS);
         assertEquals(levelsSection.getCurrentLevel(), 0);
@@ -468,19 +468,19 @@ public class BeginnerRoutineTest {
 
     @Test
     public void setSectionLevelTest() {
-        Exercise levelExercise = mBeginnerRoutine.getLinkedExercises().get(21);
+        Exercise levelExercise = mRoutine.getLinkedExercises().get(21);
         Section levelSection = levelExercise.getSection();
 
         assertEquals(levelSection.getSectionMode(), SectionMode.LEVELS);
         assertEquals(levelSection.getCurrentLevel(), 0);
         assertEquals(levelSection.getAvailableLevels(), 8);
 
-        mBeginnerRoutine.setLevel(levelExercise, 1);
+        mRoutine.setLevel(levelExercise, 1);
 
         assertEquals(levelSection.getCurrentLevel(), 1);
         assertEquals(levelExercise.getSection().getCurrentLevel(), 1);
 
-        mBeginnerRoutine.setLevel(levelExercise, 2);
+        mRoutine.setLevel(levelExercise, 2);
 
         assertEquals(levelSection.getCurrentLevel(), 2);
         assertEquals(levelExercise.getSection().getCurrentLevel(), 2);
@@ -488,7 +488,7 @@ public class BeginnerRoutineTest {
 
     @Test
     public void linkedExercisesTest() {
-        ArrayList<Exercise> linkedExercises = mBeginnerRoutine.getLinkedExercises();
+        ArrayList<Exercise> linkedExercises = mRoutine.getLinkedExercises();
 
         Exercise levelUpExercise = linkedExercises.get(14);
 
@@ -498,9 +498,9 @@ public class BeginnerRoutineTest {
         assertEquals(linkedExercises.get(14).getTitle(), "Level 1: Wall Plank");
         assertEquals(linkedExercises.get(15).getTitle(), "Level 1: Parallel Bar support");
 
-        mBeginnerRoutine.setLevel(levelUpExercise, 1);
+        mRoutine.setLevel(levelUpExercise, 1);
 
-        linkedExercises = mBeginnerRoutine.getLinkedExercises();
+        linkedExercises = mRoutine.getLinkedExercises();
 
         assertEquals(linkedExercises.get(0).getTitle(), "Wall Extensions");
         assertEquals(linkedExercises.get(4).getTitle(), "Full Body Circles");

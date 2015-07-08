@@ -15,6 +15,10 @@ public class Category extends LinkedRoutine {
         return mTitle;
     }
 
+    public RoutineType getType() {
+        return RoutineType.CATEGORY;
+    }
+
     public void insertSection(Section section) {
         section.setCategory(this);
 

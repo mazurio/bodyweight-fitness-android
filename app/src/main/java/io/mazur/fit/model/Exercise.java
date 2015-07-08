@@ -25,6 +25,10 @@ public class Exercise extends LinkedRoutine {
         return mTitle;
     }
 
+    public RoutineType getType() {
+        return RoutineType.EXERCISE;
+    }
+
     public String getDescription() {
         return mDescription;
     }
@@ -45,12 +49,20 @@ public class Exercise extends LinkedRoutine {
         return mSection;
     }
 
+    public boolean isPrevious() {
+        return mPrevious != null;
+    }
+
     public void setPrevious(Exercise previous) {
         mPrevious = previous;
     }
 
     public Exercise getPrevious() {
         return mPrevious;
+    }
+
+    public boolean isNext() {
+        return mNext != null;
     }
 
     public void setNext(Exercise next) {

@@ -1,133 +1,162 @@
 package io.mazur.fit.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 
 public class Routine {
-    @SerializedName("routine")
-    private ArrayList<PartRoutine> mPartRoutines = new ArrayList<>();
+    /**
+     * Categories are treated as top level parent for the sections and exercises.
+     */
+    private ArrayList<Category> mCategories = new ArrayList<>();
 
-    public ArrayList<PartRoutine> getPartRoutines() {
-        return mPartRoutines;
-    }
+    /**
+     * All sections put together inside a list.
+     */
+    private ArrayList<Section> mSections = new ArrayList<>();
 
-    public PartRoutine getFirstExercise() {
-        for(PartRoutine partRoutine : getPartRoutines()) {
-            if(partRoutine.getType() == RoutineType.EXERCISE) {
-                return partRoutine;
+    /**
+     * All exercises put together inside a list, used to link exercises after changes.
+     */
+    private ArrayList<Exercise> mExercises = new ArrayList<>();
+
+    /**
+     * Linked exercises for switching between them. This could and should be implemented as an
+     * independent screen manager later which allows linking different views together
+     * (e.g. rest view or summary).
+     */
+    private ArrayList<Exercise> mLinkedExercises = new ArrayList<>();
+
+    /**
+     * Linked routine for displaying views in the recycler view as we can just request
+     * type of the object.
+     */
+    private ArrayList<LinkedRoutine> mLinkedRoutine = new ArrayList<>();
+
+    public Routine(JSONRoutine JSONRoutine) {
+        Category currentCategory = null;
+        Section currentSection = null;
+        Exercise currentExercise = null;
+
+        for(JSONRoutine.PartRoutine partRoutine : JSONRoutine.getPartRoutines()) {
+            /**
+             * Update categories in both lists.
+             */
+            if(partRoutine.getType() == RoutineType.CATEGORY) {
+                currentCategory = new Category(partRoutine.getTitle());
+
+                mCategories.add(currentCategory);
+                mLinkedRoutine.add(currentCategory);
+            }
+
+            /**
+             * Updated sections for each category and add into linked routine.
+             */
+            else if(partRoutine.getType() == RoutineType.SECTION) {
+                currentSection = new Section(partRoutine.getTitle(), partRoutine.getMode());
+
+                currentCategory.insertSection(currentSection);
+
+                mSections.add(currentSection);
+                mLinkedRoutine.add(currentSection);
+            }
+
+            /**
+             * Update exercises for each section, link them together.
+             */
+            else if(partRoutine.getType() == RoutineType.EXERCISE) {
+                Exercise exercise = new Exercise(partRoutine.getId(), partRoutine.getTitle(), partRoutine.getDescription());
+                exercise.setPrevious(currentExercise);
+
+                // Link exercises together
+                if(currentExercise != null) {
+                    currentExercise.setNext(exercise);
+                }
+
+                currentExercise = exercise;
+
+                /**
+                 * Add exercise into a section.
+                 */
+                currentSection.insertExercise(exercise);
+
+                /**
+                 * List contains all exercises, no matter what level.
+                 */
+                mExercises.add(exercise);
+
+                /**
+                 * Add only first level of exercise when linking.
+                 */
+                if(currentSection.getSectionMode() == SectionMode.LEVELS) {
+                    if(currentSection.getExercises().size() == 1) {
+                        mLinkedExercises.add(exercise);
+                    }
+                } else {
+                    mLinkedExercises.add(exercise);
+                }
+
+                /**
+                 * Linked Routine contains all exercises.
+                 */
+                mLinkedRoutine.add(exercise);
             }
         }
-
-        return new PartRoutine();
     }
 
-    public int getSize() {
-        if(mPartRoutines != null) {
-            return mPartRoutines.size();
-        }
-
-        return 0;
+    public ArrayList<Category> getCategories() {
+        return mCategories;
     }
 
-    public class PartRoutine {
-        @SerializedName("id")
-        private String mId;
+    public ArrayList<Section> getSections() {
+        return mSections;
+    }
 
-        @SerializedName("title")
-        private String mTitle;
+    public ArrayList<Exercise> getExercises() {
+        return mExercises;
+    }
 
-        @SerializedName("description")
-        private String mDescription;
+    public ArrayList<Exercise> getLinkedExercises() {
+        return mLinkedExercises;
+    }
 
-        @SerializedName("type")
-        private String mType;
+    /**
+     * Set level of the exercise in given section.
+     */
+    public void setLevel(Exercise exercise, int level) {
+        Section section = exercise.getSection();
+        section.setCurrentLevel(level);
 
         /**
-         * Mode can be one of those: All, Pick, Levels
+         * Clear current linked exercises.
          */
-        @SerializedName("mode")
-        private String mMode;
+        mLinkedExercises.clear();
 
         /**
-         * Position of the section where exercise belongs to.
+         * Loop through exercises and link them together based on level changes.
          */
-        private int mSectionPosition = 0;
+        Section currentSection;
+        for(Exercise currentExercise : getExercises()) {
+            currentSection = currentExercise.getSection();
 
-        private PartRoutine mPrevious;
+            switch(currentSection.getSectionMode()) {
+                case ALL:
+                case PICK:
+                    mLinkedExercises.add(currentExercise);
 
-        private PartRoutine mNext;
+                    break;
+                case LEVELS:
+                    /**
+                     * Add only exercise for given level.
+                     */
+                    if(currentSection.getCurrentExercise() == currentExercise) {
+                        mLinkedExercises.add(currentExercise);
+                    }
 
-        public String getId() {
-            return mId;
-        }
-
-        public String getTitle() {
-            return mTitle;
-        }
-
-        public String getDescription() {
-            return mDescription;
-        }
-
-        public RoutineType getType() {
-            if(mType.matches("category")) {
-                return RoutineType.CATEGORY;
-            } else if(mType.matches("section")) {
-                return RoutineType.SECTION;
-            } else {
-                return RoutineType.EXERCISE;
+                    break;
             }
         }
+    }
 
-        public SectionMode getMode() {
-            if(mMode.matches("all")) {
-                return SectionMode.ALL;
-            } else if(mMode.matches("pick")) {
-                return SectionMode.PICK;
-            } else {
-                return SectionMode.LEVELS;
-            }
-        }
-
-        public void setSectionPosition(int sectionPosition) {
-            mSectionPosition = sectionPosition;
-        }
-
-        public int getSectionPosition() {
-            return mSectionPosition;
-        }
-
-        public void setPrevious(PartRoutine previous) {
-            mPrevious = previous;
-        }
-
-        public PartRoutine getPrevious() {
-            return mPrevious;
-        }
-
-        public void setNext(PartRoutine next) {
-            mNext = next;
-        }
-
-        public PartRoutine getNext() {
-            return mNext;
-        }
-
-        public boolean isPrevious() {
-            if(mPrevious == null) {
-                return false;
-            }
-
-            return true;
-        }
-
-        public boolean isNext() {
-            if(mNext == null) {
-                return false;
-            }
-
-            return true;
-        }
+    public ArrayList<LinkedRoutine> getLinkedRoutine() {
+        return mLinkedRoutine;
     }
 }

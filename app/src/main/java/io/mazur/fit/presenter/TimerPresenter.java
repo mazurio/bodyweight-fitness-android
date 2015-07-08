@@ -44,20 +44,20 @@ public class TimerPresenter implements Serializable {
 //        p.setLooping(true);
 //        p.start();
 
-        RoutineStream.getInstance().getExerciseObservable().subscribe(routine -> {
-            if(routine.isPrevious()) {
+        RoutineStream.getInstance().getExerciseObservable().subscribe(exercise -> {
+            if(exercise.isPrevious()) {
                 mTimerView.getPrevExerciseButton().setVisibility(View.VISIBLE);
                 mTimerView.getPrevExerciseButton().setOnClickListener(v -> {
-                    RoutineStream.getInstance().setExercise(routine.getPrevious());
+                    RoutineStream.getInstance().setExercise(exercise.getPrevious());
                 });
             } else {
                 mTimerView.getPrevExerciseButton().setVisibility(View.INVISIBLE);
             }
 
-            if(routine.isNext()) {
+            if(exercise.isNext()) {
                 mTimerView.getNextExerciseButton().setVisibility(View.VISIBLE);
                 mTimerView.getNextExerciseButton().setOnClickListener(v -> {
-                    RoutineStream.getInstance().setExercise(routine.getNext());
+                    RoutineStream.getInstance().setExercise(exercise.getNext());
                 });
             } else {
                 mTimerView.getNextExerciseButton().setVisibility(View.INVISIBLE);

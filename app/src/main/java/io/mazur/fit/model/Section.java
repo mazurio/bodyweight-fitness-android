@@ -20,6 +20,10 @@ public class Section extends LinkedRoutine {
         return mTitle;
     }
 
+    public RoutineType getType() {
+        return RoutineType.SECTION;
+    }
+
     public SectionMode getSectionMode() {
         return mSectionMode;
     }
