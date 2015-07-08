@@ -37,12 +37,12 @@ public class Routine implements Serializable {
         Section currentSection = null;
         Exercise currentExercise = null;
 
-        for(JSONRoutine.PartRoutine partRoutine : JSONRoutine.getPartRoutines()) {
+        for(io.mazur.fit.model.JSONRoutine.JSONLinkedRoutine JSONLinkedRoutine : JSONRoutine.getPartRoutines()) {
             /**
              * Update categories in both lists.
              */
-            if(partRoutine.getType() == RoutineType.CATEGORY) {
-                currentCategory = new Category(partRoutine.getTitle());
+            if(JSONLinkedRoutine.getType() == RoutineType.CATEGORY) {
+                currentCategory = new Category(JSONLinkedRoutine.getTitle());
 
                 mCategories.add(currentCategory);
                 mLinkedRoutine.add(currentCategory);
@@ -51,8 +51,8 @@ public class Routine implements Serializable {
             /**
              * Updated sections for each category and add into linked routine.
              */
-            else if(partRoutine.getType() == RoutineType.SECTION) {
-                currentSection = new Section(partRoutine.getTitle(), partRoutine.getMode());
+            else if(JSONLinkedRoutine.getType() == RoutineType.SECTION) {
+                currentSection = new Section(JSONLinkedRoutine.getTitle(), JSONLinkedRoutine.getMode());
 
                 currentCategory.insertSection(currentSection);
 
@@ -63,8 +63,8 @@ public class Routine implements Serializable {
             /**
              * Update exercises for each section, link them together.
              */
-            else if(partRoutine.getType() == RoutineType.EXERCISE) {
-                Exercise exercise = new Exercise(partRoutine.getId(), partRoutine.getTitle(), partRoutine.getDescription());
+            else if(JSONLinkedRoutine.getType() == RoutineType.EXERCISE) {
+                Exercise exercise = new Exercise(JSONLinkedRoutine.getId(), JSONLinkedRoutine.getTitle(), JSONLinkedRoutine.getDescription());
 
                 /**
                  * Add exercise into a section.

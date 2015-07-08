@@ -6,21 +6,21 @@ import java.util.ArrayList;
 
 public class JSONRoutine {
     @SerializedName("routine")
-    private ArrayList<PartRoutine> mPartRoutines = new ArrayList<>();
+    private ArrayList<JSONLinkedRoutine> mJSONLinkedRoutines = new ArrayList<>();
 
-    public ArrayList<PartRoutine> getPartRoutines() {
-        return mPartRoutines;
+    public ArrayList<JSONLinkedRoutine> getPartRoutines() {
+        return mJSONLinkedRoutines;
     }
 
     public int getSize() {
-        if(mPartRoutines != null) {
-            return mPartRoutines.size();
+        if(mJSONLinkedRoutines != null) {
+            return mJSONLinkedRoutines.size();
         }
 
         return 0;
     }
 
-    public class PartRoutine {
+    public class JSONLinkedRoutine {
         @SerializedName("id")
         private String mId;
 
