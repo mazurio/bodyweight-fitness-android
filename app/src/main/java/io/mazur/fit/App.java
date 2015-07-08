@@ -7,6 +7,8 @@ import android.content.Context;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
+import io.mazur.glacier.Glacier;
+
 //import io.fabric.sdk.android.Fabric;
 
 public class App extends Application {
@@ -16,7 +18,9 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        JodaTimeAndroid.init(this);
+        Glacier.init(getApplicationContext());
+        JodaTimeAndroid.init(getApplicationContext());
+
         if(!BuildConfig.DEBUG) {
 //            Fabric.with(this, new Crashlytics());
         }

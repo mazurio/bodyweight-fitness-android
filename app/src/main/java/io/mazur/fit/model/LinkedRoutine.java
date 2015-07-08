@@ -1,6 +1,8 @@
 package io.mazur.fit.model;
 
-public abstract class LinkedRoutine {
+import java.io.Serializable;
+
+public abstract class LinkedRoutine implements Serializable {
     public abstract String getTitle();
     public abstract RoutineType getType();
 }

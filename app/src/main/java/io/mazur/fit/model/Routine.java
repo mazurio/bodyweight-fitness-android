@@ -1,8 +1,9 @@
 package io.mazur.fit.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Routine {
+public class Routine implements Serializable {
     /**
      * Categories are treated as top level parent for the sections and exercises.
      */

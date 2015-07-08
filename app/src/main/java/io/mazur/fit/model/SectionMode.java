@@ -1,6 +1,8 @@
 package io.mazur.fit.model;
 
-public enum SectionMode {
+import java.io.Serializable;
+
+public enum SectionMode implements Serializable {
     PICK,
     ALL,
     LEVELS;

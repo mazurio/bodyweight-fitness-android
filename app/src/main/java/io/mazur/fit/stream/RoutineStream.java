@@ -13,6 +13,8 @@ import io.mazur.fit.model.Exercise;
 import io.mazur.fit.model.JSONRoutine;
 import io.mazur.fit.utils.Logger;
 
+import io.mazur.glacier.Duration;
+import io.mazur.glacier.Glacier;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -28,23 +30,30 @@ public class RoutineStream {
     private final PublishSubject<Exercise> mExerciseSubject = PublishSubject.create();
 
     private RoutineStream() {
-        try {
-            /**
-             * This should be read from Glacier if exists.
-             */
-            JSONRoutine jsonRoutine = new Gson().fromJson(IOUtils.toString(App.getContext()
-                    .getResources()
-                    .openRawResource(R.raw.beginner_routine)
-            ), JSONRoutine.class);
+        mRoutine = Glacier.getOrElse("routine", Routine.class, Duration.ALWAYS_RETURNED, new Glacier.Callback<Routine>() {
+            @Override
+            public Routine onCacheNotFound() {
+                try {
+                    Logger.d("Reading routine from Glacier if exists.");
 
-            mRoutine = new Routine(jsonRoutine);
-            mExercise = mRoutine.getLinkedExercises().get(0);
+                    JSONRoutine jsonRoutine = new Gson().fromJson(IOUtils.toString(App.getContext()
+                                    .getResources()
+                                    .openRawResource(R.raw.beginner_routine)
+                    ), JSONRoutine.class);
 
-            mRoutineSubject.onNext(mRoutine);
-            mExerciseSubject.onNext(mExercise);
-        } catch (IOException e) {
-            Logger.e("Exception when loading Beginner Routine from JSON file: " + e);
-        }
+                    return new Routine(jsonRoutine);
+                } catch (IOException e) {
+                    Logger.e("Exception when loading Beginner Routine from JSON file: " + e);
+                }
+
+                return null;
+            }
+        });
+
+        mExercise = mRoutine.getLinkedExercises().get(0);
+
+        mRoutineSubject.onNext(mRoutine);
+        mExerciseSubject.onNext(mExercise);
     }
 
     public static RoutineStream getInstance() {

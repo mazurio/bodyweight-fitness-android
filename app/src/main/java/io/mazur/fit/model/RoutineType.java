@@ -1,6 +1,8 @@
 package io.mazur.fit.model;
 
-public enum RoutineType {
+import java.io.Serializable;
+
+public enum RoutineType implements Serializable {
     CATEGORY,
     SECTION,
     EXERCISE;

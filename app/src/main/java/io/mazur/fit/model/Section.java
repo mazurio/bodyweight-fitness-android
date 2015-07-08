@@ -1,8 +1,9 @@
 package io.mazur.fit.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Section extends LinkedRoutine {
+public class Section extends LinkedRoutine implements Serializable {
     private String mTitle;
     private SectionMode mSectionMode;
 

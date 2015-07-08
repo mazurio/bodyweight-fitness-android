@@ -1,6 +1,8 @@
 package io.mazur.fit.model;
 
-public class Exercise extends LinkedRoutine {
+import java.io.Serializable;
+
+public class Exercise extends LinkedRoutine implements Serializable {
     private String mId;
     private String mTitle;
     private String mDescription;
