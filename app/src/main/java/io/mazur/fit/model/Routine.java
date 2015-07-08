@@ -64,14 +64,6 @@ public class Routine {
              */
             else if(partRoutine.getType() == RoutineType.EXERCISE) {
                 Exercise exercise = new Exercise(partRoutine.getId(), partRoutine.getTitle(), partRoutine.getDescription());
-                exercise.setPrevious(currentExercise);
-
-                // Link exercises together
-                if(currentExercise != null) {
-                    currentExercise.setNext(exercise);
-                }
-
-                currentExercise = exercise;
 
                 /**
                  * Add exercise into a section.
@@ -89,8 +81,24 @@ public class Routine {
                 if(currentSection.getSectionMode() == SectionMode.LEVELS) {
                     if(currentSection.getExercises().size() == 1) {
                         mLinkedExercises.add(exercise);
+
+                        exercise.setPrevious(currentExercise);
+
+                        if(currentExercise != null) {
+                            currentExercise.setNext(exercise);
+                        }
+
+                        currentExercise = exercise;
                     }
                 } else {
+                    exercise.setPrevious(currentExercise);
+
+                    if(currentExercise != null) {
+                        currentExercise.setNext(exercise);
+                    }
+
+                    currentExercise = exercise;
+
                     mLinkedExercises.add(exercise);
                 }
 
@@ -149,6 +157,8 @@ public class Routine {
                      */
                     if(currentSection.getCurrentExercise() == currentExercise) {
                         mLinkedExercises.add(currentExercise);
+
+                        exercise.setPrevious(currentExercise);
                     }
 
                     break;

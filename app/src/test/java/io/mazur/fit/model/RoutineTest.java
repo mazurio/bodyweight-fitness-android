@@ -508,4 +508,57 @@ public class RoutineTest {
         assertEquals(linkedExercises.get(14).getTitle(), "Level 2: Stomach-to-Wall Handstand");
         assertEquals(linkedExercises.get(15).getTitle(), "Level 1: Parallel Bar support");
     }
+
+    @Test
+    public void linkedExercisesAreLinkedBasedOnLevelTest() {
+        ArrayList<Exercise> linkedExercises = mRoutine.getLinkedExercises();
+
+        Exercise exercise = linkedExercises.get(0);
+        assertEquals(exercise.getTitle(), "Wall Extensions");
+
+        exercise = exercise.getNext();
+        assertEquals(exercise.getTitle(), "Band Dislocates");
+
+        exercise = exercise.getNext();
+        assertEquals(exercise.getTitle(), "Cat/Camel Bends");
+
+        exercise = exercise.getNext();
+        assertEquals(exercise.getTitle(), "Scapular Shrugs");
+
+        exercise = exercise.getNext();
+        assertEquals(exercise.getTitle(), "Full Body Circles");
+
+        exercise = exercise.getNext();
+        assertEquals(exercise.getTitle(), "Front and Side Leg Swings");
+
+        exercise = exercise.getNext();
+        assertEquals(exercise.getTitle(), "Wrist Mobility Exercises");
+
+        exercise = exercise.getNext();
+        assertEquals(exercise.getTitle(), "Plank");
+
+        exercise = exercise.getNext();
+        assertEquals(exercise.getTitle(), "Side Plank (Both sides)");
+
+        exercise = exercise.getNext();
+        assertEquals(exercise.getTitle(), "Reverse Plank");
+
+        exercise = exercise.getNext();
+        assertEquals(exercise.getTitle(), "Hollow Hold");
+
+        exercise = exercise.getNext();
+        assertEquals(exercise.getTitle(), "Arch");
+
+        exercise = exercise.getNext();
+        assertEquals(exercise.getTitle(), "Squat Jumps");
+
+        exercise = exercise.getNext();
+        assertEquals(exercise.getTitle(), "Burpees");
+
+        exercise = exercise.getNext();
+        assertEquals(exercise.getTitle(), "Level 1: Wall Plank");
+
+        exercise = exercise.getNext();
+        assertEquals(exercise.getTitle(), "Level 1: Parallel Bar support");
+    }
 }
