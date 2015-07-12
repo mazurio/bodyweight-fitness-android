@@ -23,7 +23,7 @@
         <activity
             android:name=".ui.ExerciseActivity"
             android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme.Activity">
+            android:theme="@style/AppTheme.ExerciseActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

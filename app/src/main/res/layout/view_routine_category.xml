@@ -4,9 +4,11 @@
     android:id="@+id/routine_category_text_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minHeight="?attr/actionBarSize"
+    android:paddingTop="16dp"
+    android:paddingLeft="16dp"
+    android:paddingBottom="16dp"
     android:background="@color/white"
-    android:gravity="center"
-    android:textColor="@color/primaryDark"
+    android:gravity="left|center"
+    android:textColor="@color/primary"
     android:textSize="16sp"
-    app:typeface="roboto_light" />
+    app:typeface="roboto_black" />

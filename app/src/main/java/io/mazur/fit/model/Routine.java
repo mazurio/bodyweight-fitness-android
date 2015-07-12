@@ -3,6 +3,8 @@ package io.mazur.fit.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import io.mazur.glacier.Glacier;
+
 public class Routine implements Serializable {
     /**
      * Categories are treated as top level parent for the sections and exercises.
@@ -52,7 +54,10 @@ public class Routine implements Serializable {
              * Updated sections for each category and add into linked routine.
              */
             else if(JSONLinkedRoutine.getType() == RoutineType.SECTION) {
-                currentSection = new Section(JSONLinkedRoutine.getTitle(), JSONLinkedRoutine.getMode());
+                currentSection = new Section(
+                        JSONLinkedRoutine.getTitle(),
+                        JSONLinkedRoutine.getDescription(),
+                        JSONLinkedRoutine.getMode());
 
                 currentCategory.insertSection(currentSection);
 
@@ -64,7 +69,11 @@ public class Routine implements Serializable {
              * Update exercises for each section, link them together.
              */
             else if(JSONLinkedRoutine.getType() == RoutineType.EXERCISE) {
-                Exercise exercise = new Exercise(JSONLinkedRoutine.getId(), JSONLinkedRoutine.getTitle(), JSONLinkedRoutine.getDescription());
+                Exercise exercise = new Exercise(
+                        JSONLinkedRoutine.getId(),
+                        JSONLinkedRoutine.getLevel(),
+                        JSONLinkedRoutine.getTitle(),
+                        JSONLinkedRoutine.getDescription());
 
                 /**
                  * Add exercise into a section.
@@ -79,17 +88,34 @@ public class Routine implements Serializable {
                 /**
                  * Add only first level of exercise when linking.
                  */
-                if(currentSection.getSectionMode() == SectionMode.LEVELS) {
-                    if(currentSection.getExercises().size() == 1) {
-                        mLinkedExercises.add(exercise);
+                if(currentSection.getSectionMode() == SectionMode.LEVELS || currentSection.getSectionMode() == SectionMode.PICK) {
+                    String currentExerciseId = Glacier.get(currentSection.getTitle(), String.class);
 
-                        exercise.setPrevious(currentExercise);
+                    if(currentExerciseId != null) {
+                        if(exercise.getId().matches(currentExerciseId)) {
+                            mLinkedExercises.add(exercise);
 
-                        if(currentExercise != null) {
-                            currentExercise.setNext(exercise);
+                            exercise.setPrevious(currentExercise);
+
+                            if(currentExercise != null) {
+                                currentExercise.setNext(exercise);
+                            }
+
+                            currentExercise = exercise;
+                            currentSection.setCurrentLevel(exercise);
                         }
+                    } else {
+                        if(currentSection.getExercises().size() == 1) {
+                            mLinkedExercises.add(exercise);
 
-                        currentExercise = exercise;
+                            exercise.setPrevious(currentExercise);
+
+                            if(currentExercise != null) {
+                                currentExercise.setNext(exercise);
+                            }
+
+                            currentExercise = exercise;
+                        }
                     }
                 } else {
                     exercise.setPrevious(currentExercise);
@@ -131,39 +157,24 @@ public class Routine implements Serializable {
      * Set level of the exercise in given section.
      */
     public void setLevel(Exercise exercise, int level) {
-        Section section = exercise.getSection();
-        section.setCurrentLevel(level);
+        Exercise currentSectionExercise = exercise.getSection().getCurrentExercise();
 
-        /**
-         * Clear current linked exercises.
-         */
-        mLinkedExercises.clear();
-
-        /**
-         * Loop through exercises and link them together based on level changes.
-         */
-        Section currentSection;
-        for(Exercise currentExercise : getExercises()) {
-            currentSection = currentExercise.getSection();
-
-            switch(currentSection.getSectionMode()) {
-                case ALL:
-                case PICK:
-                    mLinkedExercises.add(currentExercise);
-
-                    break;
-                case LEVELS:
-                    /**
-                     * Add only exercise for given level.
-                     */
-                    if(currentSection.getCurrentExercise() == currentExercise) {
-                        mLinkedExercises.add(currentExercise);
-
-                        exercise.setPrevious(currentExercise);
-                    }
-
-                    break;
+        if(currentSectionExercise != exercise) {
+            if(currentSectionExercise.getPrevious() != null) {
+                currentSectionExercise.getPrevious().setNext(exercise);
             }
+
+            if(currentSectionExercise.getNext() != null) {
+                currentSectionExercise.getNext().setPrevious(exercise);
+            }
+
+            exercise.setPrevious(currentSectionExercise.getPrevious());
+            exercise.setNext(currentSectionExercise.getNext());
+
+            exercise.getSection().setCurrentLevel(level);
+
+            currentSectionExercise.setPrevious(null);
+            currentSectionExercise.setNext(null);
         }
     }
 

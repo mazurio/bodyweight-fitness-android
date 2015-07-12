@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Exercise extends LinkedRoutine implements Serializable {
     private String mId;
+    private String mLevel;
     private String mTitle;
     private String mDescription;
 
@@ -13,14 +14,19 @@ public class Exercise extends LinkedRoutine implements Serializable {
     private Exercise mPrevious;
     private Exercise mNext;
 
-    public Exercise(String id, String title, String description) {
+    public Exercise(String id, String level, String title, String description) {
         mId = id;
+        mLevel = level;
         mTitle = title;
         mDescription = description;
     }
 
     public String getId() {
         return mId;
+    }
+
+    public String getLevel() {
+        return mLevel;
     }
 
     public String getTitle() {

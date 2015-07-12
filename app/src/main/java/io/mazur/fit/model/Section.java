@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Section extends LinkedRoutine implements Serializable {
     private String mTitle;
+    private String mDescription;
     private SectionMode mSectionMode;
 
     private Category mCategory;
@@ -12,13 +13,18 @@ public class Section extends LinkedRoutine implements Serializable {
 
     private ArrayList<Exercise> mExercises = new ArrayList<>();
 
-    public Section(String title, SectionMode sectionMode) {
+    public Section(String title, String description, SectionMode sectionMode) {
         mTitle = title;
+        mDescription = description;
         mSectionMode = sectionMode;
     }
 
     public String getTitle() {
         return mTitle;
+    }
+
+    public String getDescription() {
+        return mDescription;
     }
 
     public RoutineType getType() {
@@ -37,28 +43,8 @@ public class Section extends LinkedRoutine implements Serializable {
         return mCategory;
     }
 
-    public void levelUp() {
-        if(getSectionMode() == SectionMode.LEVELS) {
-            if((mCurrentLevel + 1) < 0 || (mCurrentLevel + 1) >= getExercises().size()) {
-                return;
-            }
-
-            mCurrentLevel += 1;
-        }
-    }
-
-    public void levelDown() {
-        if(getSectionMode() == SectionMode.LEVELS) {
-            if((mCurrentLevel - 1) < 0 || (mCurrentLevel - 1) >= getExercises().size()) {
-                return;
-            }
-
-            mCurrentLevel -= 1;
-        }
-    }
-
     public void setCurrentLevel(int level) {
-        if(getSectionMode() == SectionMode.LEVELS) {
+        if(getSectionMode() == SectionMode.LEVELS || getSectionMode() == SectionMode.PICK) {
             if(level < 0 || level >= getExercises().size()) {
                 return;
             }
@@ -67,12 +53,24 @@ public class Section extends LinkedRoutine implements Serializable {
         }
     }
 
+    public void setCurrentLevel(Exercise exercise) {
+        int current = 0;
+        for(Exercise ex : getExercises()) {
+            if(ex.equals(exercise)) {
+                mCurrentLevel = current;
+                return;
+            }
+
+            current++;
+        }
+    }
+
     public int getCurrentLevel() {
         return mCurrentLevel;
     }
 
     public int getAvailableLevels() {
-        if(getSectionMode() == SectionMode.LEVELS) {
+        if(getSectionMode() == SectionMode.LEVELS || getSectionMode() == SectionMode.PICK) {
             return getExercises().size();
         } else {
             return 0;

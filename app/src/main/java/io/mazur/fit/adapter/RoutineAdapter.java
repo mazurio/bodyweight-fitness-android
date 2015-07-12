@@ -10,10 +10,12 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import io.mazur.fit.R;
+import io.mazur.fit.model.Category;
 import io.mazur.fit.model.Routine;
 import io.mazur.fit.model.Exercise;
 import io.mazur.fit.model.LinkedRoutine;
 import io.mazur.fit.model.RoutineType;
+import io.mazur.fit.model.Section;
 import io.mazur.fit.stream.RoutineStream;
 
 public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutinePresenter> {
@@ -61,17 +63,17 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineP
         notifyDataSetChanged();
     }
 
-    public abstract class RoutinePresenter extends RecyclerView.ViewHolder {
+    public abstract class RoutinePresenter<T extends LinkedRoutine> extends RecyclerView.ViewHolder {
         public RoutinePresenter(View itemView) {
             super(itemView);
 
             ButterKnife.inject(this, itemView);
         }
 
-        public abstract void onBindView(LinkedRoutine linkedRoutine);
+        public abstract void onBindView(T linkedRoutine);
     }
 
-    public class RoutineCategoryPresenter extends RoutinePresenter {
+    public class RoutineCategoryPresenter extends RoutinePresenter<Category> {
         @InjectView(R.id.routine_category_text_view) TextView mRoutineCategoryTextView;
 
         public RoutineCategoryPresenter(View itemView) {
@@ -79,25 +81,28 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineP
         }
 
         @Override
-        public void onBindView(LinkedRoutine linkedRoutine) {
-            mRoutineCategoryTextView.setText(linkedRoutine.getTitle());
+        public void onBindView(Category category) {
+            mRoutineCategoryTextView.setText(category.getTitle());
         }
     }
 
-    public class RoutineSectionPresenter extends RoutinePresenter {
+    public class RoutineSectionPresenter extends RoutinePresenter<Section> {
         @InjectView(R.id.routine_section_text_view) TextView mRoutineSectionTextView;
+        @InjectView(R.id.routine_section_description_text_view) TextView mRoutineSectionDescriptionTextView;
 
         public RoutineSectionPresenter(View itemView) {
             super(itemView);
         }
 
         @Override
-        public void onBindView(LinkedRoutine linkedRoutine) {
-            mRoutineSectionTextView.setText(linkedRoutine.getTitle());
+        public void onBindView(Section section) {
+            mRoutineSectionTextView.setText(section.getTitle());
+            mRoutineSectionDescriptionTextView.setText(section.getDescription());
         }
     }
 
-    public class RoutineExercisePresenter extends RoutinePresenter {
+    public class RoutineExercisePresenter extends RoutinePresenter<Exercise> {
+        @InjectView(R.id.routine_exercise_level_text_view) TextView mRoutineExerciseLevelTextView;
         @InjectView(R.id.routine_exercise_text_view) TextView mRoutineExerciseTextView;
 
         public RoutineExercisePresenter(View itemView) {
@@ -105,10 +110,17 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineP
         }
 
         @Override
-        public void onBindView(LinkedRoutine linkedRoutine) {
-            mRoutineExerciseTextView.setText(linkedRoutine.getTitle());
+        public void onBindView(Exercise exercise) {
+            if(exercise.getLevel() == null) {
+                mRoutineExerciseLevelTextView.setVisibility(View.GONE);
+            } else {
+                mRoutineExerciseLevelTextView.setVisibility(View.VISIBLE);
+                mRoutineExerciseLevelTextView.setText(exercise.getLevel());
+            }
 
-            itemView.setOnClickListener(new OnItemClickListener(linkedRoutine));
+            mRoutineExerciseTextView.setText(exercise.getTitle());
+
+            itemView.setOnClickListener(new OnItemClickListener(exercise));
         }
     }
 

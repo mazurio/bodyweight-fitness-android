@@ -3,14 +3,19 @@
 	  xmlns:tools="http://schemas.android.com/tools"
 	  tools:context=".MainActivity">
 
-	<item android:id="@+id/action_exercise"
-		android:title="@string/action_exercise"
-		android:icon="@drawable/level_1"
+	<item android:id="@+id/action_progression"
+		android:title="@string/action_progression"
+		android:icon="@drawable/ic_help"
 		android:orderInCategory="10"
 		app:showAsAction="always" />
 
+	<item android:id="@+id/action_faq"
+		android:title="@string/action_faq"
+		android:orderInCategory="100"
+		app:showAsAction="never"/>
+
 	<item android:id="@+id/action_settings"
-		  android:title="@string/action_settings"
-		  android:orderInCategory="110"
-		  app:showAsAction="never"/>
+		android:title="@string/action_settings"
+		android:orderInCategory="110"
+		app:showAsAction="never"/>
 </menu>

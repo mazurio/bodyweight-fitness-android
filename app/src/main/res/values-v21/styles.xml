@@ -25,4 +25,12 @@
 
 		<item name="android:windowContentOverlay">@null</item>
 	</style>
+
+	<style name="AppTheme.ExerciseActivity" parent="Theme.AppCompat.Light.NoActionBar">
+		<item name="colorAccent">@color/primaryDark</item>
+		<item name="colorPrimary">@color/primary</item>
+		<item name="colorPrimaryDark">@color/primaryDark</item>
+
+		<item name="android:windowContentOverlay">@null</item>
+	</style>
 </resources>

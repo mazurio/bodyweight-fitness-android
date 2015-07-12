@@ -24,6 +24,9 @@ public class JSONRoutine {
         @SerializedName("id")
         private String mId;
 
+        @SerializedName("level")
+        private String mLevel;
+
         @SerializedName("title")
         private String mTitle;
 
@@ -41,6 +44,10 @@ public class JSONRoutine {
 
         public String getId() {
             return mId;
+        }
+
+        public String getLevel() {
+            return mLevel;
         }
 
         public String getTitle() {

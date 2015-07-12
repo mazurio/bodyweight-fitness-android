@@ -7,6 +7,7 @@ import org.apache.commons.io.IOUtils;
 import java.io.IOException;
 
 import io.mazur.fit.App;
+import io.mazur.fit.Constants;
 import io.mazur.fit.R;
 import io.mazur.fit.model.Routine;
 import io.mazur.fit.model.Exercise;
@@ -30,25 +31,20 @@ public class RoutineStream {
     private final PublishSubject<Exercise> mExerciseSubject = PublishSubject.create();
 
     private RoutineStream() {
-        mRoutine = Glacier.getOrElse("routine", Routine.class, Duration.ALWAYS_RETURNED, new Glacier.Callback<Routine>() {
-            @Override
-            public Routine onCacheNotFound() {
-                try {
-                    Logger.d("Reading routine from Glacier if exists.");
+        /**
+         * We should save levels only, not the whole object
+         * as we will never get any updates when JSON is udpated.
+         */
+        try {
+            JSONRoutine jsonRoutine = new Gson().fromJson(IOUtils.toString(App.getContext()
+                            .getResources()
+                            .openRawResource(R.raw.beginner_routine)
+            ), JSONRoutine.class);
 
-                    JSONRoutine jsonRoutine = new Gson().fromJson(IOUtils.toString(App.getContext()
-                                    .getResources()
-                                    .openRawResource(R.raw.beginner_routine)
-                    ), JSONRoutine.class);
-
-                    return new Routine(jsonRoutine);
-                } catch (IOException e) {
-                    Logger.e("Exception when loading Beginner Routine from JSON file: " + e);
-                }
-
-                return null;
-            }
-        });
+            mRoutine = new Routine(jsonRoutine);
+        } catch(IOException e) {
+            Logger.e("Exception when loading Beginner Routine from JSON file: " + e.getMessage());
+        }
 
         mExercise = mRoutine.getLinkedExercises().get(0);
 
@@ -81,6 +77,15 @@ public class RoutineStream {
     public void setExercise(Exercise exercise) {
         mExercise = exercise;
         mExerciseSubject.onNext(exercise);
+    }
+
+    public void setLevel(Exercise exercise, int level) {
+        mRoutine.setLevel(exercise, level);
+        setExercise(exercise);
+
+        // We save our current exercise for given section
+        // TODO: This should use section id (not title).
+        Glacier.put(exercise.getSection().getTitle(), exercise.getSection().getCurrentExercise().getId());
     }
 
     public Observable<Exercise> getExerciseChangedObservable() {

@@ -13,7 +13,9 @@ import java.io.Serializable;
 import io.mazur.fit.R;
 import io.mazur.fit.model.DialogState;
 import io.mazur.fit.model.TimerState;
+import io.mazur.fit.stream.ActivityStream;
 import io.mazur.fit.stream.RoutineStream;
+import io.mazur.fit.utils.Logger;
 import io.mazur.fit.utils.PreferenceUtil;
 import io.mazur.fit.view.TimerView;
 
@@ -40,9 +42,32 @@ public class TimerPresenter implements Serializable {
     public void onCreateView(TimerView timerView) {
         mTimerView = timerView;
 
-//        MediaPlayer p = MediaPlayer.create(mTimerView.getContext(), R.raw.timer);
-//        p.setLooping(true);
-//        p.start();
+        if(mTimerState == TimerState.FORCE_STOPPED) {
+            mTimerState = TimerState.STARTED;
+        }
+
+        /**
+         * Allows to cancel the timer when activity is paused.
+         */
+        ActivityStream.getInstance().getObservable().subscribe(activityState -> {
+            switch(mTimerState) {
+                case STARTED: {
+                    mTimerState = TimerState.FORCE_STOPPED;
+
+                    mTimerView.getStartStopTimerButton().setImageDrawable(
+                            mTimerView.getResources().getDrawable(R.drawable.ic_play)
+                    );
+
+                    mTimeInMillis = mTime.getMillis();
+
+                    if(mCountDownTimer != null) {
+                        mCountDownTimer.cancel();
+                    }
+
+                    break;
+                }
+            }
+        });
 
         RoutineStream.getInstance().getExerciseObservable().subscribe(exercise -> {
             if(exercise.isPrevious()) {
@@ -70,6 +95,13 @@ public class TimerPresenter implements Serializable {
             long minutes = ONE_MINUTE * hourOfDay;
             long seconds = ONE_SECOND * minute;
 
+            /**
+             * If user chooses 0 minutes and 0 seconds, let's set default value to 15 seconds.
+             */
+            if(minutes == 0 && seconds <= 15000) {
+                seconds = 15000;
+            }
+
             mTimerState = TimerState.PAUSED;
             mTimeInMillis = minutes + seconds;
             mTime = new DateTime(mTimeInMillis);
@@ -86,10 +118,9 @@ public class TimerPresenter implements Serializable {
             if(mCountDownTimer != null) {
                 mCountDownTimer.cancel();
             }
-
-            // set those (chosen values) in prefences using PreferenceUtil.getInstance()
         }, mTime.getMinuteOfHour(), mTime.getSecondOfMinute(), true);
 
+        mTimePickerDialog.setOnDismissListener(d -> mDialogState = DialogState.HIDDEN);
         mTimePickerDialog.setOnCancelListener(d -> mDialogState = DialogState.HIDDEN);
 
         RoutineStream.getInstance().getExerciseChangedObservable().subscribe(exercise -> {
@@ -109,6 +140,7 @@ public class TimerPresenter implements Serializable {
 
         mTimerView.getIncreaseTimerButton().setOnClickListener(v -> {
             switch(mTimerState) {
+                case FORCE_STOPPED:
                 case PAUSED: {
                     mTimerState = TimerState.PAUSED;
                     mTimeInMillis = mTimeInMillis + (ONE_SECOND * 5);
@@ -148,6 +180,7 @@ public class TimerPresenter implements Serializable {
 
         mTimerView.getStartStopTimerButton().setOnClickListener(v -> {
             switch(mTimerState) {
+                case FORCE_STOPPED:
                 case PAUSED: {
                     mTimerState = TimerState.STARTED;
 
@@ -185,6 +218,7 @@ public class TimerPresenter implements Serializable {
         mTimerView.getRestartTimerButton().setOnClickListener(v -> restartTimer());
 
         switch(mTimerState) {
+            case FORCE_STOPPED:
             case PAUSED: {
                 mTimerView.getStartStopTimerButton().setImageDrawable(
                         mTimerView.getResources().getDrawable(R.drawable.ic_play)
@@ -248,6 +282,12 @@ public class TimerPresenter implements Serializable {
 
                 mTimerView.getTimerMinutesTextView().setText(DateTimeFormat.forPattern("mm").print(mTime));
                 mTimerView.getTimerSecondsTextView().setText(DateTimeFormat.forPattern("ss").print(mTime));
+
+                if(PreferenceUtil.getInstance().playSoundWhenTimerStops()) {
+                    MediaPlayer p = MediaPlayer.create(mTimerView.getContext(), R.raw.finished);
+                    p.setLooping(false);
+                    p.start();
+                }
             }
         };
     }
