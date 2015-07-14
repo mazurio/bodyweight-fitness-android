@@ -1,6 +1,6 @@
 <resources>
 	<string name="app_name">Bodyweight Fitness Pro</string>
-	<string name="app_version">1.0.0</string>
+	<string name="app_version">1.0.1</string>
 
 	<string name="action_help">Help</string>
 	<string name="action_about">About</string>

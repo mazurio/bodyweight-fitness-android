@@ -19,6 +19,16 @@ public class PreferenceUtil {
         PreferenceManager.setDefaultValues(App.getContext(), R.xml.settings, false);
     }
 
+    public boolean playSoundWhenTimerStops() {
+        return PreferenceManager.getDefaultSharedPreferences(App.getContext())
+                .getBoolean(Constants.PREFERENCE_PLAY_SOUND_WHEN_TIMER_STOPS, true);
+    }
+
+    public boolean keepScreenOnWhenAppIsRunning() {
+        return PreferenceManager.getDefaultSharedPreferences(App.getContext())
+                .getBoolean(Constants.PREFERENCE_KEEP_SCREEN_ON, true);
+    }
+
     public void setTimerValue(long value) {
         PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit()
                 .putLong(Constants.PREFERENCE_TIMER_KEY, value).commit();

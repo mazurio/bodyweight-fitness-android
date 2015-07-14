@@ -1,6 +1,7 @@
 package io.mazur.fit.view;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
@@ -56,6 +57,10 @@ public class TimerView extends LinearLayout {
     public void onCreateView() {
         ButterKnife.inject(this);
 
+        resetFloatingActionButtonMargin(getIncreaseTimerButton());
+        resetFloatingActionButtonMargin(getStartStopTimerButton());
+        resetFloatingActionButtonMargin(getRestartTimerButton());
+
         mTimerPresenter.onCreateView(this);
     }
 
@@ -76,6 +81,14 @@ public class TimerView extends LinearLayout {
     @Override
     public void setSaveEnabled(boolean enabled) {
         super.setSaveEnabled(true);
+    }
+
+    private void resetFloatingActionButtonMargin(FloatingActionButton floatingActionButton) {
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) floatingActionButton.getLayoutParams();
+            layoutParams.setMargins(0, 0, 0, 0);
+            floatingActionButton.setLayoutParams(layoutParams);
+        }
     }
 
     public RelativeLayout getTimerLayout() {

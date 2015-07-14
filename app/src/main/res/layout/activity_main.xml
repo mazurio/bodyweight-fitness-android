@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/drawer_fragment"
-        android:layout_width="320dp"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="false"

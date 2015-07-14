@@ -11,7 +11,8 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupActionBar();
+
+        setActionBar();
 
         if(getFragmentManager().findFragmentById(android.R.id.content) == null) {
             getFragmentManager().beginTransaction().add(android.R.id.content, new SettingsFragment()).commit();
@@ -29,7 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setupActionBar() {
+    public void setActionBar() {
         ActionBar actionBar = getSupportActionBar();
 
         if(actionBar != null) {

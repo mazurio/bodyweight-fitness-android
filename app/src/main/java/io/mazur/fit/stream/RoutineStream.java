@@ -7,11 +7,15 @@ import org.apache.commons.io.IOUtils;
 import java.io.IOException;
 
 import io.mazur.fit.App;
+import io.mazur.fit.Constants;
 import io.mazur.fit.R;
 import io.mazur.fit.model.Routine;
-import io.mazur.fit.model.RoutineType;
+import io.mazur.fit.model.Exercise;
+import io.mazur.fit.model.JSONRoutine;
 import io.mazur.fit.utils.Logger;
 
+import io.mazur.glacier.Duration;
+import io.mazur.glacier.Glacier;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -21,45 +25,31 @@ public class RoutineStream {
     private static RoutineStream sInstance;
 
     private Routine mRoutine;
-    private Routine.PartRoutine mExercise;
+    private Exercise mExercise;
 
     private final PublishSubject<Routine> mRoutineSubject = PublishSubject.create();
-    private final PublishSubject<Routine.PartRoutine> mExerciseSubject = PublishSubject.create();
+    private final PublishSubject<Exercise> mExerciseSubject = PublishSubject.create();
 
     private RoutineStream() {
+        /**
+         * We should save levels only, not the whole object
+         * as we will never get any updates when JSON is udpated.
+         */
         try {
-            mRoutine = new Gson().fromJson(IOUtils.toString(App.getContext()
-                    .getResources()
-                    .openRawResource(R.raw.beginner_routine)
-            ), Routine.class);
+            JSONRoutine jsonRoutine = new Gson().fromJson(IOUtils.toString(App.getContext()
+                            .getResources()
+                            .openRawResource(R.raw.beginner_routine)
+            ), JSONRoutine.class);
 
-            /**
-             * TODO: Link Routine, I don't like how this is done at the moment.
-             * TODO: There is definitely a better way.
-             *
-             * Allows to link objects inside the Array List together so we can have previous
-             * and next buttons inside the application.
-             */
-            Routine.PartRoutine prev = null;
-            for(Routine.PartRoutine partRoutine : mRoutine.getPartRoutines()) {
-                if(partRoutine.getType() == RoutineType.EXERCISE) {
-                    if(prev != null) {
-                        partRoutine.setPrevious(prev);
-
-                        prev.setNext(partRoutine);
-                    }
-
-                    prev = partRoutine;
-                }
-            }
-
-            mExercise = mRoutine.getFirstExercise();
-
-            mRoutineSubject.onNext(mRoutine);
-            mExerciseSubject.onNext(mExercise);
-        } catch (IOException e) {
-            Logger.e("Exception when loading Beginner Routine from JSON file: " + e);
+            mRoutine = new Routine(jsonRoutine);
+        } catch(IOException e) {
+            Logger.e("Exception when loading Beginner Routine from JSON file: " + e.getMessage());
         }
+
+        mExercise = mRoutine.getLinkedExercises().get(0);
+
+        mRoutineSubject.onNext(mRoutine);
+        mExerciseSubject.onNext(mExercise);
     }
 
     public static RoutineStream getInstance() {
@@ -84,22 +74,31 @@ public class RoutineStream {
         return Observable.merge(mRoutineSubject, routineObservable);
     }
 
-    public void setExercise(Routine.PartRoutine exercise) {
+    public void setExercise(Exercise exercise) {
         mExercise = exercise;
         mExerciseSubject.onNext(exercise);
     }
 
-    public Observable<Routine.PartRoutine> getExerciseChangedObservable() {
+    public void setLevel(Exercise exercise, int level) {
+        mRoutine.setLevel(exercise, level);
+        setExercise(exercise);
+
+        // We save our current exercise for given section
+        // TODO: This should use section id (not title).
+        Glacier.put(exercise.getSection().getTitle(), exercise.getSection().getCurrentExercise().getId());
+    }
+
+    public Observable<Exercise> getExerciseChangedObservable() {
         return mExerciseSubject;
     }
 
     /**
      * @return Observable that allows to subscribe when only exercise has changed.
      */
-    public Observable<Routine.PartRoutine> getExerciseObservable() {
-        Observable<Routine.PartRoutine> exerciseObservable = Observable.create(new Observable.OnSubscribe<Routine.PartRoutine>() {
+    public Observable<Exercise> getExerciseObservable() {
+        Observable<Exercise> exerciseObservable = Observable.create(new Observable.OnSubscribe<Exercise>() {
             @Override
-            public void call(Subscriber<? super Routine.PartRoutine> subscriber) {
+            public void call(Subscriber<? super Exercise> subscriber) {
                 subscriber.onNext(mExercise);
             }
         }).observeOn(AndroidSchedulers.mainThread()).publish().refCount();

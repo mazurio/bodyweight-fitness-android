@@ -1,105 +1,184 @@
 package io.mazur.fit.model;
 
-import com.google.gson.annotations.SerializedName;
-
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
-public class Routine {
-    @SerializedName("routine")
-    private ArrayList<PartRoutine> mPartRoutines = new ArrayList<>();
+import io.mazur.glacier.Glacier;
 
-    public ArrayList<PartRoutine> getPartRoutines() {
-        return mPartRoutines;
+public class Routine implements Serializable {
+    /**
+     * Categories are treated as top level parent for the sections and exercises.
+     */
+    private ArrayList<Category> mCategories = new ArrayList<>();
+
+    /**
+     * All sections put together inside a list.
+     */
+    private ArrayList<Section> mSections = new ArrayList<>();
+
+    /**
+     * All exercises put together inside a list, used to link exercises after changes.
+     */
+    private ArrayList<Exercise> mExercises = new ArrayList<>();
+
+    /**
+     * Linked exercises for switching between them. This could and should be implemented as an
+     * independent screen manager later which allows linking different views together
+     * (e.g. rest view or summary).
+     */
+    private ArrayList<Exercise> mLinkedExercises = new ArrayList<>();
+
+    /**
+     * Linked routine for displaying views in the recycler view as we can just request
+     * type of the object.
+     */
+    private ArrayList<LinkedRoutine> mLinkedRoutine = new ArrayList<>();
+
+    public Routine(JSONRoutine JSONRoutine) {
+        Category currentCategory = null;
+        Section currentSection = null;
+        Exercise currentExercise = null;
+
+        for(io.mazur.fit.model.JSONRoutine.JSONLinkedRoutine JSONLinkedRoutine : JSONRoutine.getPartRoutines()) {
+            /**
+             * Update categories in both lists.
+             */
+            if(JSONLinkedRoutine.getType() == RoutineType.CATEGORY) {
+                currentCategory = new Category(JSONLinkedRoutine.getTitle());
+
+                mCategories.add(currentCategory);
+                mLinkedRoutine.add(currentCategory);
+            }
+
+            /**
+             * Updated sections for each category and add into linked routine.
+             */
+            else if(JSONLinkedRoutine.getType() == RoutineType.SECTION) {
+                currentSection = new Section(
+                        JSONLinkedRoutine.getTitle(),
+                        JSONLinkedRoutine.getDescription(),
+                        JSONLinkedRoutine.getMode());
+
+                currentCategory.insertSection(currentSection);
+
+                mSections.add(currentSection);
+                mLinkedRoutine.add(currentSection);
+            }
+
+            /**
+             * Update exercises for each section, link them together.
+             */
+            else if(JSONLinkedRoutine.getType() == RoutineType.EXERCISE) {
+                Exercise exercise = new Exercise(
+                        JSONLinkedRoutine.getId(),
+                        JSONLinkedRoutine.getLevel(),
+                        JSONLinkedRoutine.getTitle(),
+                        JSONLinkedRoutine.getDescription());
+
+                /**
+                 * Add exercise into a section.
+                 */
+                currentSection.insertExercise(exercise);
+
+                /**
+                 * List contains all exercises, no matter what level.
+                 */
+                mExercises.add(exercise);
+
+                /**
+                 * Add only first level of exercise when linking.
+                 */
+                if(currentSection.getSectionMode() == SectionMode.LEVELS || currentSection.getSectionMode() == SectionMode.PICK) {
+                    String currentExerciseId = Glacier.get(currentSection.getTitle(), String.class);
+
+                    if(currentExerciseId != null) {
+                        if(exercise.getId().matches(currentExerciseId)) {
+                            mLinkedExercises.add(exercise);
+
+                            exercise.setPrevious(currentExercise);
+
+                            if(currentExercise != null) {
+                                currentExercise.setNext(exercise);
+                            }
+
+                            currentExercise = exercise;
+                            currentSection.setCurrentLevel(exercise);
+                        }
+                    } else {
+                        if(currentSection.getExercises().size() == 1) {
+                            mLinkedExercises.add(exercise);
+
+                            exercise.setPrevious(currentExercise);
+
+                            if(currentExercise != null) {
+                                currentExercise.setNext(exercise);
+                            }
+
+                            currentExercise = exercise;
+                        }
+                    }
+                } else {
+                    exercise.setPrevious(currentExercise);
+
+                    if(currentExercise != null) {
+                        currentExercise.setNext(exercise);
+                    }
+
+                    currentExercise = exercise;
+
+                    mLinkedExercises.add(exercise);
+                }
+
+                /**
+                 * Linked Routine contains all exercises.
+                 */
+                mLinkedRoutine.add(exercise);
+            }
+        }
     }
 
-    public PartRoutine getFirstExercise() {
-        for(PartRoutine partRoutine : getPartRoutines()) {
-            if(partRoutine.getType() == RoutineType.EXERCISE) {
-                return partRoutine;
-            }
-        }
-
-        return new PartRoutine();
+    public ArrayList<Category> getCategories() {
+        return mCategories;
     }
 
-    public int getSize() {
-        if(mPartRoutines != null) {
-            return mPartRoutines.size();
-        }
-
-        return 0;
+    public ArrayList<Section> getSections() {
+        return mSections;
     }
 
-    public class PartRoutine {
-        @SerializedName("id")
-        private String mId;
+    public ArrayList<Exercise> getExercises() {
+        return mExercises;
+    }
 
-        @SerializedName("title")
-        private String mTitle;
+    public ArrayList<Exercise> getLinkedExercises() {
+        return mLinkedExercises;
+    }
 
-        @SerializedName("description")
-        private String mDescription;
+    /**
+     * Set level of the exercise in given section.
+     */
+    public void setLevel(Exercise exercise, int level) {
+        Exercise currentSectionExercise = exercise.getSection().getCurrentExercise();
 
-        @SerializedName("type")
-        private String mType;
-
-        private PartRoutine mPrevious;
-
-        private PartRoutine mNext;
-
-        public String getId() {
-            return mId;
-        }
-
-        public String getTitle() {
-            return mTitle;
-        }
-
-        public String getDescription() {
-            return mDescription;
-        }
-
-        public RoutineType getType() {
-            if(mType.matches("category")) {
-                return RoutineType.CATEGORY;
-            } else if(mType.matches("section")) {
-                return RoutineType.SECTION;
-            } else {
-                return RoutineType.EXERCISE;
-            }
-        }
-
-        public void setPrevious(PartRoutine mPrevious) {
-            this.mPrevious = mPrevious;
-        }
-
-        public PartRoutine getPrevious() {
-            return mPrevious;
-        }
-
-        public void setNext(PartRoutine mNext) {
-            this.mNext = mNext;
-        }
-
-        public PartRoutine getNext() {
-            return mNext;
-        }
-
-        public boolean isPrevious() {
-            if(mPrevious == null) {
-                return false;
+        if(currentSectionExercise != exercise) {
+            if(currentSectionExercise.getPrevious() != null) {
+                currentSectionExercise.getPrevious().setNext(exercise);
             }
 
-            return true;
-        }
-
-        public boolean isNext() {
-            if(mNext == null) {
-                return false;
+            if(currentSectionExercise.getNext() != null) {
+                currentSectionExercise.getNext().setPrevious(exercise);
             }
 
-            return true;
+            exercise.setPrevious(currentSectionExercise.getPrevious());
+            exercise.setNext(currentSectionExercise.getNext());
+
+            exercise.getSection().setCurrentLevel(level);
+
+            currentSectionExercise.setPrevious(null);
+            currentSectionExercise.setNext(null);
         }
+    }
+
+    public ArrayList<LinkedRoutine> getLinkedRoutine() {
+        return mLinkedRoutine;
     }
 }

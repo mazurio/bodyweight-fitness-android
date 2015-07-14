@@ -39,7 +39,6 @@
                 android:layout_toLeftOf="@+id/timer_spacing"
                 android:gravity="center"
                 android:textSize="60sp"
-                android:text="00"
                 app:typeface="roboto_bold" />
 
             <RelativeLayout
@@ -55,7 +54,6 @@
                 android:layout_toRightOf="@+id/timer_spacing"
                 android:gravity="center"
                 android:textSize="60sp"
-                android:text="58"
                 app:typeface="roboto_light" />
         </RelativeLayout>
 
@@ -110,5 +108,4 @@
         android:background="@drawable/view_action_exercise_drawable"
         android:scaleType="center"
         android:src="@drawable/ic_next"/>
-
 </io.mazur.fit.view.TimerView>

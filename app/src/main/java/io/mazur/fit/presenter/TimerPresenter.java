@@ -1,6 +1,7 @@
 package io.mazur.fit.presenter;
 
 import android.app.TimePickerDialog;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.view.View;
 
@@ -12,7 +13,9 @@ import java.io.Serializable;
 import io.mazur.fit.R;
 import io.mazur.fit.model.DialogState;
 import io.mazur.fit.model.TimerState;
+import io.mazur.fit.stream.ActivityStream;
 import io.mazur.fit.stream.RoutineStream;
+import io.mazur.fit.utils.Logger;
 import io.mazur.fit.utils.PreferenceUtil;
 import io.mazur.fit.view.TimerView;
 
@@ -39,20 +42,47 @@ public class TimerPresenter implements Serializable {
     public void onCreateView(TimerView timerView) {
         mTimerView = timerView;
 
-        RoutineStream.getInstance().getExerciseObservable().subscribe(routine -> {
-            if(routine.isPrevious()) {
+        if(mTimerState == TimerState.FORCE_STOPPED) {
+            mTimerState = TimerState.STARTED;
+        }
+
+        /**
+         * Allows to cancel the timer when activity is paused.
+         */
+        ActivityStream.getInstance().getObservable().subscribe(activityState -> {
+            switch(mTimerState) {
+                case STARTED: {
+                    mTimerState = TimerState.FORCE_STOPPED;
+
+                    mTimerView.getStartStopTimerButton().setImageDrawable(
+                            mTimerView.getResources().getDrawable(R.drawable.ic_play)
+                    );
+
+                    mTimeInMillis = mTime.getMillis();
+
+                    if(mCountDownTimer != null) {
+                        mCountDownTimer.cancel();
+                    }
+
+                    break;
+                }
+            }
+        });
+
+        RoutineStream.getInstance().getExerciseObservable().subscribe(exercise -> {
+            if(exercise.isPrevious()) {
                 mTimerView.getPrevExerciseButton().setVisibility(View.VISIBLE);
                 mTimerView.getPrevExerciseButton().setOnClickListener(v -> {
-                    RoutineStream.getInstance().setExercise(routine.getPrevious());
+                    RoutineStream.getInstance().setExercise(exercise.getPrevious());
                 });
             } else {
                 mTimerView.getPrevExerciseButton().setVisibility(View.INVISIBLE);
             }
 
-            if(routine.isNext()) {
+            if(exercise.isNext()) {
                 mTimerView.getNextExerciseButton().setVisibility(View.VISIBLE);
                 mTimerView.getNextExerciseButton().setOnClickListener(v -> {
-                    RoutineStream.getInstance().setExercise(routine.getNext());
+                    RoutineStream.getInstance().setExercise(exercise.getNext());
                 });
             } else {
                 mTimerView.getNextExerciseButton().setVisibility(View.INVISIBLE);
@@ -64,6 +94,13 @@ public class TimerPresenter implements Serializable {
 
             long minutes = ONE_MINUTE * hourOfDay;
             long seconds = ONE_SECOND * minute;
+
+            /**
+             * If user chooses 0 minutes and 0 seconds, let's set default value to 15 seconds.
+             */
+            if(minutes == 0 && seconds <= 15000) {
+                seconds = 15000;
+            }
 
             mTimerState = TimerState.PAUSED;
             mTimeInMillis = minutes + seconds;
@@ -81,10 +118,9 @@ public class TimerPresenter implements Serializable {
             if(mCountDownTimer != null) {
                 mCountDownTimer.cancel();
             }
-
-            // set those (chosen values) in prefences using PreferenceUtil.getInstance()
         }, mTime.getMinuteOfHour(), mTime.getSecondOfMinute(), true);
 
+        mTimePickerDialog.setOnDismissListener(d -> mDialogState = DialogState.HIDDEN);
         mTimePickerDialog.setOnCancelListener(d -> mDialogState = DialogState.HIDDEN);
 
         RoutineStream.getInstance().getExerciseChangedObservable().subscribe(exercise -> {
@@ -104,6 +140,7 @@ public class TimerPresenter implements Serializable {
 
         mTimerView.getIncreaseTimerButton().setOnClickListener(v -> {
             switch(mTimerState) {
+                case FORCE_STOPPED:
                 case PAUSED: {
                     mTimerState = TimerState.PAUSED;
                     mTimeInMillis = mTimeInMillis + (ONE_SECOND * 5);
@@ -143,6 +180,7 @@ public class TimerPresenter implements Serializable {
 
         mTimerView.getStartStopTimerButton().setOnClickListener(v -> {
             switch(mTimerState) {
+                case FORCE_STOPPED:
                 case PAUSED: {
                     mTimerState = TimerState.STARTED;
 
@@ -180,6 +218,7 @@ public class TimerPresenter implements Serializable {
         mTimerView.getRestartTimerButton().setOnClickListener(v -> restartTimer());
 
         switch(mTimerState) {
+            case FORCE_STOPPED:
             case PAUSED: {
                 mTimerView.getStartStopTimerButton().setImageDrawable(
                         mTimerView.getResources().getDrawable(R.drawable.ic_play)
@@ -243,6 +282,12 @@ public class TimerPresenter implements Serializable {
 
                 mTimerView.getTimerMinutesTextView().setText(DateTimeFormat.forPattern("mm").print(mTime));
                 mTimerView.getTimerSecondsTextView().setText(DateTimeFormat.forPattern("ss").print(mTime));
+
+                if(PreferenceUtil.getInstance().playSoundWhenTimerStops()) {
+                    MediaPlayer p = MediaPlayer.create(mTimerView.getContext(), R.raw.finished);
+                    p.setLooping(false);
+                    p.start();
+                }
             }
         };
     }
