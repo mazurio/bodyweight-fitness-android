@@ -98,8 +98,8 @@ public class TimerPresenter implements Serializable {
             /**
              * If user chooses 0 minutes and 0 seconds, let's set default value to 15 seconds.
              */
-            if(minutes == 0 && seconds <= 15000) {
-                seconds = 15000;
+            if(minutes == 0 && seconds <= 5000) {
+                seconds = 5000;
             }
 
             mTimerState = TimerState.PAUSED;
