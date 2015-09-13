@@ -60,6 +60,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        keepScreenOnWhenAppIsRunning();
+    }
+
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
