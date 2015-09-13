@@ -5,7 +5,7 @@
        src="https://developer.android.com/images/brand/en_generic_rgb_wo_45.png" />
 </a>
 
-An android application created for /r/bodyweightfitness subreddit. 
+An android application focused on Bodyweight Fitness/Training - part of BWF.
 
 Simple interface for accessing multiple exercise videos and up-to-date beginner routine with a handy timer helpful to finish the exercise.
 
