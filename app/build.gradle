@@ -33,14 +33,14 @@ android {
     productFlavors {
         pro {
             applicationId 'io.mazur.fit.pro'
-            versionCode 101
-            versionName "1.0.1"
+            versionCode 102
+            versionName "1.0.2"
         }
 
         free {
             applicationId 'io.mazur.fit.free'
-            versionCode 101
-            versionName "1.0.1"
+            versionCode 102
+            versionName "1.0.2"
         }
     }
 
