@@ -2,7 +2,7 @@
 <io.mazur.fit.view.CalendarView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#2E2E3B">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,7 +11,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="54dp"
             android:orientation="horizontal"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
@@ -90,8 +90,8 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/calendar"
+        android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="324dp"
         android:orientation="vertical"/>
 </io.mazur.fit.view.CalendarView>

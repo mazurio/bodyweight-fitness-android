@@ -7,20 +7,33 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import io.mazur.fit.R;
+import io.mazur.fit.view.CalendarView;
 
 public class CalendarAdapter extends PagerAdapter {
+    public static final int DEFAULT_POSITION = 60;
+
     public CalendarAdapter() {
         super();
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        final ViewPager viewPager = (ViewPager) container;
+    public Object instantiateItem(ViewGroup viewGroup, int position) {
+        final ViewPager viewPager = (ViewPager) viewGroup;
 
-        View inflatedView = LayoutInflater.from(container.getContext()).inflate(R.layout.view_calendar_item, container, false);
-        viewPager.addView(inflatedView);
+        CalendarView calendarView = (CalendarView) LayoutInflater
+                .from(viewGroup.getContext())
+                .inflate(R.layout.view_calendar_item, viewGroup, false);
 
-        return inflatedView;
+        /**
+         * We create presenter and view by manually calling the methods to pass the position
+         * in the view pager.
+         */
+        calendarView.onCreate(position);
+        calendarView.onCreateView();
+
+        viewPager.addView(calendarView);
+
+        return calendarView;
     }
 
     @Override

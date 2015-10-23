@@ -55,7 +55,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         keepScreenOnWhenAppIsRunning();
 
+        /**
+         * TODO: This should be moved somewhere else to make sure we keep MainActivity clear.
+         */
         mViewCalendarPager.setAdapter(new CalendarAdapter());
+        mViewCalendarPager.setCurrentItem(CalendarAdapter.DEFAULT_POSITION, false);
 	}
 
     /**
