@@ -1,10 +1,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:orientation="vertical">
 
     <include layout="@layout/view_toolbar" />
-    <include layout="@layout/view_timer" />
-    <include layout="@layout/view_preview" />
+
+    <include layout="@layout/view_home"
+        android:id="@+id/view_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include layout="@layout/view_calendar"
+        android:id="@+id/view_calendar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

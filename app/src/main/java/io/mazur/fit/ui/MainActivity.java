@@ -1,38 +1,49 @@
 package io.mazur.fit.ui;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.net.Uri;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 import io.mazur.fit.R;
+import io.mazur.fit.adapter.CalendarAdapter;
 import io.mazur.fit.fragment.NavigationDrawerFragment;
 import io.mazur.fit.model.ActivityState;
 import io.mazur.fit.model.Exercise;
-import io.mazur.fit.model.SectionMode;
 import io.mazur.fit.stream.ActivityStream;
 import io.mazur.fit.stream.RoutineStream;
 import io.mazur.fit.utils.PreferenceUtil;
-import io.mazur.fit.view.ProgressDialog;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Exercise mExercise;
+
+    @InjectView(R.id.view_home) View mViewHome;
+    @InjectView(R.id.view_calendar) View mViewCalendar;
+    @InjectView(R.id.view_calendar_pager) ViewPager mViewCalendarPager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_main);
+
+        ButterKnife.inject(this);
 
 		setToolbar();
         setDrawer();
@@ -43,7 +54,20 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         });
 
         keepScreenOnWhenAppIsRunning();
+
+        mViewCalendarPager.setAdapter(new CalendarAdapter());
 	}
+
+    /**
+     * TODO: Kept here for reference as we need to change the color of Calendar Status Bar.
+     */
+    public void changeStatusBarColor(String colorString) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.parseColor(colorString));
+        }
+    }
 
     @Override
     protected void onPause() {
@@ -81,59 +105,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     @Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
-
-		return true;
-	}
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem progressionMenuItem = menu.findItem(R.id.action_progression);
-
-        if(mExercise != null) {
-            if(mExercise.getSection().getSectionMode() == SectionMode.LEVELS || mExercise.getSection().getSectionMode() == SectionMode.PICK) {
-                progressionMenuItem.setVisible(true);
-            } else {
-                progressionMenuItem.setVisible(false);
-            }
-        } else {
-            progressionMenuItem.setVisible(false);
-        }
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
         if(mNavigationDrawerFragment.getActionBarDrawerToggle().onOptionsItemSelected(item)) {
             return true;
         }
-
-		switch(item.getItemId()) {
-            case(R.id.action_progression): {
-                ProgressDialog progressDialog = new ProgressDialog(this, mExercise);
-                progressDialog.show();
-
-                return true;
-            }
-
-            case (R.id.action_faq): {
-                startActivity(new Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("http://www.reddit.com/r/bodyweightfitness/wiki/faq")));
-
-                return true;
-            }
-
-			case (R.id.action_settings): {
-                startActivity(new Intent(
-                        getApplicationContext(),
-                        SettingsActivity.class));
-
-                return true;
-            }
-		}
 
 		return super.onOptionsItemSelected(item);
 	}
@@ -164,6 +139,41 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private void setDrawer() {
         mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.drawer_fragment);
         mNavigationDrawerFragment.setDrawer(R.id.drawer_fragment, (DrawerLayout) findViewById(R.id.drawer_layout));
+        mNavigationDrawerFragment.getMenuObservable().subscribe(id -> {
+            switch(id) {
+                case R.id.action_menu_home: {
+                    mViewHome.setVisibility(View.VISIBLE);
+                    mViewCalendar.setVisibility(View.GONE);
+
+                    ActionBar actionBar = getSupportActionBar();
+                    if(actionBar != null) {
+                        changeStatusBarColor("#00453E"); // primaryDarkGreen
+
+                        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#009688")));
+                        actionBar.setTitle("Home");
+                        actionBar.setSubtitle("");
+                    }
+
+                    break;
+                }
+
+                case R.id.action_menu_workout_log: {
+                    mViewHome.setVisibility(View.GONE);
+                    mViewCalendar.setVisibility(View.VISIBLE);
+
+                    ActionBar actionBar = getSupportActionBar();
+                    if(actionBar != null) {
+                        changeStatusBarColor("#25242F"); // primaryDarkGrey
+
+                        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2E2E3B")));
+                        actionBar.setTitle("Calendar");
+                        actionBar.setSubtitle("");
+                    }
+
+                    break;
+                }
+            }
+        });
     }
 
     private void keepScreenOnWhenAppIsRunning() {

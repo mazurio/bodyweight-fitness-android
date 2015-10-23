@@ -11,7 +11,14 @@
 		<item name="android:statusBarColor">@android:color/transparent</item>
 	</style>
 
-	<style name="AppTheme.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
+	<style name="AppTheme.Home.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
+		<item name="android:textColorPrimary">@color/white</item>
+		<item name="android:textColorSecondary">@color/primaryDark</item>
+
+		<item name="actionMenuTextColor">@color/white</item>
+	</style>
+
+	<style name="AppTheme.Calendar.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
 		<item name="android:textColorPrimary">@color/white</item>
 		<item name="android:textColorSecondary">@color/primaryDark</item>
 
