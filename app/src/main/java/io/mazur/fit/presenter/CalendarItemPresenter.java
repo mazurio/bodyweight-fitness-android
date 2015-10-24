@@ -1,23 +1,34 @@
 package io.mazur.fit.presenter;
 
+import android.widget.Toast;
+
 import org.joda.time.DateTime;
 
 import io.mazur.fit.adapter.CalendarAdapter;
-import io.mazur.fit.view.CalendarView;
+import io.mazur.fit.utils.Logger;
+import io.mazur.fit.view.CalendarItemView;
+import rx.Observable;
+import rx.functions.Action1;
+import rx.subjects.PublishSubject;
 
-public class CalendarPresenter {
+public class CalendarItemPresenter {
+    private CalendarItemView mCalendarItemView;
+
     private int mViewPagerPosition = CalendarAdapter.DEFAULT_POSITION;
+    private final PublishSubject<Integer> mDaySelectedSubject = PublishSubject.create();
 
-    public CalendarPresenter(int viewPagerPosition) {
+    public CalendarItemPresenter(int viewPagerPosition) {
         mViewPagerPosition = viewPagerPosition;
     }
 
-    public void onCreateView(CalendarView calendarView) {
+    public void onCreateView(CalendarItemView calendarItemView) {
+        mCalendarItemView = calendarItemView;
+
         final DateTime dateTime = getDateBasedOnViewPagerPosition(mViewPagerPosition);
 
         int pointer = 0;
-        for(int day = 1; day <= dateTime.dayOfMonth().getMaximumValue(); day++) {
-            if(day == 1) {
+        for(int dayOfMonth = 1; dayOfMonth <= dateTime.dayOfMonth().getMaximumValue(); dayOfMonth++) {
+            if(dayOfMonth == 1) {
                 pointer = pointer + dateTime.getDayOfWeek();
 
                 /**
@@ -27,25 +38,25 @@ public class CalendarPresenter {
                 for(int i = 1; i < dateTime.getDayOfWeek(); i++) {
                     DateTime previousMonthDays = dateTime.minusDays(dateTime.getDayOfWeek() - i);
 
-                    calendarView.createDayView(previousMonthDays.getDayOfMonth(), "#7D7D85", false);
+                    calendarItemView.createDayView(previousMonthDays.getDayOfMonth(), false, false);
                 }
             } else {
                 pointer++;
             }
 
-            if(day == 10) {
-                calendarView.createDayViewSelective(10);
-            } else if(isTodaysDate(dateTime, day)) {
-                calendarView.createDayViewActive(day);
+            if(isTodaysDate(dateTime, dayOfMonth)) {
+                calendarItemView.createDayView(dayOfMonth, true, true);
+
+                onDaySelected(dayOfMonth);
             } else {
-                calendarView.createDayView(day, "#FFFFFF", true);
+                calendarItemView.createDayView(dayOfMonth, true, false);
             }
 
             /**
              * Every 7 days we create new layout (new row) where we append day views.
              */
             if(pointer % 7 == 0) {
-                calendarView.createRowLayout();
+                calendarItemView.createRowLayout();
             }
 
             /**
@@ -60,6 +71,10 @@ public class CalendarPresenter {
         return (today.getYear() == dateTime.getYear() &&
                 today.getMonthOfYear() == dateTime.getMonthOfYear() &&
                 today.getDayOfMonth() == day);
+    }
+
+    public int getTodaysDayOfTheMonth() {
+        return new DateTime().getDayOfMonth();
     }
 
     public DateTime getDateBasedOnViewPagerPosition(int position) {
@@ -80,11 +95,26 @@ public class CalendarPresenter {
         }
     }
 
-    public void onPositionSelected(int position) {
-        if(position == CalendarAdapter.DEFAULT_POSITION) {
-            // highlight todaysDate
-        } else if(position == mViewPagerPosition) {
-            // highlight first day of the month
+    /**
+     * TODO: This should go to Realm for current month and fetch data. Then put it into a set.
+     */
+    public boolean isRoutineLogged(int dayOfMonth) {
+        if(dayOfMonth == 10) {
+            return true;
         }
+
+        return false;
+    }
+
+    public void onViewPagerPositionSelected(int position) {
+
+    }
+
+    public void onDaySelected(int dayOfMonth) {
+        mDaySelectedSubject.onNext(dayOfMonth);
+    }
+
+    public Observable<Integer> getDaySelectedObservable() {
+        return mDaySelectedSubject.asObservable();
     }
 }

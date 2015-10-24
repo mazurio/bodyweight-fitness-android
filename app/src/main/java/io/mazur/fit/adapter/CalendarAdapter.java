@@ -5,23 +5,27 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import io.mazur.fit.R;
-import io.mazur.fit.view.CalendarView;
-import rx.subjects.PublishSubject;
+import io.mazur.fit.view.CalendarItemView;
 
 public class CalendarAdapter extends PagerAdapter {
     public static final int DEFAULT_POSITION = 60;
 
-    public CalendarAdapter() {
+    private View mViewCalendarDetails;
+
+    public CalendarAdapter(View viewCalendarDetails) {
         super();
+
+        mViewCalendarDetails = viewCalendarDetails;
     }
 
     @Override
     public Object instantiateItem(ViewGroup viewGroup, int position) {
         final ViewPager viewPager = (ViewPager) viewGroup;
 
-        CalendarView calendarView = (CalendarView) LayoutInflater
+        CalendarItemView calendarItemView = (CalendarItemView) LayoutInflater
                 .from(viewGroup.getContext())
                 .inflate(R.layout.view_calendar_item, viewGroup, false);
 
@@ -29,8 +33,8 @@ public class CalendarAdapter extends PagerAdapter {
          * We create presenter and view by manually calling the methods to pass the position
          * in the view pager.
          */
-        calendarView.onCreate(position);
-        calendarView.onCreateView();
+        calendarItemView.onCreate(position);
+        calendarItemView.onCreateView();
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -39,7 +43,7 @@ public class CalendarAdapter extends PagerAdapter {
 
             @Override
             public void onPageSelected(int position) {
-                calendarView.getCalendarPresenter().onPositionSelected(position);
+                calendarItemView.getCalendarItemPresenter().onViewPagerPositionSelected(position);
             }
 
             @Override
@@ -47,9 +51,17 @@ public class CalendarAdapter extends PagerAdapter {
             }
         });
 
-        viewPager.addView(calendarView);
+        calendarItemView.getCalendarItemPresenter().getDaySelectedObservable().subscribe((dayOfMonth) -> {
+            if(calendarItemView.getCalendarItemPresenter().isRoutineLogged(dayOfMonth)) {
+                mViewCalendarDetails.setVisibility(View.VISIBLE);
+            } else {
+                mViewCalendarDetails.setVisibility(View.GONE);
+            }
+        });
 
-        return calendarView;
+        viewPager.addView(calendarItemView);
+
+        return calendarItemView;
     }
 
     @Override

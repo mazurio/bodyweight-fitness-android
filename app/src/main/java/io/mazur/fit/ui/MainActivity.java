@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @InjectView(R.id.view_home) View mViewHome;
     @InjectView(R.id.view_calendar) View mViewCalendar;
     @InjectView(R.id.view_calendar_pager) ViewPager mViewCalendarPager;
+    @InjectView(R.id.view_calendar_details) View mViewCalendarDetails;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         /**
          * TODO: This should be moved somewhere else to make sure we keep MainActivity clear.
          */
-        mViewCalendarPager.setAdapter(new CalendarAdapter());
+        mViewCalendarPager.setAdapter(new CalendarAdapter(mViewCalendarDetails));
         mViewCalendarPager.setCurrentItem(CalendarAdapter.DEFAULT_POSITION, false);
 	}
 

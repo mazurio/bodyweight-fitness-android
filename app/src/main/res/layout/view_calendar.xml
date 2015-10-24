@@ -10,10 +10,29 @@
         android:layout_width="match_parent"
         android:layout_height="378dp"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/view_calendar_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_add_dark"
+            android:layout_centerInParent="true"
+            android:layout_margin="12dp"
+            app:backgroundTint="@color/white"
+            app:borderWidth="0dp"
+            app:elevation="6dp"/>
+    </RelativeLayout>
+
     <LinearLayout
+        android:id="@+id/view_calendar_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"

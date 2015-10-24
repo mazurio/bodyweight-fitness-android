@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:paddingTop="16dp"
-                android:paddingBottom="16dp"
+                android:paddingBottom="8dp"
                 android:textColor="#FFFFFF"
                 android:gravity="center_horizontal"
                 app:typeface="roboto_light" />
@@ -32,6 +32,7 @@
                 android:layout_below="@+id/dayTextView"
                 android:layout_width="4dp"
                 android:layout_height="4dp"
+                android:paddingBottom="8dp"
                 android:layout_centerHorizontal="true"
                 android:visibility="invisible"
                 app:cardCornerRadius="2dp"
