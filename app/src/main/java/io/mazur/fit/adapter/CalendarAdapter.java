@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import io.mazur.fit.R;
 import io.mazur.fit.view.CalendarView;
+import rx.subjects.PublishSubject;
 
 public class CalendarAdapter extends PagerAdapter {
     public static final int DEFAULT_POSITION = 60;
@@ -30,6 +31,21 @@ public class CalendarAdapter extends PagerAdapter {
          */
         calendarView.onCreate(position);
         calendarView.onCreateView();
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                calendarView.getCalendarPresenter().onPositionSelected(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
 
         viewPager.addView(calendarView);
 

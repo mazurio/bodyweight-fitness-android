@@ -30,6 +30,7 @@ import io.mazur.fit.stream.RoutineStream;
 import io.mazur.fit.utils.PreferenceUtil;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+    private Toolbar mToolbar;
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Exercise mExercise;
 
@@ -123,8 +124,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     private void setToolbar() {
-		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+//        mToolbar.setTitleTextColor(Color.parseColor("#00453E"));
+
+		setSupportActionBar(mToolbar);
 
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
@@ -170,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         changeStatusBarColor("#25242F"); // primaryDarkGrey
 
                         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2E2E3B")));
-                        actionBar.setTitle("Calendar");
+                        actionBar.setTitle("Workout Log");
                         actionBar.setSubtitle("");
                     }
 

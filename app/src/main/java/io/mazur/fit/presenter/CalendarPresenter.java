@@ -1,13 +1,7 @@
 package io.mazur.fit.presenter;
 
-import android.graphics.Color;
-import android.view.LayoutInflater;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import org.joda.time.DateTime;
 
-import io.mazur.fit.R;
 import io.mazur.fit.adapter.CalendarAdapter;
 import io.mazur.fit.view.CalendarView;
 
@@ -21,12 +15,6 @@ public class CalendarPresenter {
     public void onCreateView(CalendarView calendarView) {
         final DateTime dateTime = getDateBasedOnViewPagerPosition(mViewPagerPosition);
 
-        LinearLayout row = (LinearLayout) LayoutInflater
-                .from(calendarView.getContext())
-                .inflate(R.layout.view_calendar_item_row, calendarView.getLayout(), false);
-
-        calendarView.getLayout().addView(row);
-
         int pointer = 0;
         for(int day = 1; day <= dateTime.dayOfMonth().getMaximumValue(); day++) {
             if(day == 1) {
@@ -39,40 +27,25 @@ public class CalendarPresenter {
                 for(int i = 1; i < dateTime.getDayOfWeek(); i++) {
                     DateTime previousMonthDays = dateTime.minusDays(dateTime.getDayOfWeek() - i);
 
-                    TextView dayTextView = (TextView) LayoutInflater
-                            .from(calendarView.getContext())
-                            .inflate(R.layout.view_calendar_item_day, row, false);
-
-                    dayTextView.setTextColor(Color.parseColor("#7D7D85"));
-                    dayTextView.setText(String.valueOf(previousMonthDays.getDayOfMonth()));
-
-                    row.addView(dayTextView);
+                    calendarView.createDayView(previousMonthDays.getDayOfMonth(), "#7D7D85", false);
                 }
             } else {
                 pointer++;
             }
 
-            TextView dayTextView = (TextView) LayoutInflater
-                    .from(calendarView.getContext())
-                    .inflate(R.layout.view_calendar_item_day, row, false);
-
-            if(isTodaysDate(dateTime, day)) {
-                dayTextView.setTextColor(Color.parseColor("#009688"));
+            if(day == 10) {
+                calendarView.createDayViewSelective(10);
+            } else if(isTodaysDate(dateTime, day)) {
+                calendarView.createDayViewActive(day);
+            } else {
+                calendarView.createDayView(day, "#FFFFFF", true);
             }
-
-            dayTextView.setText(String.valueOf(day));
-
-            row.addView(dayTextView);
 
             /**
              * Every 7 days we create new layout (new row) where we append day views.
              */
             if(pointer % 7 == 0) {
-                row = (LinearLayout) LayoutInflater
-                        .from(calendarView.getContext())
-                        .inflate(R.layout.view_calendar_item_row, calendarView.getLayout(), false);
-
-                calendarView.getLayout().addView(row);
+                calendarView.createRowLayout();
             }
 
             /**
@@ -104,6 +77,14 @@ public class CalendarPresenter {
                     .plusMonths(position - CalendarAdapter.DEFAULT_POSITION)
                     .dayOfMonth()
                     .withMinimumValue();
+        }
+    }
+
+    public void onPositionSelected(int position) {
+        if(position == CalendarAdapter.DEFAULT_POSITION) {
+            // highlight todaysDate
+        } else if(position == mViewPagerPosition) {
+            // highlight first day of the month
         }
     }
 }
