@@ -1,6 +1,7 @@
 package io.mazur.fit.view;
 
 import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
@@ -13,7 +14,14 @@ import pl.droidsonroids.gif.GifImageView;
 public class PreviewView extends RelativeLayout {
     private PreviewPresenter mPreviewPresenter;
 
-    @InjectView(R.id.preview_gif_image_view) GifImageView mPreviewGifImageView;
+    @InjectView(R.id.preview_gif_image_view)
+    GifImageView mPreviewGifImageView;
+
+    @InjectView(R.id.log_workout_button)
+    FloatingActionButton mLogWorkoutButton;
+
+    @InjectView(R.id.action_button)
+    FloatingActionButton mActionButton;
 
     public PreviewView(Context context) {
         super(context);
@@ -33,6 +41,9 @@ public class PreviewView extends RelativeLayout {
 
         ButterKnife.inject(this);
 
+        mLogWorkoutButton.setOnClickListener((v) -> mPreviewPresenter.onLogWorkoutButtonClick());
+        mActionButton.setOnClickListener((v) -> mPreviewPresenter.onActionButtonClick());
+
         onCreateView();
     }
 
@@ -46,5 +57,13 @@ public class PreviewView extends RelativeLayout {
 
     public GifImageView getPreviewGifImageView() {
         return mPreviewGifImageView;
+    }
+
+    public FloatingActionButton getLogWorkoutButton() {
+        return mLogWorkoutButton;
+    }
+
+    public FloatingActionButton getActionButton() {
+        return mActionButton;
     }
 }

@@ -79,8 +79,13 @@ public class RoutineStream {
         mExerciseSubject.onNext(exercise);
     }
 
+    public Exercise getExercise() {
+        return mExercise;
+    }
+
     public void setLevel(Exercise exercise, int level) {
         mRoutine.setLevel(exercise, level);
+
         setExercise(exercise);
 
         // We save our current exercise for given section

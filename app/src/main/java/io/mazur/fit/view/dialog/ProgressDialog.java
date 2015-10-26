@@ -1,4 +1,4 @@
-package io.mazur.fit.view;
+package io.mazur.fit.view.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -16,12 +16,14 @@ import io.mazur.fit.R;
 import io.mazur.fit.model.Exercise;
 import io.mazur.fit.model.SectionMode;
 import io.mazur.fit.stream.RoutineStream;
+import io.mazur.fit.view.CircularProgressBar;
 
 public class ProgressDialog {
     @InjectView(R.id.level_title_text_view) TextView mLevelTitleTextView;
     @InjectView(R.id.level_previous_button) ImageButton mLevelPreviousButton;
     @InjectView(R.id.level_next_button) ImageButton mLevelNextButton;
-    @InjectView(R.id.level_progress_bar) CircularProgressBar mLevelProgressBar;
+    @InjectView(R.id.level_progress_bar)
+    CircularProgressBar mLevelProgressBar;
     @InjectView(R.id.level_text_view) TextView mLevelTextView;
     @InjectView(R.id.level_confirm_button) FloatingActionButton mLevelConfirmButton;
 

@@ -6,12 +6,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @InjectView(R.id.view_home) View mViewHome;
     @InjectView(R.id.view_calendar) View mViewCalendar;
     @InjectView(R.id.view_calendar_pager) ViewPager mViewCalendarPager;
+    @InjectView(R.id.view_calendar_action_button)
+    FloatingActionButton mViewCalendarActionButton;
     @InjectView(R.id.view_calendar_details) View mViewCalendarDetails;
 
 	@Override
@@ -60,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         /**
          * TODO: This should be moved somewhere else to make sure we keep MainActivity clear.
          */
-        mViewCalendarPager.setAdapter(new CalendarAdapter(mViewCalendarDetails));
+        mViewCalendarPager.setAdapter(new CalendarAdapter(mViewCalendarActionButton, mViewCalendarDetails));
         mViewCalendarPager.setCurrentItem(CalendarAdapter.DEFAULT_POSITION, false);
 	}
 
@@ -124,6 +128,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         keepScreenOnWhenAppIsRunning();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.calendar, menu);
+
+        return true;
+    }
+
     private void setToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 //        mToolbar.setTitleTextColor(Color.parseColor("#00453E"));
@@ -174,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         changeStatusBarColor("#25242F"); // primaryDarkGrey
 
                         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2E2E3B")));
-                        actionBar.setTitle("Workout Log");
+                        actionBar.setTitle("October 2015");
                         actionBar.setSubtitle("");
                     }
 

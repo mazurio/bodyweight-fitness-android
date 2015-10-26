@@ -13,6 +13,19 @@
         android:layout_height="match_parent" />
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/log_workout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_create"
+        android:layout_alignParentRight="true"
+        android:layout_above="@+id/action_button"
+        android:layout_marginRight="12dp"
+        app:backgroundTint="@color/white"
+        app:borderWidth="0dp"
+        app:elevation="6dp"/>
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +33,9 @@
         android:src="@drawable/ic_add"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginRight="12dp"
         app:backgroundTint="@color/primaryDark"
         app:borderWidth="0dp"
         app:elevation="6dp"/>

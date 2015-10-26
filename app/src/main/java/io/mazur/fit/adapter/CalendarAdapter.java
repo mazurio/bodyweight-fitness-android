@@ -13,11 +13,13 @@ import io.mazur.fit.view.CalendarItemView;
 public class CalendarAdapter extends PagerAdapter {
     public static final int DEFAULT_POSITION = 60;
 
+    private View mViewCalendarActionButton;
     private View mViewCalendarDetails;
 
-    public CalendarAdapter(View viewCalendarDetails) {
+    public CalendarAdapter(View viewCalendarActionButton, View viewCalendarDetails) {
         super();
 
+        mViewCalendarActionButton = viewCalendarActionButton;
         mViewCalendarDetails = viewCalendarDetails;
     }
 
@@ -53,8 +55,10 @@ public class CalendarAdapter extends PagerAdapter {
 
         calendarItemView.getCalendarItemPresenter().getDaySelectedObservable().subscribe((dayOfMonth) -> {
             if(calendarItemView.getCalendarItemPresenter().isRoutineLogged(dayOfMonth)) {
+                mViewCalendarActionButton.setVisibility(View.GONE);
                 mViewCalendarDetails.setVisibility(View.VISIBLE);
             } else {
+                mViewCalendarActionButton.setVisibility(View.VISIBLE);
                 mViewCalendarDetails.setVisibility(View.GONE);
             }
         });
