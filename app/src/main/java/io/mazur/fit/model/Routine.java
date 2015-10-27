@@ -47,7 +47,11 @@ public class Routine implements Serializable {
                 currentCategory = new Category(JSONLinkedRoutine.getTitle());
 
                 mCategories.add(currentCategory);
-                mLinkedRoutine.add(currentCategory);
+
+                /**
+                 * TODO: We avoid categories from Linked Routine for now.
+                 */
+//                mLinkedRoutine.add(currentCategory);
             }
 
             /**
@@ -94,6 +98,7 @@ public class Routine implements Serializable {
                     if(currentExerciseId != null) {
                         if(exercise.getId().matches(currentExerciseId)) {
                             mLinkedExercises.add(exercise);
+                            mLinkedRoutine.add(exercise);
 
                             exercise.setPrevious(currentExercise);
 
@@ -107,6 +112,7 @@ public class Routine implements Serializable {
                     } else {
                         if(currentSection.getExercises().size() == 1) {
                             mLinkedExercises.add(exercise);
+                            mLinkedRoutine.add(exercise);
 
                             exercise.setPrevious(currentExercise);
 
@@ -127,12 +133,8 @@ public class Routine implements Serializable {
                     currentExercise = exercise;
 
                     mLinkedExercises.add(exercise);
+                    mLinkedRoutine.add(exercise);
                 }
-
-                /**
-                 * Linked Routine contains all exercises.
-                 */
-                mLinkedRoutine.add(exercise);
             }
         }
     }
@@ -175,6 +177,13 @@ public class Routine implements Serializable {
 
             currentSectionExercise.setPrevious(null);
             currentSectionExercise.setNext(null);
+
+            int indexOfCurrentExercise = mLinkedRoutine.indexOf(currentSectionExercise);
+            if(indexOfCurrentExercise == -1) {
+                return;
+            }
+
+            mLinkedRoutine.set(indexOfCurrentExercise, exercise);
         }
     }
 

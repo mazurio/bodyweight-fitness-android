@@ -29,6 +29,7 @@ public class RoutineStream {
 
     private final PublishSubject<Routine> mRoutineSubject = PublishSubject.create();
     private final PublishSubject<Exercise> mExerciseSubject = PublishSubject.create();
+    private final PublishSubject<Routine> mLevelChangedSubject = PublishSubject.create();
 
     private RoutineStream() {
         /**
@@ -58,6 +59,10 @@ public class RoutineStream {
         }
 
         return sInstance;
+    }
+
+    public Routine getRoutine() {
+        return mRoutine;
     }
 
     /**
@@ -91,6 +96,8 @@ public class RoutineStream {
         // We save our current exercise for given section
         // TODO: This should use section id (not title).
         Glacier.put(exercise.getSection().getTitle(), exercise.getSection().getCurrentExercise().getId());
+
+        mLevelChangedSubject.onNext(mRoutine);
     }
 
     public Observable<Exercise> getExerciseChangedObservable() {
@@ -109,5 +116,9 @@ public class RoutineStream {
         }).observeOn(AndroidSchedulers.mainThread()).publish().refCount();
 
         return Observable.merge(mExerciseSubject, exerciseObservable);
+    }
+
+    public Observable<Routine> getLevelChangedObservable() {
+        return mLevelChangedSubject;
     }
 }

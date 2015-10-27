@@ -1,12 +1,25 @@
 package io.mazur.fit.presenter;
 
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
 import android.widget.Toast;
 
 import org.joda.time.DateTime;
 
+import java.util.Date;
+import java.util.HashSet;
+
 import io.mazur.fit.adapter.CalendarAdapter;
+import io.mazur.fit.model.ActivityState;
+import io.mazur.fit.realm.RealmRoutine;
+import io.mazur.fit.stream.ActivityStream;
+import io.mazur.fit.stream.RealmStream;
+import io.mazur.fit.ui.ProgressActivity;
 import io.mazur.fit.utils.Logger;
 import io.mazur.fit.view.CalendarItemView;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.subjects.PublishSubject;
@@ -63,6 +76,12 @@ public class CalendarItemPresenter {
              * TODO: Needs to display days after the end of the month.
              */
         }
+//
+//        ActivityStream.getInstance().getObservable().subscribe(state -> {
+//            if(state == ActivityState.OnResume) {
+//                // todo: reDRAW?!?!?!???!?!?!?!?!?!?!??!?!?!?!!?!?!??!!?
+//            }
+//        });
     }
 
     public boolean isTodaysDate(DateTime dateTime, int day) {
@@ -95,22 +114,119 @@ public class CalendarItemPresenter {
         }
     }
 
+    public DateTime getDateForDayOfMonth(int position, int dayOfMonth) {
+        return getDateBasedOnViewPagerPosition(position)
+                .withDayOfMonth(dayOfMonth)
+                .withTimeAtStartOfDay();
+    }
+
     /**
      * TODO: This should go to Realm for current month and fetch data. Then put it into a set.
      */
     public boolean isRoutineLogged(int dayOfMonth) {
-        if(dayOfMonth == 10) {
+        // Day of month at 00:00
+        final Date start = getDateForDayOfMonth(mViewPagerPosition, dayOfMonth)
+                .toDate();
+
+        // Day of month at 23:59
+        final Date end = getDateForDayOfMonth(mViewPagerPosition, dayOfMonth)
+                .plusDays(1)
+                .minusMinutes(1)
+                .toDate();
+
+        Realm realm = RealmStream.getInstance().getRealm();
+
+        RealmRoutine routine = realm.where(RealmRoutine.class).between("date", start, end).findFirst();
+
+        if(routine != null) {
             return true;
         }
 
         return false;
     }
 
+    public HashSet<Integer> getThisMonthsHighlights(Context context, DateTime currentMonth) {
+        HashSet<Integer> set = new HashSet<>();
+
+        Realm realm = RealmStream.getInstance().getRealm();
+
+        DateTime start = currentMonth
+                .withDayOfMonth(1)
+                .withTimeAtStartOfDay();
+
+        DateTime end = currentMonth
+                .withDayOfMonth(currentMonth.dayOfMonth().getMaximumValue())
+                .withTimeAtStartOfDay()
+                .plusDays(1);
+
+        RealmResults<RealmRoutine> list = realm
+                .where(RealmRoutine.class)
+                .between("date", start.toDate(), end.toDate())
+                .findAll();
+
+        /**
+         * Map each day to the set. We can then check if day exists in the set to change the date
+         * in the calendar (e.g. highlight it).
+         */
+        for(RealmRoutine realmRoutine : list) {
+            DateTime date = new DateTime(realmRoutine.getDate());
+
+            set.add(date.getDayOfMonth());
+        }
+
+        return set;
+    }
+
+
     public void onViewPagerPositionSelected(int position) {
 
     }
 
     public void onDaySelected(int dayOfMonth) {
+        // Day of month at 00:00
+        final Date start = getDateForDayOfMonth(mViewPagerPosition, dayOfMonth)
+                .toDate();
+
+        // Day of month at 23:59
+        final Date end = getDateForDayOfMonth(mViewPagerPosition, dayOfMonth)
+                .plusDays(1)
+                .minusMinutes(1)
+                .toDate();
+
+        if(isRoutineLogged(dayOfMonth)) {
+            mCalendarItemView.getCalendarActionButton().setVisibility(View.GONE);
+            mCalendarItemView.getCalendarActionButton().setOnClickListener(v -> {
+                // Do nothing.
+            });
+
+            mCalendarItemView.getCalendarDetails().setVisibility(View.VISIBLE);
+            mCalendarItemView.getCalendarDetails().setOnClickListener(v -> {
+                Intent intent = new Intent(mCalendarItemView.getContext(), ProgressActivity.class);
+
+                intent.putExtra("exists", true);
+                intent.putExtra("start", start);
+                intent.putExtra("end", end);
+
+                mCalendarItemView.getContext().startActivity(intent);
+            });
+        } else {
+            mCalendarItemView.getCalendarActionButton().setVisibility(View.VISIBLE);
+            mCalendarItemView.getCalendarActionButton().setOnClickListener(v -> {
+                Intent intent = new Intent(mCalendarItemView.getContext(), ProgressActivity.class);
+
+                intent.putExtra("exists", false);
+                intent.putExtra("start", start);
+                intent.putExtra("end", end);
+
+                mCalendarItemView.getContext().startActivity(intent);
+            });
+
+            mCalendarItemView.getCalendarDetails().setVisibility(View.GONE);
+            mCalendarItemView.getCalendarDetails().setOnClickListener(v -> {
+                // Do nothing.
+            });
+        }
+
         mDaySelectedSubject.onNext(dayOfMonth);
     }
 

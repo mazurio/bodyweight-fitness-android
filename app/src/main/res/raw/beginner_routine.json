@@ -14,43 +14,78 @@
       "id": "wall_extensions",
       "title": "Wall Extensions",
       "description": "5-10 reps",
-      "type": "exercise"
+      "type": "exercise",
+	  "allowTimeReps": false,
+	  "allowBodyweightReps": true,
+	  "defaultNumberOfSets": 1,
+	  "defaultNumberOfReps": 5,
+	  "maxNumberOfReps": 15
     },
     {
       "id": "band_dislocates",
       "title": "Band Dislocates",
       "description": "5-10 reps",
-      "type": "exercise"
+      "type": "exercise",
+	  "allowTimeReps": false,
+	  "allowBodyweightReps": true,
+	  "defaultNumberOfSets": 1,
+	  "defaultNumberOfReps": 5,
+	  "maxNumberOfReps": 15
     },
     {
       "id": "cat_camel",
       "title": "Cat/Camel Bends",
       "description": "5-10 reps",
-      "type": "exercise"
+      "type": "exercise",
+	  "allowTimeReps": false,
+	  "allowBodyweightReps": true,
+	  "defaultNumberOfSets": 1,
+	  "defaultNumberOfReps": 5,
+	  "maxNumberOfReps": 15
     },
     {
       "id": "scapular_shrugs",
       "title": "Scapular Shrugs",
       "description": "5-10 reps",
-      "type": "exercise"
+      "type": "exercise",
+	  "allowTimeReps": false,
+	  "allowBodyweightReps": true,
+	  "defaultNumberOfSets": 1,
+	  "defaultNumberOfReps": 5,
+	  "maxNumberOfReps": 15
     },
     {
       "id": "full_body_circles",
       "title": "Full Body Circles",
       "description": "5-10 reps",
-      "type": "exercise"
+      "type": "exercise",
+	  "allowTimeReps": false,
+	  "allowBodyweightReps": true,
+	  "defaultNumberOfSets": 1,
+	  "defaultNumberOfReps": 5,
+	  "maxNumberOfReps": 15
     },
     {
       "id": "leg_swings",
       "title": "Front and Side Leg Swings",
       "description": "5-10 reps",
-      "type": "exercise"
+      "type": "exercise",
+	  "allowTimeReps": false,
+	  "allowBodyweightReps": true,
+	  "defaultNumberOfSets": 1,
+	  "defaultNumberOfReps": 5,
+	  "maxNumberOfReps": 15
     },
     {
       "id": "wrist_progression",
       "title": "Wrist Mobility Exercises",
       "description": "5-10 reps",
-      "type": "exercise"
+      "type": "exercise",
+	  "allowTimeReps": false,
+	  "allowBodyweightReps": true,
+	  "defaultNumberOfSets": 1,
+	  "defaultNumberOfReps": 5,
+	  "maxNumberOfReps": 15
     },
     {
       "title": "Bodyline Drills",

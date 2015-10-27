@@ -17,6 +17,9 @@ import io.mazur.fit.presenter.CalendarItemPresenter;
 public class CalendarItemView extends LinearLayout {
     private CalendarItemPresenter mCalendarItemPresenter;
 
+    private View mViewCalendarActionButton;
+    private View mViewCalendarDetails;
+
     @InjectView(R.id.layout) LinearLayout mLayout;
     private LinearLayout mRowLayout;
 
@@ -50,7 +53,10 @@ public class CalendarItemView extends LinearLayout {
         mCalendarItemPresenter = new CalendarItemPresenter(viewPagerPosition);
     }
 
-    public void onCreateView() {
+    public void onCreateView(View viewCalendarActionButton, View viewCalendarDetails) {
+        mViewCalendarActionButton = viewCalendarActionButton;
+        mViewCalendarDetails = viewCalendarDetails;
+
         mCalendarItemPresenter.onCreateView(this);
     }
 
@@ -96,13 +102,13 @@ public class CalendarItemView extends LinearLayout {
             dayTextView.setText(String.valueOf(dayOfMonth));
         }
 
-        if(mCalendarItemPresenter.isRoutineLogged(dayOfMonth)) {
-            dot.setVisibility(View.VISIBLE);
-        } else {
-            dot.setVisibility(View.GONE);
-        }
-
         if(clickable) {
+            if(mCalendarItemPresenter.isRoutineLogged(dayOfMonth)) {
+                dot.setVisibility(View.VISIBLE);
+            } else {
+                dot.setVisibility(View.GONE);
+            }
+
             view.setOnClickListener((v) -> {
                 mCalendarItemPresenter.onDaySelected(dayOfMonth);
 
@@ -141,5 +147,13 @@ public class CalendarItemView extends LinearLayout {
         }
 
         getRowLayout().addView(view);
+    }
+
+    public View getCalendarActionButton() {
+        return mViewCalendarActionButton;
+    }
+
+    public View getCalendarDetails() {
+        return mViewCalendarDetails;
     }
 }

@@ -3,12 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/routine_category_text_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="16dp"
+    android:layout_height="48dp"
     android:paddingLeft="16dp"
-    android:paddingBottom="16dp"
-    android:background="@color/white"
-    android:gravity="left|center"
+    android:paddingRight="16dp"
+    android:gravity="center_vertical"
     android:textColor="@color/primary"
     android:textSize="16sp"
-    app:typeface="roboto_black" />
+    android:text="Dynamic Stretches"
+    app:typeface="roboto_medium"/>

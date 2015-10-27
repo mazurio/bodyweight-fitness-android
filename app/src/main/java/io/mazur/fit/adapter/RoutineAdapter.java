@@ -88,7 +88,6 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineP
 
     public class RoutineSectionPresenter extends RoutinePresenter<Section> {
         @InjectView(R.id.routine_section_text_view) TextView mRoutineSectionTextView;
-        @InjectView(R.id.routine_section_description_text_view) TextView mRoutineSectionDescriptionTextView;
 
         public RoutineSectionPresenter(View itemView) {
             super(itemView);
@@ -97,7 +96,6 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineP
         @Override
         public void onBindView(Section section) {
             mRoutineSectionTextView.setText(section.getTitle());
-            mRoutineSectionDescriptionTextView.setText(section.getDescription());
         }
     }
 

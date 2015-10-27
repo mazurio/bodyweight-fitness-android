@@ -32,6 +32,7 @@
                 android:orientation="vertical" />
 
             <com.devspark.robototextview.widget.RobotoButton
+                android:id="@+id/saveButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"

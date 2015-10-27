@@ -1,4 +1,4 @@
-package io.mazur.fit.fragment;
+package io.mazur.fit.view.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -74,6 +74,12 @@ public class NavigationDrawerFragment extends Fragment {
 
         final View actionMenuWorkoutLog = view.findViewById(R.id.action_menu_workout_log);
         actionMenuWorkoutLog.setOnClickListener(v -> setActionActive(v.getId()));
+
+        final View actionMenuFAQ = view.findViewById(R.id.action_menu_faq);
+        actionMenuFAQ.setOnClickListener(v -> setActionActive(v.getId()));
+
+        final View actionMenuSettings = view.findViewById(R.id.action_menu_settings);
+        actionMenuSettings.setOnClickListener(v -> setActionActive(v.getId()));
 
         mDrawerMenuSubject.subscribe(id -> {
             ((TextView) view.findViewById(mMenuId)).setTextColor(Color.parseColor("#87000000"));

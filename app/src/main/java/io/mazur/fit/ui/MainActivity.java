@@ -1,9 +1,11 @@
 package io.mazur.fit.ui;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -24,9 +26,9 @@ import butterknife.InjectView;
 
 import io.mazur.fit.R;
 import io.mazur.fit.adapter.CalendarAdapter;
-import io.mazur.fit.fragment.NavigationDrawerFragment;
-import io.mazur.fit.model.ActivityState;
 import io.mazur.fit.model.Exercise;
+import io.mazur.fit.view.fragment.NavigationDrawerFragment;
+import io.mazur.fit.model.ActivityState;
 import io.mazur.fit.stream.ActivityStream;
 import io.mazur.fit.stream.RoutineStream;
 import io.mazur.fit.utils.PreferenceUtil;
@@ -34,13 +36,14 @@ import io.mazur.fit.utils.PreferenceUtil;
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private Toolbar mToolbar;
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private Exercise mExercise;
+    private CalendarAdapter mCalendarAdapter;
+
+    private boolean mDisplayMenu = false;
 
     @InjectView(R.id.view_home) View mViewHome;
     @InjectView(R.id.view_calendar) View mViewCalendar;
     @InjectView(R.id.view_calendar_pager) ViewPager mViewCalendarPager;
-    @InjectView(R.id.view_calendar_action_button)
-    FloatingActionButton mViewCalendarActionButton;
+    @InjectView(R.id.view_calendar_action_button) FloatingActionButton mViewCalendarActionButton;
     @InjectView(R.id.view_calendar_details) View mViewCalendarDetails;
 
 	@Override
@@ -54,30 +57,16 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 		setToolbar();
         setDrawer();
 
-        RoutineStream.getInstance().getExerciseObservable().subscribe(exercise -> {
-            mExercise = exercise;
-            invalidateOptionsMenu();
-        });
-
         keepScreenOnWhenAppIsRunning();
 
         /**
          * TODO: This should be moved somewhere else to make sure we keep MainActivity clear.
          */
-        mViewCalendarPager.setAdapter(new CalendarAdapter(mViewCalendarActionButton, mViewCalendarDetails));
+        mCalendarAdapter = new CalendarAdapter(mViewCalendarPager, mViewCalendarActionButton, mViewCalendarDetails, getSupportActionBar());
+
+        mViewCalendarPager.setAdapter(mCalendarAdapter);
         mViewCalendarPager.setCurrentItem(CalendarAdapter.DEFAULT_POSITION, false);
 	}
-
-    /**
-     * TODO: Kept here for reference as we need to change the color of Calendar Status Bar.
-     */
-    public void changeStatusBarColor(String colorString) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.parseColor(colorString));
-        }
-    }
 
     @Override
     protected void onPause() {
@@ -96,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @Override
     protected void onResume() {
         super.onResume();
+
+        ActivityStream.getInstance().setActivityState(ActivityState.OnResume);
+
+        mCalendarAdapter.notifyDataSetChanged();
 
         keepScreenOnWhenAppIsRunning();
     }
@@ -120,6 +113,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             return true;
         }
 
+        switch(item.getItemId()) {
+            case(R.id.action_today): {
+                mCalendarAdapter.setToday();
+                mViewCalendarPager.setCurrentItem(CalendarAdapter.DEFAULT_POSITION, true);
+
+                return true;
+            }
+        }
+
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -130,14 +132,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.calendar, menu);
+        if(mDisplayMenu) {
+            getMenuInflater().inflate(R.menu.calendar, menu);
+        }
 
         return true;
     }
 
     private void setToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-//        mToolbar.setTitleTextColor(Color.parseColor("#00453E"));
 
 		setSupportActionBar(mToolbar);
 
@@ -161,33 +164,61 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         mNavigationDrawerFragment.getMenuObservable().subscribe(id -> {
             switch(id) {
                 case R.id.action_menu_home: {
+                    mDisplayMenu = false;
+
+                    invalidateOptionsMenu();
+
                     mViewHome.setVisibility(View.VISIBLE);
                     mViewCalendar.setVisibility(View.GONE);
 
                     ActionBar actionBar = getSupportActionBar();
                     if(actionBar != null) {
-                        changeStatusBarColor("#00453E"); // primaryDarkGreen
-
                         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#009688")));
-                        actionBar.setTitle("Home");
-                        actionBar.setSubtitle("");
+
+                        Exercise exercise = RoutineStream.getInstance().getExercise();
+
+                        actionBar.setTitle(exercise.getTitle());
+                        actionBar.setSubtitle(exercise.getDescription());
                     }
 
                     break;
                 }
 
                 case R.id.action_menu_workout_log: {
+                    mDisplayMenu = true;
+
+                    invalidateOptionsMenu();
+
                     mViewHome.setVisibility(View.GONE);
                     mViewCalendar.setVisibility(View.VISIBLE);
 
                     ActionBar actionBar = getSupportActionBar();
                     if(actionBar != null) {
-                        changeStatusBarColor("#25242F"); // primaryDarkGrey
-
                         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2E2E3B")));
-                        actionBar.setTitle("October 2015");
+                        actionBar.setTitle(mCalendarAdapter.getCurrentTitle());
                         actionBar.setSubtitle("");
                     }
+
+                    break;
+                }
+
+                case R.id.action_menu_faq: {
+                    startActivity(new Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("http://www.reddit.com/r/bodyweightfitness/wiki/faq")));
+
+                    break;
+                }
+
+                case R.id.action_menu_settings: {
+                    startActivity(new Intent(
+                            getApplicationContext(),
+                            SettingsActivity.class));
+
+                    break;
+                }
+
+                case R.id.action_menu_help_and_feedback: {
 
                     break;
                 }

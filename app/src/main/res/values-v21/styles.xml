@@ -5,10 +5,9 @@
 		<item name="colorPrimaryDark">@color/primaryDark</item>
 
 		<item name="android:windowBackground">@color/window_background</item>
-		<item name="android:windowDrawsSystemBarBackgrounds">true</item>
+		<item name="android:windowDrawsSystemBarBackgrounds">false</item>
 		<item name="android:windowContentOverlay">@null</item>
-
-		<item name="android:statusBarColor">@android:color/transparent</item>
+		<item name="android:windowTranslucentStatus">true</item>
 	</style>
 
 	<style name="AppTheme.Home.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -25,10 +24,25 @@
 		<item name="actionMenuTextColor">@color/white</item>
 	</style>
 
+	<style name="AppTheme.Progress.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
+		<item name="android:textColorPrimary">@color/white</item>
+		<item name="android:textColorSecondary">@color/white</item>
+
+		<item name="actionMenuTextColor">@color/white</item>
+	</style>
+
 	<style name="AppTheme.Activity" parent="Theme.AppCompat.Light.DarkActionBar">
 		<item name="colorAccent">@color/primaryDark</item>
 		<item name="colorPrimary">@color/primary</item>
 		<item name="colorPrimaryDark">@color/primaryDark</item>
+
+		<item name="android:windowContentOverlay">@null</item>
+	</style>
+
+	<style name="AppTheme.Activity.Progress" parent="Theme.AppCompat.Light.NoActionBar">
+		<item name="colorAccent">#25242F</item>
+		<item name="colorPrimary">#2E2E3B</item>
+		<item name="colorPrimaryDark">#25242F</item>
 
 		<item name="android:windowContentOverlay">@null</item>
 	</style>
