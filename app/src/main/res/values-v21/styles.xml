@@ -11,22 +11,15 @@
 	</style>
 
 	<style name="AppTheme.Home.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="android:textColorPrimary">@color/white</item>
-		<item name="android:textColorSecondary">@color/white</item>
-
-		<item name="actionMenuTextColor">@color/white</item>
-	</style>
-
-	<style name="AppTheme.Calendar.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="android:textColorPrimary">@color/white</item>
-		<item name="android:textColorSecondary">@color/white</item>
+		<item name="android:textColorPrimary">@color/primaryDark</item>
+		<item name="android:textColorSecondary">@color/primaryDark</item>
 
 		<item name="actionMenuTextColor">@color/white</item>
 	</style>
 
 	<style name="AppTheme.Progress.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="android:textColorPrimary">@color/white</item>
-		<item name="android:textColorSecondary">@color/white</item>
+		<item name="android:textColorPrimary">@color/primaryDark</item>
+		<item name="android:textColorSecondary">@color/primaryDark</item>
 
 		<item name="actionMenuTextColor">@color/white</item>
 	</style>
@@ -40,9 +33,9 @@
 	</style>
 
 	<style name="AppTheme.Activity.Progress" parent="Theme.AppCompat.Light.NoActionBar">
-		<item name="colorAccent">#25242F</item>
-		<item name="colorPrimary">#2E2E3B</item>
-		<item name="colorPrimaryDark">#25242F</item>
+		<item name="colorAccent">@color/primaryDark</item>
+		<item name="colorPrimary">@color/primary</item>
+		<item name="colorPrimaryDark">@color/primaryDark</item>
 
 		<item name="android:windowContentOverlay">@null</item>
 	</style>

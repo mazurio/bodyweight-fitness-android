@@ -16,9 +16,9 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center_horizontal"
-            android:textColor="@color/primaryDark"
+            android:textColor="#4000453E"
             android:textSize="17sp"
-            app:typeface="roboto_condensed_regular" />
+            app:typeface="roboto_thin" />
 
         <RelativeLayout
             android:id="@+id/dot"

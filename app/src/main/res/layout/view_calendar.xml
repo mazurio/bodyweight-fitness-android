@@ -3,35 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#2E2E3B">
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_calendar_pager"
-        android:layout_width="match_parent"
-        android:layout_height="378dp"/>
+    android:background="@color/black">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="378dp"
+        android:background="@color/primary">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/view_calendar_action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_add_dark"
-            android:layout_centerInParent="true"
-            android:layout_margin="12dp"
-            app:backgroundTint="@color/white"
-            app:borderWidth="0dp"
-            app:elevation="6dp"/>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_calendar_pager"
+            android:layout_width="match_parent"
+            android:layout_height="378dp"/>
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/view_calendar_details"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
         android:visibility="gone">
 
         <android.support.v7.widget.CardView
@@ -66,5 +54,22 @@
                     app:typeface="roboto_light" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
-    </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/view_calendar_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_add_dark"
+            android:layout_centerInParent="true"
+            android:layout_margin="12dp"
+            app:backgroundTint="@color/white"
+            app:borderWidth="0dp"
+            app:elevation="6dp"/>
+    </RelativeLayout>
 </LinearLayout>

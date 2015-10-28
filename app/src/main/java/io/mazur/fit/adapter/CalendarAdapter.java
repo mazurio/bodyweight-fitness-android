@@ -110,8 +110,6 @@ public class CalendarAdapter extends PagerAdapter {
         super.notifyDataSetChanged();
 
         mViewCalendarPager.setCurrentItem(position, false);
-
-        Toast.makeText(mViewCalendarPager.getContext(), "Day of month: " + dayOfMonth, Toast.LENGTH_SHORT).show();
     }
 
     public void setToday() {

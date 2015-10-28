@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
                     ActionBar actionBar = getSupportActionBar();
                     if(actionBar != null) {
-                        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#009688")));
+//                        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#009688")));
 
                         Exercise exercise = RoutineStream.getInstance().getExercise();
 
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
                     ActionBar actionBar = getSupportActionBar();
                     if(actionBar != null) {
-                        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2E2E3B")));
+//                        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2E2E3B")));
                         actionBar.setTitle(mCalendarAdapter.getCurrentTitle());
                         actionBar.setSubtitle("");
                     }

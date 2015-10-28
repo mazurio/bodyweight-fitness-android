@@ -25,7 +25,7 @@ public class CalendarItemView extends LinearLayout {
 
     private int mClickedPosition = -1;
 
-    private CardView mClickedCardView;
+    private View mClickedView;
     private TextView mClickedTextView;
 
     public CalendarItemView(Context context) {
@@ -81,24 +81,30 @@ public class CalendarItemView extends LinearLayout {
     }
 
     public void createDayView(int dayOfMonth, boolean clickable, boolean active) {
-        View view = LayoutInflater
-                .from(getContext())
-                .inflate(R.layout.view_calendar_item_day, getRowLayout(), false);
+        View view;
+
+        if(clickable) {
+            view = LayoutInflater.from(getContext())
+                    .inflate(R.layout.view_calendar_item_day, getRowLayout(), false);
+        } else {
+            view = LayoutInflater.from(getContext())
+                    .inflate(R.layout.view_calendar_item_empty, getRowLayout(), false);
+        }
 
         view.setId(dayOfMonth);
 
-        CardView cardView = (CardView) view.findViewById(R.id.cardView);
+        View roundLayout = view.findViewById(R.id.roundLayout);
+
         TextView dayTextView = (TextView) view.findViewById(R.id.dayTextView);
         View dot = view.findViewById(R.id.dot);
 
         if(active) {
-            cardView.setCardBackgroundColor(Color.parseColor("#3A3A46"));
-            cardView.setRadius(76);
+            roundLayout.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.rounded_corner_today));
 
             dayTextView.setTextColor(Color.parseColor("#FFFFFF"));
             dayTextView.setText(String.valueOf(dayOfMonth));
         } else {
-            dayTextView.setTextColor(Color.parseColor("#FFFFFF"));
+            dayTextView.setTextColor(Color.parseColor("#00453E"));
             dayTextView.setText(String.valueOf(dayOfMonth));
         }
 
@@ -120,28 +126,25 @@ public class CalendarItemView extends LinearLayout {
                  * Reset currently clicked day. This could be done in much simpler and cleaner way
                  * later.
                  */
-                if (mClickedCardView != null && mClickedTextView != null) {
+                if (mClickedView != null && mClickedTextView != null) {
                     /**
                      * Highlight today's date back.
                      */
                     if (mClickedPosition == mCalendarItemPresenter.getTodaysDayOfTheMonth()) {
-                        mClickedCardView.setCardBackgroundColor(Color.parseColor("#3A3A46"));
-                        mClickedCardView.setRadius(76);
+                        mClickedView.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.rounded_corner_today));
                         mClickedTextView.setTextColor(Color.parseColor("#FFFFFF"));
                     } else {
-                        mClickedCardView.setCardBackgroundColor(Color.parseColor("#2E2E3B"));
-                        mClickedCardView.setRadius(0);
-                        mClickedTextView.setTextColor(Color.parseColor("#FFFFFF"));
+                        mClickedView.setBackgroundDrawable(null);
+                        mClickedTextView.setTextColor(Color.parseColor("#00453E"));
                     }
                 }
 
-                cardView.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
-                cardView.setRadius(76);
+                roundLayout.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.rounded_corner_active));
 
-                dayTextView.setTextColor(Color.parseColor("#FF4081"));
+                dayTextView.setTextColor(Color.parseColor("#00453E"));
 
                 mClickedPosition = dayOfMonth;
-                mClickedCardView = cardView;
+                mClickedView = roundLayout;
                 mClickedTextView = dayTextView;
             });
         }

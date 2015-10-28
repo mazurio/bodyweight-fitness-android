@@ -22,9 +22,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                app:typeface="roboto_light"
-                android:textColor="#7D7D85"
                 android:textAllCaps="true"
+                android:textColor="@color/primaryDark"
+                android:textSize="20sp"
+                app:typeface="roboto_thin"
                 android:text="M"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
@@ -32,9 +33,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                app:typeface="roboto_light"
-                android:textColor="#7D7D85"
                 android:textAllCaps="true"
+                android:textColor="@color/primaryDark"
+                android:textSize="20sp"
+                app:typeface="roboto_thin"
                 android:text="T"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
@@ -42,9 +44,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                app:typeface="roboto_light"
-                android:textColor="#7D7D85"
                 android:textAllCaps="true"
+                android:textColor="@color/primaryDark"
+                android:textSize="20sp"
+                app:typeface="roboto_thin"
                 android:text="W"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
@@ -52,9 +55,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                app:typeface="roboto_light"
-                android:textColor="#7D7D85"
                 android:textAllCaps="true"
+                android:textColor="@color/primaryDark"
+                android:textSize="20sp"
+                app:typeface="roboto_thin"
                 android:text="T"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
@@ -62,9 +66,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                app:typeface="roboto_light"
-                android:textColor="#7D7D85"
                 android:textAllCaps="true"
+                android:textColor="@color/primaryDark"
+                android:textSize="20sp"
+                app:typeface="roboto_thin"
                 android:text="F"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
@@ -72,9 +77,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                app:typeface="roboto_light"
-                android:textColor="#7D7D85"
                 android:textAllCaps="true"
+                android:textColor="@color/primaryDark"
+                android:textSize="20sp"
+                app:typeface="roboto_thin"
                 android:text="S"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
@@ -82,9 +88,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                app:typeface="roboto_light"
-                android:textColor="#7D7D85"
                 android:textAllCaps="true"
+                android:textColor="@color/primaryDark"
+                android:textSize="20sp"
+                app:typeface="roboto_thin"
                 android:text="S"/>
         </LinearLayout>
     </LinearLayout>

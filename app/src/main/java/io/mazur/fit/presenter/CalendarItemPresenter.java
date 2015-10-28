@@ -41,20 +41,27 @@ public class CalendarItemPresenter {
 
         int pointer = 0;
         for(int dayOfMonth = 1; dayOfMonth <= dateTime.dayOfMonth().getMaximumValue(); dayOfMonth++) {
+            /**
+             * Every 7 days we create new layout (new row) where we append day views.
+             */
+            if(pointer != 0 && pointer % 7 == 0) {
+                calendarItemView.createRowLayout();
+            }
+
+            /**
+             * Append empty days at the beginning of the month
+             * if 1st of the month is not Monday.
+             */
             if(dayOfMonth == 1) {
                 pointer = pointer + dateTime.getDayOfWeek();
 
-                /**
-                 * Append empty days at the beginning of the month
-                 * if 1st of the month is not Monday.
-                 */
                 for(int i = 1; i < dateTime.getDayOfWeek(); i++) {
                     DateTime previousMonthDays = dateTime.minusDays(dateTime.getDayOfWeek() - i);
 
                     calendarItemView.createDayView(previousMonthDays.getDayOfMonth(), false, false);
                 }
             } else {
-                pointer++;
+                pointer += 1;
             }
 
             if(isTodaysDate(dateTime, dayOfMonth)) {
@@ -66,22 +73,22 @@ public class CalendarItemPresenter {
             }
 
             /**
-             * Every 7 days we create new layout (new row) where we append day views.
+             * Append empty days at the end of the month.
              */
-            if(pointer % 7 == 0) {
-                calendarItemView.createRowLayout();
-            }
+            if(dayOfMonth == dateTime.dayOfMonth().getMaximumValue()) {
+                int newMonth = 1;
+                for(int i = pointer; i < 42; i++) {
+                    if(pointer % 7 == 0) {
+                        calendarItemView.createRowLayout();
+                    }
 
-            /**
-             * TODO: Needs to display days after the end of the month.
-             */
+                    calendarItemView.createDayView(newMonth, false, false);
+
+                    pointer += 1;
+                    newMonth += 1;
+                }
+            }
         }
-//
-//        ActivityStream.getInstance().getObservable().subscribe(state -> {
-//            if(state == ActivityState.OnResume) {
-//                // todo: reDRAW?!?!?!???!?!?!?!?!?!?!??!?!?!?!!?!?!??!!?
-//            }
-//        });
     }
 
     public boolean isTodaysDate(DateTime dateTime, int day) {
