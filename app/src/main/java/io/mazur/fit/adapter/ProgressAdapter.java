@@ -128,16 +128,13 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
                     button.setText(String.valueOf(set.getValue()));
                 }
 
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (set.getValue() >= MAXIMUM_NUMBER_OF_REPS) {
-                            set.setValue(0);
-                            button.setText("/");
-                        } else {
-                            set.setValue(set.getValue() + 1);
-                            button.setText(String.valueOf(set.getValue()));
-                        }
+                button.setOnClickListener(v -> {
+                    if (set.getValue() >= MAXIMUM_NUMBER_OF_REPS) {
+                        set.setValue(0);
+                        button.setText("/");
+                    } else {
+                        set.setValue(set.getValue() + 1);
+                        button.setText(String.valueOf(set.getValue()));
                     }
                 });
 

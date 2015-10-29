@@ -15,6 +15,7 @@
       "title": "Wall Extensions",
       "description": "5-10 reps",
       "type": "exercise",
+      "youtubeId": "0i230923",
 	  "allowTimeReps": false,
 	  "allowBodyweightReps": true,
 	  "defaultNumberOfSets": 1,
