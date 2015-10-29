@@ -3,13 +3,8 @@ package io.mazur.fit.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,15 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import io.mazur.fit.R;
-import io.mazur.fit.adapter.CalendarAdapter;
 import io.mazur.fit.model.Exercise;
+import io.mazur.fit.view.CalendarView;
 import io.mazur.fit.view.fragment.NavigationDrawerFragment;
 import io.mazur.fit.model.ActivityState;
 import io.mazur.fit.stream.ActivityStream;
@@ -34,17 +28,12 @@ import io.mazur.fit.stream.RoutineStream;
 import io.mazur.fit.utils.PreferenceUtil;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
-    private Toolbar mToolbar;
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private CalendarAdapter mCalendarAdapter;
 
     private boolean mDisplayMenu = false;
 
     @InjectView(R.id.view_home) View mViewHome;
-    @InjectView(R.id.view_calendar) View mViewCalendar;
-    @InjectView(R.id.view_calendar_pager) ViewPager mViewCalendarPager;
-    @InjectView(R.id.view_calendar_action_button) FloatingActionButton mViewCalendarActionButton;
-    @InjectView(R.id.view_calendar_details) View mViewCalendarDetails;
+    @InjectView(R.id.view_calendar) CalendarView mViewCalendar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +47,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         setDrawer();
 
         keepScreenOnWhenAppIsRunning();
-
-        /**
-         * TODO: This should be moved somewhere else to make sure we keep MainActivity clear.
-         */
-        mCalendarAdapter = new CalendarAdapter(mViewCalendarPager, mViewCalendarActionButton, mViewCalendarDetails, getSupportActionBar());
-
-        mViewCalendarPager.setAdapter(mCalendarAdapter);
-        mViewCalendarPager.setCurrentItem(CalendarAdapter.DEFAULT_POSITION, false);
 	}
 
     @Override
@@ -87,8 +68,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         super.onResume();
 
         ActivityStream.getInstance().setActivityState(ActivityState.OnResume);
-
-        mCalendarAdapter.notifyDataSetChanged();
 
         keepScreenOnWhenAppIsRunning();
     }
@@ -115,8 +94,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         switch(item.getItemId()) {
             case(R.id.action_today): {
-                mCalendarAdapter.setToday();
-                mViewCalendarPager.setCurrentItem(CalendarAdapter.DEFAULT_POSITION, true);
+                // MenuStream.onNext(actionToday);
 
                 return true;
             }
@@ -140,9 +118,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     private void setToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
-		setSupportActionBar(mToolbar);
+		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
@@ -173,8 +149,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
                     ActionBar actionBar = getSupportActionBar();
                     if(actionBar != null) {
-//                        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#009688")));
-
                         Exercise exercise = RoutineStream.getInstance().getExercise();
 
                         actionBar.setTitle(exercise.getTitle());
@@ -194,8 +168,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
                     ActionBar actionBar = getSupportActionBar();
                     if(actionBar != null) {
-//                        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2E2E3B")));
-                        actionBar.setTitle(mCalendarAdapter.getCurrentTitle());
+                        actionBar.setTitle("TODO");
                         actionBar.setSubtitle("");
                     }
 

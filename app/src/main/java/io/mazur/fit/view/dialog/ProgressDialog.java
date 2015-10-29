@@ -16,7 +16,7 @@ import io.mazur.fit.R;
 import io.mazur.fit.model.Exercise;
 import io.mazur.fit.model.SectionMode;
 import io.mazur.fit.stream.RoutineStream;
-import io.mazur.fit.view.CircularProgressBar;
+import io.mazur.fit.view.widget.CircularProgressBar;
 
 public class ProgressDialog {
     @InjectView(R.id.level_title_text_view) TextView mLevelTitleTextView;

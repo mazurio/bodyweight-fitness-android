@@ -25,7 +25,7 @@ import rx.functions.Action1;
 import rx.subjects.PublishSubject;
 
 public class CalendarItemPresenter {
-    private CalendarItemView mCalendarItemView;
+    private transient CalendarItemView mCalendarItemView;
 
     private int mViewPagerPosition = CalendarAdapter.DEFAULT_POSITION;
     private final PublishSubject<Integer> mDaySelectedSubject = PublishSubject.create();

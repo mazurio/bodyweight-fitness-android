@@ -12,7 +12,24 @@
         android:background="@color/primary"
         android:fitsSystemWindows="false">
 
-        <include layout="@layout/view_content" />
+        <LinearLayout
+            android:fitsSystemWindows="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/view_toolbar" />
+
+            <include layout="@layout/view_home"
+                android:id="@+id/view_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <include layout="@layout/view_calendar"
+                android:id="@+id/view_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
     </RelativeLayout>
 
     <fragment

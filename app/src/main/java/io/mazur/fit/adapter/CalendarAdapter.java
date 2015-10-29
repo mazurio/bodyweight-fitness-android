@@ -2,12 +2,10 @@ package io.mazur.fit.adapter;
 
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import org.joda.time.DateTime;
 
@@ -21,22 +19,15 @@ public class CalendarAdapter extends PagerAdapter {
     private View mViewCalendarActionButton;
     private View mViewCalendarDetails;
 
-    private ActionBar mActionBar;
-
-    private String mCurrentTitle;
-
     private int mCurrentPosition = DEFAULT_POSITION;
     private int mCurrentDayOfMonth = 1;
 
-    public CalendarAdapter(ViewPager viewCalendarPager, View viewCalendarActionButton, View viewCalendarDetails, ActionBar actionBar) {
+    public CalendarAdapter(ViewPager viewCalendarPager, View viewCalendarActionButton, View viewCalendarDetails) {
         super();
 
         mViewCalendarPager = viewCalendarPager;
         mViewCalendarActionButton = viewCalendarActionButton;
         mViewCalendarDetails = viewCalendarDetails;
-        mActionBar = actionBar;
-
-        mCurrentTitle = getMonthForActionBarTitle(DEFAULT_POSITION);
     }
 
     @Override
@@ -65,10 +56,10 @@ public class CalendarAdapter extends PagerAdapter {
                     mCurrentDayOfMonth = dayOfMonth;
                 });
 
-                mCurrentTitle = getMonthForActionBarTitle(position);
-
-                mActionBar.setTitle(mCurrentTitle);
-                mActionBar.setSubtitle("");
+//                mCurrentTitle = getMonthForActionBarTitle(position);
+//
+//                mActionBar.setTitle(mCurrentTitle);
+//                mActionBar.setSubtitle("");
             }
 
             @Override
@@ -114,10 +105,6 @@ public class CalendarAdapter extends PagerAdapter {
 
     public void setToday() {
         // TODO: shouldSetDateToToday
-    }
-
-    public String getCurrentTitle() {
-        return mCurrentTitle;
     }
 
     public DateTime getDateBasedOnViewPagerPosition(int position) {

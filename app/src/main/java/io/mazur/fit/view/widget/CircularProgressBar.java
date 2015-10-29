@@ -1,4 +1,4 @@
-package io.mazur.fit.view;
+package io.mazur.fit.view.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -10,7 +10,8 @@
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/preview_gif_image_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="invisible"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/log_workout_button"
