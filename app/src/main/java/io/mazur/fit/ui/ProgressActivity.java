@@ -14,7 +14,7 @@ import java.util.Date;
 
 import io.mazur.fit.R;
 import io.mazur.fit.adapter.ProgressAdapter;
-import io.mazur.fit.realm.RealmRoutine;
+import io.mazur.fit.model.realm.RealmRoutine;
 import io.mazur.fit.stream.RealmStream;
 import io.mazur.fit.stream.RoutineStream;
 import io.realm.Realm;

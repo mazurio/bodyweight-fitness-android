@@ -79,6 +79,7 @@ dependencies {
 
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
     compile 'com.github.johnkil.android-robototextview:robototextview:2.3.0'
+    compile 'com.gordonwong:material-sheet-fab:1.2'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.4.0@aar') {
         transitive = true;

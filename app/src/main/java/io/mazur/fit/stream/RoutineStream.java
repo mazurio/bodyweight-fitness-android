@@ -7,14 +7,12 @@ import org.apache.commons.io.IOUtils;
 import java.io.IOException;
 
 import io.mazur.fit.App;
-import io.mazur.fit.Constants;
 import io.mazur.fit.R;
 import io.mazur.fit.model.Routine;
 import io.mazur.fit.model.Exercise;
-import io.mazur.fit.model.JSONRoutine;
+import io.mazur.fit.model.json.JSONRoutine;
 import io.mazur.fit.utils.Logger;
 
-import io.mazur.glacier.Duration;
 import io.mazur.glacier.Glacier;
 import rx.Observable;
 import rx.Subscriber;

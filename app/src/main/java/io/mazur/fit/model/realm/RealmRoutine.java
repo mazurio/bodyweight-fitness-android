@@ -1,4 +1,4 @@
-package io.mazur.fit.realm;
+package io.mazur.fit.model.realm;
 
 import java.util.Date;
 

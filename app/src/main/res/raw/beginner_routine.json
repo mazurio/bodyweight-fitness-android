@@ -97,31 +97,46 @@
       "id": "plank",
       "title": "Plank",
       "description": "10-60s hold",
-      "type": "exercise"
+      "type": "exercise",
+      "allowTimeReps": true,
+      "allowBodyweightReps": false,
+      "defaultNumberOfSets": 1
     },
     {
       "id": "side_plank",
       "title": "Side Plank (Both sides)",
       "description": "10-60s hold",
-      "type": "exercise"
+      "type": "exercise",
+      "allowTimeReps": true,
+      "allowBodyweightReps": false,
+      "defaultNumberOfSets": 1
     },
     {
       "id": "reverse_plank",
       "title": "Reverse Plank",
       "description": "10-60s hold",
-      "type": "exercise"
+      "type": "exercise",
+      "allowTimeReps": true,
+      "allowBodyweightReps": false,
+      "defaultNumberOfSets": 1
     },
     {
       "id": "hollow_hold",
       "title": "Hollow Hold",
       "description": "10-60s hold",
-      "type": "exercise"
+      "type": "exercise",
+      "allowTimeReps": true,
+      "allowBodyweightReps": false,
+      "defaultNumberOfSets": 1
     },
     {
       "id": "arch",
       "title": "Arch",
       "description": "10-60s hold",
-      "type": "exercise"
+      "type": "exercise",
+      "allowTimeReps": true,
+      "allowBodyweightReps": false,
+      "defaultNumberOfSets": 1
     },
     {
       "title": "Activity",

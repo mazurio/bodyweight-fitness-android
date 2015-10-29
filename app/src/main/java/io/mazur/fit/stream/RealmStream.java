@@ -8,9 +8,9 @@ import java.util.UUID;
 import io.mazur.fit.App;
 import io.mazur.fit.model.Exercise;
 import io.mazur.fit.model.Routine;
-import io.mazur.fit.realm.RealmExercise;
-import io.mazur.fit.realm.RealmRoutine;
-import io.mazur.fit.realm.RealmSet;
+import io.mazur.fit.model.realm.RealmExercise;
+import io.mazur.fit.model.realm.RealmRoutine;
+import io.mazur.fit.model.realm.RealmSet;
 import io.mazur.fit.utils.Logger;
 
 import io.realm.Realm;
@@ -33,7 +33,7 @@ public class RealmStream {
 
     public Realm getRealm() {
         return Realm.getInstance(new RealmConfiguration.Builder(App.getContext())
-                .name("19.realm")
+                .name("20.realm")
                 .schemaVersion(1)
                 .build());
     }
@@ -55,7 +55,14 @@ public class RealmStream {
 
             RealmSet realmSet = getRealm().createObject(RealmSet.class);
             realmSet.setId("Set-" + UUID.randomUUID().toString());
-            realmSet.setNumberOfReps(0);
+
+            if(exercise.allowTimeReps()) {
+                realmSet.setType(RealmSet.TIME);
+            } else {
+                realmSet.setType(RealmSet.BODYWEIGHT);
+            }
+
+            realmSet.setValue(0);
 
             realmExercise.getSets().add(realmSet);
 
@@ -84,7 +91,14 @@ public class RealmStream {
 
             RealmSet realmSet = getRealm().createObject(RealmSet.class);
             realmSet.setId("Set-" + UUID.randomUUID().toString());
-            realmSet.setNumberOfReps(0);
+
+            if(exercise.allowTimeReps()) {
+                realmSet.setType(RealmSet.TIME);
+            } else {
+                realmSet.setType(RealmSet.BODYWEIGHT);
+            }
+
+            realmSet.setValue(0);
 
             realmExercise.getSets().add(realmSet);
 

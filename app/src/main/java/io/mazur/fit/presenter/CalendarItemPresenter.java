@@ -3,7 +3,6 @@ package io.mazur.fit.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
-import android.widget.Toast;
 
 import org.joda.time.DateTime;
 
@@ -11,17 +10,13 @@ import java.util.Date;
 import java.util.HashSet;
 
 import io.mazur.fit.adapter.CalendarAdapter;
-import io.mazur.fit.model.ActivityState;
-import io.mazur.fit.realm.RealmRoutine;
-import io.mazur.fit.stream.ActivityStream;
+import io.mazur.fit.model.realm.RealmRoutine;
 import io.mazur.fit.stream.RealmStream;
 import io.mazur.fit.ui.ProgressActivity;
-import io.mazur.fit.utils.Logger;
 import io.mazur.fit.view.CalendarItemView;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
-import rx.functions.Action1;
 import rx.subjects.PublishSubject;
 
 public class CalendarItemPresenter {

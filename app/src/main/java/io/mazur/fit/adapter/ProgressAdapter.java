@@ -3,7 +3,6 @@ package io.mazur.fit.adapter;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -13,9 +12,9 @@ import android.widget.TextView;
 import java.util.UUID;
 
 import io.mazur.fit.R;
-import io.mazur.fit.realm.RealmExercise;
-import io.mazur.fit.realm.RealmRoutine;
-import io.mazur.fit.realm.RealmSet;
+import io.mazur.fit.model.realm.RealmExercise;
+import io.mazur.fit.model.realm.RealmRoutine;
+import io.mazur.fit.model.realm.RealmSet;
 
 public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.ProgressPresenter> {
     private static final int MAXIMUM_NUMBER_OF_REPS = 10;
@@ -77,43 +76,40 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
                 sectionTitle.setVisibility(View.GONE);
             }
 
-            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    int numberOfSets = 0;
+            toolbar.setOnMenuItemClickListener(item -> {
+                int numberOfSets = 0;
 
-                    switch (item.getItemId()) {
-                        case R.id.action_add_set:
-                            numberOfSets = realmExercise.getSets().size();
+                switch (item.getItemId()) {
+                    case R.id.action_add_bodyweight_set:
+                        numberOfSets = realmExercise.getSets().size();
 
-                            // We do not want user to add more than 10 sets to one exercise.
-                            if(numberOfSets < 10) {
-                                RealmSet realmSet = new RealmSet();
-                                realmSet.setId(UUID.randomUUID().toString());
-                                realmSet.setNumberOfReps(0);
+                        // We do not want user to add more than 10 sets to one exercise.
+                        if(numberOfSets < 10) {
+                            RealmSet realmSet = new RealmSet();
+                            realmSet.setId(UUID.randomUUID().toString());
+                            realmSet.setValue(0);
 
-                                realmExercise.getSets().add(realmSet);
+                            realmExercise.getSets().add(realmSet);
 
-                                redrawSets(realmExercise);
-                            }
+                            redrawSets(realmExercise);
+                        }
 
-                            return true;
+                        return true;
 
-                        case R.id.action_remove_set:
-                            numberOfSets = realmExercise.getSets().size();
+                    case R.id.action_remove_set:
+                        numberOfSets = realmExercise.getSets().size();
 
-                            // We always keep at least one set.
-                            if(numberOfSets > 1) {
-                                realmExercise.getSets().remove(numberOfSets - 1);
+                        // We always keep at least one set.
+                        if(numberOfSets > 1) {
+                            realmExercise.getSets().remove(numberOfSets - 1);
 
-                                redrawSets(realmExercise);
-                            }
+                            redrawSets(realmExercise);
+                        }
 
-                            return true;
-                    }
-
-                    return false;
+                        return true;
                 }
+
+                return false;
             });
 
             redrawSets(realmExercise);
@@ -126,21 +122,21 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
                 final View view = LayoutInflater.from(itemView.getContext()).inflate(R.layout.activity_progress_set, sets, false);
                 final Button button = (Button) view.findViewById(R.id.button);
 
-                if(set.getNumberOfReps() == 0) {
+                if(set.getValue() == 0) {
                     button.setText("/");
                 } else {
-                    button.setText(String.valueOf(set.getNumberOfReps()));
+                    button.setText(String.valueOf(set.getValue()));
                 }
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (set.getNumberOfReps() >= MAXIMUM_NUMBER_OF_REPS) {
-                            set.setNumberOfReps(0);
+                        if (set.getValue() >= MAXIMUM_NUMBER_OF_REPS) {
+                            set.setValue(0);
                             button.setText("/");
                         } else {
-                            set.setNumberOfReps(set.getNumberOfReps() + 1);
-                            button.setText(String.valueOf(set.getNumberOfReps()));
+                            set.setValue(set.getValue() + 1);
+                            button.setText(String.valueOf(set.getValue()));
                         }
                     }
                 });

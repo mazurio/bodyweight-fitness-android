@@ -6,6 +6,8 @@ import org.junit.*;
 
 import java.util.ArrayList;
 
+import io.mazur.fit.model.json.JSONRoutine;
+
 import static org.junit.Assert.*;
 
 public class RoutineTest {

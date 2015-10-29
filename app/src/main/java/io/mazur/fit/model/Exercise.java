@@ -8,17 +8,24 @@ public class Exercise extends LinkedRoutine implements Serializable {
     private String mTitle;
     private String mDescription;
 
+    private boolean mAllowTimeReps = false;
+    private boolean mAllowBodyweightReps = true;
+
+    private int mDefaultNumberOfSets = 1;
+
     private Category mCategory;
     private Section mSection;
 
     private Exercise mPrevious;
     private Exercise mNext;
 
-    public Exercise(String id, String level, String title, String description) {
+    public Exercise(String id, String level, String title, String description, boolean allowTimeReps, boolean allowBodyweightReps) {
         mId = id;
         mLevel = level;
         mTitle = title;
         mDescription = description;
+        mAllowTimeReps = allowTimeReps;
+        mAllowBodyweightReps = allowBodyweightReps;
     }
 
     public String getId() {
@@ -39,6 +46,18 @@ public class Exercise extends LinkedRoutine implements Serializable {
 
     public String getDescription() {
         return mDescription;
+    }
+
+    public boolean allowTimeReps() {
+        return mAllowTimeReps;
+    }
+
+    public boolean allowBodyweightReps() {
+        return mAllowBodyweightReps;
+    }
+
+    public int getDefaultNumberOfSets() {
+        return mDefaultNumberOfSets;
     }
 
     public void setCategory(Category category) {

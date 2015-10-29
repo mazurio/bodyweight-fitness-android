@@ -20,6 +20,7 @@ import butterknife.InjectView;
 
 import io.mazur.fit.R;
 import io.mazur.fit.model.Exercise;
+import io.mazur.fit.stream.RealmStream;
 import io.mazur.fit.view.CalendarView;
 import io.mazur.fit.view.fragment.NavigationDrawerFragment;
 import io.mazur.fit.model.ActivityState;
@@ -61,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         super.onStop();
 
         clearFlagKeepScreenOn();
+
+        RealmStream.getInstance().getRealm().close();
     }
 
     @Override
