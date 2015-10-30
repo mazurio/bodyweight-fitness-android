@@ -10,5 +10,52 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:theme="@style/AppTheme.Home.Toolbar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:id="@+id/toolbar_exercise_title"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".50"
+                android:gravity="bottom"
+                android:layout_gravity="bottom"
+                app:typeface="roboto_regular"
+                android:textColor="@color/primaryDark"
+                android:textSize="16sp"
+                android:text="Wall Extensions"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".50"
+                android:orientation="horizontal">
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/toolbar_section_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="top"
+                    app:typeface="roboto_regular"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:text="Dynamic Stretches"/>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/toolbar_exercise_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="top"
+                    android:paddingLeft="4dp"
+                    app:typeface="roboto_regular"
+                    android:textColor="@color/primaryDark"
+                    android:textSize="16sp"
+                    android:text="1x(5-10)"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
 </android.support.design.widget.AppBarLayout>

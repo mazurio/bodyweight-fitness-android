@@ -57,6 +57,7 @@ public class Routine implements Serializable {
                         JSONLinkedRoutine.getLevel(),
                         JSONLinkedRoutine.getTitle(),
                         JSONLinkedRoutine.getDescription(),
+                        JSONLinkedRoutine.getYouTubeId(),
                         JSONLinkedRoutine.allowTimeReps(),
                         JSONLinkedRoutine.allowBodyweightReps()
                 );

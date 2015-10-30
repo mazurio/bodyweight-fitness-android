@@ -1,5 +1,6 @@
 package io.mazur.fit.adapter;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -50,6 +51,8 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
     }
 
     public class ProgressPresenter extends RecyclerView.ViewHolder {
+        private CardView cardView;
+        private View cardLayout;
         private TextView sectionTitle;
         private TextView exerciseTitle;
         private Toolbar toolbar;
@@ -58,7 +61,9 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         public ProgressPresenter(View itemView) {
             super(itemView);
 
-            sectionTitle = (TextView) itemView.findViewById(R.id.sectionTitle);
+            cardView = (CardView) itemView.findViewById(R.id.cardView);
+            cardLayout = itemView.findViewById(R.id.cardLayout);
+//            sectionTitle = (TextView) itemView.findViewById(R.id.sectionTitle);
             exerciseTitle = (TextView) itemView.findViewById(R.id.exerciseTitle);
             toolbar = (Toolbar) itemView.findViewById(R.id.toolbar);
             toolbar.inflateMenu(R.menu.menu_log_workout);
@@ -67,14 +72,22 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         }
 
         public void bindView(final RealmExercise realmExercise) {
+            itemView.setOnClickListener(v -> {
+                if(sets.getVisibility() == View.GONE) {
+                    sets.setVisibility(View.VISIBLE);
+                } else {
+                    sets.setVisibility(View.GONE);
+                }
+            });
+
             exerciseTitle.setText(realmExercise.getTitle());
 
-            if(realmExercise.getSectionOrder() == 0) {
-                sectionTitle.setText(realmExercise.getSection());
-                sectionTitle.setVisibility(View.VISIBLE);
-            } else {
-                sectionTitle.setVisibility(View.GONE);
-            }
+//            if(realmExercise.getSectionOrder() == 0) {
+//                sectionTitle.setText(realmExercise.getSection());
+//                sectionTitle.setVisibility(View.VISIBLE);
+//            } else {
+//                sectionTitle.setVisibility(View.GONE);
+//            }
 
             toolbar.setOnMenuItemClickListener(item -> {
                 int numberOfSets = 0;

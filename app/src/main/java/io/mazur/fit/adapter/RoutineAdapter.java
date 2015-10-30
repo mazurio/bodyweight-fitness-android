@@ -21,6 +21,18 @@ import io.mazur.fit.stream.RoutineStream;
 public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutinePresenter> {
     private Routine mRoutine;
 
+    private int mActiveIndex = 1;
+
+    public RoutineAdapter() {
+        super();
+
+        RoutineStream.getInstance().getExerciseChangedObservable().subscribe(exercise -> {
+            mActiveIndex = RoutineStream.getInstance().getRoutine().getLinkedRoutine().indexOf(exercise);
+
+            notifyDataSetChanged();
+        });
+    }
+
     @Override
     public RoutinePresenter onCreateViewHolder(ViewGroup parent, int viewType) {
         switch(RoutineType.fromInt(viewType)) {
@@ -30,6 +42,10 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineP
 
             case SECTION: return new RoutineSectionPresenter(
                     LayoutInflater.from(parent.getContext()).inflate(R.layout.view_routine_section, parent, false)
+            );
+
+            case EXERCISE_ACTIVE: return new RoutineExercisePresenter(
+                    LayoutInflater.from(parent.getContext()).inflate(R.layout.view_routine_exercise_active, parent, false)
             );
 
             default: return new RoutineExercisePresenter(
@@ -54,6 +70,10 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineP
 
     @Override
     public int getItemViewType(int position) {
+        if(mActiveIndex == position) {
+            return RoutineType.EXERCISE_ACTIVE.ordinal();
+        }
+
         return mRoutine.getLinkedRoutine().get(position).getType().ordinal();
     }
 

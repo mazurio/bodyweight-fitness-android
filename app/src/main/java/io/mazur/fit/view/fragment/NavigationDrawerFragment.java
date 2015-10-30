@@ -101,7 +101,7 @@ public class NavigationDrawerFragment extends Fragment {
         );
 
         mNavigationDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        mNavigationDrawerLayout.post(() -> mActionBarDrawerToggle.syncState());
+        mNavigationDrawerLayout.post(mActionBarDrawerToggle::syncState);
 
         mNavigationDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
 

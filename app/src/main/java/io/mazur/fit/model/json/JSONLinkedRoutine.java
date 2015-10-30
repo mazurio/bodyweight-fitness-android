@@ -18,6 +18,9 @@ public class JSONLinkedRoutine {
     @SerializedName("description")
     private String mDescription;
 
+    @SerializedName("youTubeId")
+    private String mYouTubeId;
+
     @SerializedName("type")
     private String mType;
 
@@ -50,6 +53,10 @@ public class JSONLinkedRoutine {
 
     public String getDescription() {
         return mDescription;
+    }
+
+    public String getYouTubeId() {
+        return mYouTubeId;
     }
 
     public RoutineType getType() {

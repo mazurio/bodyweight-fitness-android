@@ -7,6 +7,7 @@ public class Exercise extends LinkedRoutine implements Serializable {
     private String mLevel;
     private String mTitle;
     private String mDescription;
+    private String mYouTubeId;
 
     private boolean mAllowTimeReps = false;
     private boolean mAllowBodyweightReps = true;
@@ -19,11 +20,12 @@ public class Exercise extends LinkedRoutine implements Serializable {
     private Exercise mPrevious;
     private Exercise mNext;
 
-    public Exercise(String id, String level, String title, String description, boolean allowTimeReps, boolean allowBodyweightReps) {
+    public Exercise(String id, String level, String title, String description, String youTubeId, boolean allowTimeReps, boolean allowBodyweightReps) {
         mId = id;
         mLevel = level;
         mTitle = title;
         mDescription = description;
+        mYouTubeId = youTubeId;
         mAllowTimeReps = allowTimeReps;
         mAllowBodyweightReps = allowBodyweightReps;
     }
@@ -48,12 +50,20 @@ public class Exercise extends LinkedRoutine implements Serializable {
         return mDescription;
     }
 
+    public String getYouTubeId() {
+        return mYouTubeId;
+    }
+
     public boolean allowTimeReps() {
         return mAllowTimeReps;
     }
 
     public boolean allowBodyweightReps() {
         return mAllowBodyweightReps;
+    }
+
+    public boolean hasProgressions() {
+        return (getSection().getSectionMode().equals(SectionMode.LEVELS) || getSection().getSectionMode().equals(SectionMode.PICK));
     }
 
     public int getDefaultNumberOfSets() {
