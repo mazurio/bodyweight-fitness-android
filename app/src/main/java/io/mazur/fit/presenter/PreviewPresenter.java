@@ -11,7 +11,9 @@ public class PreviewPresenter {
 
         RoutineStream.getInstance().getExerciseObservable().subscribe(exercise -> {
             mPreviewView.getPreviewGifImageView().setImageResource(
-                    mPreviewView.getContext().getResources().getIdentifier(exercise.getId(), "drawable", mPreviewView.getContext().getPackageName())
+                    mPreviewView.getContext()
+                            .getResources()
+                            .getIdentifier(exercise.getId(), "drawable", mPreviewView.getContext().getPackageName())
             );
         });
     }

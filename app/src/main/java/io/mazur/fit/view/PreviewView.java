@@ -6,14 +6,17 @@ import android.widget.RelativeLayout;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+
 import io.mazur.fit.R;
 import io.mazur.fit.presenter.PreviewPresenter;
+
 import pl.droidsonroids.gif.GifImageView;
 
 public class PreviewView extends RelativeLayout {
     private PreviewPresenter mPreviewPresenter;
 
-    @InjectView(R.id.preview_gif_image_view) GifImageView mPreviewGifImageView;
+    @InjectView(R.id.preview_gif_image_view)
+    GifImageView mPreviewGifImageView;
 
     public PreviewView(Context context) {
         super(context);

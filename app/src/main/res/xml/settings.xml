@@ -20,15 +20,18 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Developed by">
+        android:title="Developed &amp; Designed by">
 
         <Preference
             android:title="Damian Mazurkiewicz"
-            android:summary="github.com/mazurio"/>
+            android:summary="github.com/mazurio">
+
+            <intent android:action="android.intent.action.VIEW" android:data="https://github.com/mazurio" />
+        </Preference>
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="About the app">
+        android:title="About">
 
         <Preference
             android:title="@string/app_name"

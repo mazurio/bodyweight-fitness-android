@@ -3,35 +3,14 @@ package io.mazur.fit.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import io.mazur.fit.model.json.*;
 import io.mazur.glacier.Glacier;
 
 public class Routine implements Serializable {
-    /**
-     * Categories are treated as top level parent for the sections and exercises.
-     */
     private ArrayList<Category> mCategories = new ArrayList<>();
-
-    /**
-     * All sections put together inside a list.
-     */
     private ArrayList<Section> mSections = new ArrayList<>();
-
-    /**
-     * All exercises put together inside a list, used to link exercises after changes.
-     */
     private ArrayList<Exercise> mExercises = new ArrayList<>();
-
-    /**
-     * Linked exercises for switching between them. This could and should be implemented as an
-     * independent screen manager later which allows linking different views together
-     * (e.g. rest view or summary).
-     */
     private ArrayList<Exercise> mLinkedExercises = new ArrayList<>();
-
-    /**
-     * Linked routine for displaying views in the recycler view as we can just request
-     * type of the object.
-     */
     private ArrayList<LinkedRoutine> mLinkedRoutine = new ArrayList<>();
 
     public Routine(JSONRoutine JSONRoutine) {
@@ -39,15 +18,18 @@ public class Routine implements Serializable {
         Section currentSection = null;
         Exercise currentExercise = null;
 
-        for(io.mazur.fit.model.JSONRoutine.JSONLinkedRoutine JSONLinkedRoutine : JSONRoutine.getPartRoutines()) {
-            /**
-             * Update categories in both lists.
-             */
+        for(JSONLinkedRoutine JSONLinkedRoutine : JSONRoutine.getPartRoutines()) {
             if(JSONLinkedRoutine.getType() == RoutineType.CATEGORY) {
-                currentCategory = new Category(JSONLinkedRoutine.getTitle());
+                currentCategory = new Category(
+                        JSONLinkedRoutine.getTitle()
+                );
 
                 mCategories.add(currentCategory);
-                mLinkedRoutine.add(currentCategory);
+
+                /**
+                 * TODO: We avoid categories from Linked Routine for now.
+                 */
+//                mLinkedRoutine.add(currentCategory);
             }
 
             /**
@@ -57,7 +39,8 @@ public class Routine implements Serializable {
                 currentSection = new Section(
                         JSONLinkedRoutine.getTitle(),
                         JSONLinkedRoutine.getDescription(),
-                        JSONLinkedRoutine.getMode());
+                        JSONLinkedRoutine.getMode()
+                );
 
                 currentCategory.insertSection(currentSection);
 
@@ -73,7 +56,11 @@ public class Routine implements Serializable {
                         JSONLinkedRoutine.getId(),
                         JSONLinkedRoutine.getLevel(),
                         JSONLinkedRoutine.getTitle(),
-                        JSONLinkedRoutine.getDescription());
+                        JSONLinkedRoutine.getDescription(),
+                        JSONLinkedRoutine.getYouTubeId(),
+                        JSONLinkedRoutine.allowTimeReps(),
+                        JSONLinkedRoutine.allowBodyweightReps()
+                );
 
                 /**
                  * Add exercise into a section.
@@ -94,6 +81,7 @@ public class Routine implements Serializable {
                     if(currentExerciseId != null) {
                         if(exercise.getId().matches(currentExerciseId)) {
                             mLinkedExercises.add(exercise);
+                            mLinkedRoutine.add(exercise);
 
                             exercise.setPrevious(currentExercise);
 
@@ -107,6 +95,7 @@ public class Routine implements Serializable {
                     } else {
                         if(currentSection.getExercises().size() == 1) {
                             mLinkedExercises.add(exercise);
+                            mLinkedRoutine.add(exercise);
 
                             exercise.setPrevious(currentExercise);
 
@@ -127,12 +116,8 @@ public class Routine implements Serializable {
                     currentExercise = exercise;
 
                     mLinkedExercises.add(exercise);
+                    mLinkedRoutine.add(exercise);
                 }
-
-                /**
-                 * Linked Routine contains all exercises.
-                 */
-                mLinkedRoutine.add(exercise);
             }
         }
     }
@@ -153,9 +138,6 @@ public class Routine implements Serializable {
         return mLinkedExercises;
     }
 
-    /**
-     * Set level of the exercise in given section.
-     */
     public void setLevel(Exercise exercise, int level) {
         Exercise currentSectionExercise = exercise.getSection().getCurrentExercise();
 
@@ -175,6 +157,13 @@ public class Routine implements Serializable {
 
             currentSectionExercise.setPrevious(null);
             currentSectionExercise.setNext(null);
+
+            int indexOfCurrentExercise = mLinkedRoutine.indexOf(currentSectionExercise);
+            if(indexOfCurrentExercise == -1) {
+                return;
+            }
+
+            mLinkedRoutine.set(indexOfCurrentExercise, exercise);
         }
     }
 

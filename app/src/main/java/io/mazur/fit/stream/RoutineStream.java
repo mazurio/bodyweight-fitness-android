@@ -7,14 +7,12 @@ import org.apache.commons.io.IOUtils;
 import java.io.IOException;
 
 import io.mazur.fit.App;
-import io.mazur.fit.Constants;
 import io.mazur.fit.R;
 import io.mazur.fit.model.Routine;
 import io.mazur.fit.model.Exercise;
-import io.mazur.fit.model.JSONRoutine;
+import io.mazur.fit.model.json.JSONRoutine;
 import io.mazur.fit.utils.Logger;
 
-import io.mazur.glacier.Duration;
 import io.mazur.glacier.Glacier;
 import rx.Observable;
 import rx.Subscriber;
@@ -29,6 +27,7 @@ public class RoutineStream {
 
     private final PublishSubject<Routine> mRoutineSubject = PublishSubject.create();
     private final PublishSubject<Exercise> mExerciseSubject = PublishSubject.create();
+    private final PublishSubject<Routine> mLevelChangedSubject = PublishSubject.create();
 
     private RoutineStream() {
         /**
@@ -60,6 +59,10 @@ public class RoutineStream {
         return sInstance;
     }
 
+    public Routine getRoutine() {
+        return mRoutine;
+    }
+
     /**
      * @return Observable that allows to subscribe when the whole routine has changed.
      */
@@ -79,13 +82,20 @@ public class RoutineStream {
         mExerciseSubject.onNext(exercise);
     }
 
+    public Exercise getExercise() {
+        return mExercise;
+    }
+
     public void setLevel(Exercise exercise, int level) {
         mRoutine.setLevel(exercise, level);
+
         setExercise(exercise);
 
         // We save our current exercise for given section
         // TODO: This should use section id (not title).
         Glacier.put(exercise.getSection().getTitle(), exercise.getSection().getCurrentExercise().getId());
+
+        mLevelChangedSubject.onNext(mRoutine);
     }
 
     public Observable<Exercise> getExerciseChangedObservable() {
@@ -104,5 +114,9 @@ public class RoutineStream {
         }).observeOn(AndroidSchedulers.mainThread()).publish().refCount();
 
         return Observable.merge(mExerciseSubject, exerciseObservable);
+    }
+
+    public Observable<Routine> getLevelChangedObservable() {
+        return mLevelChangedSubject;
     }
 }

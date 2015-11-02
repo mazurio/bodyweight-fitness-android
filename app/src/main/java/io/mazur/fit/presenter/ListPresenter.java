@@ -4,6 +4,8 @@ import io.mazur.fit.adapter.RoutineAdapter;
 import io.mazur.fit.stream.RoutineStream;
 import io.mazur.fit.view.ListView;
 
+import rx.Observable;
+
 public class ListPresenter {
     private transient ListView mListView;
 
@@ -15,10 +17,11 @@ public class ListPresenter {
 
     public void onCreateView(ListView listView) {
         mListView = listView;
-
         mListView.getRecyclerView().setAdapter(mRoutineAdapter);
 
-        RoutineStream.getInstance().getRoutineObservable()
-                .subscribe(routine -> mRoutineAdapter.setRoutine(routine));
+        Observable.merge(
+                RoutineStream.getInstance().getRoutineObservable(),
+                RoutineStream.getInstance().getLevelChangedObservable()
+        ).subscribe(mRoutineAdapter::setRoutine);
     }
 }
