@@ -54,23 +54,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @InjectView(R.id.toolbar_section_title) TextView mToolbarSectionTitle;
     @InjectView(R.id.toolbar_exercise_description) TextView mToolbarExerciseDescription;
 
-    @InjectView(R.id.log_workout_button)
-    FloatingActionButton mLogWorkoutButton;
-
-    @InjectView(R.id.action_button)
-    Fab mActionButton;
-
-    @InjectView(R.id.fab_sheet)
-    CardView mFabSheet;
-
-    @InjectView(R.id.action_choose_progression)
-    TextView mActionChooseProgression;
-
-    @InjectView(R.id.action_watch_on_youtube)
-    TextView mActionWatchOnYouTube;
-
-    @InjectView(R.id.overlay)
-    View mOverlay;
+    /**
+     * TODO: Move to ActionPresenter/ActionView.
+     */
+    @InjectView(R.id.log_workout_button) Fab mLogWorkoutButton;
+    @InjectView(R.id.action_button) Fab mActionButton;
+    @InjectView(R.id.fab_sheet) CardView mFabSheet;
+    @InjectView(R.id.action_choose_progression) TextView mActionChooseProgression;
+    @InjectView(R.id.action_watch_on_youtube) TextView mActionWatchOnYouTube;
+    @InjectView(R.id.overlay) View mOverlay;
 
     private MaterialSheetFab mMaterialSheetFab;
 
@@ -88,9 +80,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         keepScreenOnWhenAppIsRunning();
 
         RoutineStream.getInstance().getExerciseObservable().subscribe(exercise -> {
-            if (exercise.hasProgressions()) {
+            if(exercise.hasProgressions()) {
+                mActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_assessment_white_24dp));
                 mActionChooseProgression.setVisibility(View.VISIBLE);
             } else {
+                mActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_white_24dp));
                 mActionChooseProgression.setVisibility(View.GONE);
             }
         });
@@ -131,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             public void onShowSheet() {
                 super.onShowSheet();
 
-                mLogWorkoutButton.setVisibility(View.GONE);
+                mLogWorkoutButton.hide();
             }
 
             @Override
@@ -148,11 +142,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             public void onSheetHidden() {
                 super.onSheetHidden();
 
-                mLogWorkoutButton.setVisibility(View.VISIBLE);
+                mLogWorkoutButton.show();
             }
         });
 
-        startActivity(new Intent(this, ProgressActivity.class));
+//        startActivity(new Intent(this, ProgressActivity.class));
 	}
 
     @Override

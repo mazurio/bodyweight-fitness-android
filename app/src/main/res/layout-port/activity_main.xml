@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <android.support.design.widget.FloatingActionButton
+        <io.mazur.fit.view.widget.Fab
             android:id="@+id/log_workout_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/ic_add"
+            android:src="@drawable/ic_add_white_24dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="12dp"
@@ -82,15 +82,18 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/action_choose_progression"
+                        android:id="@+id/action_buy_equipment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
-                        android:textSize="18sp"
-                        android:textColor="#111"
-                        android:text="Choose Progression"/>
+                        android:textSize="16sp"
+                        android:textColor="#de000000"
+                        android:drawablePadding="24dp"
+                        android:drawableLeft="@drawable/ic_shopping_cart_grey_600_24dp"
+                        android:drawableStart="@drawable/ic_shopping_cart_grey_600_24dp"
+                        android:text="Buy Equipment" />
 
                     <TextView
                         android:id="@+id/action_watch_on_youtube"
@@ -99,19 +102,46 @@
                         android:padding="16dp"
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
-                        android:textSize="18sp"
-                        android:textColor="#111"
-                        android:text="Watch on YouTube"/>
+                        android:textSize="16sp"
+                        android:textColor="#de000000"
+                        android:drawablePadding="24dp"
+                        android:drawableLeft="@drawable/ic_movie_grey_600_24dp"
+                        android:drawableStart="@drawable/ic_movie_grey_600_24dp"
+                        android:text="Watch on YouTube" />
 
                     <TextView
+                        android:id="@+id/action_choose_progression"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
-                        android:textSize="18sp"
-                        android:textColor="#111"
-                        android:text="Related Equipment"/>
+                        android:textSize="16sp"
+                        android:textColor="#de000000"
+                        android:drawablePadding="24dp"
+                        android:drawableLeft="@drawable/ic_assessment_grey_600_24dp"
+                        android:drawableStart="@drawable/ic_assessment_grey_600_24dp"
+                        android:text="Choose Progression" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/primary">
+
+                        <TextView
+                            android:id="@+id/action_log_workout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:textSize="16sp"
+                            android:textColor="#fff"
+                            android:drawablePadding="24dp"
+                            android:drawableLeft="@drawable/ic_create_white_24dp"
+                            android:drawableStart="@drawable/ic_create_white_24dp"
+                            android:text="Log Workout" />
+                    </RelativeLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </io.codetail.widget.RevealLinearLayout>
