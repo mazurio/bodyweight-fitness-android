@@ -7,8 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import io.mazur.fit.R;
+import io.mazur.fit.model.ActivityState;
 import io.mazur.fit.view.CalendarItemView;
 import io.mazur.fit.view.widget.ViewPager;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
 public class CalendarAdapter extends PagerAdapter {
     public static final int DEFAULT_POSITION = 60;
@@ -17,10 +20,29 @@ public class CalendarAdapter extends PagerAdapter {
 
     private int mCurrentPosition = DEFAULT_POSITION;
 
+    private final PublishSubject<Integer> mOnPageSelectedSubject = PublishSubject.create();
+
     public CalendarAdapter(ViewPager viewCalendarPager) {
         super();
 
         mViewCalendarPager = viewCalendarPager;
+        mViewCalendarPager.addOnPageChangeListener(new android.support.v4.view.ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mOnPageSelectedSubject.onNext(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
 
     @Override
@@ -33,6 +55,8 @@ public class CalendarAdapter extends PagerAdapter {
 
         calendarItemView.onCreate(position);
         calendarItemView.onCreateView();
+
+        mOnPageSelectedSubject.subscribe(calendarItemView.getCalendarItemPresenter()::onViewPagerPositionChanged);
 
         viewPager.addView(calendarItemView);
 
@@ -67,5 +91,9 @@ public class CalendarAdapter extends PagerAdapter {
         super.notifyDataSetChanged();
 
         mViewCalendarPager.setCurrentItem(position, false);
+    }
+
+    public Observable<Integer> getOnPageSelectedSubject() {
+        return mOnPageSelectedSubject.asObservable();
     }
 }
