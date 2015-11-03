@@ -12,4 +12,9 @@
     </declare-styleable>
 
     <attr name="CircularProgressBarStyle" format="reference" />
+
+    <declare-styleable name="DrawShadowFrameLayout">
+        <attr name="shadowDrawable" format="reference" />
+        <attr name="shadowVisible" format="boolean" />
+    </declare-styleable>
 </resources>

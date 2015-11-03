@@ -5,19 +5,4 @@
         android:icon="@drawable/ic_today"
         android:orderInCategory="10"
         app:showAsAction="always" />
-
-    <item android:id="@+id/action_export_today"
-        android:title="@string/action_export_today"
-        android:orderInCategory="20"
-        app:showAsAction="never" />
-
-    <item android:id="@+id/action_export_last_week"
-        android:title="@string/action_export_last_week"
-        android:orderInCategory="20"
-        app:showAsAction="never" />
-
-    <item android:id="@+id/action_export_last_month"
-        android:title="@string/action_export_last_month"
-        android:orderInCategory="20"
-        app:showAsAction="never" />
 </menu>

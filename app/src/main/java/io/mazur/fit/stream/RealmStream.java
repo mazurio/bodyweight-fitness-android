@@ -34,6 +34,7 @@ public class RealmStream {
     public Realm getRealm() {
         return Realm.getInstance(new RealmConfiguration.Builder(App.getContext())
                 .name("20.realm")
+                .deleteRealmIfMigrationNeeded()
                 .schemaVersion(1)
                 .build());
     }

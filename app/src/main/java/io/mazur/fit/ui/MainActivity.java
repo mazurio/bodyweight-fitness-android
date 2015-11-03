@@ -275,11 +275,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     mLogWorkoutButton.setVisibility(View.GONE);
                     mActionButton.setVisibility(View.GONE);
 
-                    ActionBar actionBar = getSupportActionBar();
-                    if(actionBar != null) {
-                        actionBar.setTitle("TODO");
-                        actionBar.setSubtitle("");
-                    }
+                    mToolbarExerciseTitle.setText("");
+                    mToolbarSectionTitle.setText("");
+                    mToolbarExerciseDescription.setText("");
 
                     break;
                 }

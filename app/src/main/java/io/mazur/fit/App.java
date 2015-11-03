@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.crashlytics.android.Crashlytics;
+import com.squareup.leakcanary.LeakCanary;
+
 import net.danlew.android.joda.JodaTimeAndroid;
 
 import io.mazur.glacier.Glacier;
@@ -25,6 +27,8 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        LeakCanary.install(this);
 
         Glacier.init(getApplicationContext());
         JodaTimeAndroid.init(getApplicationContext());
