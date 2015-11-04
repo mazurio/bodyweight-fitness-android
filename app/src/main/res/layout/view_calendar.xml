@@ -131,6 +131,7 @@
                 android:background="@color/white">
 
                 <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/view_calendar_routine_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="24sp"

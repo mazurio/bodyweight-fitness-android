@@ -17,5 +17,11 @@ public class CalendarPresenter {
 
         mCalendarView.getViewPager().setAdapter(mCalendarAdapter);
         mCalendarView.getViewPager().setCurrentItem(CalendarAdapter.DEFAULT_POSITION, false);
+
+        mCalendarAdapter.getOnDaySelectedObservable().subscribe(calendarDayChanged -> {
+            mCalendarView.getRoutineTitle().setText(
+                    calendarDayChanged.presenterSelected + ":" + calendarDayChanged.daySelected
+            );
+        });
     }
 }

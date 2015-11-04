@@ -1,10 +1,13 @@
 package io.mazur.fit.presenter;
 
+import android.widget.TextView;
+
 import org.joda.time.DateTime;
 
 import io.mazur.fit.R;
 import io.mazur.fit.adapter.CalendarAdapter;
-import io.mazur.fit.utils.Logger;
+import io.mazur.fit.model.CalendarDayChanged;
+import io.mazur.fit.utils.ViewUtils;
 import io.mazur.fit.view.CalendarItemView;
 
 public class CalendarItemPresenter {
@@ -21,38 +24,41 @@ public class CalendarItemPresenter {
 
         DateTime monday = getDateBasedOnViewPagerPosition(mViewPagerPosition);
 
-        Logger.d("Month " + monday.toString("MMMM"));
-
         for(int i = 0; i < 7; i++) {
             DateTime dayOfWeek = monday.plusDays(i);
 
-            // Highlight todays date
+            TextView view = mCalendarItemView.getDays().get(i);
+
             if(isTodaysDate(dayOfWeek, dayOfWeek.getDayOfMonth())) {
-                mCalendarItemView.getDays().get(i).setBackgroundDrawable(
-                        mCalendarItemView.getContext().getResources().getDrawable(
-                                R.drawable.rounded_corner_today
-                        )
+                view.setTag(true);
+
+                ViewUtils.setBackgroundResourceWithPadding(
+                        view, R.drawable.rounded_corner_active
                 );
+            } else {
+                view.setTag(false);
             }
 
-            mCalendarItemView.getDays()
-                    .get(i)
-                    .setText(dayOfWeek.dayOfMonth().getAsString());
+            view.setText(dayOfWeek.dayOfMonth().getAsString());
         }
     }
 
-    public void onViewPagerPositionChanged(int position) {
-        Logger.d("position " + position);
+    public int getViewPagerPosition() {
+        return mViewPagerPosition;
+    }
 
-        if(position == mViewPagerPosition) {
-            // select first day!!!!
-//            mCalendarItemView.getDays().get(0).setBackgroundDrawable(
-//                    mCalendarItemView.getContext().getResources().getDrawable(
-//                            R.drawable.rounded_corner_active
-//                    )
-//            );
-        } else {
-            // unselect any day...
+    public void onPageSelected(int position) {
+        /**
+         * I don't like how it jumps.
+         */
+//        if(position == mViewPagerPosition) {
+//            mCalendarItemView.selectFirstDay();
+//        }
+    }
+
+    public void onDaySelected(CalendarDayChanged calendarDayChanged) {
+        if(mViewPagerPosition != calendarDayChanged.presenterSelected) {
+            mCalendarItemView.unselectClickedDay();
         }
     }
 

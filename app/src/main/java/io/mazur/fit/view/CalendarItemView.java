@@ -1,29 +1,35 @@
 package io.mazur.fit.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.InjectViews;
 
 import butterknife.OnClick;
+
 import io.mazur.fit.R;
+import io.mazur.fit.model.CalendarDayChanged;
 import io.mazur.fit.presenter.CalendarItemPresenter;
-import io.mazur.fit.utils.Logger;
+
+import io.mazur.fit.utils.ViewUtils;
+import rx.subjects.PublishSubject;
 
 public class CalendarItemView extends LinearLayout {
     private CalendarItemPresenter mCalendarItemPresenter;
 
+    private PublishSubject<CalendarDayChanged> mOnDaySelectedSubject;
+
     @InjectViews({
             R.id.day_1, R.id.day_2, R.id.day_3, R.id.day_4, R.id.day_5, R.id.day_6, R.id.day_7
     }) List<TextView> mDays;
+
+    private TextView mClickedDay;
 
     public CalendarItemView(Context context) {
         super(context);
@@ -44,8 +50,9 @@ public class CalendarItemView extends LinearLayout {
         ButterKnife.inject(this);
     }
 
-    public void onCreate(int viewPagerPosition) {
+    public void onCreate(int viewPagerPosition, PublishSubject<CalendarDayChanged> onDaySelectedSubject) {
         mCalendarItemPresenter = new CalendarItemPresenter(viewPagerPosition);
+        mOnDaySelectedSubject = onDaySelectedSubject;
     }
 
     public void onCreateView() {
@@ -63,15 +70,42 @@ public class CalendarItemView extends LinearLayout {
     @OnClick({
             R.id.day_1, R.id.day_2, R.id.day_3, R.id.day_4, R.id.day_5, R.id.day_6, R.id.day_7
     }) @SuppressWarnings("unused")
-    public void onDaysClick(View view) {
-        int indexOfObject = mDays.indexOf(view);
+    public void onDaysClick(TextView view) {
+        if(mClickedDay != null && mClickedDay != view) {
+            unselectClickedDay();
+        }
 
-        Logger.d("" + indexOfObject);
+        view.setTextColor(Color.parseColor("#ffffff"));
+        ViewUtils.setBackgroundResourceWithPadding(view, R.drawable.rounded_corner_today);
 
-        view.setBackgroundDrawable(
-                getContext().getResources().getDrawable(
-                        R.drawable.rounded_corner_today
-                )
-        );
+        CalendarDayChanged calendarDayChanged = new CalendarDayChanged();
+
+        calendarDayChanged.daySelected = mDays.indexOf(view);
+        calendarDayChanged.presenterSelected = mCalendarItemPresenter.getViewPagerPosition();
+
+        mOnDaySelectedSubject.onNext(calendarDayChanged);
+
+        mClickedDay = view;
+    }
+
+    public void selectFirstDay() {
+        TextView view = mDays.get(0);
+
+        if(view != null) {
+            onDaysClick(view);
+        }
+    }
+
+    public void unselectClickedDay() {
+        if(mClickedDay != null) {
+            if(mClickedDay.getTag() != null && ((boolean) mClickedDay.getTag())) {
+                mClickedDay.setTextColor(Color.parseColor("#00453E"));
+
+                ViewUtils.setBackgroundResourceWithPadding(mClickedDay, R.drawable.rounded_corner_active);
+            } else {
+                mClickedDay.setTextColor(Color.parseColor("#00453E"));
+                mClickedDay.setBackgroundResource(0);
+            }
+        }
     }
 }
