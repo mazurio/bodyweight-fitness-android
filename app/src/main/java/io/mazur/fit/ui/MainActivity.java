@@ -330,11 +330,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
                     break;
                 }
-
-                case R.id.action_menu_help_and_feedback: {
-
-                    break;
-                }
             }
         });
     }

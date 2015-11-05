@@ -1,92 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="280dp"
-    android:layout_height="250dp">
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    android:background="@null">
 
-    <RelativeLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".25">
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        app:cardCornerRadius="4dp"
+        app:cardBackgroundColor="#fff">
 
-        <com.devspark.robototextview.widget.RobotoTextView
-            android:id="@+id/level_title_text_view"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            app:typeface="roboto_light"
-            android:textColor="@color/primaryDark"
-            android:textSize="15sp"/>
-    </RelativeLayout>
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".50"
-        android:orientation="horizontal">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white" />
 
-        <ImageButton
-            android:id="@+id/level_previous_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight=".20"
-            android:background="@null"
-            android:scaleType="center"
-            android:src="@drawable/ic_prev"/>
+            <LinearLayout
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="24dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="24dp"
+                android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight=".60">
+                <ImageButton
+                    android:id="@+id/level_previous_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".20"
+                    android:background="@null"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_prev"/>
 
-            <com.devspark.robototextview.widget.RobotoTextView
-                android:id="@+id/level_text_view"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:textAllCaps="true"
-                android:textSize="18sp"
-                android:textColor="@color/primaryDark"
-                android:gravity="center"
-                android:layout_alignTop="@+id/level_progress_bar"
-                android:layout_alignLeft="@+id/level_progress_bar"
-                android:layout_alignRight="@+id/level_progress_bar"
-                android:layout_alignBottom="@+id/level_progress_bar"
-                app:typeface="roboto_bold"/>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".60">
 
-            <io.mazur.fit.view.widget.CircularProgressBar
-                android:id="@+id/level_progress_bar"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_centerInParent="true"/>
-        </RelativeLayout>
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/level_text_view"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:textAllCaps="true"
+                        android:textSize="18sp"
+                        android:textColor="@color/primaryDark"
+                        android:gravity="center"
+                        android:layout_alignTop="@+id/level_progress_bar"
+                        android:layout_alignLeft="@+id/level_progress_bar"
+                        android:layout_alignRight="@+id/level_progress_bar"
+                        android:layout_alignBottom="@+id/level_progress_bar"
+                        app:typeface="roboto_bold"/>
 
-        <ImageButton
-            android:id="@+id/level_next_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight=".20"
-            android:background="@null"
-            android:scaleType="center"
-            android:src="@drawable/ic_next"/>
-    </LinearLayout>
+                    <io.mazur.fit.view.widget.CircularProgressBar
+                        android:id="@+id/level_progress_bar"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_centerInParent="true"/>
+                </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".25">
+                <ImageButton
+                    android:id="@+id/level_next_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".20"
+                    android:background="@null"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_next"/>
+            </LinearLayout>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/level_confirm_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_play"
-            android:layout_centerInParent="true"
-            app:fabSize="mini"
-            app:borderWidth="0dp"
-            app:elevation="12dp"
-            app:pressedTranslationZ="12dp"/>
-    </RelativeLayout>
+            <com.devspark.robototextview.widget.RobotoButton
+                android:id="@+id/chooseButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:textColor="#3A3A47"
+                android:text="Choose"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 </LinearLayout>

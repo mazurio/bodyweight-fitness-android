@@ -4,8 +4,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -19,13 +21,14 @@ import io.mazur.fit.stream.RoutineStream;
 import io.mazur.fit.view.widget.CircularProgressBar;
 
 public class ProgressDialog {
-    @InjectView(R.id.level_title_text_view) TextView mLevelTitleTextView;
+    @InjectView(R.id.toolbar) Toolbar mToolbar;
+
     @InjectView(R.id.level_previous_button) ImageButton mLevelPreviousButton;
     @InjectView(R.id.level_next_button) ImageButton mLevelNextButton;
-    @InjectView(R.id.level_progress_bar)
-    CircularProgressBar mLevelProgressBar;
+    @InjectView(R.id.level_progress_bar) CircularProgressBar mLevelProgressBar;
     @InjectView(R.id.level_text_view) TextView mLevelTextView;
-    @InjectView(R.id.level_confirm_button) FloatingActionButton mLevelConfirmButton;
+
+    @InjectView(R.id.chooseButton) Button mLevelConfirmButton;
 
     private Dialog mDialog;
 
@@ -78,11 +81,12 @@ public class ProgressDialog {
     private void updateDialog() {
         Exercise chosenExercise = mExercise.getSection().getExercises().get(mChosenLevel);
 
+        mToolbar.setTitle(chosenExercise.getTitle());
+        mToolbar.setSubtitle(chosenExercise.getDescription());
+
         if(mExercise.getSection().getSectionMode() == SectionMode.LEVELS) {
-            mLevelTitleTextView.setText(chosenExercise.getTitle());
             mLevelTextView.setText(chosenExercise.getLevel());
         } else {
-            mLevelTitleTextView.setText(chosenExercise.getTitle());
             mLevelTextView.setText("Pick One");
         }
 
