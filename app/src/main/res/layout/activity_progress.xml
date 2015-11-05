@@ -18,6 +18,11 @@
             android:layout_height="?attr/actionBarSize"
             android:theme="@style/AppTheme.Progress.Toolbar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView

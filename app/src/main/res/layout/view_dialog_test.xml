@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    android:background="@null">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        app:cardCornerRadius="4dp"
+        app:cardBackgroundColor="#fff">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="24dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="24dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="125dp"
+                    android:orientation="horizontal"
+                    android:weightSum="5">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <com.devspark.robototextview.widget.RobotoTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:textSize="16sp"
+                            android:textColor="#111"
+                            android:text="1/4"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2">
+
+                        <ImageView
+                            android:id="@+id/weightUp1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_above="@+id/weightCount1"
+                            android:paddingTop="4dp"
+                            android:scaleType="center"
+                            android:src="@drawable/ic_keyboard_arrow_up_grey_600_36dp"/>
+
+                        <com.devspark.robototextview.widget.RobotoTextView
+                            android:id="@+id/weightCount1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:textSize="24sp"
+                            android:textColor="#111"
+                            android:text="10.0"/>
+
+                        <com.devspark.robototextview.widget.RobotoTextView
+                            android:id="@+id/weightDescription1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_below="@+id/weightCount1"
+                            android:paddingTop="4dp"
+                            android:textSize="12sp"
+                            android:textColor="#111"
+                            android:text="Weight (kg)"/>
+
+                        <ImageView
+                            android:id="@+id/weightDown1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_below="@+id/weightDescription1"
+                            android:paddingTop="4dp"
+                            android:scaleType="center"
+                            android:src="@drawable/ic_keyboard_arrow_down_grey_600_36dp"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2">
+
+                        <ImageView
+                            android:id="@+id/repsUp1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_above="@+id/repsCount1"
+                            android:paddingTop="4dp"
+                            android:scaleType="center"
+                            android:src="@drawable/ic_keyboard_arrow_up_grey_600_36dp"/>
+
+                        <com.devspark.robototextview.widget.RobotoTextView
+                            android:id="@+id/repsCount1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:textSize="24sp"
+                            android:textColor="#111"
+                            android:text="10"/>
+
+                        <com.devspark.robototextview.widget.RobotoTextView
+                            android:id="@+id/repsDescription1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_below="@+id/repsCount1"
+                            android:paddingTop="4dp"
+                            android:textSize="12sp"
+                            android:textColor="#111"
+                            android:text="Reps"/>
+
+                        <ImageView
+                            android:id="@+id/repsDown1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_below="@+id/repsDescription1"
+                            android:paddingTop="4dp"
+                            android:scaleType="center"
+                            android:src="@drawable/ic_keyboard_arrow_down_grey_600_36dp"/>
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.devspark.robototextview.widget.RobotoButton
+                android:id="@+id/saveButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:textColor="#3A3A47"
+                android:text="Save"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

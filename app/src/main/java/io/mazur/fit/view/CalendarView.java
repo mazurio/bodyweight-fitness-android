@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +21,8 @@ public class CalendarView extends LinearLayout {
     @InjectView(R.id.view_calendar_pager) ViewPager mViewPager;
     @InjectView(R.id.view_calendar_date) TextView mDate;
     @InjectView(R.id.view_calendar_card) CardView mCardView;
+    @InjectView(R.id.view_calendar_card_view_button) Button mViewButton;
+    @InjectView(R.id.view_calendar_card_remove_button) Button mRemoveButton;
     @InjectView(R.id.view_calendar_message) View mMessage;
 
     public CalendarView(Context context) {
@@ -71,6 +74,14 @@ public class CalendarView extends LinearLayout {
 
     public CardView getCardView() {
         return mCardView;
+    }
+
+    public Button getViewButton() {
+        return mViewButton;
+    }
+
+    public Button getRemoveButton() {
+        return mRemoveButton;
     }
 
     public View getMessage() {

@@ -41,6 +41,7 @@ import io.mazur.fit.utils.DateUtils;
 import io.mazur.fit.view.CalendarView;
 import io.mazur.fit.view.dialog.LogWorkoutDialog;
 import io.mazur.fit.view.dialog.ProgressDialog;
+import io.mazur.fit.view.dialog.TestDialog;
 import io.mazur.fit.view.fragment.NavigationDrawerFragment;
 import io.mazur.fit.model.ActivityState;
 import io.mazur.fit.stream.ActivityStream;
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         keepScreenOnWhenAppIsRunning();
 
         RoutineStream.getInstance().getExerciseObservable().subscribe(exercise -> {
-            if(exercise.hasProgressions()) {
+            if (exercise.hasProgressions()) {
                 mActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_assessment_white_24dp));
                 mActionChooseProgression.setVisibility(View.VISIBLE);
             } else {
@@ -165,7 +166,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     mToolbarExerciseTitle.setText(dateTime.toString("MMMM"));
 
                     mToolbarExerciseDescription.setText("");
-        });
+                });
+
+        new TestDialog(this).show();
 	}
 
     @Override

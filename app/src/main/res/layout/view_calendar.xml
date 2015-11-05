@@ -163,6 +163,7 @@
                 android:orientation="horizontal">
 
                 <com.devspark.robototextview.widget.RobotoButton
+                    android:id="@+id/view_calendar_card_view_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="16dp"
@@ -177,6 +178,7 @@
                     app:typeface="roboto_medium" />
 
                 <com.devspark.robototextview.widget.RobotoButton
+                    android:id="@+id/view_calendar_card_remove_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="16dp"
