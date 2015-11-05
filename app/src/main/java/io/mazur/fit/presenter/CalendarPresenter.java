@@ -1,12 +1,26 @@
 package io.mazur.fit.presenter;
 
+import android.view.View;
+
+import org.joda.time.DateTime;
+
+import io.mazur.fit.R;
 import io.mazur.fit.adapter.CalendarAdapter;
+import io.mazur.fit.model.ActivityPresenterState;
+import io.mazur.fit.model.CalendarDayChanged;
+import io.mazur.fit.model.realm.RealmRoutine;
+import io.mazur.fit.stream.ActivityStream;
+import io.mazur.fit.stream.RealmStream;
+import io.mazur.fit.utils.DateUtils;
 import io.mazur.fit.view.CalendarView;
+
+import io.realm.Realm;
 
 public class CalendarPresenter {
     private transient CalendarView mCalendarView;
 
     private CalendarAdapter mCalendarAdapter;
+    private CalendarDayChanged mCalendarDayChanged;
 
     public void onCreateView(CalendarView calendarView) {
         mCalendarView = calendarView;
@@ -19,9 +33,61 @@ public class CalendarPresenter {
         mCalendarView.getViewPager().setCurrentItem(CalendarAdapter.DEFAULT_POSITION, false);
 
         mCalendarAdapter.getOnDaySelectedObservable().subscribe(calendarDayChanged -> {
-            mCalendarView.getRoutineTitle().setText(
-                    calendarDayChanged.presenterSelected + ":" + calendarDayChanged.daySelected
+            mCalendarDayChanged = calendarDayChanged;
+
+            DateTime dateTime = DateUtils.getDate(
+                    calendarDayChanged.presenterSelected,
+                    calendarDayChanged.daySelected
             );
+
+            mCalendarView.getDate().setText(dateTime.toString("EEEE, d MMMM"));
+
+            if (isRoutineLogged(dateTime)) {
+                mCalendarView.getDate().setVisibility(View.VISIBLE);
+                mCalendarView.getCardView().setVisibility(View.VISIBLE);
+                mCalendarView.getMessage().setVisibility(View.GONE);
+            } else {
+                mCalendarView.getDate().setVisibility(View.GONE);
+                mCalendarView.getCardView().setVisibility(View.GONE);
+                mCalendarView.getMessage().setVisibility(View.VISIBLE);
+            }
         });
+
+        ActivityStream.getInstance().getMenuObservable().subscribe(id -> {
+            if(id == R.id.action_today) {
+                mCalendarView.getViewPager().setCurrentItem(
+                        CalendarAdapter.DEFAULT_POSITION, true
+                );
+            }
+        });
+    }
+
+    public CalendarAdapter getCalendarAdapter() {
+        return mCalendarAdapter;
+    }
+
+    public CalendarDayChanged getCalendarDayChanged() {
+        return mCalendarDayChanged;
+    }
+
+    /**
+     * Compare dates between 00:00 and 23:59.
+     *
+     * TODO: Asynchronous.
+     */
+    public boolean isRoutineLogged(DateTime dateTime) {
+        final DateTime start = dateTime.withTimeAtStartOfDay();
+        final DateTime end = start.plusDays(1).minusMinutes(1);
+
+        Realm realm = RealmStream.getInstance().getRealm();
+        RealmRoutine routine = realm.where(RealmRoutine.class)
+                .between("date", start.toDate(), end.toDate())
+                .findFirst();
+
+        if(routine != null) {
+            return true;
+        }
+
+        return false;
     }
 }

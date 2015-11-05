@@ -5,4 +5,9 @@
         android:icon="@drawable/ic_today"
         android:orderInCategory="10"
         app:showAsAction="always" />
+
+    <item android:id="@+id/action_export"
+        android:title="Export"
+        android:orderInCategory="20"
+        app:showAsAction="never" />
 </menu>

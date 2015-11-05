@@ -15,7 +15,6 @@ import io.mazur.fit.model.DialogState;
 import io.mazur.fit.model.TimerState;
 import io.mazur.fit.stream.ActivityStream;
 import io.mazur.fit.stream.RoutineStream;
-import io.mazur.fit.utils.Logger;
 import io.mazur.fit.utils.PreferenceUtil;
 import io.mazur.fit.view.TimerView;
 
@@ -49,7 +48,7 @@ public class TimerPresenter implements Serializable {
         /**
          * Allows to cancel the timer when activity is paused.
          */
-        ActivityStream.getInstance().getObservable().subscribe(activityState -> {
+        ActivityStream.getInstance().getActivityObservable().subscribe(activityState -> {
             switch(mTimerState) {
                 case STARTED: {
                     mTimerState = TimerState.FORCE_STOPPED;

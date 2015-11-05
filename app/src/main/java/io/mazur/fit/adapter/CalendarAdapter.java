@@ -16,32 +16,16 @@ import rx.subjects.PublishSubject;
 public class CalendarAdapter extends PagerAdapter {
     public static final int DEFAULT_POSITION = 60;
 
-    private ViewPager mViewCalendarPager;
-
-    private int mCurrentPosition = DEFAULT_POSITION;
-
     private final PublishSubject<CalendarDayChanged> mOnDaySelectedSubject = PublishSubject.create();
     private final PublishSubject<Integer> mOnPageSelectedSubject = PublishSubject.create();
 
     public CalendarAdapter(ViewPager viewCalendarPager) {
         super();
 
-        mViewCalendarPager = viewCalendarPager;
-        mViewCalendarPager.addOnPageChangeListener(new android.support.v4.view.ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mOnPageSelectedSubject.onNext(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
+        viewCalendarPager.addOnPageChangeListener(new android.support.v4.view.ViewPager.OnPageChangeListener() {
+            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            @Override public void onPageSelected(int position) { mOnPageSelectedSubject.onNext(position); }
+            @Override public void onPageScrollStateChanged(int state) {}
         });
     }
 
@@ -80,25 +64,7 @@ public class CalendarAdapter extends PagerAdapter {
         return 120;
     }
 
-    @Override
-    public int getItemPosition(Object object) {
-        return POSITION_NONE;
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        int position = mCurrentPosition;
-
-        super.notifyDataSetChanged();
-
-        mViewCalendarPager.setCurrentItem(position, false);
-    }
-
     public Observable<CalendarDayChanged> getOnDaySelectedObservable() {
         return mOnDaySelectedSubject.asObservable();
-    }
-
-    public Observable<Integer> getOnPageSelectedObservable() {
-        return mOnPageSelectedSubject.asObservable();
     }
 }

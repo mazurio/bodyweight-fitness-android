@@ -104,6 +104,7 @@
     </io.mazur.fit.view.widget.DrawShadowFrameLayout>
 
     <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/view_calendar_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
@@ -113,6 +114,7 @@
         app:typeface="roboto_regular" />
 
     <android.support.v7.widget.CardView
+        android:id="@+id/view_calendar_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -190,4 +192,20 @@
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
+
+    <RelativeLayout
+        android:id="@+id/view_calendar_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:typeface="roboto_regular"
+            android:textColor="#676767"
+            android:textSize="14sp"
+            android:text="You have no logged workouts."/>
+    </RelativeLayout>
 </io.mazur.fit.view.CalendarView>

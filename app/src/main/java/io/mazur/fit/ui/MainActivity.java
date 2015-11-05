@@ -26,12 +26,18 @@ import android.widget.TextView;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
 
+import org.joda.time.DateTime;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import io.mazur.fit.R;
+import io.mazur.fit.adapter.CalendarAdapter;
+import io.mazur.fit.model.ActivityPresenterState;
+import io.mazur.fit.model.CalendarDayChanged;
 import io.mazur.fit.model.Exercise;
 import io.mazur.fit.stream.RealmStream;
+import io.mazur.fit.utils.DateUtils;
 import io.mazur.fit.view.CalendarView;
 import io.mazur.fit.view.dialog.LogWorkoutDialog;
 import io.mazur.fit.view.dialog.ProgressDialog;
@@ -146,7 +152,20 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             }
         });
 
-//        startActivity(new Intent(this, ProgressActivity.class));
+        mViewCalendar.getCalendarPresenter()
+                .getCalendarAdapter()
+                .getOnDaySelectedObservable()
+                .subscribe(calendarDayChanged -> {
+                    DateTime dateTime = DateUtils.getDate(
+                            calendarDayChanged.presenterSelected,
+                            calendarDayChanged.daySelected
+                    );
+
+                    mToolbarSectionTitle.setText(dateTime.toString("YYYY"));
+                    mToolbarExerciseTitle.setText(dateTime.toString("MMMM"));
+
+                    mToolbarExerciseDescription.setText("");
+        });
 	}
 
     @Override
@@ -194,13 +213,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             return true;
         }
 
-        switch(item.getItemId()) {
-            case(R.id.action_today): {
-                // MenuStream.onNext(actionToday);
-
-                return true;
-            }
-        }
+        ActivityStream.getInstance().setMenuState(item.getItemId());
 
 		return super.onOptionsItemSelected(item);
 	}
@@ -243,6 +256,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         mNavigationDrawerFragment.getMenuObservable().subscribe(id -> {
             switch(id) {
                 case R.id.action_menu_home: {
+                    ActivityStream.getInstance()
+                            .setActivityPresenterState(ActivityPresenterState.Home);
+
                     mDisplayMenu = false;
 
                     invalidateOptionsMenu();
@@ -257,14 +273,18 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     if(actionBar != null) {
                         Exercise exercise = RoutineStream.getInstance().getExercise();
 
-                        actionBar.setTitle(exercise.getTitle());
-                        actionBar.setSubtitle(exercise.getDescription());
+                        mToolbarExerciseTitle.setText(exercise.getTitle());
+                        mToolbarSectionTitle.setText(exercise.getSection().getTitle());
+                        mToolbarExerciseDescription.setText(exercise.getDescription());
                     }
 
                     break;
                 }
 
                 case R.id.action_menu_workout_log: {
+                    ActivityStream.getInstance()
+                            .setActivityPresenterState(ActivityPresenterState.Calendar);
+
                     mDisplayMenu = true;
 
                     invalidateOptionsMenu();
@@ -275,8 +295,21 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     mLogWorkoutButton.setVisibility(View.GONE);
                     mActionButton.setVisibility(View.GONE);
 
-                    mToolbarExerciseTitle.setText("");
-                    mToolbarSectionTitle.setText("");
+                    CalendarDayChanged calendarDayChanged = mViewCalendar.getCalendarPresenter().getCalendarDayChanged();
+
+                    DateTime dateTime;
+                    if(calendarDayChanged == null) {
+                        dateTime = new DateTime();
+                    } else {
+                        dateTime = DateUtils.getDate(
+                                calendarDayChanged.presenterSelected,
+                                calendarDayChanged.daySelected
+                        );
+                    }
+
+                    mToolbarSectionTitle.setText(dateTime.toString("YYYY"));
+                    mToolbarExerciseTitle.setText(dateTime.toString("MMMM"));
+
                     mToolbarExerciseDescription.setText("");
 
                     break;

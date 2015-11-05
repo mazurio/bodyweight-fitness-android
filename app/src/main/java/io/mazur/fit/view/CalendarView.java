@@ -1,7 +1,9 @@
 package io.mazur.fit.view;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,7 +18,9 @@ public class CalendarView extends LinearLayout {
     private CalendarPresenter mCalendarPresenter;
 
     @InjectView(R.id.view_calendar_pager) ViewPager mViewPager;
-    @InjectView(R.id.view_calendar_routine_title) TextView mRoutineTitle;
+    @InjectView(R.id.view_calendar_date) TextView mDate;
+    @InjectView(R.id.view_calendar_card) CardView mCardView;
+    @InjectView(R.id.view_calendar_message) View mMessage;
 
     public CalendarView(Context context) {
         super(context);
@@ -53,11 +57,23 @@ public class CalendarView extends LinearLayout {
         mCalendarPresenter.onCreateView(this);
     }
 
+    public CalendarPresenter getCalendarPresenter() {
+        return mCalendarPresenter;
+    }
+
     public ViewPager getViewPager() {
         return mViewPager;
     }
 
-    public TextView getRoutineTitle() {
-        return mRoutineTitle;
+    public TextView getDate() {
+        return mDate;
+    }
+
+    public CardView getCardView() {
+        return mCardView;
+    }
+
+    public View getMessage() {
+        return mMessage;
     }
 }
