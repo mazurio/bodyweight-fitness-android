@@ -30,7 +30,6 @@ import io.mazur.fit.model.realm.RealmSet;
 import io.mazur.fit.stream.RealmStream;
 
 import io.mazur.fit.stream.RoutineStream;
-import io.mazur.fit.utils.Logger;
 import io.realm.Realm;
 
 public class LogWorkoutDialog {
@@ -91,23 +90,23 @@ public class LogWorkoutDialog {
         mToolbar.inflateMenu(R.menu.menu_log_workout);
 
         if(!mCurrentExercise.allowBodyweightReps()) {
-            mToolbar.getMenu().removeItem(R.id.action_add_bodyweight_set);
+            mToolbar.getMenu().removeItem(R.id.action_add_set);
         }
 
         if(!mCurrentExercise.allowTimeReps()) {
-            mToolbar.getMenu().removeItem(R.id.action_add_time_set);
+            mToolbar.getMenu().removeItem(R.id.action_add_timed_set);
         }
 
         mToolbar.setTitle(mRealmExercise.getTitle());
         mToolbar.setSubtitle(mRealmDateTime.toString("EEEE, d MMMM"));
         mToolbar.setOnMenuItemClickListener((item) -> {
             switch (item.getItemId()) {
-                case R.id.action_add_bodyweight_set:
+                case R.id.action_add_set:
                     addSet(null, RealmSet.BODYWEIGHT);
 
                     return true;
 
-                case R.id.action_add_time_set:
+                case R.id.action_add_timed_set:
                     addSet(null, RealmSet.TIME);
 
                     return true;

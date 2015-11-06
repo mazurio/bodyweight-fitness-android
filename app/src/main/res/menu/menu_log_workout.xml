@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_add_bodyweight_set"
+    <item android:id="@+id/action_add_set"
         android:title="Add Set"
         android:orderInCategory="10"
         app:showAsAction="never" />
 
-    <item android:id="@+id/action_add_time_set"
-        android:title="Add Time Set"
+    <item android:id="@+id/action_add_timed_set"
+        android:title="Add Timed Set"
         android:orderInCategory="20"
         app:showAsAction="never" />
 
     <item android:id="@+id/action_remove_set"
-        android:title="Remove Last Set"
+        android:title="Remove Set"
         android:orderInCategory="30"
         app:showAsAction="never" />
 </menu>

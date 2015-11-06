@@ -93,7 +93,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
                 int numberOfSets = 0;
 
                 switch (item.getItemId()) {
-                    case R.id.action_add_bodyweight_set:
+                    case R.id.action_add_set:
                         numberOfSets = realmExercise.getSets().size();
 
                         // We do not want user to add more than 10 sets to one exercise.
