@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @InjectView(R.id.action_button) Fab mActionButton;
     @InjectView(R.id.fab_sheet) CardView mFabSheet;
     @InjectView(R.id.action_choose_progression) TextView mActionChooseProgression;
+    @InjectView(R.id.action_buy_equipment) TextView mActionBuyEquipment;
     @InjectView(R.id.action_watch_on_youtube) TextView mActionWatchOnYouTube;
     @InjectView(R.id.overlay) View mOverlay;
 
@@ -106,6 +107,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
             ProgressDialog progressDialog = new ProgressDialog(this, RoutineStream.getInstance().getExercise());
             progressDialog.show();
+        });
+
+        mActionBuyEquipment.setOnClickListener(v -> {
+            mMaterialSheetFab.hideSheet();
+
+            startActivity(new Intent(this, BuyEquipmentActivity.class));
         });
 
         mActionWatchOnYouTube.setOnClickListener(v -> {
@@ -168,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     mToolbarExerciseDescription.setText("");
                 });
 
-        new TestDialog(this).show();
+//        new TestDialog(this).show();
 	}
 
     @Override

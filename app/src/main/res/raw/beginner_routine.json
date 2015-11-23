@@ -15,78 +15,49 @@
       "title": "Wall Extensions",
       "description": "1x(5-10)",
       "type": "exercise",
-      "youTubeId": "d6V2Exzb324",
-	  "allowTimeReps": false,
-	  "allowBodyweightReps": true,
-	  "defaultNumberOfSets": 1,
-	  "defaultNumberOfReps": 5,
-	  "maxNumberOfReps": 15
+      "youTubeId": "d6V2Exzb324"
     },
     {
       "id": "band_dislocates",
       "title": "Band Dislocates",
       "description": "1x(5-10)",
       "type": "exercise",
-	  "allowTimeReps": false,
-	  "allowBodyweightReps": true,
-	  "defaultNumberOfSets": 1,
-	  "defaultNumberOfReps": 5,
-	  "maxNumberOfReps": 15
+	  "youTubeId": "WyW5jGGxoZk"
     },
     {
       "id": "cat_camel",
       "title": "Cat/Camel Bends",
       "description": "1x(5-10)",
       "type": "exercise",
-	  "allowTimeReps": false,
-	  "allowBodyweightReps": true,
-	  "defaultNumberOfSets": 1,
-	  "defaultNumberOfReps": 5,
-	  "maxNumberOfReps": 15
+	  "youTubeId": "K9bK0BwKFjs"
     },
     {
       "id": "scapular_shrugs",
       "title": "Scapular Shrugs",
       "description": "1x(5-10)",
       "type": "exercise",
-	  "allowTimeReps": false,
-	  "allowBodyweightReps": true,
-	  "defaultNumberOfSets": 1,
-	  "defaultNumberOfReps": 5,
-	  "maxNumberOfReps": 15
+	  "youTubeId": "akgQbxhrhOc"
     },
     {
       "id": "full_body_circles",
       "title": "Full Body Circles",
       "description": "1x(5-10)",
       "type": "exercise",
-	  "allowTimeReps": false,
-	  "allowBodyweightReps": true,
-	  "defaultNumberOfSets": 1,
-	  "defaultNumberOfReps": 5,
-	  "maxNumberOfReps": 15
+	  "youTubeId": "yRigKuEou7k"
     },
     {
       "id": "leg_swings",
       "title": "Front and Side Leg Swings",
       "description": "1x(5-10)",
       "type": "exercise",
-	  "allowTimeReps": false,
-	  "allowBodyweightReps": true,
-	  "defaultNumberOfSets": 1,
-	  "defaultNumberOfReps": 5,
-	  "maxNumberOfReps": 15
+	  "youTubeId": "4aoUZEZFJF8"
     },
     {
       "id": "wrist_progression",
       "title": "Wrist Mobility Exercises",
       "description": "1x(5-10)",
       "type": "exercise",
-	  "allowTimeReps": false,
-	  "allowBodyweightReps": true,
-	  "defaultNumberOfSets": 1,
-	  "defaultNumberOfReps": 5,
-	  "maxNumberOfReps": 15
+	  "youTubeId": "HU5UCh_E6Ns"
     },
     {
       "title": "Bodyline Drills",
@@ -99,45 +70,35 @@
       "title": "Plank",
       "description": "1x(10-60s) hold",
       "type": "exercise",
-      "allowTimeReps": true,
-      "allowBodyweightReps": false,
-      "defaultNumberOfSets": 1
+      "youTubeId": "PLu6k-uKOJ0"
     },
     {
       "id": "side_plank",
       "title": "Side Plank (Both sides)",
       "description": "1x(10-60s) hold",
       "type": "exercise",
-      "allowTimeReps": true,
-      "allowBodyweightReps": false,
-      "defaultNumberOfSets": 1
+      "youTubeId": "xIFWxQgFMiE"
     },
     {
       "id": "reverse_plank",
       "title": "Reverse Plank",
       "description": "1x(10-60s) hold",
       "type": "exercise",
-      "allowTimeReps": true,
-      "allowBodyweightReps": false,
-      "defaultNumberOfSets": 1
+      "youTubeId": "1s1bPYBPERU"
     },
     {
       "id": "hollow_hold",
       "title": "Hollow Hold",
       "description": "1x(10-60s) hold",
       "type": "exercise",
-      "allowTimeReps": true,
-      "allowBodyweightReps": false,
-      "defaultNumberOfSets": 1
+      "youTubeId": "wrzjVTK2brk"
     },
     {
       "id": "arch",
       "title": "Arch",
       "description": "1x(10-60s) hold",
       "type": "exercise",
-      "allowTimeReps": true,
-      "allowBodyweightReps": false,
-      "defaultNumberOfSets": 1
+      "youTubeId": "wrzjVTK2brk"
     },
     {
       "title": "Activity",
@@ -149,13 +110,15 @@
       "id": "squat_jumps",
       "title": "Squat Jumps",
       "description": "1x(10-20)",
-      "type": "exercise"
+      "type": "exercise",
+      "youTubeId": "CVaEhXotL7M"
     },
     {
       "id": "burpee",
       "title": "Burpees",
       "description": "1x(10-20)",
-      "type": "exercise"
+      "type": "exercise",
+      "youTubeId": "41knz-ZUiBU"
     },
     {
       "title": "Skill Work",
