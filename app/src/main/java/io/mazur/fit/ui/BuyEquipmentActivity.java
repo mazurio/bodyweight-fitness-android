@@ -10,19 +10,23 @@ import com.amazon.device.associates.AssociatesAPI;
 import com.amazon.device.associates.OpenProductPageRequest;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.InjectViews;
 import butterknife.OnClick;
 
 import io.mazur.fit.R;
 import io.mazur.fit.utils.Logger;
 
 public class BuyEquipmentActivity extends AppCompatActivity {
-    @InjectView(R.id.product1) ImageView product1;
-    @InjectView(R.id.product2) ImageView product2;
-    @InjectView(R.id.product3) ImageView product3;
-    @InjectView(R.id.product4) ImageView product4;
-    @InjectView(R.id.product5) ImageView product5;
+    @InjectViews({
+            R.id.product1,
+            R.id.product2,
+            R.id.product3,
+            R.id.product4,
+            R.id.product5})
+    List<ImageView> mProducts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,26 +42,11 @@ public class BuyEquipmentActivity extends AppCompatActivity {
                 new AssociatesAPI.Config("<KEY>", this)
         );
 
-
-        Picasso.with(this)
-                .load(R.drawable.product_bands)
-                .into(product1);
-
-        Picasso.with(this)
-                .load(R.drawable.product_yoga)
-                .into(product2);
-
-        Picasso.with(this)
-                .load(R.drawable.product_powertower)
-                .into(product3);
-
-        Picasso.with(this)
-                .load(R.drawable.product_rings)
-                .into(product4);
-
-        Picasso.with(this)
-                .load(R.drawable.product_irongym)
-                .into(product5);
+        loadDrawable(R.drawable.product_bands, mProducts.get(0));
+        loadDrawable(R.drawable.product_yoga, mProducts.get(1));
+        loadDrawable(R.drawable.product_powertower, mProducts.get(2));
+        loadDrawable(R.drawable.product_rings, mProducts.get(3));
+        loadDrawable(R.drawable.product_irongym, mProducts.get(4));
     }
 
     @Override
@@ -73,34 +62,45 @@ public class BuyEquipmentActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.product1card)
     @SuppressWarnings("unused")
-    public void onClickButton1(View view) {
-        openProductPage("B0026PMD70");
+    @OnClick({
+            R.id.product1card,
+            R.id.product2card,
+            R.id.product3card,
+            R.id.product4card,
+            R.id.product5card
+    })
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.product1card:
+                openProductPage("B0026PMD70");
+
+                break;
+
+            case R.id.product2card:
+                openProductPage("B004TN51EE");
+
+                break;
+
+            case R.id.product3card:
+                openProductPage("B002Y2SUU4");
+
+                break;
+
+            case R.id.product4card:
+                openProductPage("B0031QCS8C");
+
+                break;
+
+            case R.id.product5card:
+                openProductPage("B001EJMS6K");
+
+                break;
+        }
     }
 
-    @OnClick(R.id.product2card)
-    @SuppressWarnings("unused")
-    public void onClickButton2(View view) {
-        openProductPage("B004TN51EE");
-    }
-
-    @OnClick(R.id.product3card)
-    @SuppressWarnings("unused")
-    public void onClickButton3(View view) {
-        openProductPage("B002Y2SUU4");
-    }
-
-    @OnClick(R.id.product4card)
-    @SuppressWarnings("unused")
-    public void onClickButton4(View view) {
-        openProductPage("B0031QCS8C");
-    }
-
-    @OnClick(R.id.product5card)
-    @SuppressWarnings("unused")
-    public void onClickButton5(View view) {
-        openProductPage("B001EJMS6K");
+    public void loadDrawable(int drawable, ImageView imageView) {
+        Picasso.with(this).load(drawable).into(imageView);
     }
 
     public void openProductPage(String productId) {
