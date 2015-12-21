@@ -1,20 +1,43 @@
 package io.mazur.fit.presenter;
 
+import java.io.Serializable;
+
 import io.mazur.fit.stream.RoutineStream;
 import io.mazur.fit.view.PreviewView;
 
-public class PreviewPresenter {
-    private transient PreviewView mPreviewView;
+import rx.Subscription;
 
-    public void onCreateView(PreviewView previewView) {
-        mPreviewView = previewView;
+public class PreviewPresenter extends IPresenter<PreviewView> implements Serializable {
+    private transient Subscription mSubscription;
 
-        RoutineStream.getInstance().getExerciseObservable().subscribe(exercise -> {
-            mPreviewView.getPreviewGifImageView().setImageResource(
-                    mPreviewView.getContext()
-                            .getResources()
-                            .getIdentifier(exercise.getId(), "drawable", mPreviewView.getContext().getPackageName())
-            );
-        });
+    @Override
+    public void onCreateView(PreviewView view) {
+        super.onCreateView(view);
+
+        mSubscription = RoutineStream.getInstance()
+                .getExerciseObservable()
+                .subscribe(exercise -> {
+                    /**
+                     * This is a leak, why?
+                     */
+                    if (mView.getPreviewGifImageView() != null) {
+                        mView.getPreviewGifImageView().setImageResource(
+                                mView.getContext()
+                                        .getResources()
+                                        .getIdentifier(exercise.getId(), "drawable", mView.getContext().getPackageName())
+                        );
+                    }
+                });
     }
+
+    @Override
+    public void onSaveInstanceState() {
+        if (mSubscription != null) {
+            mSubscription.unsubscribe();
+            mSubscription = null;
+        }
+    }
+
+    @Override
+    public void onRestoreInstanceState() {}
 }

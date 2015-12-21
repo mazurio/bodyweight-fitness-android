@@ -36,7 +36,7 @@ public class BuyEquipmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_buy_equipment);
 
         ButterKnife.inject(this);
-g
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Buy Equipment");
         }

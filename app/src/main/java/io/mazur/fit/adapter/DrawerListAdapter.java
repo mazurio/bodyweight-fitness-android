@@ -18,12 +18,12 @@ import io.mazur.fit.model.RoutineType;
 import io.mazur.fit.model.Section;
 import io.mazur.fit.stream.RoutineStream;
 
-public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutinePresenter> {
+public class DrawerListAdapter extends RecyclerView.Adapter<DrawerListAdapter.RoutinePresenter> {
     private Routine mRoutine;
 
     private int mActiveIndex = 1;
 
-    public RoutineAdapter() {
+    public DrawerListAdapter() {
         super();
 
         RoutineStream.getInstance().getExerciseChangedObservable().subscribe(exercise -> {
@@ -37,19 +37,19 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineP
     public RoutinePresenter onCreateViewHolder(ViewGroup parent, int viewType) {
         switch(RoutineType.fromInt(viewType)) {
             case CATEGORY: return new RoutineCategoryPresenter(
-                    LayoutInflater.from(parent.getContext()).inflate(R.layout.view_routine_category, parent, false)
+                    LayoutInflater.from(parent.getContext()).inflate(R.layout.view_drawer_list_category, parent, false)
             );
 
             case SECTION: return new RoutineSectionPresenter(
-                    LayoutInflater.from(parent.getContext()).inflate(R.layout.view_routine_section, parent, false)
+                    LayoutInflater.from(parent.getContext()).inflate(R.layout.view_drawer_list_section, parent, false)
             );
 
             case EXERCISE_ACTIVE: return new RoutineExercisePresenter(
-                    LayoutInflater.from(parent.getContext()).inflate(R.layout.view_routine_exercise_active, parent, false)
+                    LayoutInflater.from(parent.getContext()).inflate(R.layout.view_drawer_list_exercise_active, parent, false)
             );
 
             default: return new RoutineExercisePresenter(
-                    LayoutInflater.from(parent.getContext()).inflate(R.layout.view_routine_exercise, parent, false)
+                    LayoutInflater.from(parent.getContext()).inflate(R.layout.view_drawer_list_exercise, parent, false)
             );
         }
     }

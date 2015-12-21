@@ -11,13 +11,6 @@ import io.mazur.glacier.Glacier;
 import io.fabric.sdk.android.Fabric;
 
 /**
- * TODO: Calculate length of workout and set times, e.g. firstTime when created and endTime when lastLogged.
- * TODO: Length calculated based on below values \/.
- * TODO: StartTime can be changed manually.
- * TODO: EndTime can be changed manually.
- * TODO: EndTime cannot be before StartTime.
- *
- *
  * TODO: Update all gif videos to match 16:9 format.
  * TODO: Update videos for Antranik new video.
  */
@@ -31,8 +24,11 @@ public class App extends Application {
         Glacier.init(getApplicationContext());
         JodaTimeAndroid.init(getApplicationContext());
 
-        if(!BuildConfig.DEBUG) {
-            Fabric.with(this, new Crashlytics());
+        if (!BuildConfig.DEBUG) {
+            Fabric.with(
+                    getApplicationContext(),
+                    new Crashlytics()
+            );
         }
 
         mContext = getApplicationContext();

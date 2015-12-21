@@ -85,10 +85,7 @@ dependencies {
     compile 'commons-io:commons-io:2.4'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'frankiesardo:icepick:3.0.2'
 
-
-    provided 'frankiesardo:icepick-processor:3.0.2'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.1'
     compile 'com.github.johnkil.android-robototextview:robototextview:2.3.0'
     compile 'com.gordonwong:material-sheet-fab:1.2'
@@ -97,6 +94,9 @@ dependencies {
 
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'io.reactivex:rxjava:1.1.0'
+
+    compile 'frankiesardo:icepick:3.0.2'
+    provided 'frankiesardo:icepick-processor:3.0.2'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.4.0@aar') {
         transitive = true;

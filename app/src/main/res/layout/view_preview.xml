@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <io.mazur.fit.view.PreviewView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/preview_view"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight=".55"
@@ -9,6 +10,5 @@
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/preview_gif_image_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:layout_height="match_parent" />
 </io.mazur.fit.view.PreviewView>

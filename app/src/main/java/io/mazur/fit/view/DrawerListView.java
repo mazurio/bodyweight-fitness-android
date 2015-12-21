@@ -9,20 +9,20 @@ import android.widget.RelativeLayout;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import io.mazur.fit.R;
-import io.mazur.fit.presenter.ListPresenter;
+import io.mazur.fit.presenter.DrawerListPresenter;
 
-public class ListView extends RelativeLayout {
-    private ListPresenter mListPresenter;
+public class DrawerListView extends RelativeLayout {
+    private DrawerListPresenter mDrawerListPresenter;
 
     @InjectView(R.id.recycler_view) RecyclerView mRecyclerView;
 
-    public ListView(Context context) {
+    public DrawerListView(Context context) {
         super(context);
 
         onCreate();
     }
 
-    public ListView(Context context, AttributeSet attrs) {
+    public DrawerListView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         onCreate();
@@ -40,11 +40,11 @@ public class ListView extends RelativeLayout {
     }
 
     public void onCreate() {
-        mListPresenter = new ListPresenter();
+        mDrawerListPresenter = new DrawerListPresenter();
     }
 
     public void onCreateView() {
-        mListPresenter.onCreateView(this);
+        mDrawerListPresenter.onCreateView(this);
     }
 
     public RecyclerView getRecyclerView() {
