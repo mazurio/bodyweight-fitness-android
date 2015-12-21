@@ -2,16 +2,22 @@ package io.mazur.fit.model.realm;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class RealmExercise extends RealmObject {
+    @PrimaryKey
     private String id;
 
     private String title;
     private String description;
-    private String section; // todo: should be RealmObject
-    private int sectionOrder;
+    private String defaultSet;
 
-    private RealmList<RealmSet> sets;
+    private boolean visible = false;
+
+    private RealmCategory category;
+    private RealmSection section;
+
+    private RealmList<RealmSet> sets = new RealmList<>();
 
     public void setId(String id) {
         this.id = id;
@@ -37,23 +43,36 @@ public class RealmExercise extends RealmObject {
         return description;
     }
 
-    public void setSection(String section) {
-        this.section = section;
+    public void setDefaultSet(String defaultSet) {
+        this.defaultSet = defaultSet;
     }
 
-    public String getSection() {
+    public String getDefaultSet() {
+        return defaultSet;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public RealmCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(RealmCategory category) {
+        this.category = category;
+    }
+
+    public RealmSection getSection() {
         return section;
     }
 
-    /**
-     * Used to determine the order of this exercise in the section, e.g. 1 or 2 or last, etc.
-     */
-    public void setSectionOrder(int sectionOrder) {
-        this.sectionOrder = sectionOrder;
-    }
-
-    public int getSectionOrder() {
-        return sectionOrder;
+    public void setSection(RealmSection section) {
+        this.section = section;
     }
 
     public void setSets(RealmList<RealmSet> sets) {
@@ -61,6 +80,6 @@ public class RealmExercise extends RealmObject {
     }
 
     public RealmList<RealmSet> getSets() {
-        return sets;
+        return this.sets;
     }
 }

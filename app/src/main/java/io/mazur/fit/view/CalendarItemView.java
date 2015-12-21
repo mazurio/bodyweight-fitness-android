@@ -10,7 +10,6 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectViews;
-
 import butterknife.OnClick;
 
 import io.mazur.fit.R;
@@ -55,8 +54,8 @@ public class CalendarItemView extends LinearLayout {
         mOnDaySelectedSubject = onDaySelectedSubject;
     }
 
-    public void onCreateView() {
-        mCalendarItemPresenter.onCreateView(this);
+    public void onCreateView(int currentViewPagerPosition) {
+        mCalendarItemPresenter.onCreateView(this, currentViewPagerPosition);
     }
 
     public CalendarItemPresenter getCalendarItemPresenter() {
@@ -88,8 +87,8 @@ public class CalendarItemView extends LinearLayout {
         mClickedDay = view;
     }
 
-    public void selectFirstDay() {
-        TextView view = mDays.get(0);
+    public void selectDay(int day) {
+        TextView view = mDays.get(day);
 
         if(view != null) {
             onDaysClick(view);

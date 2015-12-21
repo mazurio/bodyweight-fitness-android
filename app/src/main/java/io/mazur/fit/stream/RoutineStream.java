@@ -30,10 +30,6 @@ public class RoutineStream {
     private final PublishSubject<Routine> mLevelChangedSubject = PublishSubject.create();
 
     private RoutineStream() {
-        /**
-         * We should save levels only, not the whole object
-         * as we will never get any updates when JSON is udpated.
-         */
         try {
             JSONRoutine jsonRoutine = new Gson().fromJson(IOUtils.toString(App.getContext()
                             .getResources()
@@ -63,20 +59,6 @@ public class RoutineStream {
         return mRoutine;
     }
 
-    /**
-     * @return Observable that allows to subscribe when the whole routine has changed.
-     */
-    public Observable<Routine> getRoutineObservable() {
-        Observable<Routine> routineObservable = Observable.create(new Observable.OnSubscribe<Routine>() {
-            @Override
-            public void call(Subscriber<? super Routine> subscriber) {
-                subscriber.onNext(mRoutine);
-            }
-        }).observeOn(AndroidSchedulers.mainThread()).publish().refCount();
-
-        return Observable.merge(mRoutineSubject, routineObservable);
-    }
-
     public void setExercise(Exercise exercise) {
         mExercise = exercise;
         mExerciseSubject.onNext(exercise);
@@ -96,6 +78,20 @@ public class RoutineStream {
         Glacier.put(exercise.getSection().getTitle(), exercise.getSection().getCurrentExercise().getId());
 
         mLevelChangedSubject.onNext(mRoutine);
+    }
+
+    /**
+     * @return Observable that allows to subscribe when the whole routine has changed.
+     */
+    public Observable<Routine> getRoutineObservable() {
+        Observable<Routine> routineObservable = Observable.create(new Observable.OnSubscribe<Routine>() {
+            @Override
+            public void call(Subscriber<? super Routine> subscriber) {
+                subscriber.onNext(mRoutine);
+            }
+        }).publish().refCount();
+
+        return Observable.merge(mRoutineSubject, routineObservable);
     }
 
     public Observable<Exercise> getExerciseChangedObservable() {

@@ -1,22 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
+    android:layout_width="66dp"
+    android:layout_height="66dp"
     android:layout_marginLeft="6dp"
     android:layout_marginRight="6dp"
-    app:cardCornerRadius="25dp"
-    app:cardBackgroundColor="#3A3A47"
-    app:cardElevation="0dp">
+    android:background="@drawable/large_set">
 
-    <com.devspark.robototextview.widget.RobotoButton
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/repsOnlyValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:background="@null"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:text="/"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:visibility="gone"
         app:typeface="roboto_medium"/>
-</android.support.v7.widget.CardView>
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/repsValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_above="@+id/center"
+        android:background="@null"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        app:typeface="roboto_medium"/>
+
+    <RelativeLayout
+        android:id="@+id/center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/weightValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/center"
+        android:layout_centerInParent="true"
+        android:textColor="@color/black"
+        android:textSize="13dp"
+        app:typeface="roboto_medium"/>
+</RelativeLayout>

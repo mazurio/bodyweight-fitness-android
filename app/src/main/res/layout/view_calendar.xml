@@ -110,7 +110,6 @@
         android:padding="16dp"
         android:textSize="14sp"
         android:textColor="#80000000"
-        android:text="Wednesday, 3 November"
         app:typeface="roboto_regular" />
 
     <android.support.v7.widget.CardView
@@ -178,6 +177,21 @@
                     app:typeface="roboto_medium" />
 
                 <com.devspark.robototextview.widget.RobotoButton
+                    android:id="@+id/view_calendar_card_export_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="16dp"
+                    android:background="@android:color/transparent"
+                    android:textAllCaps="true"
+                    android:textColor="@color/primaryDark"
+                    android:textSize="14sp"
+                    android:text="Export"
+                    app:typeface="roboto_medium" />
+
+                <com.devspark.robototextview.widget.RobotoButton
                     android:id="@+id/view_calendar_card_remove_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -208,6 +222,6 @@
             app:typeface="roboto_regular"
             android:textColor="#676767"
             android:textSize="14sp"
-            android:text="You have no logged workouts."/>
+            android:text="When you log a workout, you'll see it here."/>
     </RelativeLayout>
 </io.mazur.fit.view.CalendarView>

@@ -1,47 +1,35 @@
 package io.mazur.fit.ui;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.gordonwong.materialsheetfab.MaterialSheetFab;
-import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
-
 import org.joda.time.DateTime;
+
+import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import io.mazur.fit.R;
-import io.mazur.fit.adapter.CalendarAdapter;
 import io.mazur.fit.model.ActivityPresenterState;
 import io.mazur.fit.model.CalendarDayChanged;
 import io.mazur.fit.model.Exercise;
 import io.mazur.fit.stream.RealmStream;
 import io.mazur.fit.utils.DateUtils;
 import io.mazur.fit.view.CalendarView;
-import io.mazur.fit.view.dialog.LogWorkoutDialog;
-import io.mazur.fit.view.dialog.ProgressDialog;
-import io.mazur.fit.view.dialog.TestDialog;
 import io.mazur.fit.view.fragment.NavigationDrawerFragment;
 import io.mazur.fit.model.ActivityState;
 import io.mazur.fit.stream.ActivityStream;
@@ -61,18 +49,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @InjectView(R.id.toolbar_section_title) TextView mToolbarSectionTitle;
     @InjectView(R.id.toolbar_exercise_description) TextView mToolbarExerciseDescription;
 
-    /**
-     * TODO: Move to ActionPresenter/ActionView.
-     */
-    @InjectView(R.id.log_workout_button) Fab mLogWorkoutButton;
-    @InjectView(R.id.action_button) Fab mActionButton;
-    @InjectView(R.id.fab_sheet) CardView mFabSheet;
-    @InjectView(R.id.action_choose_progression) TextView mActionChooseProgression;
-    @InjectView(R.id.action_buy_equipment) TextView mActionBuyEquipment;
-    @InjectView(R.id.action_watch_on_youtube) TextView mActionWatchOnYouTube;
-    @InjectView(R.id.overlay) View mOverlay;
-
-    private MaterialSheetFab mMaterialSheetFab;
+    @InjectView(R.id.action_view_log_workout_button) Fab mLogWorkoutButton;
+    @InjectView(R.id.action_view_action_button) Fab mActionButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,79 +65,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         keepScreenOnWhenAppIsRunning();
 
-        RoutineStream.getInstance().getExerciseObservable().subscribe(exercise -> {
-            if (exercise.hasProgressions()) {
-                mActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_assessment_white_24dp));
-                mActionChooseProgression.setVisibility(View.VISIBLE);
-            } else {
-                mActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_white_24dp));
-                mActionChooseProgression.setVisibility(View.GONE);
-            }
-        });
-
-        mLogWorkoutButton.setOnClickListener(v -> {
-            LogWorkoutDialog logWorkoutDialog = new LogWorkoutDialog(this);
-            logWorkoutDialog.show();
-        });
-
-        mActionChooseProgression.setOnClickListener(v -> {
-            mMaterialSheetFab.hideSheet();
-
-            ProgressDialog progressDialog = new ProgressDialog(this, RoutineStream.getInstance().getExercise());
-            progressDialog.show();
-        });
-
-        mActionBuyEquipment.setOnClickListener(v -> {
-            mMaterialSheetFab.hideSheet();
-
-            startActivity(new Intent(this, BuyEquipmentActivity.class));
-        });
-
-        mActionWatchOnYouTube.setOnClickListener(v -> {
-            mMaterialSheetFab.hideSheet();
-
-            String id = RoutineStream.getInstance().getExercise().getYouTubeId();
-
-            if(id != null) {
-                try {
-                    startActivity(
-                            new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id))
-                    );
-                } catch(ActivityNotFoundException e) {
-                    startActivity(
-                            new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + id))
-                    );
-                }
-            }
-        });
-
-        mMaterialSheetFab = new MaterialSheetFab<>(mActionButton, mFabSheet, mOverlay, Color.parseColor("#FFFFFF"), Color.parseColor("#FFFDDD"));
-        mMaterialSheetFab.setEventListener(new MaterialSheetFabEventListener() {
-            @Override
-            public void onShowSheet() {
-                super.onShowSheet();
-
-                mLogWorkoutButton.hide();
-            }
-
-            @Override
-            public void onSheetShown() {
-                super.onSheetShown();
-            }
-
-            @Override
-            public void onHideSheet() {
-                super.onHideSheet();
-            }
-
-            @Override
-            public void onSheetHidden() {
-                super.onSheetHidden();
-
-                mLogWorkoutButton.show();
-            }
-        });
-
         mViewCalendar.getCalendarPresenter()
                 .getCalendarAdapter()
                 .getOnDaySelectedObservable()
@@ -169,13 +74,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             calendarDayChanged.daySelected
                     );
 
-                    mToolbarSectionTitle.setText(dateTime.toString("YYYY"));
-                    mToolbarExerciseTitle.setText(dateTime.toString("MMMM"));
+                    mToolbarSectionTitle.setText(dateTime.toString("YYYY", Locale.ENGLISH));
+                    mToolbarExerciseTitle.setText(dateTime.toString("MMMM", Locale.ENGLISH));
 
                     mToolbarExerciseDescription.setText("");
                 });
-
-//        new TestDialog(this).show();
 	}
 
     @Override
@@ -317,8 +220,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         );
                     }
 
-                    mToolbarSectionTitle.setText(dateTime.toString("YYYY"));
-                    mToolbarExerciseTitle.setText(dateTime.toString("MMMM"));
+                    mToolbarSectionTitle.setText(dateTime.toString("YYYY", Locale.ENGLISH));
+                    mToolbarExerciseTitle.setText(dateTime.toString("MMMM", Locale.ENGLISH));
 
                     mToolbarExerciseDescription.setText("");
 

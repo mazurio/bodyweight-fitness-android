@@ -8,7 +8,18 @@
     android:background="@drawable/large_set">
 
     <com.devspark.robototextview.widget.RobotoTextView
-        android:id="@+id/repsValue"
+        android:id="@+id/secondsOnlyValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@null"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:visibility="gone"
+        app:typeface="roboto_medium"/>
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/minutesValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -25,7 +36,7 @@
         android:layout_centerInParent="true"/>
 
     <com.devspark.robototextview.widget.RobotoTextView
-        android:id="@+id/weightValue"
+        android:id="@+id/secondsValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/center"

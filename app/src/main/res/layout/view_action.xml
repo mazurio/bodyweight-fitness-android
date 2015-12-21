@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.mazur.fit.view.ActionView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.gordonwong.materialsheetfab.DimOverlayFrameLayout
+        android:id="@+id/action_view_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <io.mazur.fit.view.widget.Fab
+        android:id="@+id/action_view_log_workout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_create"
+        android:layout_alignParentRight="true"
+        android:layout_above="@+id/action_view_action_button"
+        android:layout_marginRight="12dp"
+        app:backgroundTint="@color/white"
+        app:borderWidth="0dp"
+        app:elevation="6dp"/>
+
+    <io.mazur.fit.view.widget.Fab
+        android:id="@+id/action_view_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_add_white_24dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginRight="12dp"
+        app:backgroundTint="@color/primaryDark"
+        app:borderWidth="0dp"
+        app:elevation="6dp"/>
+
+    <io.codetail.widget.RevealLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="end|bottom"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/action_view_action_sheet"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/action_view_action_sheet_buy_equipment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:textSize="16sp"
+                    android:textColor="#de000000"
+                    android:drawablePadding="24dp"
+                    android:drawableLeft="@drawable/ic_shopping_cart_grey_600_24dp"
+                    android:drawableStart="@drawable/ic_shopping_cart_grey_600_24dp"
+                    android:text="Buy Equipment" />
+
+                <TextView
+                    android:id="@+id/action_view_action_sheet_watch_on_youtube"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:textSize="16sp"
+                    android:textColor="#de000000"
+                    android:drawablePadding="24dp"
+                    android:drawableLeft="@drawable/ic_movie_grey_600_24dp"
+                    android:drawableStart="@drawable/ic_movie_grey_600_24dp"
+                    android:text="Watch on YouTube" />
+
+                <TextView
+                    android:id="@+id/action_view_action_sheet_choose_progression"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:textSize="16sp"
+                    android:textColor="#de000000"
+                    android:drawablePadding="24dp"
+                    android:drawableLeft="@drawable/ic_assessment_grey_600_24dp"
+                    android:drawableStart="@drawable/ic_assessment_grey_600_24dp"
+                    android:text="Choose Progression" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/primary">
+
+                    <TextView
+                        android:id="@+id/action_view_action_sheet_log_workout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:textSize="16sp"
+                        android:textColor="#fff"
+                        android:drawablePadding="24dp"
+                        android:drawableLeft="@drawable/ic_create_white_24dp"
+                        android:drawableStart="@drawable/ic_create_white_24dp"
+                        android:text="Today's Workout" />
+                </RelativeLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </io.codetail.widget.RevealLinearLayout>
+</io.mazur.fit.view.ActionView>

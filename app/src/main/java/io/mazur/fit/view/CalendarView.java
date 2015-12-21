@@ -22,6 +22,7 @@ public class CalendarView extends LinearLayout {
     @InjectView(R.id.view_calendar_date) TextView mDate;
     @InjectView(R.id.view_calendar_card) CardView mCardView;
     @InjectView(R.id.view_calendar_card_view_button) Button mViewButton;
+    @InjectView(R.id.view_calendar_card_export_button) Button mExportButton;
     @InjectView(R.id.view_calendar_card_remove_button) Button mRemoveButton;
     @InjectView(R.id.view_calendar_message) View mMessage;
 
@@ -78,6 +79,10 @@ public class CalendarView extends LinearLayout {
 
     public Button getViewButton() {
         return mViewButton;
+    }
+
+    public Button getExportButton() {
+        return mExportButton;
     }
 
     public Button getRemoveButton() {

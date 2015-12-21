@@ -2,32 +2,32 @@ package io.mazur.fit.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import org.joda.time.DateTime;
 
-import java.util.Date;
-import java.util.UUID;
+import java.util.Locale;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 import io.mazur.fit.R;
-import io.mazur.fit.adapter.ProgressAdapter;
-import io.mazur.fit.model.realm.RealmExercise;
+import io.mazur.fit.adapter.ProgressPagerAdapter;
 import io.mazur.fit.model.realm.RealmRoutine;
-import io.mazur.fit.model.realm.RealmSet;
 import io.mazur.fit.stream.RealmStream;
-import io.mazur.fit.stream.RoutineStream;
+
 import io.realm.Realm;
 
 public class ProgressActivity extends AppCompatActivity {
-    private Realm mRealm;
-    private RealmRoutine mRealmRoutine;
+    @InjectView(R.id.view_progress_pager) ViewPager mViewPager;
 
-    private RecyclerView mRecyclerView;
+    private RealmRoutine mRealmRoutine;
+    private ProgressPagerAdapter mProgressPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,42 +35,16 @@ public class ProgressActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_progress);
 
+        ButterKnife.inject(this);
+
+        String routineId = getIntent().getStringExtra("routineId");
+
+        buildRoutine(routineId);
+
+        setPager(mRealmRoutine);
+
         setToolbar();
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
-        tabLayout.addTab(tabLayout.newTab().setText("Warmup"));
-        tabLayout.addTab(tabLayout.newTab().setText("Skills Work"));
-        tabLayout.addTab(tabLayout.newTab().setText("Strength Work"));
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
-        mRealm = RealmStream.getInstance().getRealm();
-
-        Date start = (Date) getIntent().getSerializableExtra("start");
-        Date end = (Date) getIntent().getSerializableExtra("end");
-
-        boolean exists = getIntent().getBooleanExtra("exists", false);
-
-        mRealm = RealmStream.getInstance().getRealm();
-
-        if(start != null && end != null) {
-            if(exists) {
-                mRealmRoutine = mRealm
-                        .where(RealmRoutine.class)
-                        .between("date", start, end)
-                        .findFirst();
-
-                if(mRealmRoutine != null) {
-                    mRecyclerView.setAdapter(new ProgressAdapter(mRealmRoutine));
-                }
-            } else {
-                mRealmRoutine = RealmStream.getInstance().buildRealmRoutineFrom(
-                        RoutineStream.getInstance().getRoutine(), new DateTime(start).plusHours(1));
-
-                mRecyclerView.setAdapter(new ProgressAdapter(mRealmRoutine));
-            }
-        }
+        setTabLayout();
     }
 
     @Override
@@ -86,26 +60,12 @@ public class ProgressActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    private void buildRoutine(String routineId) {
+        Realm realm = RealmStream.getInstance().getRealm();
 
-        mRealm.beginTransaction();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        mRealm.copyToRealmOrUpdate(mRealmRoutine);
-        mRealm.commitTransaction();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        mRealm.close();
+        mRealmRoutine = realm.where(RealmRoutine.class)
+                .equalTo("id", routineId)
+                .findFirst();
     }
 
     private void setToolbar() {
@@ -114,11 +74,41 @@ public class ProgressActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
-            actionBar.setTitle("Workout");
+            actionBar.setTitle(new DateTime(mRealmRoutine.getStartTime()).toString("d MMMM", Locale.ENGLISH));
             actionBar.setElevation(0);
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    private void setTabLayout() {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition(), true);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                if (tab.getPosition() != 0) {
+                    mProgressPagerAdapter.onTabReselected(tab.getPosition());
+                }
+            }
+        });
+    }
+
+    private void setPager(RealmRoutine realmRoutine) {
+        mProgressPagerAdapter = new ProgressPagerAdapter(realmRoutine);
+
+        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.setAdapter(mProgressPagerAdapter);
     }
 }

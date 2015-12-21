@@ -1,13 +1,18 @@
 package io.mazur.fit.presenter;
 
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import org.joda.time.DateTime;
 
+import java.util.Date;
+import java.util.Locale;
+
 import io.mazur.fit.R;
 import io.mazur.fit.adapter.CalendarAdapter;
 import io.mazur.fit.model.CalendarDayChanged;
+import io.mazur.fit.model.realm.RealmExercise;
 import io.mazur.fit.model.realm.RealmRoutine;
 import io.mazur.fit.stream.ActivityStream;
 import io.mazur.fit.stream.RealmStream;
@@ -23,6 +28,8 @@ public class CalendarPresenter {
     private CalendarAdapter mCalendarAdapter;
     private CalendarDayChanged mCalendarDayChanged;
 
+    private String mRealmRoutineId;
+
     public void onCreateView(CalendarView calendarView) {
         mCalendarView = calendarView;
 
@@ -33,6 +40,10 @@ public class CalendarPresenter {
         mCalendarView.getViewPager().setAdapter(mCalendarAdapter);
         mCalendarView.getViewPager().setCurrentItem(CalendarAdapter.DEFAULT_POSITION, false);
 
+        RealmStream.getInstance().getRealmRoutineObservable().subscribe(realmRoutine -> {
+            notifyDataSetChanged();
+        });
+
         mCalendarAdapter.getOnDaySelectedObservable().subscribe(calendarDayChanged -> {
             mCalendarDayChanged = calendarDayChanged;
 
@@ -41,31 +52,12 @@ public class CalendarPresenter {
                     calendarDayChanged.daySelected
             );
 
-            mCalendarView.getDate().setText(dateTime.toString("EEEE, d MMMM"));
+            mCalendarView.getDate().setText(dateTime.toString("EEEE, d MMMM", Locale.ENGLISH));
 
             if (isRoutineLogged(dateTime)) {
-                mCalendarView.getDate().setVisibility(View.VISIBLE);
-                mCalendarView.getCardView().setVisibility(View.VISIBLE);
-                mCalendarView.getMessage().setVisibility(View.GONE);
-
-                final DateTime start = dateTime.withTimeAtStartOfDay();
-                final DateTime end = start.plusDays(1).minusMinutes(1);
-
-                mCalendarView.getViewButton().setOnClickListener(view -> {
-                    Intent intent = new Intent(mCalendarView.getContext(), ProgressActivity.class);
-
-                    intent.putExtra("exists", true);
-                    intent.putExtra("start", start.toDate());
-                    intent.putExtra("end", end.toDate());
-
-                    mCalendarView.getContext().startActivity(intent);
-                });
+                showCardView();
             } else {
-                mCalendarView.getDate().setVisibility(View.GONE);
-                mCalendarView.getCardView().setVisibility(View.GONE);
-                mCalendarView.getMessage().setVisibility(View.VISIBLE);
-
-                mCalendarView.getViewButton().setOnClickListener(view -> {});
+                hideCardView();
             }
         });
 
@@ -78,6 +70,79 @@ public class CalendarPresenter {
         });
     }
 
+    private void showCardView() {
+        mCalendarView.getDate().setVisibility(View.VISIBLE);
+        mCalendarView.getCardView().setVisibility(View.VISIBLE);
+        mCalendarView.getMessage().setVisibility(View.GONE);
+
+        mCalendarView.getViewButton().setOnClickListener(view -> {
+            Intent intent = new Intent(mCalendarView.getContext(), ProgressActivity.class);
+
+            intent.putExtra("routineId", mRealmRoutineId);
+
+            mCalendarView.getContext().startActivity(intent);
+        });
+
+        mCalendarView.getExportButton().setOnClickListener(view -> {
+            Realm realm = RealmStream.getInstance().getRealm();
+
+            RealmRoutine realmRoutine = realm.where(RealmRoutine.class)
+                    .equalTo("id", mRealmRoutineId)
+                    .findFirst();
+
+            String s = "Category Title,Section Title,Exercise Title,Exercise Description";
+            for(RealmExercise realmExercise : realmRoutine.getExercises()) {
+                s += realmExercise.getCategory().getTitle() + ",";
+                s += realmExercise.getSection().getTitle() + ",";
+                s += realmExercise.getTitle() + ",";
+                s += realmExercise.getDescription() + "\n";
+            }
+
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, s);
+
+            mCalendarView.getContext().startActivity(Intent.createChooser(sharingIntent, "Export as CSV"));
+        });
+
+        mCalendarView.getRemoveButton().setOnClickListener(view -> {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(mCalendarView.getContext())
+                    .setTitle("Remove Logged Workout?")
+                    .setPositiveButton("Ok", (dialog, which) -> {
+                        Realm realm = RealmStream.getInstance().getRealm();
+
+                        RealmRoutine realmRoutine = realm.where(RealmRoutine.class)
+                                .equalTo("id", mRealmRoutineId)
+                                .findFirst();
+
+                        realm.beginTransaction();
+                        realmRoutine.removeFromRealm();
+                        realm.commitTransaction();
+
+                        notifyDataSetChanged();
+                        hideCardView();
+                    })
+                    .setNegativeButton("Cancel", (dialog, which) -> {});
+
+            alertDialog.show();
+        });
+    }
+
+    private void hideCardView() {
+        mCalendarView.getDate().setVisibility(View.GONE);
+        mCalendarView.getCardView().setVisibility(View.GONE);
+        mCalendarView.getMessage().setVisibility(View.VISIBLE);
+
+        mCalendarView.getViewButton().setOnClickListener(view -> {});
+    }
+
+    private void notifyDataSetChanged() {
+        mCalendarView.getViewPager().setAdapter(mCalendarAdapter);
+        mCalendarView.getViewPager().setCurrentItem(CalendarAdapter.DEFAULT_POSITION, false);
+    }
+
     public CalendarAdapter getCalendarAdapter() {
         return mCalendarAdapter;
     }
@@ -86,21 +151,28 @@ public class CalendarPresenter {
         return mCalendarDayChanged;
     }
 
-    /**
-     * Compare dates between 00:00 and 23:59.
-     *
-     * TODO: Asynchronous.
-     * TODO: Should return Set of days.
-     */
     public boolean isRoutineLogged(DateTime dateTime) {
-        final DateTime start = dateTime.withTimeAtStartOfDay();
-        final DateTime end = start.plusDays(1).minusMinutes(1);
+        final Date start = dateTime
+                .withTimeAtStartOfDay()
+                .toDate();
+
+        final Date end = dateTime
+                .withTimeAtStartOfDay()
+                .plusDays(1)
+                .minusSeconds(1)
+                .toDate();
 
         Realm realm = RealmStream.getInstance().getRealm();
-        RealmRoutine routine = realm.where(RealmRoutine.class)
-                .between("date", start.toDate(), end.toDate())
+        RealmRoutine realmRoutine = realm.where(RealmRoutine.class)
+                .between("startTime", start, end)
                 .findFirst();
 
-        return (routine != null);
+        if(realmRoutine != null) {
+            mRealmRoutineId = realmRoutine.getId();
+
+            return true;
+        }
+
+        return false;
     }
 }

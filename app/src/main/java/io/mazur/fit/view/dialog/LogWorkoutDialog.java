@@ -2,300 +2,678 @@ package io.mazur.fit.view.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 import io.mazur.fit.R;
 import io.mazur.fit.model.Exercise;
+import io.mazur.fit.model.SectionMode;
+import io.mazur.fit.model.WeightMeasurementUnit;
 import io.mazur.fit.model.realm.RealmExercise;
 import io.mazur.fit.model.realm.RealmRoutine;
 import io.mazur.fit.model.realm.RealmSet;
 import io.mazur.fit.stream.RealmStream;
-
 import io.mazur.fit.stream.RoutineStream;
+import io.mazur.fit.utils.Logger;
+import io.mazur.fit.utils.PreferenceUtil;
 import io.realm.Realm;
 
 public class LogWorkoutDialog {
-    private Context mContext;
+    public interface OnDismissLogWorkoutDialogListener {
+        void onDismissed();
+    }
+
+    private static final int MAXIMUM_NUMBER_OF_SETS = 12;
+
     private Dialog mDialog;
-
-    private int mNumberOfSets = 0;
-
-    private ArrayList<LinearLayout> mSetLayouts = new ArrayList<>();
-
-    private boolean mEditTextHasFocus = false;
-
-    private Exercise mCurrentExercise;
-
-    private Realm mRealm;
-    private DateTime mRealmDateTime;
-    private RealmRoutine mRealmRoutine;
-    private RealmExercise mRealmExercise;
+    private OnDismissLogWorkoutDialogListener mOnDismissLogWorkoutDialogListener;
 
     @InjectView(R.id.toolbar) Toolbar mToolbar;
-    @InjectView(R.id.layout) LinearLayout mMainLayout;
     @InjectView(R.id.saveButton) Button mSaveButton;
 
+    @InjectView(R.id.setView) LinearLayout mSetView;
+    @InjectView(R.id.actionView) View mActionView;
+    @InjectView(R.id.setValue) TextView mActionViewSetValue;
+
+    @InjectView(R.id.weightValue) TextView mActionViewWeightValue;
+    @InjectView(R.id.weightDescription) TextView mActionViewWeightDescription;
+
+    @InjectView(R.id.repsValue) TextView mActionViewRepsValue;
+    @InjectView(R.id.repsDescription) TextView mActionViewRepsDescription;
+
+    private LinearLayout mRowLayout;
+
+    private ArrayList<View> mViewSets = new ArrayList<>();
+
+    private RealmRoutine mRealmRoutine;
+    private RealmExercise mRealmExercise;
+    private RealmSet mSet;
+
+    private Realm mRealm;
+
+    private WeightMeasurementUnit mWeightMeasurementUnit;
+
     public LogWorkoutDialog(Context context) {
-        mContext = context;
         mRealm = RealmStream.getInstance().getRealm();
 
-        mDialog = new Dialog(context);
-        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mDialog.setContentView(R.layout.view_dialog_log_workout);
-        mDialog.setCanceledOnTouchOutside(true);
+        Exercise exercise = RoutineStream.getInstance().getExercise();
 
-        mRealmRoutine = RealmStream
-                .getInstance()
-                .getRealmRoutineForToday();
+        mRealmRoutine = RealmStream.getInstance().getRealmRoutineForToday();
 
-        mRealmDateTime = new DateTime(mRealmRoutine.getDate());
-
-        mCurrentExercise = RoutineStream.getInstance().getExercise();
-
-        /**
-         * TODO: This should be based on the unique id/key of the exercise.
-         */
         for(RealmExercise realmExercise : mRealmRoutine.getExercises()) {
-            if(realmExercise.getTitle().equals(mCurrentExercise.getTitle())) {
+            if(realmExercise.getTitle().equals(exercise.getTitle())) {
                 mRealmExercise = realmExercise;
 
                 break;
             }
         }
+
+        mDialog = new Dialog(context);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialog.setContentView(R.layout.view_dialog_log_workout);
+        mDialog.setCanceledOnTouchOutside(true);
+    }
+
+    public LogWorkoutDialog(Context context, RealmExercise realmExercise) {
+        mRealm = RealmStream.getInstance().getRealm();
+
+        mRealmRoutine = null;
+        mRealmExercise = realmExercise;
+
+        mDialog = new Dialog(context);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialog.setContentView(R.layout.view_dialog_log_workout);
+        mDialog.setCanceledOnTouchOutside(true);
     }
 
     public void show() {
+        mWeightMeasurementUnit = PreferenceUtil
+                .getInstance()
+                .getWeightMeasurementUnit();
+
         mRealm.beginTransaction();
 
         ButterKnife.inject(this, mDialog);
 
-        mToolbar.inflateMenu(R.menu.menu_log_workout);
-
-        if(!mCurrentExercise.allowBodyweightReps()) {
-            mToolbar.getMenu().removeItem(R.id.action_add_set);
-        }
-
-        if(!mCurrentExercise.allowTimeReps()) {
-            mToolbar.getMenu().removeItem(R.id.action_add_timed_set);
-        }
+        mActionView.setVisibility(View.GONE);
 
         mToolbar.setTitle(mRealmExercise.getTitle());
-        mToolbar.setSubtitle(mRealmDateTime.toString("EEEE, d MMMM"));
-        mToolbar.setOnMenuItemClickListener((item) -> {
-            switch (item.getItemId()) {
-                case R.id.action_add_set:
-                    addSet(null, RealmSet.BODYWEIGHT);
+        mToolbar.setSubtitle(mRealmExercise.getDescription());
 
-                    return true;
+        inflateToolbarMenu();
 
-                case R.id.action_add_timed_set:
-                    addSet(null, RealmSet.TIME);
+        buildSets();
 
-                    return true;
+        mSaveButton.setOnClickListener(v -> mDialog.dismiss());
 
-                case R.id.action_remove_set:
-                    removeSet();
+        mDialog.setOnDismissListener(l -> {
+            String mode = mRealmExercise.getSection().getMode();
 
-                    return true;
+            if (mode.equals(SectionMode.LEVELS.toString()) ||
+                    mode.equals(SectionMode.PICK.toString())) {
+
+                if(isCompleted(mRealmExercise)) {
+                    mRealmExercise.setVisible(true);
+                } else {
+                    mRealmExercise.setVisible(false);
+                }
             }
 
-            return false;
-        });
-
-        for(RealmSet set : mRealmExercise.getSets()) {
-            addSet(set, set.getType());
-        }
-
-        mDialog.setOnDismissListener(dialog -> {
-            mRealm.copyToRealmOrUpdate(mRealmRoutine);
+            mRealm.copyToRealmOrUpdate(mRealmExercise);
             mRealm.commitTransaction();
-        });
 
-        mSaveButton.setOnClickListener(v -> {
-            mDialog.dismiss();
+            if (mOnDismissLogWorkoutDialogListener != null) {
+                mOnDismissLogWorkoutDialogListener.onDismissed();
+            }
         });
 
         mDialog.show();
     }
 
-    public void addSet(RealmSet realmSet, String setType) {
-        if(mNumberOfSets >= 12) {
-            return;
-        }
+    public void setOnDismissLogWorkoutDialogListener(OnDismissLogWorkoutDialogListener onDismissLogWorkoutDialogListener) {
+        mOnDismissLogWorkoutDialogListener = onDismissLogWorkoutDialogListener;
+    }
 
-        LinearLayout setLayout = null;
-
-        boolean isTimeSet = setType.equals(RealmSet.TIME);
-
-        int numberOfSetsInRow = 4;
-        if(isTimeSet) {
-            numberOfSetsInRow = 1;
-        }
-
-        if(realmSet == null) {
-            realmSet = mRealm.createObject(RealmSet.class);
-            realmSet.setId(UUID.randomUUID().toString());
-            realmSet.setType(setType);
-            realmSet.setValue(0);
-
-            mRealmExercise.getSets().add(realmSet);
-        }
-
-        if(mNumberOfSets == 0 || (mNumberOfSets % numberOfSetsInRow) == 0) {
-            setLayout = (LinearLayout) LayoutInflater
-                    .from(mContext)
-                    .inflate(R.layout.view_dialog_log_workout_row, mMainLayout, false);
-
-            mMainLayout.addView(setLayout);
-            mSetLayouts.add(setLayout);
-        } else {
-            setLayout = mSetLayouts.get(mSetLayouts.size() - 1);
-        }
-
-        if(setLayout != null) {
-            CardView setView;
-
-            if(isTimeSet) {
-                View view = LayoutInflater
-                        .from(mContext)
-                        .inflate(R.layout.view_dialog_log_workout_time_set, setLayout, false);
-
-                EditText editText = (EditText) view.findViewById(R.id.editText);
-
-                if(realmSet.getValue() == 0) {
-                    editText.setText("/");
+    public void buildSets() {
+        for(RealmSet set : mRealmExercise.getSets()) {
+            if(shouldAddSet()) {
+                if(set.isTimed()) {
+                    addTimedSet(set);
                 } else {
-                    editText.setText(prettyFormatSeconds(realmSet.getValue()));
+                    addSet(set);
                 }
+            }
+        }
 
-                final RealmSet set = realmSet;
+        updateToolbarMenu();
+    }
 
-                editText.setOnFocusChangeListener((v, hasFocus) -> {
-                    mEditTextHasFocus = hasFocus;
+    public void actionViewOpened() {
+        invalidateToolbarMenu();
 
-                    if(hasFocus) {
-                        editText.setText(String.valueOf(set.getValue()));
-                    } else {
-                        editText.setText(prettyFormatSeconds(set.getValue()));
-                    }
-                });
+        mSaveButton.setText("Back");
+        mSaveButton.setOnClickListener(v -> {
+            updateSets();
 
-                editText.addTextChangedListener(new TextWatcher() {
-                    @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-                    @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        if (mEditTextHasFocus) {
-                            String s = charSequence.toString();
+            mSetView.setVisibility(View.VISIBLE);
+            mActionView.setVisibility(View.GONE);
 
-                            if(s.equals("")) {
-                                set.setValue(0);
-                            } else {
-                                int value;
+            actionViewClosed();
+        });
+    }
 
-                                try {
-                                    value = Integer.valueOf(s);
-                                } catch (NumberFormatException e) {
-                                    value = 0;
-                                }
+    public void actionViewClosed() {
+        inflateToolbarMenu();
 
-                                if(value > 600) {
-                                    value = 600;
-                                } else if(value < 0) {
-                                    value = 0;
-                                }
+        mSaveButton.setText("Save");
+        mSaveButton.setOnClickListener(v -> {
+            mDialog.dismiss();
+        });
+    }
 
-                                set.setValue(value);
-                            }
-                        }
-                    }
+    public void updateSets() {
+        int i = 0;
+        for(View view : mViewSets) {
+            RealmSet set = mRealmExercise.getSets().get(i);
 
-                    @Override public void afterTextChanged(Editable editable) {}
-                });
-
-                setLayout.addView(view);
+            if(set.isTimed()) {
+                updateTimedSet(set, view);
             } else {
-                setView = (CardView) LayoutInflater
-                        .from(mContext)
-                        .inflate(R.layout.view_dialog_log_workout_set, setLayout, false);
+                updateSet(set, view);
+            }
 
-                Button button = (Button) setView.findViewById(R.id.button);
+            i++;
+        }
+    }
 
-                if(realmSet.getValue() == 0) {
-                    button.setText("/");
-                } else {
-                    button.setText(String.valueOf(realmSet.getValue()));
+    public boolean shouldAddSet() {
+        int numberOfSets = mViewSets.size();
+
+        if(numberOfSets >= MAXIMUM_NUMBER_OF_SETS) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean shouldRemoveSet() {
+        int numberOfSets = mViewSets.size();
+
+        if(numberOfSets == 1) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public void addRow() {
+        int numberOfSets = mViewSets.size();
+
+        if(numberOfSets == 0 || numberOfSets == 3 || numberOfSets == 6 || numberOfSets == 9) {
+            View view = LayoutInflater.from(mDialog.getContext())
+                    .inflate(R.layout.view_dialog_log_workout_row, mSetView, false);
+
+            mRowLayout = (LinearLayout) view;
+            mSetView.addView(view);
+        }
+    }
+
+    public boolean addSet(RealmSet set) {
+        addRow();
+
+        View view = LayoutInflater.from(mDialog.getContext())
+                .inflate(R.layout.view_dialog_log_workout_set, mSetView, false);
+
+        updateSet(set, view);
+
+        view.setOnClickListener(v -> {
+            updateActionView(set, mRealmExercise.getSets().indexOf(set) + 1);
+
+            mSetView.setVisibility(View.GONE);
+            mActionView.setVisibility(View.VISIBLE);
+
+            actionViewOpened();
+        });
+
+        mRowLayout.addView(view);
+
+        if(!mRealmExercise.getSets().contains(set)) {
+            mRealmExercise.getSets().add(set);
+        }
+
+        mViewSets.add(view);
+
+        setLastUpdatedTime();
+
+        return true;
+    }
+
+    public boolean addTimedSet(RealmSet set) {
+        addRow();
+
+        View view = LayoutInflater.from(mDialog.getContext())
+                .inflate(R.layout.view_dialog_log_workout_timed_set, mSetView, false);
+
+        updateTimedSet(set, view);
+
+        view.setOnClickListener(v -> {
+            updateActionViewForTimedSet(set, mRealmExercise.getSets().indexOf(set) + 1);
+
+            mSetView.setVisibility(View.GONE);
+            mActionView.setVisibility(View.VISIBLE);
+
+            actionViewOpened();
+        });
+
+        mRowLayout.addView(view);
+
+        if(!mRealmExercise.getSets().contains(set)) {
+            mRealmExercise.getSets().add(set);
+        }
+
+        setLastUpdatedTime();
+
+        mViewSets.add(view);
+
+        return true;
+    }
+
+    public boolean removeLastSet() {
+        mRealmExercise.getSets().remove(mRealmExercise.getSets().size() - 1);
+        mViewSets.remove(mViewSets.size() - 1);
+
+        mRowLayout.removeViewAt(mRowLayout.getChildCount() - 1);
+
+        if (mRowLayout.getChildCount() == 0) {
+            mSetView.removeView(mRowLayout);
+
+            mRowLayout = (LinearLayout) mSetView.getChildAt(mSetView.getChildCount() - 1);
+        }
+
+        return true;
+    }
+
+    public void updateActionView(RealmSet set, int index) {
+        mSet = set;
+
+        mActionViewSetValue.setText(String.valueOf(index));
+
+        mActionViewWeightValue.setText(String.valueOf(set.getWeight()));
+        mActionViewWeightDescription.setText(formatWeightDescription());
+
+        mActionViewRepsValue.setText(String.valueOf(set.getReps()));
+        mActionViewRepsDescription.setText("Reps");
+    }
+
+    public void updateActionViewForTimedSet(RealmSet set, int index) {
+        mSet = set;
+
+        mActionViewSetValue.setText(String.valueOf(index));
+
+        mActionViewRepsValue.setText(formatMinutes(mSet.getSeconds()));
+        mActionViewRepsDescription.setText("Minutes");
+
+        mActionViewWeightValue.setText(formatSeconds(mSet.getSeconds()));
+        mActionViewWeightDescription.setText("Seconds");
+    }
+
+    public void updateSet(RealmSet set, View view) {
+        TextView repsOnlyValue = (TextView) view.findViewById(R.id.repsOnlyValue);
+
+        TextView reps = (TextView) view.findViewById(R.id.repsValue);
+        TextView weight = (TextView) view.findViewById(R.id.weightValue);
+
+        View center = view.findViewById(R.id.center);
+
+        if(set.getWeight() == 0) {
+            repsOnlyValue.setVisibility(View.VISIBLE);
+
+            reps.setVisibility(View.GONE);
+            weight.setVisibility(View.GONE);
+
+            center.setVisibility(View.GONE);
+
+            repsOnlyValue.setText(formatReps(set.getReps(), false));
+        } else {
+            repsOnlyValue.setVisibility(View.GONE);
+
+            reps.setVisibility(View.VISIBLE);
+            weight.setVisibility(View.VISIBLE);
+
+            center.setVisibility(View.VISIBLE);
+
+            reps.setText(formatReps(set.getReps(), true));
+            weight.setText(formatWeight(set.getWeight()));
+        }
+    }
+
+    public void updateTimedSet(RealmSet set, View view) {
+        TextView secondsOnlyValue = (TextView) view.findViewById(R.id.secondsOnlyValue);
+
+        TextView minutes = (TextView) view.findViewById(R.id.minutesValue);
+        TextView seconds = (TextView) view.findViewById(R.id.secondsValue);
+
+        View center = view.findViewById(R.id.center);
+
+        if(set.getSeconds() < 60) {
+            secondsOnlyValue.setVisibility(View.VISIBLE);
+
+            minutes.setVisibility(View.GONE);
+            seconds.setVisibility(View.GONE);
+
+            center.setVisibility(View.GONE);
+
+            secondsOnlyValue.setText(formatSeconds(
+                    set.getSeconds()
+            ) + "s");
+        } else {
+            secondsOnlyValue.setVisibility(View.GONE);
+
+            minutes.setVisibility(View.VISIBLE);
+            seconds.setVisibility(View.VISIBLE);
+
+            center.setVisibility(View.VISIBLE);
+
+            minutes.setText(formatMinutes(set.getSeconds()) + "m");
+            seconds.setText(formatSeconds(set.getSeconds()) + "s");
+        }
+    }
+
+    public void updateToolbarMenu() {
+        int numberOfSets = mViewSets.size();
+
+        Menu menu = mToolbar.getMenu();
+
+        if(numberOfSets >= MAXIMUM_NUMBER_OF_SETS) {
+            menu.findItem(R.id.action_add_set).setVisible(false);
+            menu.findItem(R.id.action_add_timed_set).setVisible(false);
+        } else if (numberOfSets == 1) {
+            if (mRealmExercise.getDefaultSet().equals("timed")) {
+                menu.findItem(R.id.action_add_set).setVisible(false);
+                menu.findItem(R.id.action_add_timed_set).setVisible(true);
+            } else {
+                menu.findItem(R.id.action_add_set).setVisible(true);
+                menu.findItem(R.id.action_add_timed_set).setVisible(false);
+            }
+
+            menu.findItem(R.id.action_remove_last_set).setVisible(false);
+        } else {
+            if (mRealmExercise.getDefaultSet().equals("timed")) {
+                menu.findItem(R.id.action_add_set).setVisible(false);
+                menu.findItem(R.id.action_add_timed_set).setVisible(true);
+            } else {
+                menu.findItem(R.id.action_add_set).setVisible(true);
+                menu.findItem(R.id.action_add_timed_set).setVisible(false);
+            }
+
+            menu.findItem(R.id.action_remove_last_set).setVisible(true);
+        }
+    }
+
+    public void inflateToolbarMenu() {
+        mToolbar.inflateMenu(R.menu.menu_log_workout);
+        mToolbar.setOnMenuItemClickListener((item) -> {
+            switch (item.getItemId()) {
+                case R.id.action_add_set: {
+                    if (shouldAddSet()) {
+                        RealmSet realmSet = mRealm.createObject(RealmSet.class);
+
+                        realmSet.setId("Set-" + UUID.randomUUID().toString());
+                        realmSet.setIsTimed(false);
+                        realmSet.setSeconds(0);
+                        realmSet.setWeight(0);
+                        realmSet.setReps(0);
+
+                        addSet(realmSet);
+                        updateToolbarMenu();
+                    }
+
+                    return true;
                 }
 
-                final RealmSet set = realmSet;
-                button.setOnClickListener(v -> {
-                    if(set.getValue() >= 10) {
-                        set.setValue(0);
+                case R.id.action_add_timed_set: {
+                    if (shouldAddSet()) {
+                        RealmSet realmSet = mRealm.createObject(RealmSet.class);
 
-                        button.setText("/");
-                    } else {
-                        set.setValue(set.getValue() + 1);
+                        realmSet.setId("Set-" + UUID.randomUUID().toString());
+                        realmSet.setIsTimed(true);
+                        realmSet.setSeconds(0);
+                        realmSet.setWeight(0);
+                        realmSet.setReps(0);
 
-                        button.setText(String.valueOf(set.getValue()));
+                        addTimedSet(realmSet);
+                        updateToolbarMenu();
                     }
-                });
 
-                setLayout.addView(setView);
+                    return true;
+                }
+
+                case R.id.action_remove_last_set: {
+                    if (shouldRemoveSet()) {
+                        removeLastSet();
+                        updateToolbarMenu();
+                    }
+
+                    return true;
+                }
             }
 
-            mNumberOfSets += 1;
+            return false;
+        });
+
+        updateToolbarMenu();
+    }
+
+    public void invalidateToolbarMenu() {
+        mToolbar.getMenu().clear();
+    }
+
+    @OnClick(R.id.weightIncrease)
+    @SuppressWarnings("unused")
+    public void onClickIncreaseWeight(View view) {
+        if(mSet.isTimed()) {
+            if(mSet.getSeconds() % 60 == 59) {
+                mSet.setSeconds(mSet.getSeconds() - 59);
+            } else {
+                mSet.setSeconds(mSet.getSeconds() + 1);
+            }
+
+            mActionViewRepsValue.setText(formatMinutes(mSet.getSeconds()));
+            mActionViewWeightValue.setText(formatSeconds(mSet.getSeconds()));
+
+            setLastUpdatedTime();
+        } else {
+            if(mSet.getWeight() >= 500) {
+                return;
+            }
+
+            if (mWeightMeasurementUnit.equals(WeightMeasurementUnit.kg)) {
+                mSet.setWeight(mSet.getWeight() + 0.5);
+            } else {
+                mSet.setWeight(mSet.getWeight() + 1.0);
+            }
+
+            mActionViewWeightValue.setText(String.valueOf(mSet.getWeight()));
+
+            setLastUpdatedTime();
         }
     }
 
-    public void removeSet() {
-        if(mNumberOfSets == 1) {
-            return;
-        }
-
-        mRealmExercise.getSets().remove(mRealmExercise.getSets().size() - 1);
-
-        LinearLayout setLayout = mSetLayouts.get(mSetLayouts.size() - 1);
-
-        if(setLayout != null) {
-            setLayout.removeViewAt(setLayout.getChildCount() - 1);
-
-            mNumberOfSets -= 1;
-
-            if(setLayout.getChildCount() == 0) {
-                mMainLayout.removeView(setLayout);
-                mSetLayouts.remove(setLayout);
+    @OnClick(R.id.weightDecrease)
+    @SuppressWarnings("unused")
+    public void onClickDecreaseWeight(View view) {
+        if(mSet.isTimed()) {
+            if(mSet.getSeconds() % 60 == 0) {
+                mSet.setSeconds(mSet.getSeconds() + 59);
+            } else {
+                mSet.setSeconds(mSet.getSeconds() - 1);
             }
+
+            mActionViewRepsValue.setText(formatMinutes(mSet.getSeconds()));
+            mActionViewWeightValue.setText(formatSeconds(mSet.getSeconds()));
+
+            setLastUpdatedTime();
+        } else {
+            if(mSet.getWeight() <= 0) {
+                return;
+            }
+
+            if (mWeightMeasurementUnit.equals(WeightMeasurementUnit.kg)) {
+                mSet.setWeight(mSet.getWeight() - 0.5);
+            } else {
+                mSet.setWeight(mSet.getWeight() - 1.0);
+            }
+
+            mActionViewWeightValue.setText(String.valueOf(mSet.getWeight()));
+
+            setLastUpdatedTime();
         }
     }
 
-    public String prettyFormatSeconds(int seconds) {
-        int m = seconds / 60;
+    @OnClick(R.id.repsIncrease)
+    @SuppressWarnings("unused")
+    public void onClickIncreaseReps(View view) {
+        if(mSet.isTimed()) {
+            if (mSet.getSeconds() / 60 >= 5) {
+                return;
+            }
+
+            mSet.setSeconds(mSet.getSeconds() + 60);
+
+            mActionViewRepsValue.setText(formatMinutes(mSet.getSeconds()));
+            mActionViewWeightValue.setText(formatSeconds(mSet.getSeconds()));
+
+            setLastUpdatedTime();
+        } else {
+            if(mSet.getReps() >= 50) {
+                return;
+            }
+
+            mSet.setReps(mSet.getReps() + 1);
+
+            mActionViewRepsValue.setText(String.valueOf(mSet.getReps()));
+
+            setLastUpdatedTime();
+        }
+    }
+
+    @OnClick(R.id.repsDecrease)
+    @SuppressWarnings("unused")
+    public void onClickDecreaseReps(View view) {
+        if(mSet.isTimed()) {
+            if(mSet.getSeconds() >= 60) {
+                mSet.setSeconds(mSet.getSeconds() - 60);
+            }
+
+            mActionViewRepsValue.setText(formatMinutes(mSet.getSeconds()));
+            mActionViewWeightValue.setText(formatSeconds(mSet.getSeconds()));
+
+            setLastUpdatedTime();
+        } else {
+            if(mSet.getReps() == 0) {
+                return;
+            }
+
+            mSet.setReps(mSet.getReps() - 1);
+
+            mActionViewRepsValue.setText(String.valueOf(mSet.getReps()));
+
+            setLastUpdatedTime();
+        }
+    }
+
+    public String formatReps(int reps, boolean append) {
+        if(append) {
+            return reps + " x";
+        } else {
+            if(reps == 0) {
+                return "/";
+            }
+
+            return String.valueOf(reps);
+        }
+    }
+
+    public String formatWeight(double weight) {
+        return String.format("%s %s", weight, mWeightMeasurementUnit.toString()
+        );
+    }
+
+    public String formatWeightDescription() {
+        return String.format("Weight (%s)", mWeightMeasurementUnit.toString());
+    }
+
+    public String formatMinutes(int seconds) {
+        Logger.d(String.valueOf(seconds));
+
+        int minutes = seconds / 60;
+
+        if(minutes == 0) {
+            return "0";
+        }
+
+        return String.valueOf(minutes);
+    }
+
+    public String formatSeconds(int seconds) {
         int s = seconds % 60;
 
-        if(seconds > 60) {
-            if(s == 0) {
-                return m + "m";
-            }
-
-            return m + "m" + s + "s";
+        if(s == 0) {
+            return "0";
         }
 
-        return seconds + "s";
+        return String.valueOf(s);
+    }
+
+    public boolean isCompleted(RealmExercise realmExercise) {
+        int size = realmExercise.getSets().size();
+
+        if (size == 0) {
+            return false;
+        }
+
+        RealmSet firstSet = realmExercise.getSets().get(0);
+
+        if(size == 1 && firstSet.getSeconds() == 0 && firstSet.getReps() == 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public void setLastUpdatedTime() {
+        /**
+         * Update last updated time.
+         *
+         * Update only if the difference between start time and last updated time is less than
+         * 120 minutes (it ignores changing the time later in the day after the workout ends
+         * if we decide to update some values).
+         */
+        if (mRealmRoutine != null) {
+            DateTime startTime = new DateTime(mRealmRoutine.getStartTime());
+            DateTime lastUpdatedTime = new DateTime(mRealmRoutine.getLastUpdatedTime());
+
+            Duration duration = new Duration(startTime, lastUpdatedTime);
+
+            if (duration.toStandardMinutes().getMinutes() < 120) {
+                mRealmRoutine.setLastUpdatedTime(new DateTime().toDate());
+            }
+        }
     }
 }

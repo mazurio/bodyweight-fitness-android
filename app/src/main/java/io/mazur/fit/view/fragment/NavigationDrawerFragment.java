@@ -68,22 +68,32 @@ public class NavigationDrawerFragment extends Fragment {
         final View actionMenuHome = view.findViewById(R.id.action_menu_home);
 
         mMenuId = actionMenuHome.getId();
-        setActionActive(mMenuId);
+        mDrawerMenuSubject.onNext(mMenuId);
 
-        actionMenuHome.setOnClickListener(v -> setActionActive(v.getId()));
+        actionMenuHome.setOnClickListener(v -> mDrawerMenuSubject.onNext(v.getId()));
 
         final View actionMenuWorkoutLog = view.findViewById(R.id.action_menu_workout_log);
-        actionMenuWorkoutLog.setOnClickListener(v -> setActionActive(v.getId()));
+        actionMenuWorkoutLog.setOnClickListener(v -> mDrawerMenuSubject.onNext(v.getId()));
 
         final View actionMenuFAQ = view.findViewById(R.id.action_menu_faq);
-        actionMenuFAQ.setOnClickListener(v -> setActionActive(v.getId()));
+        actionMenuFAQ.setOnClickListener(v -> mDrawerMenuSubject.onNext(v.getId()));
 
         final View actionMenuSettings = view.findViewById(R.id.action_menu_settings);
-        actionMenuSettings.setOnClickListener(v -> setActionActive(v.getId()));
+        actionMenuSettings.setOnClickListener(v ->  mDrawerMenuSubject.onNext(v.getId()));
 
         mDrawerMenuSubject.subscribe(id -> {
+            if(id == R.id.action_menu_faq || id == R.id.action_menu_settings) {
+                closeDrawer();
+
+                return;
+            }
+
             ((TextView) view.findViewById(mMenuId)).setTextColor(Color.parseColor("#87000000"));
             ((TextView) view.findViewById(id)).setTextColor(Color.parseColor("#009688"));
+
+            mMenuId = id;
+
+            closeDrawer();
         });
 
         return view;
@@ -118,13 +128,6 @@ public class NavigationDrawerFragment extends Fragment {
 
     public ActionBarDrawerToggle getActionBarDrawerToggle() {
         return mActionBarDrawerToggle;
-    }
-
-    public void setActionActive(int id) {
-        mDrawerMenuSubject.onNext(id);
-        mMenuId = id;
-
-        closeDrawer();
     }
 
     public Observable<Integer> getMenuObservable() {

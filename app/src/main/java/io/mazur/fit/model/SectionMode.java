@@ -3,13 +3,18 @@ package io.mazur.fit.model;
 import java.io.Serializable;
 
 public enum SectionMode implements Serializable {
-    PICK,
-    ALL,
-    LEVELS;
+    PICK("pick"),
+    ALL("all"),
+    LEVELS("levels");
 
-    private static SectionMode[] values = SectionMode.values();
+    private String mAsString;
 
-    public static SectionMode fromInt(int value) {
-        return values[value];
+    SectionMode(String asString) {
+        mAsString = asString;
+    }
+
+    @Override
+    public String toString() {
+        return mAsString;
     }
 }

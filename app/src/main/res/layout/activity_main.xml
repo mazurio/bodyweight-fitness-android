@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary"
+        android:fitsSystemWindows="true">
+
+        <include layout="@layout/view_toolbar"
+            android:id="@+id/view_toolbar" />
+
+        <include layout="@layout/view_home"
+            android:id="@+id/view_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/view_toolbar"
+            android:visibility="visible"/>
+
+        <include layout="@layout/view_calendar"
+            android:id="@+id/view_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/view_toolbar"
+            android:visibility="gone"/>
+
+        <include layout="@layout/view_action" />
+    </RelativeLayout>
+
+    <fragment
+        android:id="@+id/drawer_fragment"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:name="io.mazur.fit.view.fragment.NavigationDrawerFragment"/>
+</android.support.v4.widget.DrawerLayout>

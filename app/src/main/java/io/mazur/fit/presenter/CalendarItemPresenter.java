@@ -4,6 +4,8 @@ import android.widget.TextView;
 
 import org.joda.time.DateTime;
 
+import java.util.Date;
+
 import io.mazur.fit.R;
 import io.mazur.fit.adapter.CalendarAdapter;
 import io.mazur.fit.model.CalendarDayChanged;
@@ -19,11 +21,14 @@ public class CalendarItemPresenter {
 
     private int mViewPagerPosition = CalendarAdapter.DEFAULT_POSITION;
 
+    private boolean mIsTodaysWeek = false;
+    private int mTodaysDate = 3;
+
     public CalendarItemPresenter(int viewPagerPosition) {
         mViewPagerPosition = viewPagerPosition;
     }
 
-    public void onCreateView(CalendarItemView calendarItemView) {
+    public void onCreateView(CalendarItemView calendarItemView, int currentViewPagerPosition) {
         mCalendarItemView = calendarItemView;
 
         DateTime monday = DateUtils.getDate(mViewPagerPosition);
@@ -34,13 +39,22 @@ public class CalendarItemPresenter {
             TextView view = mCalendarItemView.getDays().get(i);
 
             if(isTodaysDate(dayOfWeek, dayOfWeek.getDayOfMonth())) {
+                mIsTodaysWeek = true;
+                mTodaysDate = i;
+
                 view.setTag(true);
 
                 ViewUtils.setBackgroundResourceWithPadding(
                         view, R.drawable.rounded_corner_active
                 );
 
-                mCalendarItemView.onDaysClick(view);
+                /**
+                 * If we create view when other is visible, we do not want to click on the
+                 * current item.
+                 */
+                if(currentViewPagerPosition == mViewPagerPosition) {
+                    mCalendarItemView.onDaysClick(view);
+                }
             } else {
                 view.setTag(false);
             }
@@ -59,13 +73,19 @@ public class CalendarItemPresenter {
         return mViewPagerPosition;
     }
 
+    /**
+     * Called by Adapter
+     *
+     * @param position of the selected page.
+     */
     public void onPageSelected(int position) {
-        /**
-         * I don't like how it jumps.
-         */
-//        if(position == mViewPagerPosition) {
-//            mCalendarItemView.selectFirstDay();
-//        }
+        if(position == mViewPagerPosition) {
+            if (mIsTodaysWeek) {
+                mCalendarItemView.selectDay(mTodaysDate);
+            } else {
+                mCalendarItemView.selectDay(3);
+            }
+        }
     }
 
     public void onDaySelected(CalendarDayChanged calendarDayChanged) {
@@ -83,12 +103,19 @@ public class CalendarItemPresenter {
     }
 
     public boolean isRoutineLogged(DateTime dateTime) {
-        final DateTime start = dateTime.withTimeAtStartOfDay();
-        final DateTime end = start.plusDays(1).minusMinutes(1);
+        final Date start = dateTime
+                .withTimeAtStartOfDay()
+                .toDate();
+
+        final Date end = dateTime
+                .withTimeAtStartOfDay()
+                .plusDays(1)
+                .minusSeconds(1)
+                .toDate();
 
         Realm realm = RealmStream.getInstance().getRealm();
         RealmRoutine routine = realm.where(RealmRoutine.class)
-                .between("date", start.toDate(), end.toDate())
+                .between("startTime", start, end)
                 .findFirst();
 
         if(routine != null) {

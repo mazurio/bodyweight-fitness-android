@@ -5,6 +5,7 @@ import android.preference.PreferenceManager;
 import io.mazur.fit.App;
 import io.mazur.fit.Constants;
 import io.mazur.fit.R;
+import io.mazur.fit.model.WeightMeasurementUnit;
 
 public class PreferenceUtil {
     private static class InstanceHolder {
@@ -17,6 +18,13 @@ public class PreferenceUtil {
 
     private PreferenceUtil() {
         PreferenceManager.setDefaultValues(App.getContext(), R.xml.settings, false);
+    }
+
+    public WeightMeasurementUnit getWeightMeasurementUnit() {
+        String value = PreferenceManager.getDefaultSharedPreferences(App.getContext())
+                .getString(Constants.PREFERENCE_WEIGHT_MEASUREMENT_UNITS, "kg");
+
+        return WeightMeasurementUnit.get(value);
     }
 
     public boolean playSoundWhenTimerStops() {

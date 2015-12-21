@@ -11,9 +11,6 @@ import io.mazur.glacier.Glacier;
 import io.fabric.sdk.android.Fabric;
 
 /**
- * Done: Connect HomeUI Dialog to Realm.
- * TODO: Delete Workouts.
-
  * TODO: Calculate length of workout and set times, e.g. firstTime when created and endTime when lastLogged.
  * TODO: Length calculated based on below values \/.
  * TODO: StartTime can be changed manually.

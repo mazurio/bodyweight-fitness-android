@@ -8,11 +8,7 @@ public class Exercise extends LinkedRoutine implements Serializable {
     private String mTitle;
     private String mDescription;
     private String mYouTubeId;
-
-    private boolean mAllowTimeReps = false;
-    private boolean mAllowBodyweightReps = true;
-
-    private int mDefaultNumberOfSets = 1;
+    private String mDefaultSet;
 
     private Category mCategory;
     private Section mSection;
@@ -20,14 +16,19 @@ public class Exercise extends LinkedRoutine implements Serializable {
     private Exercise mPrevious;
     private Exercise mNext;
 
-    public Exercise(String id, String level, String title, String description, String youTubeId, boolean allowTimeReps, boolean allowBodyweightReps) {
+    public Exercise(
+            String id,
+            String level,
+            String title,
+            String description,
+            String youTubeId,
+            String defaultSet) {
         mId = id;
         mLevel = level;
         mTitle = title;
         mDescription = description;
         mYouTubeId = youTubeId;
-        mAllowTimeReps = allowTimeReps;
-        mAllowBodyweightReps = allowBodyweightReps;
+        mDefaultSet = defaultSet;
     }
 
     public String getId() {
@@ -54,20 +55,12 @@ public class Exercise extends LinkedRoutine implements Serializable {
         return mYouTubeId;
     }
 
-    public boolean allowTimeReps() {
-        return mAllowTimeReps;
-    }
-
-    public boolean allowBodyweightReps() {
-        return mAllowBodyweightReps;
+    public String getDefaultSet() {
+        return mDefaultSet;
     }
 
     public boolean hasProgressions() {
         return (getSection().getSectionMode().equals(SectionMode.LEVELS) || getSection().getSectionMode().equals(SectionMode.PICK));
-    }
-
-    public int getDefaultNumberOfSets() {
-        return mDefaultNumberOfSets;
     }
 
     public void setCategory(Category category) {

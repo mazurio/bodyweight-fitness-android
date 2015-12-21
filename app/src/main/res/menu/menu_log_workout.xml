@@ -11,8 +11,8 @@
         android:orderInCategory="20"
         app:showAsAction="never" />
 
-    <item android:id="@+id/action_remove_set"
-        android:title="Remove Set"
+    <item android:id="@+id/action_remove_last_set"
+        android:title="Remove Last Set"
         android:orderInCategory="30"
         app:showAsAction="never" />
 </menu>

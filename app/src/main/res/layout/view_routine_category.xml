@@ -9,5 +9,4 @@
     android:gravity="center_vertical"
     android:textColor="@color/primary"
     android:textSize="16sp"
-    android:text="Dynamic Stretches"
     app:typeface="roboto_medium"/>

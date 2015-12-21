@@ -17,4 +17,14 @@
 
 	<string name="previous">Previous</string>
 	<string name="next">Next</string>
+
+	<string-array name="weight">
+		<item>Kilograms (kg)</item>
+		<item>Pounds (lbs)</item>
+	</string-array>
+
+	<string-array name="weight_values">
+		<item>kg</item>
+		<item>lbs</item>
+	</string-array>
 </resources>

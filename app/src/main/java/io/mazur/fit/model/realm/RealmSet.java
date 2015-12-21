@@ -1,19 +1,17 @@
 package io.mazur.fit.model.realm;
 
 import io.realm.RealmObject;
-import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
 
 public class RealmSet extends RealmObject {
-    @Ignore
-    public static final String BODYWEIGHT = "bodyweight";
-
-    @Ignore
-    public static final String TIME = "time";
-
+    @PrimaryKey
     private String id;
-    private String type;
 
-    private int value;
+    private boolean isTimed = false;
+
+    private double weight = 0; // (kg)
+    private int reps = 0;
+    private int seconds = 0;
 
     public void setId(String id) {
         this.id = id;
@@ -23,19 +21,35 @@ public class RealmSet extends RealmObject {
         return this.id;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setIsTimed(boolean isTimed) {
+        this.isTimed = isTimed;
     }
 
-    public String getType() {
-        return this.type;
+    public boolean isTimed() {
+        return this.isTimed;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 
-    public int getValue() {
-        return this.value;
+    public double getWeight() {
+        return this.weight;
+    }
+
+    public void setReps(int reps) {
+        this.reps = reps;
+    }
+
+    public int getReps() {
+        return this.reps;
+    }
+
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
+    }
+
+    public int getSeconds() {
+        return this.seconds;
     }
 }

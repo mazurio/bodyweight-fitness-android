@@ -12,17 +12,16 @@ public class RealmRoutine extends RealmObject {
     private String id;
 
     @Index
-    private Date date;
+    private Date startTime;
 
-    private RealmList<RealmExercise> exercises;
+    /**
+     * Last updated time for workout only during the same day.
+     */
+    @Index
+    private Date lastUpdatedTime;
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Date getDate() {
-        return date;
-    }
+    private RealmList<RealmCategory> categories = new RealmList<>();
+    private RealmList<RealmExercise> exercises = new RealmList<>();
 
     public void setId(String id) {
         this.id = id;
@@ -30,6 +29,30 @@ public class RealmRoutine extends RealmObject {
 
     public String getId() {
         return id;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setLastUpdatedTime(Date lastUpdatedTime) {
+        this.lastUpdatedTime = lastUpdatedTime;
+    }
+
+    public Date getLastUpdatedTime() {
+        return lastUpdatedTime;
+    }
+
+    public RealmList<RealmCategory> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(RealmList<RealmCategory> categories) {
+        this.categories = categories;
     }
 
     public RealmList<RealmExercise> getExercises() {

@@ -30,14 +30,8 @@ public class JSONLinkedRoutine {
     @SerializedName("mode")
     private String mMode;
 
-    @SerializedName("allowTimeReps")
-    private boolean mAllowTimeReps;
-
-    @SerializedName("allowBodyweightReps")
-    private boolean mAllowBodyweightReps;
-
-    @SerializedName("defaultNumberOfSets")
-    private Integer mDefaultNumberOfSets;
+    @SerializedName("defaultSet")
+    private String mDefaultSet;
 
     public String getId() {
         return mId;
@@ -79,19 +73,7 @@ public class JSONLinkedRoutine {
         }
     }
 
-    public boolean allowTimeReps() {
-        return mAllowTimeReps;
-    }
-
-    public boolean allowBodyweightReps() {
-        return mAllowBodyweightReps;
-    }
-
-    public Integer getDefaultNumberOfSets() {
-        if(mDefaultNumberOfSets != null) {
-            return mDefaultNumberOfSets;
-        }
-
-        return 1;
+    public String getDefaultSet() {
+        return mDefaultSet;
     }
 }

@@ -39,7 +39,7 @@ public class BuyEquipmentActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Buy Equipment");
 
         AssociatesAPI.initialize(
-                new AssociatesAPI.Config("<KEY>", this)
+                new AssociatesAPI.Config("<key>", this)
         );
 
         loadDrawable(R.drawable.product_bands, mProducts.get(0));

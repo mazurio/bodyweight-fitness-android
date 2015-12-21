@@ -15,49 +15,56 @@
       "title": "Wall Extensions",
       "description": "1x(5-10)",
       "type": "exercise",
-      "youTubeId": "d6V2Exzb324"
+      "youTubeId": "d6V2Exzb324",
+      "defaultSet": "weighted"
     },
     {
       "id": "band_dislocates",
       "title": "Band Dislocates",
       "description": "1x(5-10)",
       "type": "exercise",
-	  "youTubeId": "WyW5jGGxoZk"
+	  "youTubeId": "WyW5jGGxoZk",
+      "defaultSet": "weighted"
     },
     {
       "id": "cat_camel",
       "title": "Cat/Camel Bends",
       "description": "1x(5-10)",
       "type": "exercise",
-	  "youTubeId": "K9bK0BwKFjs"
+	  "youTubeId": "K9bK0BwKFjs",
+      "defaultSet": "weighted"
     },
     {
       "id": "scapular_shrugs",
       "title": "Scapular Shrugs",
       "description": "1x(5-10)",
       "type": "exercise",
-	  "youTubeId": "akgQbxhrhOc"
+	  "youTubeId": "akgQbxhrhOc",
+      "defaultSet": "weighted"
     },
     {
       "id": "full_body_circles",
       "title": "Full Body Circles",
       "description": "1x(5-10)",
       "type": "exercise",
-	  "youTubeId": "yRigKuEou7k"
+	  "youTubeId": "yRigKuEou7k",
+      "defaultSet": "weighted"
     },
     {
       "id": "leg_swings",
       "title": "Front and Side Leg Swings",
       "description": "1x(5-10)",
       "type": "exercise",
-	  "youTubeId": "4aoUZEZFJF8"
+	  "youTubeId": "4aoUZEZFJF8",
+      "defaultSet": "weighted"
     },
     {
       "id": "wrist_progression",
       "title": "Wrist Mobility Exercises",
       "description": "1x(5-10)",
       "type": "exercise",
-	  "youTubeId": "HU5UCh_E6Ns"
+	  "youTubeId": "HU5UCh_E6Ns",
+      "defaultSet": "weighted"
     },
     {
       "title": "Bodyline Drills",
@@ -70,35 +77,40 @@
       "title": "Plank",
       "description": "1x(10-60s) hold",
       "type": "exercise",
-      "youTubeId": "PLu6k-uKOJ0"
+      "youTubeId": "PLu6k-uKOJ0",
+      "defaultSet": "timed"
     },
     {
       "id": "side_plank",
       "title": "Side Plank (Both sides)",
       "description": "1x(10-60s) hold",
       "type": "exercise",
-      "youTubeId": "xIFWxQgFMiE"
+      "youTubeId": "xIFWxQgFMiE",
+      "defaultSet": "timed"
     },
     {
       "id": "reverse_plank",
       "title": "Reverse Plank",
       "description": "1x(10-60s) hold",
       "type": "exercise",
-      "youTubeId": "1s1bPYBPERU"
+      "youTubeId": "1s1bPYBPERU",
+      "defaultSet": "timed"
     },
     {
       "id": "hollow_hold",
       "title": "Hollow Hold",
       "description": "1x(10-60s) hold",
       "type": "exercise",
-      "youTubeId": "wrzjVTK2brk"
+      "youTubeId": "wrzjVTK2brk",
+      "defaultSet": "timed"
     },
     {
       "id": "arch",
       "title": "Arch",
       "description": "1x(10-60s) hold",
       "type": "exercise",
-      "youTubeId": "wrzjVTK2brk"
+      "youTubeId": "wrzjVTK2brk",
+      "defaultSet": "timed"
     },
     {
       "title": "Activity",
@@ -111,14 +123,16 @@
       "title": "Squat Jumps",
       "description": "1x(10-20)",
       "type": "exercise",
-      "youTubeId": "CVaEhXotL7M"
+      "youTubeId": "CVaEhXotL7M",
+      "defaultSet": "weighted"
     },
     {
       "id": "burpee",
       "title": "Burpees",
       "description": "1x(10-20)",
       "type": "exercise",
-      "youTubeId": "41knz-ZUiBU"
+      "youTubeId": "41knz-ZUiBU",
+      "defaultSet": "weighted"
     },
     {
       "title": "Skill Work",
@@ -135,21 +149,24 @@
       "level": "Level 1",
       "title": "Wall Plank",
       "description": "5 min",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "timed"
     },
     {
       "id": "wall_handstand",
       "level": "Level 2",
       "title": "Stomach-to-Wall Handstand",
       "description": "5 min",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "timed"
     },
     {
       "id": "freestanding_handstand",
       "level": "Level 3",
       "title": "Freestanding Handstand",
       "description": "5 min",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "timed"
     },
     {
       "title": "Support Practice",
@@ -162,21 +179,24 @@
       "level": "Level 1",
       "title": "Parallel Bar support",
       "description": "2-3 min",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "timed"
     },
     {
       "id": "ring_support",
       "level": "Level 2",
       "title": "Ring Support",
       "description": "2-3 min",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "timed"
     },
     {
       "id": "rings_turned_out_support",
       "level": "Level 3",
       "title": "Rings Turned Out Support Hold",
       "description": "2-3 min",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "timed"
     },
     {
       "title": "Strength Work",
@@ -186,35 +206,40 @@
       "title": "Pullup Progression",
       "description": "3x(5-8)",
       "type": "section",
-      "mode": "levels"
+      "mode": "levels",
+      "defaultSet": "weighted"
     },
     {
       "id": "negative_pullup",
       "level": "Level 1",
       "title": "Negative Pullups",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "pullup",
       "level": "Level 2",
       "title": "Pull Up",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "lsit_pullup",
       "level": "Level 3",
       "title": "L-sit Pull Up",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "pullover",
       "level": "Level 4",
       "title": "Pull Over",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "title": "Dipping Progression",
@@ -227,21 +252,24 @@
       "level": "Level 1",
       "title": "Parallel Bar Dips",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "ring_dips",
       "level": "Level 2",
       "title": "Ring Dips",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "l_ring_dips",
       "level": "Level 3",
       "title": "Ring Dips in L-sit",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "title": "Squat Progression",
@@ -254,21 +282,24 @@
       "level": "Level 1",
       "title": "Assisted Bodyweight Squat",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "bodyweight_squat",
       "level": "Level 2",
       "title": "Bodyweight Squat",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "deep_stepup",
       "level": "Level 3",
       "title": "Deep Step-up",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "title": "L-sit Progression",
@@ -281,28 +312,32 @@
       "level": "Level 1",
       "title": "Foot-supported L-sit",
       "description": "3x(10-30s)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "timed"
     },
     {
       "id": "one_foot_l_sit",
       "level": "Level 2",
       "title": "One-Leg Foot Supported L-sit",
       "description": "3x(10-30s)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "timed"
     },
     {
       "id": "tuck_l_sit",
       "level": "Level 3",
       "title": "Tuck L-sit",
       "description": "3x(10-30s)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "timed"
     },
     {
       "id": "l_sit",
       "level": "Level 4",
       "title": "L-sit",
       "description": "3x(10-30s)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "timed"
     },
     {
       "title": "Pushing",
@@ -315,56 +350,64 @@
       "level": "Level 1",
       "title": "Wall Pushup",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "incline_pushup",
       "level": "Level 2",
       "title": "Incline Pushup",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "pushup",
       "level": "Level 3",
       "title": "Pushup",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "diamond_pushup",
       "level": "Level 4",
       "title": "Diamond Pushup",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "ring_pushup",
       "level": "Level 5",
       "title": "Rings Push Ups",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "rings_turned_out_pushup",
       "level": "Level 6",
       "title": "Rings Turned Out Push Up",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "pseudo_planche_pushup",
       "level": "Level 7",
       "title": "Rings Turned Out PPPU",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "pseudo_planche",
       "level": "Level 5-7 (No Rings)",
       "title": "Pseudo Planche Push Ups",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "title": "Row Progression",
@@ -377,56 +420,64 @@
       "level": "Level 1",
       "title": "Vertical Row",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "incline_row",
       "level": "Level 2",
       "title": "Incline Row",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "horizontal_row",
       "level": "Level 3",
       "title": "Horizontal Row",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "wide_row",
       "level": "Level 4",
       "title": "Wide Row",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "tuck_front_lever",
       "level": "Level 5",
       "title": "Tuck Front Lever",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "tuck_ice_cream_maker",
       "level": "Level 6",
       "title": "Tuck Ice Cream Maker",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "tuck_front_lever_row",
       "level": "Level 7",
       "title": "Tuck Front Lever Row",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     },
     {
       "id": "advanced_tuck_front_lever_row",
       "level": "Level 8",
       "title": "Advanced Tuck Front Lever Row",
       "description": "3x(5-8)",
-      "type": "exercise"
+      "type": "exercise",
+      "defaultSet": "weighted"
     }
   ]
 }
