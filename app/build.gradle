@@ -2,6 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'io.fabric'
 
+def getApiKey(){
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('api.properties')))
+    return props['AMAZON_API_KEY']
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion '23.0.2'
@@ -46,6 +52,10 @@ android {
     }
 
     buildTypes {
+        applicationVariants.all { variant ->
+            variant.buildConfigField "String", "AMAZON_API_KEY", "\"" + getApiKey() + "\""
+        }
+
         debug {
             ext.enableCrashlytics = false
         }

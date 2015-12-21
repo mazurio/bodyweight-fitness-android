@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectViews;
 import butterknife.OnClick;
 
+import io.mazur.fit.BuildConfig;
 import io.mazur.fit.R;
 import io.mazur.fit.utils.Logger;
 
@@ -35,11 +36,13 @@ public class BuyEquipmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_buy_equipment);
 
         ButterKnife.inject(this);
-
-        getSupportActionBar().setTitle("Buy Equipment");
+g
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Buy Equipment");
+        }
 
         AssociatesAPI.initialize(
-                new AssociatesAPI.Config("<key>", this)
+                new AssociatesAPI.Config(BuildConfig.AMAZON_API_KEY, this)
         );
 
         loadDrawable(R.drawable.product_bands, mProducts.get(0));
