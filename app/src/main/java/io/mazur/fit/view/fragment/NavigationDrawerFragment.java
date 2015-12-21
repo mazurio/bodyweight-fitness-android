@@ -18,6 +18,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
+import icepick.Icepick;
+import icepick.Icicle;
 import io.mazur.fit.App;
 import io.mazur.fit.R;
 import io.mazur.fit.stream.RoutineStream;
@@ -32,17 +34,22 @@ public class NavigationDrawerFragment extends Fragment {
 
     @InjectView(R.id.menu)
     View mMenu;
-    
+
     @InjectView(R.id.recycler_view)
     View mRecyclerView;
 
     @InjectView(R.id.action_menu_home)
     View mActionMenuHome;
 
+    @Icicle
+    int mMenuId = -1;
+
+    @Icicle
+    boolean mShowRecyclerView = false;
+
     private ActionBarDrawerToggle mActionBarDrawerToggle;
     private DrawerLayout mNavigationDrawerLayout;
     private View mFragmentContainerView;
-    private int mMenuId = -1;
 
     private final PublishSubject<Integer> mDrawerMenuSubject = PublishSubject.create();
 
@@ -60,6 +67,8 @@ public class NavigationDrawerFragment extends Fragment {
                 .subscribe(exercise -> {
                     closeDrawer();
                 });
+
+        Icepick.restoreInstanceState(this, savedInstanceState);
     }
 
     @Override
@@ -85,7 +94,18 @@ public class NavigationDrawerFragment extends Fragment {
 
         subscribe(view);
 
+        if (mShowRecyclerView) {
+            showRecyclerView();
+        }
+
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Icepick.saveInstanceState(this, outState);
     }
 
     public void setDrawer(int fragmentId, DrawerLayout drawerLayout) {
@@ -111,30 +131,36 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void subscribe(View view) {
-        mMenuId = mActionMenuHome.getId();
+        if (mMenuId == -1) {
+            mMenuId = mActionMenuHome.getId();
+        }
 
         mDrawerMenuSubscription = mDrawerMenuSubject.subscribe(id -> {
-            if (id == R.id.action_menu_faq || id == R.id.action_menu_settings) {
-                closeDrawer();
-
-                return;
-            }
-
-            if (id == R.id.action_menu_home) {
-                mImageViewArrow.setVisibility(View.VISIBLE);
-            } else if (id == R.id.action_menu_workout_log) {
-                mImageViewArrow.setVisibility(View.INVISIBLE);
-            }
-
-            ((TextView) view.findViewById(mMenuId)).setTextColor(Color.parseColor("#87000000"));
-            ((TextView) view.findViewById(id)).setTextColor(Color.parseColor("#009688"));
-
-            mMenuId = id;
+            setMenu(view, id);
 
             closeDrawer();
         });
 
         mDrawerMenuSubject.onNext(mMenuId);
+    }
+
+    private void setMenu(View view, int id) {
+        if (id == R.id.action_menu_faq || id == R.id.action_menu_settings) {
+            closeDrawer();
+
+            return;
+        }
+
+        if (id == R.id.action_menu_home) {
+            mImageViewArrow.setVisibility(View.VISIBLE);
+        } else if (id == R.id.action_menu_workout_log) {
+            mImageViewArrow.setVisibility(View.INVISIBLE);
+        }
+
+        ((TextView) view.findViewById(mMenuId)).setTextColor(Color.parseColor("#87000000"));
+        ((TextView) view.findViewById(id)).setTextColor(Color.parseColor("#009688"));
+
+        mMenuId = id;
     }
 
     public ActionBarDrawerToggle getActionBarDrawerToggle() {
@@ -145,28 +171,41 @@ public class NavigationDrawerFragment extends Fragment {
         return mDrawerMenuSubject.asObservable();
     }
 
+    private void showRecyclerView() {
+        mShowRecyclerView = true;
+
+        mImageViewArrow.setImageDrawable(App
+                .getContext()
+                .getResources()
+                .getDrawable(R.drawable.ic_arrow_drop_up));
+
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mMenu.setVisibility(View.GONE);
+    }
+
+    private void hideRecyclerView() {
+        mShowRecyclerView = false;
+
+        mImageViewArrow.setImageDrawable(App
+                .getContext()
+                .getResources()
+                .getDrawable(R.drawable.ic_arrow_drop_down));
+
+        mRecyclerView.setVisibility(View.GONE);
+        mMenu.setVisibility(View.VISIBLE);
+    }
+
     @OnClick(R.id.header)
+    @SuppressWarnings("unused")
     public void onHeaderClick(View view) {
         if (mMenuId != R.id.action_menu_home) {
             return;
         }
 
         if (mMenu.getVisibility() == View.VISIBLE) {
-            mImageViewArrow.setImageDrawable(App
-                    .getContext()
-                    .getResources()
-                    .getDrawable(R.drawable.ic_arrow_drop_up));
-
-            mRecyclerView.setVisibility(View.VISIBLE);
-            mMenu.setVisibility(View.GONE);
+            showRecyclerView();
         } else {
-            mImageViewArrow.setImageDrawable(App
-                    .getContext()
-                    .getResources()
-                    .getDrawable(R.drawable.ic_arrow_drop_down));
-
-            mRecyclerView.setVisibility(View.GONE);
-            mMenu.setVisibility(View.VISIBLE);
+            hideRecyclerView();
         }
     }
 
@@ -176,6 +215,7 @@ public class NavigationDrawerFragment extends Fragment {
             R.id.action_menu_faq,
             R.id.action_menu_settings
     })
+    @SuppressWarnings("unused")
     public void onMenuClick(View view) {
         mDrawerMenuSubject.onNext(view.getId());
     }
