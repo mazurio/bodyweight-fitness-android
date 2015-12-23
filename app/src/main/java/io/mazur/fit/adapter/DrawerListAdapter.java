@@ -17,7 +17,6 @@ import io.mazur.fit.model.LinkedRoutine;
 import io.mazur.fit.model.RoutineType;
 import io.mazur.fit.model.Section;
 import io.mazur.fit.stream.RoutineStream;
-import io.mazur.fit.utils.Logger;
 
 public class DrawerListAdapter extends RecyclerView.Adapter<DrawerListAdapter.RoutinePresenter> {
     private Routine mRoutine;
@@ -75,8 +74,6 @@ public class DrawerListAdapter extends RecyclerView.Adapter<DrawerListAdapter.Ro
     }
 
     public void setActiveExerciseIndex(int index) {
-        Logger.d("index: " + index + " with id: " + this);
-
         mActiveExerciseIndex = index;
 
         notifyItemRangeChanged(0, mActiveExerciseIndex);

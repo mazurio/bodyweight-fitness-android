@@ -90,7 +90,7 @@ public class RoutineStream {
             public void call(Subscriber<? super Routine> subscriber) {
                 subscriber.onNext(mRoutine);
             }
-        }).publish().refCount();
+        }).observeOn(AndroidSchedulers.mainThread()).publish().refCount();
 
         return Observable.merge(mRoutineSubject, routineObservable);
     }

@@ -26,8 +26,6 @@ import io.mazur.fit.R;
 import io.mazur.fit.stream.DrawerStream;
 import io.mazur.fit.stream.RoutineStream;
 
-import io.mazur.fit.utils.Logger;
-
 import rx.Subscription;
 
 public class NavigationDrawerFragment extends Fragment {
