@@ -1,11 +1,13 @@
 package io.mazur.fit.presenter;
 
 import android.app.TimePickerDialog;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
-import android.widget.Toast;
 
+import io.mazur.fit.R;
 import io.mazur.fit.model.Exercise;
 import io.mazur.fit.stream.RoutineStream;
+import io.mazur.fit.utils.PreferenceUtil;
 import io.mazur.fit.view.TimerView;
 
 import rx.Observable;
@@ -128,7 +130,11 @@ public class TimerPresenter extends IPresenter<TimerView> {
     }
 
     public void playSound() {
-        Toast.makeText(getContext(), "Fake Sound", Toast.LENGTH_SHORT).show();
+        if(PreferenceUtil.getInstance().playSoundWhenTimerStops()) {
+            MediaPlayer mediaPlayer = MediaPlayer.create(getContext(), R.raw.finished);
+            mediaPlayer.setLooping(false);
+            mediaPlayer.start();
+        }
     }
 
     public void onClickPreviousExerciseButton() {
@@ -151,9 +157,9 @@ public class TimerPresenter extends IPresenter<TimerView> {
 
             restartTimer(mCurrentSeconds);
 
-            // save currentChosenSeconds as new preferences
             mSeconds = mCurrentSeconds;
 
+            PreferenceUtil.getInstance().setTimerValue(mSeconds * 1000);
         }, formatMinutesAsNumber(mCurrentSeconds), formatSecondsAsNumber(mCurrentSeconds), true);
 
         timePickerDialog.show();
@@ -175,9 +181,8 @@ public class TimerPresenter extends IPresenter<TimerView> {
         restartTimer(getSeconds());
     }
 
-    // later it will be either default or from preferences.
     public int getSeconds() {
-        return mSeconds;
+        return (int) PreferenceUtil.getInstance().getTimerValue(mSeconds * 1000) / 1000;
     }
 
     public CountDownTimer buildCountDownTimer(int seconds) {
