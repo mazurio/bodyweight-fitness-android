@@ -44,13 +44,13 @@ public class ActionPresenter extends IPresenter<ActionView> {
     }
 
     public void onClickLogWorkoutButton() {
-        LogWorkoutDialog logWorkoutDialog = new LogWorkoutDialog(mView.getContext());
+        LogWorkoutDialog logWorkoutDialog = new LogWorkoutDialog(getContext());
         logWorkoutDialog.show();
     }
 
     public void onClickBuyEquipment() {
-        mView.getContext().startActivity(
-                new Intent(mView.getContext(), BuyEquipmentActivity.class)
+        getContext().startActivity(
+                new Intent(getContext(), BuyEquipmentActivity.class)
         );
     }
 
@@ -59,11 +59,11 @@ public class ActionPresenter extends IPresenter<ActionView> {
 
         if(id != null) {
             try {
-                mView.getContext().startActivity(
+                getContext().startActivity(
                         new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id))
                 );
             } catch(ActivityNotFoundException e) {
-                mView.getContext().startActivity(
+                getContext().startActivity(
                         new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + id))
                 );
             }
@@ -71,15 +71,15 @@ public class ActionPresenter extends IPresenter<ActionView> {
     }
 
     public void onClickChooseProgression() {
-        ProgressDialog progressDialog = new ProgressDialog(mView.getContext(), RoutineStream.getInstance().getExercise());
+        ProgressDialog progressDialog = new ProgressDialog(getContext(), RoutineStream.getInstance().getExercise());
         progressDialog.show();
     }
 
     public void onClickLogWorkout() {
         String routineId = RealmStream.getInstance().getRealmRoutineForToday().getId();
 
-        mView.getContext().startActivity(
-                new Intent(mView.getContext(), ProgressActivity.class)
+        getContext().startActivity(
+                new Intent(getContext(), ProgressActivity.class)
                         .putExtra("routineId", routineId)
         );
     }

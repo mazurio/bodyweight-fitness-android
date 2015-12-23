@@ -1,5 +1,6 @@
 package io.mazur.fit.presenter;
 
+import android.content.Context;
 import android.view.View;
 
 import java.io.Serializable;
@@ -16,6 +17,10 @@ public abstract class IPresenter<V extends View> implements Serializable {
     protected transient V mView;
 
     private transient ArrayList<Subscription> mSubscriptions = new ArrayList<>();
+
+    public Context getContext() {
+        return mView.getContext();
+    }
 
     /**
      * Create new view.

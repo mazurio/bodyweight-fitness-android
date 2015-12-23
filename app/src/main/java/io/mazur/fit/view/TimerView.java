@@ -23,14 +23,29 @@ public class TimerView extends LinearLayout {
     @State
     TimerPresenter mTimerPresenter;
 
-    @InjectView(R.id.timer_layout) RelativeLayout mTimerLayout;
-    @InjectView(R.id.prev_exercise_button) ImageButton mPrevExerciseButton;
-    @InjectView(R.id.next_exercise_button) ImageButton mNextExerciseButton;
-    @InjectView(R.id.timer_minutes) TextView mTimerMinutesTextView;
-    @InjectView(R.id.timer_seconds) TextView mTimerSecondsTextView;
-    @InjectView(R.id.increase_timer_button) FloatingActionButton mIncreaseTimerButton;
-    @InjectView(R.id.start_stop_timer_button) FloatingActionButton mStartStopTimerButton;
-    @InjectView(R.id.restart_timer_button) FloatingActionButton mRestartTimerButton;
+    @InjectView(R.id.timer_layout)
+    RelativeLayout mTimerLayout;
+
+    @InjectView(R.id.prev_exercise_button)
+    ImageButton mPrevExerciseButton;
+
+    @InjectView(R.id.next_exercise_button)
+    ImageButton mNextExerciseButton;
+
+    @InjectView(R.id.timer_minutes)
+    TextView mTimerMinutesTextView;
+
+    @InjectView(R.id.timer_seconds)
+    TextView mTimerSecondsTextView;
+
+    @InjectView(R.id.increase_timer_button)
+    FloatingActionButton mIncreaseTimerButton;
+
+    @InjectView(R.id.start_stop_timer_button)
+    FloatingActionButton mStartStopTimerButton;
+
+    @InjectView(R.id.restart_timer_button)
+    FloatingActionButton mRestartTimerButton;
 
     public TimerView(Context context) {
         super(context);
@@ -48,6 +63,12 @@ public class TimerView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
+        ButterKnife.inject(this);
+
+        resetFloatingActionButtonMargin(getIncreaseTimerButton());
+        resetFloatingActionButtonMargin(getStartStopTimerButton());
+        resetFloatingActionButtonMargin(getRestartTimerButton());
+
         onCreateView();
     }
 
@@ -56,12 +77,6 @@ public class TimerView extends LinearLayout {
     }
 
     public void onCreateView() {
-        ButterKnife.inject(this);
-
-        resetFloatingActionButtonMargin(getIncreaseTimerButton());
-        resetFloatingActionButtonMargin(getStartStopTimerButton());
-        resetFloatingActionButtonMargin(getRestartTimerButton());
-
         mTimerPresenter.onCreateView(this);
     }
 
@@ -77,11 +92,6 @@ public class TimerView extends LinearLayout {
         super.onRestoreInstanceState(Icepick.restoreInstanceState(this, state));
 
         onCreateView();
-    }
-
-    @Override
-    public void setSaveEnabled(boolean enabled) {
-        super.setSaveEnabled(true);
     }
 
     private void resetFloatingActionButtonMargin(FloatingActionButton floatingActionButton) {
