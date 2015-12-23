@@ -2,6 +2,7 @@ package io.mazur.fit.view;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Parcelable;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -14,20 +15,34 @@ import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+
+import icepick.Icepick;
+import icepick.State;
+
 import io.mazur.fit.R;
 import io.mazur.fit.presenter.ActionPresenter;
 import io.mazur.fit.view.widget.Fab;
 
 public class ActionView extends RelativeLayout {
-    private ActionPresenter mActionPresenter;
+    @State
+    ActionPresenter mPresenter;
 
     private MaterialSheetFab mMaterialSheet;
 
-    @InjectView(R.id.action_view_overlay) View mActionViewOverlay;
-    @InjectView(R.id.action_view_log_workout_button) Fab mActionViewLogWorkoutButton;
-    @InjectView(R.id.action_view_action_button) Fab mActionViewActionButton;
-    @InjectView(R.id.action_view_action_sheet) CardView mActionViewActionSheet;
-    @InjectView(R.id.action_view_action_sheet_choose_progression) TextView mActionViewActionSheetChooseProgression;
+    @InjectView(R.id.action_view_overlay)
+    View mActionViewOverlay;
+
+    @InjectView(R.id.action_view_log_workout_button)
+    Fab mActionViewLogWorkoutButton;
+
+    @InjectView(R.id.action_view_action_button)
+    Fab mActionViewActionButton;
+
+    @InjectView(R.id.action_view_action_sheet)
+    CardView mActionViewActionSheet;
+
+    @InjectView(R.id.action_view_action_sheet_choose_progression)
+    TextView mActionViewActionSheetChooseProgression;
 
     public ActionView(Context context) {
         super(context);
@@ -90,16 +105,43 @@ public class ActionView extends RelativeLayout {
         onCreateView();
     }
 
+    @Override
+    public Parcelable onSaveInstanceState() {
+        mPresenter.onSaveInstanceState();
+
+        return Icepick.saveInstanceState(this, super.onSaveInstanceState());
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        mPresenter.onDestroyView();
+        mPresenter = null;
+
+        super.onRestoreInstanceState(Icepick.restoreInstanceState(this, state));
+
+        mPresenter.onRestoreInstanceState(this);
+    }
+
     public void onCreate() {
-        mActionPresenter = new ActionPresenter();
+        mPresenter = new ActionPresenter();
     }
 
     public void onCreateView() {
-        mActionPresenter.onCreateView(this);
+        mPresenter.onCreateView(this);
     }
 
     public void setActionButtonImageDrawable(int drawable) {
         mActionViewActionButton.setImageDrawable(getResources().getDrawable(drawable));
+    }
+
+    public void showActionButtons() {
+        mActionViewLogWorkoutButton.setVisibility(View.VISIBLE);
+        mActionViewActionButton.setVisibility(View.VISIBLE);
+    }
+
+    public void hideActionButtons() {
+        mActionViewLogWorkoutButton.setVisibility(View.GONE);
+        mActionViewActionButton.setVisibility(View.GONE);
     }
 
     public void showActionSheetChooseProgression() {
@@ -111,31 +153,36 @@ public class ActionView extends RelativeLayout {
     }
 
     @OnClick(R.id.action_view_log_workout_button)
+    @SuppressWarnings("unused")
     public void onClickLogWorkoutButton(View view) {
-        mActionPresenter.onClickLogWorkoutButton();
+        mPresenter.onClickLogWorkoutButton();
     }
 
     @OnClick(R.id.action_view_action_sheet_buy_equipment)
+    @SuppressWarnings("unused")
     public void onClickBuyEquipment(View view) {
         mMaterialSheet.hideSheet();
-        mActionPresenter.onClickBuyEquipment();
+        mPresenter.onClickBuyEquipment();
     }
 
     @OnClick(R.id.action_view_action_sheet_watch_on_youtube)
+    @SuppressWarnings("unused")
     public void onClickWatchOnYouTube(View view) {
         mMaterialSheet.hideSheet();
-        mActionPresenter.onClickWatchOnYouTube();
+        mPresenter.onClickWatchOnYouTube();
     }
 
     @OnClick(R.id.action_view_action_sheet_choose_progression)
+    @SuppressWarnings("unused")
     public void onClickChooseProgression(View view) {
         mMaterialSheet.hideSheet();
-        mActionPresenter.onClickChooseProgression();
+        mPresenter.onClickChooseProgression();
     }
 
     @OnClick(R.id.action_view_action_sheet_log_workout)
+    @SuppressWarnings("unused")
     public void onClickLogWorkout(View view) {
         mMaterialSheet.hideSheet();
-        mActionPresenter.onClickLogWorkout();
+        mPresenter.onClickLogWorkout();
     }
 }

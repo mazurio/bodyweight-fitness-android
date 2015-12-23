@@ -8,8 +8,8 @@ import java.util.Date;
 
 import io.mazur.fit.R;
 import io.mazur.fit.adapter.CalendarAdapter;
-import io.mazur.fit.model.CalendarDayChanged;
 import io.mazur.fit.model.realm.RealmRoutine;
+import io.mazur.fit.stream.CalendarStream;
 import io.mazur.fit.stream.RealmStream;
 import io.mazur.fit.utils.DateUtils;
 import io.mazur.fit.utils.ViewUtils;
@@ -67,31 +67,32 @@ public class CalendarItemPresenter {
 
             view.setText(dayOfWeek.dayOfMonth().getAsString());
         }
+
+        CalendarStream.getInstance().getCalendarPageObservable().subscribe(position -> {
+            if(position == mViewPagerPosition) {
+                if (mIsTodaysWeek) {
+                    mCalendarItemView.selectDay(mTodaysDate);
+                } else {
+                    mCalendarItemView.selectDay(3);
+                }
+            }
+        });
+
+        CalendarStream.getInstance()
+                .getCalendarDayChangedObservable()
+                .subscribe(calendarDayChanged -> {
+                    if(mViewPagerPosition != calendarDayChanged.presenterSelected) {
+                        mCalendarItemView.unselectClickedDay();
+                    }
+                });
+    }
+
+    public void onDestroyView() {
+        // remove subscriptions
     }
 
     public int getViewPagerPosition() {
         return mViewPagerPosition;
-    }
-
-    /**
-     * Called by Adapter
-     *
-     * @param position of the selected page.
-     */
-    public void onPageSelected(int position) {
-        if(position == mViewPagerPosition) {
-            if (mIsTodaysWeek) {
-                mCalendarItemView.selectDay(mTodaysDate);
-            } else {
-                mCalendarItemView.selectDay(3);
-            }
-        }
-    }
-
-    public void onDaySelected(CalendarDayChanged calendarDayChanged) {
-        if(mViewPagerPosition != calendarDayChanged.presenterSelected) {
-            mCalendarItemView.unselectClickedDay();
-        }
     }
 
     public boolean isTodaysDate(DateTime dateTime, int day) {

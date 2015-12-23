@@ -18,13 +18,26 @@ import io.mazur.fit.view.widget.ViewPager;
 public class CalendarView extends LinearLayout {
     private CalendarPresenter mCalendarPresenter;
 
-    @InjectView(R.id.view_calendar_pager) ViewPager mViewPager;
-    @InjectView(R.id.view_calendar_date) TextView mDate;
-    @InjectView(R.id.view_calendar_card) CardView mCardView;
-    @InjectView(R.id.view_calendar_card_view_button) Button mViewButton;
-    @InjectView(R.id.view_calendar_card_export_button) Button mExportButton;
-    @InjectView(R.id.view_calendar_card_remove_button) Button mRemoveButton;
-    @InjectView(R.id.view_calendar_message) View mMessage;
+    @InjectView(R.id.view_calendar_pager)
+    ViewPager mViewPager;
+
+    @InjectView(R.id.view_calendar_date)
+    TextView mDate;
+
+    @InjectView(R.id.view_calendar_card)
+    CardView mCardView;
+
+    @InjectView(R.id.view_calendar_card_view_button)
+    Button mViewButton;
+
+    @InjectView(R.id.view_calendar_card_export_button)
+    Button mExportButton;
+
+    @InjectView(R.id.view_calendar_card_remove_button)
+    Button mRemoveButton;
+
+    @InjectView(R.id.view_calendar_message)
+    View mMessage;
 
     public CalendarView(Context context) {
         super(context);
@@ -59,10 +72,6 @@ public class CalendarView extends LinearLayout {
 
     public void onCreateView() {
         mCalendarPresenter.onCreateView(this);
-    }
-
-    public CalendarPresenter getCalendarPresenter() {
-        return mCalendarPresenter;
     }
 
     public ViewPager getViewPager() {

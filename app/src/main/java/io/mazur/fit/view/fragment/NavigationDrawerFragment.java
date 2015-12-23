@@ -19,14 +19,16 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 import icepick.Icepick;
-import icepick.Icicle;
+import icepick.State;
+
 import io.mazur.fit.App;
 import io.mazur.fit.R;
+import io.mazur.fit.stream.DrawerStream;
 import io.mazur.fit.stream.RoutineStream;
 
-import rx.Observable;
+import io.mazur.fit.utils.Logger;
+
 import rx.Subscription;
-import rx.subjects.PublishSubject;
 
 public class NavigationDrawerFragment extends Fragment {
     @InjectView(R.id.arrow)
@@ -41,17 +43,15 @@ public class NavigationDrawerFragment extends Fragment {
     @InjectView(R.id.action_menu_home)
     View mActionMenuHome;
 
-    @Icicle
+    @State
     int mMenuId = -1;
 
-    @Icicle
+    @State
     boolean mShowRecyclerView = false;
 
     private ActionBarDrawerToggle mActionBarDrawerToggle;
     private DrawerLayout mNavigationDrawerLayout;
     private View mFragmentContainerView;
-
-    private final PublishSubject<Integer> mDrawerMenuSubject = PublishSubject.create();
 
     private Subscription mExerciseChangedSubscription;
     private Subscription mDrawerMenuSubscription;
@@ -67,8 +67,6 @@ public class NavigationDrawerFragment extends Fragment {
                 .subscribe(exercise -> {
                     closeDrawer();
                 });
-
-        Icepick.restoreInstanceState(this, savedInstanceState);
     }
 
     @Override
@@ -88,6 +86,8 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Icepick.restoreInstanceState(this, savedInstanceState);
+
         final View view = inflater.inflate(R.layout.view_drawer, container, false);
 
         ButterKnife.inject(this, view);
@@ -106,6 +106,10 @@ public class NavigationDrawerFragment extends Fragment {
         super.onSaveInstanceState(outState);
 
         Icepick.saveInstanceState(this, outState);
+    }
+
+    public ActionBarDrawerToggle getActionBarDrawerToggle() {
+        return mActionBarDrawerToggle;
     }
 
     public void setDrawer(int fragmentId, DrawerLayout drawerLayout) {
@@ -135,13 +139,14 @@ public class NavigationDrawerFragment extends Fragment {
             mMenuId = mActionMenuHome.getId();
         }
 
-        mDrawerMenuSubscription = mDrawerMenuSubject.subscribe(id -> {
-            setMenu(view, id);
+        mDrawerMenuSubscription = DrawerStream.getInstance()
+                .getMenuObservable()
+                .subscribe(id -> {
+                    setMenu(view, id);
+                    closeDrawer();
+                });
 
-            closeDrawer();
-        });
-
-        mDrawerMenuSubject.onNext(mMenuId);
+        DrawerStream.getInstance().setMenu(mMenuId);
     }
 
     private void setMenu(View view, int id) {
@@ -161,14 +166,6 @@ public class NavigationDrawerFragment extends Fragment {
         ((TextView) view.findViewById(id)).setTextColor(Color.parseColor("#009688"));
 
         mMenuId = id;
-    }
-
-    public ActionBarDrawerToggle getActionBarDrawerToggle() {
-        return mActionBarDrawerToggle;
-    }
-
-    public Observable<Integer> getMenuObservable() {
-        return mDrawerMenuSubject.asObservable();
     }
 
     private void showRecyclerView() {
@@ -217,6 +214,6 @@ public class NavigationDrawerFragment extends Fragment {
     })
     @SuppressWarnings("unused")
     public void onMenuClick(View view) {
-        mDrawerMenuSubject.onNext(view.getId());
+        DrawerStream.getInstance().setMenu(view.getId());
     }
 }

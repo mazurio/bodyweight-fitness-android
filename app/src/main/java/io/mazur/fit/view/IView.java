@@ -7,12 +7,12 @@ import android.widget.RelativeLayout;
 
 import butterknife.ButterKnife;
 import icepick.Icepick;
-import icepick.Icicle;
+import icepick.State;
 
 import io.mazur.fit.presenter.IPresenter;
 
 public abstract class IView <P extends IPresenter> extends RelativeLayout {
-    @Icicle
+    @State
     P mPresenter;
 
     public IView(Context context) {
@@ -45,9 +45,11 @@ public abstract class IView <P extends IPresenter> extends RelativeLayout {
 
     @Override
     public void onRestoreInstanceState(Parcelable state) {
+        mPresenter = null;
+
         super.onRestoreInstanceState(Icepick.restoreInstanceState(this, state));
 
-        mPresenter.onRestoreInstanceState();
+        mPresenter.onRestoreInstanceState(this);
     }
 
     public abstract void onCreate();

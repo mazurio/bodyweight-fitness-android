@@ -11,11 +11,11 @@ import java.util.Locale;
 
 import io.mazur.fit.R;
 import io.mazur.fit.adapter.CalendarAdapter;
-import io.mazur.fit.model.CalendarDayChanged;
 import io.mazur.fit.model.realm.RealmExercise;
 import io.mazur.fit.model.realm.RealmRoutine;
-import io.mazur.fit.stream.ActivityStream;
+import io.mazur.fit.stream.CalendarStream;
 import io.mazur.fit.stream.RealmStream;
+import io.mazur.fit.stream.ToolbarStream;
 import io.mazur.fit.ui.ProgressActivity;
 import io.mazur.fit.utils.DateUtils;
 import io.mazur.fit.view.CalendarView;
@@ -26,7 +26,6 @@ public class CalendarPresenter {
     private transient CalendarView mCalendarView;
 
     private CalendarAdapter mCalendarAdapter;
-    private CalendarDayChanged mCalendarDayChanged;
 
     private String mRealmRoutineId;
 
@@ -40,34 +39,37 @@ public class CalendarPresenter {
         mCalendarView.getViewPager().setAdapter(mCalendarAdapter);
         mCalendarView.getViewPager().setCurrentItem(CalendarAdapter.DEFAULT_POSITION, false);
 
-        RealmStream.getInstance().getRealmRoutineObservable().subscribe(realmRoutine -> {
-            notifyDataSetChanged();
-        });
+        RealmStream.getInstance()
+                .getRealmRoutineObservable()
+                .subscribe(realmRoutine -> {
+                    notifyDataSetChanged();
+                });
 
-        mCalendarAdapter.getOnDaySelectedObservable().subscribe(calendarDayChanged -> {
-            mCalendarDayChanged = calendarDayChanged;
+        CalendarStream.getInstance()
+                .getCalendarDayChangedObservable()
+                .subscribe(calendarDayChanged -> {
+                    DateTime dateTime = DateUtils.getDate(
+                            calendarDayChanged.presenterSelected,
+                            calendarDayChanged.daySelected
+                    );
 
-            DateTime dateTime = DateUtils.getDate(
-                    calendarDayChanged.presenterSelected,
-                    calendarDayChanged.daySelected
-            );
+                    mCalendarView.getDate().setText(dateTime.toString("EEEE, d MMMM", Locale.ENGLISH));
 
-            mCalendarView.getDate().setText(dateTime.toString("EEEE, d MMMM", Locale.ENGLISH));
+                    if (isRoutineLogged(dateTime)) {
+                        showCardView();
+                    } else {
+                        hideCardView();
+                    }
+                });
 
-            if (isRoutineLogged(dateTime)) {
-                showCardView();
-            } else {
-                hideCardView();
-            }
-        });
-
-        ActivityStream.getInstance().getMenuObservable().subscribe(id -> {
-            if(id == R.id.action_today) {
-                mCalendarView.getViewPager().setCurrentItem(
-                        CalendarAdapter.DEFAULT_POSITION, true
-                );
-            }
-        });
+        ToolbarStream.getInstance()
+                .getMenuObservable()
+                .filter(id -> id.equals(R.id.action_today))
+                .subscribe(id -> {
+                    mCalendarView.getViewPager().setCurrentItem(
+                            CalendarAdapter.DEFAULT_POSITION, true
+                    );
+                });
     }
 
     private void showCardView() {
@@ -141,14 +143,6 @@ public class CalendarPresenter {
     private void notifyDataSetChanged() {
         mCalendarView.getViewPager().setAdapter(mCalendarAdapter);
         mCalendarView.getViewPager().setCurrentItem(CalendarAdapter.DEFAULT_POSITION, false);
-    }
-
-    public CalendarAdapter getCalendarAdapter() {
-        return mCalendarAdapter;
-    }
-
-    public CalendarDayChanged getCalendarDayChanged() {
-        return mCalendarDayChanged;
     }
 
     public boolean isRoutineLogged(DateTime dateTime) {

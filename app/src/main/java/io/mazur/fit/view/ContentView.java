@@ -3,6 +3,7 @@ package io.mazur.fit.view;
 import android.content.Context;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import butterknife.ButterKnife;
@@ -10,25 +11,34 @@ import butterknife.InjectView;
 
 import icepick.Icepick;
 import icepick.State;
+
 import io.mazur.fit.R;
-import io.mazur.fit.presenter.PreviewPresenter;
+import io.mazur.fit.presenter.ContentPresenter;
 
-import pl.droidsonroids.gif.GifImageView;
-
-public class PreviewView extends RelativeLayout {
+public class ContentView extends RelativeLayout {
     @State
-    PreviewPresenter mPresenter;
+    ContentPresenter mPresenter;
 
-    @InjectView(R.id.preview_gif_image_view) GifImageView mPreviewGifImageView;
+    @InjectView(R.id.view_home)
+    View mHomeView;
 
-    public PreviewView(Context context) {
+    @InjectView(R.id.view_calendar)
+    CalendarView mCalendarView;
+
+    public ContentView(Context context) {
         super(context);
 
         onCreate();
     }
 
-    public PreviewView(Context context, AttributeSet attrs) {
+    public ContentView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        onCreate();
+    }
+
+    public ContentView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
 
         onCreate();
     }
@@ -48,7 +58,7 @@ public class PreviewView extends RelativeLayout {
 
         return Icepick.saveInstanceState(this, super.onSaveInstanceState());
     }
-    
+
     @Override
     public void onRestoreInstanceState(Parcelable state) {
         mPresenter.onDestroyView();
@@ -59,15 +69,21 @@ public class PreviewView extends RelativeLayout {
         mPresenter.onRestoreInstanceState(this);
     }
 
-    public void onCreate() {
-        mPresenter = new PreviewPresenter();
+    private void onCreate() {
+        mPresenter = new ContentPresenter();
     }
 
-    public void onCreateView() {
+    private void onCreateView() {
         mPresenter.onCreateView(this);
     }
 
-    public GifImageView getPreviewGifImageView() {
-        return mPreviewGifImageView;
+    public void showHome() {
+        mHomeView.setVisibility(View.VISIBLE);
+        mCalendarView.setVisibility(View.GONE);
+    }
+
+    public void showCalendar() {
+        mHomeView.setVisibility(View.GONE);
+        mCalendarView.setVisibility(View.VISIBLE);
     }
 }

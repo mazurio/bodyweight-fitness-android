@@ -16,13 +16,12 @@ import io.mazur.fit.R;
 import io.mazur.fit.model.CalendarDayChanged;
 import io.mazur.fit.presenter.CalendarItemPresenter;
 
+import io.mazur.fit.stream.CalendarStream;
 import io.mazur.fit.utils.ViewUtils;
 import rx.subjects.PublishSubject;
 
 public class CalendarItemView extends LinearLayout {
     private CalendarItemPresenter mCalendarItemPresenter;
-
-    private PublishSubject<CalendarDayChanged> mOnDaySelectedSubject;
 
     @InjectViews({
             R.id.day_1, R.id.day_2, R.id.day_3, R.id.day_4, R.id.day_5, R.id.day_6, R.id.day_7
@@ -49,17 +48,16 @@ public class CalendarItemView extends LinearLayout {
         ButterKnife.inject(this);
     }
 
-    public void onCreate(int viewPagerPosition, PublishSubject<CalendarDayChanged> onDaySelectedSubject) {
+    public void onCreate(int viewPagerPosition) {
         mCalendarItemPresenter = new CalendarItemPresenter(viewPagerPosition);
-        mOnDaySelectedSubject = onDaySelectedSubject;
     }
 
     public void onCreateView(int currentViewPagerPosition) {
         mCalendarItemPresenter.onCreateView(this, currentViewPagerPosition);
     }
 
-    public CalendarItemPresenter getCalendarItemPresenter() {
-        return mCalendarItemPresenter;
+    public void onDestroyView() {
+        mCalendarItemPresenter.onDestroyView();
     }
 
     public List<TextView> getDays() {
@@ -82,7 +80,7 @@ public class CalendarItemView extends LinearLayout {
         calendarDayChanged.daySelected = mDays.indexOf(view);
         calendarDayChanged.presenterSelected = mCalendarItemPresenter.getViewPagerPosition();
 
-        mOnDaySelectedSubject.onNext(calendarDayChanged);
+        CalendarStream.getInstance().setCalendarDay(calendarDayChanged);
 
         mClickedDay = view;
     }

@@ -95,8 +95,8 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'io.reactivex:rxjava:1.1.0'
 
-    compile 'frankiesardo:icepick:3.0.2'
-    provided 'frankiesardo:icepick-processor:3.0.2'
+    compile 'frankiesardo:icepick:3.1.0'
+    provided 'frankiesardo:icepick-processor:3.1.0'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.4.0@aar') {
         transitive = true;

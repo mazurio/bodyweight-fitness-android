@@ -14,13 +14,14 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import icepick.Icepick;
-import icepick.Icicle;
+import icepick.State;
 
 import io.mazur.fit.R;
 import io.mazur.fit.presenter.TimerPresenter;
 
 public class TimerView extends LinearLayout {
-    @Icicle TimerPresenter mTimerPresenter;
+    @State
+    TimerPresenter mTimerPresenter;
 
     @InjectView(R.id.timer_layout) RelativeLayout mTimerLayout;
     @InjectView(R.id.prev_exercise_button) ImageButton mPrevExerciseButton;

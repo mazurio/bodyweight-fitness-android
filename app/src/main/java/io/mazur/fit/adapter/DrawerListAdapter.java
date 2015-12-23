@@ -17,21 +17,12 @@ import io.mazur.fit.model.LinkedRoutine;
 import io.mazur.fit.model.RoutineType;
 import io.mazur.fit.model.Section;
 import io.mazur.fit.stream.RoutineStream;
+import io.mazur.fit.utils.Logger;
 
 public class DrawerListAdapter extends RecyclerView.Adapter<DrawerListAdapter.RoutinePresenter> {
     private Routine mRoutine;
 
-    private int mActiveIndex = 1;
-
-    public DrawerListAdapter() {
-        super();
-
-        RoutineStream.getInstance().getExerciseChangedObservable().subscribe(exercise -> {
-            mActiveIndex = RoutineStream.getInstance().getRoutine().getLinkedRoutine().indexOf(exercise);
-
-            notifyDataSetChanged();
-        });
-    }
+    private int mActiveExerciseIndex = 1;
 
     @Override
     public RoutinePresenter onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -70,7 +61,7 @@ public class DrawerListAdapter extends RecyclerView.Adapter<DrawerListAdapter.Ro
 
     @Override
     public int getItemViewType(int position) {
-        if(mActiveIndex == position) {
+        if(mActiveExerciseIndex == position) {
             return RoutineType.EXERCISE_ACTIVE.ordinal();
         }
 
@@ -81,6 +72,14 @@ public class DrawerListAdapter extends RecyclerView.Adapter<DrawerListAdapter.Ro
         mRoutine = routine;
 
         notifyDataSetChanged();
+    }
+
+    public void setActiveExerciseIndex(int index) {
+        Logger.d("index: " + index + " with id: " + this);
+
+        mActiveExerciseIndex = index;
+
+        notifyItemRangeChanged(0, mActiveExerciseIndex);
     }
 
     public abstract class RoutinePresenter<T extends LinkedRoutine> extends RecyclerView.ViewHolder {
