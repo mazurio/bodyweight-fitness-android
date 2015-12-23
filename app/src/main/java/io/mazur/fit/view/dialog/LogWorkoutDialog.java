@@ -620,8 +620,6 @@ public class LogWorkoutDialog {
     }
 
     public String formatMinutes(int seconds) {
-        Logger.d(String.valueOf(seconds));
-
         int minutes = seconds / 60;
 
         if(minutes == 0) {

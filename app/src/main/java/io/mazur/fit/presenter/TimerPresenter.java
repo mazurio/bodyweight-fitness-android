@@ -1,311 +1,238 @@
 package io.mazur.fit.presenter;
 
 import android.app.TimePickerDialog;
-import android.media.MediaPlayer;
 import android.os.CountDownTimer;
-import android.view.View;
+import android.widget.Toast;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-
-import java.io.Serializable;
-
-import io.mazur.fit.R;
-import io.mazur.fit.model.DialogState;
-import io.mazur.fit.model.TimerState;
-import io.mazur.fit.stream.ActivityStream;
+import io.mazur.fit.model.Exercise;
 import io.mazur.fit.stream.RoutineStream;
-import io.mazur.fit.utils.PreferenceUtil;
 import io.mazur.fit.view.TimerView;
 
-/**
- * TODO: Refactor.
- * TODO: Unit Test this.
- * TODO: Basically everything here :).
- */
-public class TimerPresenter implements Serializable {
-    private static final long ONE_MINUTE = 60000;
-    private static final long ONE_SECOND = 1000;
+import rx.Observable;
 
-    private transient TimerView mTimerView;
+public class TimerPresenter extends IPresenter<TimerView> {
+    private transient Exercise mExercise;
+
+    private int mSeconds = 60;
+    private int mCurrentSeconds = mSeconds;
+
+    private boolean mPlaying = false;
+
     private transient CountDownTimer mCountDownTimer;
 
-    private long mTimeInMillis = PreferenceUtil.getInstance().getTimerValue(ONE_MINUTE);
-    private DateTime mTime = new DateTime(mTimeInMillis);
+    @Override
+    public void onCreateView(TimerView view) {
+        super.onCreateView(view);
 
-    private TimerState mTimerState = TimerState.PAUSED;
-    private DialogState mDialogState = DialogState.HIDDEN;
+        restartTimer(getSeconds());
+    }
 
-    private transient TimePickerDialog mTimePickerDialog;
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 
-    public void onCreateView(TimerView timerView) {
-        mTimerView = timerView;
+    @Override
+    public void onSaveInstanceState() {
+        super.onSaveInstanceState();
+    }
 
-        if(mTimerState == TimerState.FORCE_STOPPED) {
-            mTimerState = TimerState.STARTED;
+    @Override
+    public void onRestoreInstanceState(TimerView view) {
+        super.onRestoreInstanceState(view);
+    }
+
+    @Override
+    public void onSubscribe() {
+        super.onSubscribe();
+
+        subscribe(Observable.merge(
+                RoutineStream.getInstance().getExerciseObservable(),
+                RoutineStream.getInstance().getExerciseChangedObservable()
+        ).subscribe(exercise -> {
+            mExercise = exercise;
+
+            hideOrShowExerciseButtons();
+            restartTimer(getSeconds());
+        }));
+    }
+
+    private void hideOrShowExerciseButtons() {
+        if (mExercise.isPrevious()) {
+            mView.showPreviousExerciseButton();
+        } else {
+            mView.hidePreviousExerciseButton();
         }
 
-        /**
-         * Allows to cancel the timer when activity is paused.
-         */
-        ActivityStream.getInstance().getActivityObservable().subscribe(activityState -> {
-            switch(mTimerState) {
-                case STARTED: {
-                    mTimerState = TimerState.FORCE_STOPPED;
+        if (mExercise.isNext()) {
+            mView.showNextExerciseButton();
+        } else {
+            mView.hideNextExerciseButton();
+        }
+    }
 
-                    mTimerView.getStartStopTimerButton().setImageDrawable(
-                            mTimerView.getResources().getDrawable(R.drawable.ic_play)
-                    );
-
-                    mTimeInMillis = mTime.getMillis();
-
-                    if(mCountDownTimer != null) {
-                        mCountDownTimer.cancel();
-                    }
-
-                    break;
-                }
-            }
-        });
-
-        RoutineStream.getInstance().getExerciseObservable().subscribe(exercise -> {
-            if(exercise.isPrevious()) {
-                mTimerView.getPrevExerciseButton().setVisibility(View.VISIBLE);
-                mTimerView.getPrevExerciseButton().setOnClickListener(v -> {
-                    RoutineStream.getInstance().setExercise(exercise.getPrevious());
-                });
-            } else {
-                mTimerView.getPrevExerciseButton().setVisibility(View.INVISIBLE);
-            }
-
-            if(exercise.isNext()) {
-                mTimerView.getNextExerciseButton().setVisibility(View.VISIBLE);
-                mTimerView.getNextExerciseButton().setOnClickListener(v -> {
-                    RoutineStream.getInstance().setExercise(exercise.getNext());
-                });
-            } else {
-                mTimerView.getNextExerciseButton().setVisibility(View.INVISIBLE);
-            }
-        });
-
-        mTimePickerDialog = new TimePickerDialog(mTimerView.getContext(), (view, hourOfDay, minute) -> {
-            mDialogState = DialogState.HIDDEN;
-
-            long minutes = ONE_MINUTE * hourOfDay;
-            long seconds = ONE_SECOND * minute;
-
-            /**
-             * If user chooses 0 minutes and 0 seconds, let's set default value to 15 seconds.
-             */
-            if(minutes == 0 && seconds <= 5000) {
-                seconds = 5000;
-            }
-
-            mTimerState = TimerState.PAUSED;
-            mTimeInMillis = minutes + seconds;
-            mTime = new DateTime(mTimeInMillis);
-
-            PreferenceUtil.getInstance().setTimerValue(mTimeInMillis);
-
-            mTimerView.getStartStopTimerButton().setImageDrawable(
-                    mTimerView.getResources().getDrawable(R.drawable.ic_play)
-            );
-
-            mTimerView.getTimerMinutesTextView().setText(DateTimeFormat.forPattern("mm").print(mTime));
-            mTimerView.getTimerSecondsTextView().setText(DateTimeFormat.forPattern("ss").print(mTime));
-
-            if(mCountDownTimer != null) {
+    public void increaseTimer(int extraSeconds) {
+        if (mPlaying) {
+            if (mCountDownTimer != null) {
                 mCountDownTimer.cancel();
             }
-        }, mTime.getMinuteOfHour(), mTime.getSecondOfMinute(), true);
 
-        mTimePickerDialog.setOnDismissListener(d -> mDialogState = DialogState.HIDDEN);
-        mTimePickerDialog.setOnCancelListener(d -> mDialogState = DialogState.HIDDEN);
+            mCurrentSeconds += extraSeconds;
+            mCountDownTimer = buildCountDownTimer(mCurrentSeconds);
 
-        RoutineStream.getInstance().getExerciseChangedObservable().subscribe(exercise -> {
-            restartTimer();
-        });
+            mView.setMinutes(formatMinutes(mCurrentSeconds));
+            mView.setSeconds(formatSeconds(mCurrentSeconds));
 
-        if(mDialogState == DialogState.SHOWN) {
-            mTimePickerDialog.show();
-        }
+            mCountDownTimer.start();
+        } else {
+            mCurrentSeconds += extraSeconds;
+            mCountDownTimer = buildCountDownTimer(mCurrentSeconds);
 
-        mTimerView.getTimerLayout().setOnClickListener(v -> {
-            mDialogState = DialogState.SHOWN;
-
-            mTimePickerDialog.updateTime(mTime.getMinuteOfHour(), mTime.getSecondOfMinute());
-            mTimePickerDialog.show();
-        });
-
-        mTimerView.getIncreaseTimerButton().setOnClickListener(v -> {
-            switch(mTimerState) {
-                case FORCE_STOPPED:
-                case PAUSED: {
-                    mTimerState = TimerState.PAUSED;
-                    mTimeInMillis = mTimeInMillis + (ONE_SECOND * 5);
-                    mTime = new DateTime(mTimeInMillis);
-
-                    mTimerView.getTimerMinutesTextView().setText(DateTimeFormat.forPattern("mm").print(mTime));
-                    mTimerView.getTimerSecondsTextView().setText(DateTimeFormat.forPattern("ss").print(mTime));
-
-                    if(mCountDownTimer != null) {
-                        mCountDownTimer.cancel();
-                    }
-
-                    break;
-                }
-
-                case STARTED: {
-                    mTimeInMillis = mTimeInMillis + (ONE_SECOND * 5);
-                    mTime = new DateTime(mTimeInMillis);
-
-                    mTimerView.getTimerMinutesTextView().setText(DateTimeFormat.forPattern("mm").print(mTime));
-                    mTimerView.getTimerSecondsTextView().setText(DateTimeFormat.forPattern("ss").print(mTime));
-
-                    if(mCountDownTimer != null) {
-                        mCountDownTimer.cancel();
-                    }
-
-                    createCountDownTimer();
-
-                    if(mCountDownTimer != null) {
-                        mCountDownTimer.start();
-                    }
-
-                    break;
-                }
-            }
-        });
-
-        mTimerView.getStartStopTimerButton().setOnClickListener(v -> {
-            switch(mTimerState) {
-                case FORCE_STOPPED:
-                case PAUSED: {
-                    mTimerState = TimerState.STARTED;
-
-                    mTimerView.getStartStopTimerButton().setImageDrawable(
-                            mTimerView.getResources().getDrawable(R.drawable.ic_pause)
-                    );
-
-                    createCountDownTimer();
-
-                    if(mCountDownTimer != null) {
-                        mCountDownTimer.start();
-                    }
-
-                    break;
-                }
-
-                case STARTED: {
-                    mTimerState = TimerState.PAUSED;
-
-                    mTimerView.getStartStopTimerButton().setImageDrawable(
-                            mTimerView.getResources().getDrawable(R.drawable.ic_play)
-                    );
-
-                    mTimeInMillis = mTime.getMillis();
-
-                    if(mCountDownTimer != null) {
-                        mCountDownTimer.cancel();
-                    }
-
-                    break;
-                }
-            }
-        });
-
-        mTimerView.getRestartTimerButton().setOnClickListener(v -> restartTimer());
-
-        switch(mTimerState) {
-            case FORCE_STOPPED:
-            case PAUSED: {
-                mTimerView.getStartStopTimerButton().setImageDrawable(
-                        mTimerView.getResources().getDrawable(R.drawable.ic_play)
-                );
-
-                mTimerView.getTimerMinutesTextView().setText(DateTimeFormat.forPattern("mm").print(mTime));
-                mTimerView.getTimerSecondsTextView().setText(DateTimeFormat.forPattern("ss").print(mTime));
-
-                break;
-            }
-
-            case STARTED: {
-                mTimeInMillis = mTime.getMillis();
-
-                mTimerView.getStartStopTimerButton().setImageDrawable(
-                        mTimerView.getResources().getDrawable(R.drawable.ic_pause)
-                );
-
-                createCountDownTimer();
-
-                if(mCountDownTimer != null) {
-                    mCountDownTimer.start();
-                }
-
-                break;
-            }
+            mView.setMinutes(formatMinutes(mCurrentSeconds));
+            mView.setSeconds(formatSeconds(mCurrentSeconds));
         }
     }
 
-    public void onDestroyView() {
-        if(mTimePickerDialog != null && mTimePickerDialog.isShowing()) {
-            mTimePickerDialog.dismiss();
-        }
-
-        if(mCountDownTimer != null) {
+    public void pauseTimer() {
+        if (mCountDownTimer != null) {
             mCountDownTimer.cancel();
         }
+
+        mPlaying = false;
+        mCountDownTimer = buildCountDownTimer(mCurrentSeconds);
+
+        mView.setMinutes(formatMinutes(mCurrentSeconds));
+        mView.setSeconds(formatSeconds(mCurrentSeconds));
+
+        mView.showPaused();
     }
 
-    public void createCountDownTimer() {
-        mCountDownTimer = new CountDownTimer(mTimeInMillis, ONE_SECOND) {
+    public void startTimer() {
+        mCountDownTimer.start();
+    }
+
+    public void restartTimer(int seconds) {
+        if (mCountDownTimer != null) {
+            mCountDownTimer.cancel();
+        }
+
+        mPlaying = false;
+        mCurrentSeconds = seconds;
+
+        mCountDownTimer = buildCountDownTimer(seconds);
+
+        mView.setMinutes(formatMinutes(seconds));
+        mView.setSeconds(formatSeconds(seconds));
+
+        mView.showPaused();
+    }
+
+    public void playSound() {
+        Toast.makeText(getContext(), "Fake Sound", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onClickPreviousExerciseButton() {
+        if (mExercise.isPrevious()) {
+            RoutineStream.getInstance().setExercise(mExercise.getPrevious());
+        }
+    }
+
+    public void onClickNextExerciseButton() {
+        if (mExercise.isNext()) {
+            RoutineStream.getInstance().setExercise(mExercise.getNext());
+        }
+    }
+
+    public void onClickTimeLayout() {
+        pauseTimer();
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), (view, minutes, seconds) -> {
+            mCurrentSeconds = seconds + (minutes * 60);
+
+            restartTimer(mCurrentSeconds);
+
+            // save currentChosenSeconds as new preferences
+            mSeconds = mCurrentSeconds;
+
+        }, formatMinutesAsNumber(mCurrentSeconds), formatSecondsAsNumber(mCurrentSeconds), true);
+
+        timePickerDialog.show();
+    }
+
+    public void onClickIncreaseTimeButton() {
+        increaseTimer(5);
+    }
+
+    public void onClickStartStopTimeButton() {
+        if (mPlaying) {
+            pauseTimer();
+        } else {
+            startTimer();
+        }
+    }
+
+    public void onClickRestartTimeButton() {
+        restartTimer(getSeconds());
+    }
+
+    // later it will be either default or from preferences.
+    public int getSeconds() {
+        return mSeconds;
+    }
+
+    public CountDownTimer buildCountDownTimer(int seconds) {
+        return new CountDownTimer(seconds * 1000, 100) {
             @Override
             public void onTick(long millisUntilFinished) {
-                mTime = new DateTime(millisUntilFinished);
-                mTimeInMillis = mTime.getMillis();
+                int seconds = (int) millisUntilFinished / 1000;
 
-                mTimerView.getTimerMinutesTextView().setText(DateTimeFormat.forPattern("mm").print(mTime));
-                mTimerView.getTimerSecondsTextView().setText(DateTimeFormat.forPattern("ss").print(mTime));
+                mPlaying = true;
+                mCurrentSeconds = seconds;
+
+                mView.setMinutes(formatMinutes(seconds));
+                mView.setSeconds(formatSeconds(seconds));
+
+                mView.showPlaying();
             }
 
             @Override
             public void onFinish() {
-                mTimerState = TimerState.PAUSED;
+                restartTimer(getSeconds());
 
-                mTimeInMillis = PreferenceUtil.getInstance().getTimerValue(ONE_MINUTE);
-                mTime = new DateTime(mTimeInMillis);
-
-                mTimerView.getStartStopTimerButton().setImageDrawable(
-                        mTimerView.getResources().getDrawable(R.drawable.ic_play)
-                );
-
-                mTimerView.getTimerMinutesTextView().setText(DateTimeFormat.forPattern("mm").print(mTime));
-                mTimerView.getTimerSecondsTextView().setText(DateTimeFormat.forPattern("ss").print(mTime));
-
-                if(PreferenceUtil.getInstance().playSoundWhenTimerStops()) {
-                    MediaPlayer p = MediaPlayer.create(mTimerView.getContext(), R.raw.finished);
-                    p.setLooping(false);
-                    p.start();
-                }
+                playSound();
             }
         };
     }
 
-    public void restartTimer() {
-        mTimerState = TimerState.PAUSED;
+    public String formatMinutes(int seconds) {
+        int minutes = seconds / 60;
 
-        mTimeInMillis = PreferenceUtil.getInstance().getTimerValue(ONE_MINUTE);
-        mTime = new DateTime(mTimeInMillis);
-
-        mTimerView.getStartStopTimerButton().setImageDrawable(
-                mTimerView.getResources().getDrawable(R.drawable.ic_play)
-        );
-
-        mTimerView.getTimerMinutesTextView().setText(DateTimeFormat.forPattern("mm").print(mTime));
-        mTimerView.getTimerSecondsTextView().setText(DateTimeFormat.forPattern("ss").print(mTime));
-
-        if(mCountDownTimer != null) {
-            mCountDownTimer.cancel();
+        if (minutes == 0) {
+            return "00";
+        } else if (minutes < 10) {
+            return "0" + minutes;
         }
+
+        return String.valueOf(minutes);
+    }
+
+    public int formatMinutesAsNumber(int seconds) {
+        return seconds / 60;
+    }
+
+    public String formatSeconds(int seconds) {
+        int s = seconds % 60;
+
+        if (s == 0) {
+            return "00";
+        } else if (s < 10) {
+            return "0" + s;
+        }
+
+        return String.valueOf(s);
+    }
+
+    public int formatSecondsAsNumber(int seconds) {
+        return seconds % 60;
     }
 }

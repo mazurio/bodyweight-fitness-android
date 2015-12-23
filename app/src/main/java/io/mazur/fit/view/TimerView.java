@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import butterknife.OnClick;
 import icepick.Icepick;
 import icepick.State;
 
@@ -21,10 +23,7 @@ import io.mazur.fit.presenter.TimerPresenter;
 
 public class TimerView extends LinearLayout {
     @State
-    TimerPresenter mTimerPresenter;
-
-    @InjectView(R.id.timer_layout)
-    RelativeLayout mTimerLayout;
+    TimerPresenter mPresenter;
 
     @InjectView(R.id.prev_exercise_button)
     ImageButton mPrevExerciseButton;
@@ -65,33 +64,36 @@ public class TimerView extends LinearLayout {
 
         ButterKnife.inject(this);
 
-        resetFloatingActionButtonMargin(getIncreaseTimerButton());
-        resetFloatingActionButtonMargin(getStartStopTimerButton());
-        resetFloatingActionButtonMargin(getRestartTimerButton());
+        resetFloatingActionButtonMargin(mIncreaseTimerButton);
+        resetFloatingActionButtonMargin(mStartStopTimerButton);
+        resetFloatingActionButtonMargin(mRestartTimerButton);
 
         onCreateView();
     }
 
-    public void onCreate() {
-        mTimerPresenter = new TimerPresenter();
-    }
-
-    public void onCreateView() {
-        mTimerPresenter.onCreateView(this);
-    }
-
     @Override
-    protected Parcelable onSaveInstanceState() {
-        mTimerPresenter.onDestroyView();
+    public Parcelable onSaveInstanceState() {
+        mPresenter.onSaveInstanceState();
 
         return Icepick.saveInstanceState(this, super.onSaveInstanceState());
     }
 
     @Override
-    protected void onRestoreInstanceState(Parcelable state) {
+    public void onRestoreInstanceState(Parcelable state) {
+        mPresenter.onDestroyView();
+        mPresenter = null;
+
         super.onRestoreInstanceState(Icepick.restoreInstanceState(this, state));
 
-        onCreateView();
+        mPresenter.onRestoreInstanceState(this);
+    }
+
+    public void onCreate() {
+        mPresenter = new TimerPresenter();
+    }
+
+    public void onCreateView() {
+        mPresenter.onCreateView(this);
     }
 
     private void resetFloatingActionButtonMargin(FloatingActionButton floatingActionButton) {
@@ -102,35 +104,69 @@ public class TimerView extends LinearLayout {
         }
     }
 
-    public RelativeLayout getTimerLayout() {
-        return mTimerLayout;
+    public void showPreviousExerciseButton() {
+        mPrevExerciseButton.setVisibility(View.VISIBLE);
     }
 
-    public ImageButton getPrevExerciseButton() {
-        return mPrevExerciseButton;
+    public void hidePreviousExerciseButton() {
+        mPrevExerciseButton.setVisibility(View.INVISIBLE);
     }
 
-    public ImageButton getNextExerciseButton() {
-        return mNextExerciseButton;
+    public void showNextExerciseButton() {
+        mNextExerciseButton.setVisibility(View.VISIBLE);
     }
 
-    public TextView getTimerMinutesTextView() {
-        return mTimerMinutesTextView;
+    public void hideNextExerciseButton() {
+        mNextExerciseButton.setVisibility(View.INVISIBLE);
     }
 
-    public TextView getTimerSecondsTextView() {
-        return mTimerSecondsTextView;
+    public void setMinutes(String text) {
+        mTimerMinutesTextView.setText(text);
     }
 
-    public FloatingActionButton getIncreaseTimerButton() {
-        return mIncreaseTimerButton;
+    public void setSeconds(String text) {
+        mTimerSecondsTextView.setText(text);
     }
 
-    public FloatingActionButton getStartStopTimerButton() {
-        return mStartStopTimerButton;
+    public void showPlaying() {
+        mStartStopTimerButton.setImageDrawable(
+                getResources().getDrawable(R.drawable.ic_pause)
+        );
     }
 
-    public FloatingActionButton getRestartTimerButton() {
-        return mRestartTimerButton;
+    public void showPaused() {
+        mStartStopTimerButton.setImageDrawable(
+                getResources().getDrawable(R.drawable.ic_play)
+        );
+    }
+
+    @OnClick(R.id.prev_exercise_button)
+    public void onClickPreviousExerciseButton(View view) {
+        mPresenter.onClickPreviousExerciseButton();
+    }
+
+    @OnClick(R.id.next_exercise_button)
+    public void onClickNextExerciseButton(View view) {
+        mPresenter.onClickNextExerciseButton();
+    }
+
+    @OnClick(R.id.timer_layout)
+    public void onClickTimeLayout(View view) {
+        mPresenter.onClickTimeLayout();
+    }
+
+    @OnClick(R.id.increase_timer_button)
+    public void onClickIncreaseTimeButton(View view) {
+        mPresenter.onClickIncreaseTimeButton();
+    }
+
+    @OnClick(R.id.start_stop_timer_button)
+    public void onClickStartStopTimeButton(View view) {
+        mPresenter.onClickStartStopTimeButton();
+    }
+
+    @OnClick(R.id.restart_timer_button)
+    public void onClickRestartTimeButton(View view) {
+        mPresenter.onClickRestartTimeButton();
     }
 }
