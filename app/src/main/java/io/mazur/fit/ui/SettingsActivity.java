@@ -10,7 +10,6 @@ import android.view.MenuItem;
 
 import io.mazur.fit.Constants;
 import io.mazur.fit.R;
-import io.mazur.fit.utils.Logger;
 
 public class SettingsActivity extends AppCompatActivity {
     @Override

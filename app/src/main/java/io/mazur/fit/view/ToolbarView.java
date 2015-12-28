@@ -15,7 +15,6 @@ import icepick.State;
 
 import io.mazur.fit.R;
 import io.mazur.fit.presenter.ToolbarPresenter;
-import io.mazur.fit.utils.Logger;
 
 public class ToolbarView extends AppBarLayout {
     @State

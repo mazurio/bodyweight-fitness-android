@@ -14,10 +14,10 @@ import io.mazur.fit.model.json.JSONRoutine;
 import io.mazur.fit.utils.Logger;
 
 import io.mazur.glacier.Glacier;
+
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
 import rx.subjects.PublishSubject;
 
 public class RoutineStream {

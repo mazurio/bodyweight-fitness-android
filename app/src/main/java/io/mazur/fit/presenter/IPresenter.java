@@ -30,8 +30,6 @@ public abstract class IPresenter<V extends View> implements Serializable {
      * @param view view.
      */
     public void onCreateView(V view) {
-        Logger.d("onCreateView = " + this);
-
         mView = view;
 
         onSubscribe();
@@ -41,21 +39,16 @@ public abstract class IPresenter<V extends View> implements Serializable {
      * Destroy view and remove all subscriptions.
      */
     public void onDestroyView() {
-        Logger.d("onDestroyView = " + this);
-
         mView = null;
 
         unsubscribeAll();
     }
 
-    public void onSaveInstanceState() {
-        Logger.d("onSaveInstanceState = " + this);
-
-        /**
-         * We can't call unsubscribeAll here as Activity calls
-         * onSaveInstanceState with onPause method.
-         */
-    }
+    /**
+     * We can't call unsubscribeAll here as Activity calls
+     * onSaveInstanceState with onPause method.
+     */
+    public void onSaveInstanceState() {}
 
     /**
      * Restore instance state with the new view being created.
@@ -63,8 +56,6 @@ public abstract class IPresenter<V extends View> implements Serializable {
      * @param view new instance of the view.
      */
     public void onRestoreInstanceState(V view) {
-        Logger.d("onRestoreInstanceState = " + this);
-
         unsubscribeAll();
 
         mView = view;
@@ -75,9 +66,7 @@ public abstract class IPresenter<V extends View> implements Serializable {
     /**
      * Called by onCreateView and onRestoreInstanceState so we can recreate subscriptions.
      */
-    public void onSubscribe() {
-        Logger.d("onSubscribe = " + this);
-    }
+    public void onSubscribe() {}
 
     /**
      * Add transient Rx Subscription to the array list.
@@ -92,8 +81,6 @@ public abstract class IPresenter<V extends View> implements Serializable {
      * Remove all Rx subscriptions.
      */
     private void unsubscribeAll() {
-        Logger.d("unsubscribeAll = " + this);
-
         for(Subscription s : mSubscriptions) {
             s.unsubscribe();
             s = null;

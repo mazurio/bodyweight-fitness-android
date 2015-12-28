@@ -30,7 +30,6 @@ import io.mazur.fit.model.realm.RealmRoutine;
 import io.mazur.fit.model.realm.RealmSet;
 import io.mazur.fit.stream.RealmStream;
 import io.mazur.fit.stream.RoutineStream;
-import io.mazur.fit.utils.Logger;
 import io.mazur.fit.utils.PreferenceUtil;
 import io.realm.Realm;
 

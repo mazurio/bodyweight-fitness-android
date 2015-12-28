@@ -17,6 +17,7 @@ import io.mazur.fit.model.realm.RealmSet;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+
 import rx.Observable;
 import rx.subjects.PublishSubject;
 
@@ -33,13 +34,12 @@ public class RealmStream {
         return sRealmStream;
     }
 
-    public RealmStream() {
-        super();
-    }
+    private RealmStream() {}
 
     public Realm getRealm() {
         return Realm.getInstance(new RealmConfiguration.Builder(App.getContext())
                 .name("bodyweight.fitness.realm")
+                // TODO: Delete this in production.
                 .deleteRealmIfMigrationNeeded()
                 .schemaVersion(1)
                 .build());

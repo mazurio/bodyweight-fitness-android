@@ -18,8 +18,6 @@ import io.mazur.fit.stream.DrawerStream;
 import io.mazur.fit.stream.RealmStream;
 import io.mazur.fit.stream.ToolbarStream;
 import io.mazur.fit.view.fragment.NavigationDrawerFragment;
-import io.mazur.fit.model.ActivityState;
-import io.mazur.fit.stream.ActivityStream;
 import io.mazur.fit.utils.PreferenceUtil;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -39,13 +37,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 	}
 
     @Override
-    protected void onPause() {
-        super.onPause();
-
-        ActivityStream.getInstance().setActivityState(ActivityState.OnPause);
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
 
@@ -57,8 +48,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @Override
     protected void onResume() {
         super.onResume();
-
-        ActivityStream.getInstance().setActivityState(ActivityState.OnResume);
 
         keepScreenOnWhenAppIsRunning();
     }

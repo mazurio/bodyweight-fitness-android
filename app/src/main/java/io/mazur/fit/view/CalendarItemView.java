@@ -18,7 +18,6 @@ import io.mazur.fit.presenter.CalendarItemPresenter;
 
 import io.mazur.fit.stream.CalendarStream;
 import io.mazur.fit.utils.ViewUtils;
-import rx.subjects.PublishSubject;
 
 public class CalendarItemView extends LinearLayout {
     private CalendarItemPresenter mCalendarItemPresenter;

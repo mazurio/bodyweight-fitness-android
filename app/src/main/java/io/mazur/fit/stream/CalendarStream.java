@@ -1,6 +1,7 @@
 package io.mazur.fit.stream;
 
 import io.mazur.fit.model.CalendarDayChanged;
+
 import rx.Observable;
 import rx.subjects.PublishSubject;
 
