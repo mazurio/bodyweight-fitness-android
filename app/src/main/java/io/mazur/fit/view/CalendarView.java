@@ -21,6 +21,9 @@ public class CalendarView extends LinearLayout {
     @InjectView(R.id.view_calendar_pager)
     ViewPager mViewPager;
 
+    @InjectView(R.id.view_calendar_scrollview)
+    View mScrollView;
+
     @InjectView(R.id.view_calendar_date)
     TextView mDate;
 
@@ -82,10 +85,6 @@ public class CalendarView extends LinearLayout {
         return mDate;
     }
 
-    public CardView getCardView() {
-        return mCardView;
-    }
-
     public Button getViewButton() {
         return mViewButton;
     }
@@ -98,7 +97,13 @@ public class CalendarView extends LinearLayout {
         return mRemoveButton;
     }
 
-    public View getMessage() {
-        return mMessage;
+    public void hideCardView() {
+        mScrollView.setVisibility(View.GONE);
+        mMessage.setVisibility(View.VISIBLE);
+    }
+
+    public void showCardView() {
+        mScrollView.setVisibility(View.VISIBLE);
+        mMessage.setVisibility(View.GONE);
     }
 }

@@ -2,7 +2,6 @@ package io.mazur.fit.presenter;
 
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
-import android.view.View;
 
 import org.joda.time.DateTime;
 
@@ -58,7 +57,7 @@ public class CalendarPresenter {
                     if (isRoutineLogged(dateTime)) {
                         showCardView();
                     } else {
-                        hideCardView();
+                        mCalendarView.hideCardView();
                     }
                 });
 
@@ -73,9 +72,7 @@ public class CalendarPresenter {
     }
 
     private void showCardView() {
-        mCalendarView.getDate().setVisibility(View.VISIBLE);
-        mCalendarView.getCardView().setVisibility(View.VISIBLE);
-        mCalendarView.getMessage().setVisibility(View.GONE);
+        mCalendarView.showCardView();
 
         mCalendarView.getViewButton().setOnClickListener(view -> {
             Intent intent = new Intent(mCalendarView.getContext(), ProgressActivity.class);
@@ -124,20 +121,12 @@ public class CalendarPresenter {
                         realm.commitTransaction();
 
                         notifyDataSetChanged();
-                        hideCardView();
+                        mCalendarView.hideCardView();
                     })
                     .setNegativeButton("Cancel", (dialog, which) -> {});
 
             alertDialog.show();
         });
-    }
-
-    private void hideCardView() {
-        mCalendarView.getDate().setVisibility(View.GONE);
-        mCalendarView.getCardView().setVisibility(View.GONE);
-        mCalendarView.getMessage().setVisibility(View.VISIBLE);
-
-        mCalendarView.getViewButton().setOnClickListener(view -> {});
     }
 
     private void notifyDataSetChanged() {
