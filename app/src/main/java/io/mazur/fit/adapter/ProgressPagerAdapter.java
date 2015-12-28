@@ -18,6 +18,7 @@ import com.hookedonplay.decoviewlib.events.DecoEvent;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.Minutes;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
@@ -135,15 +136,19 @@ public class ProgressPagerAdapter extends PagerAdapter {
                 lastUpdatedTime.toString("HH:mm", Locale.ENGLISH)
         );
 
-        String formatted = new PeriodFormatterBuilder()
-                .appendHours()
-                .appendSuffix("h ")
-                .appendMinutes()
-                .appendSuffix("m")
-                .toFormatter()
-                .print(duration.toPeriod());
+        if (duration.toStandardMinutes().getMinutes() < 10) {
+            workoutLengthText.setText("--");
+        } else {
+            String formatted = new PeriodFormatterBuilder()
+                    .appendHours()
+                    .appendSuffix("h ")
+                    .appendMinutes()
+                    .appendSuffix("m")
+                    .toFormatter()
+                    .print(duration.toPeriod());
 
-        workoutLengthText.setText(formatted);
+            workoutLengthText.setText(formatted);
+        }
 
         if (mCurrentExercise == mNumberOfExercises) {
             endTimeLabel.setText("End Time");

@@ -15,6 +15,8 @@ import io.fabric.sdk.android.Fabric;
  * TODO: Update videos for Antranik new video.
  *
  * TODO BUG: ProgressActivity missing items sometimes.
+ *
+ * TODO: Remove delete on upgrade line of code from Realm.
  */
 public class App extends Application {
     private static Context mContext;

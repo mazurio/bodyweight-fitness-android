@@ -7,7 +7,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 
 import org.joda.time.DateTime;
 
@@ -24,7 +23,8 @@ import io.mazur.fit.stream.RealmStream;
 import io.realm.Realm;
 
 public class ProgressActivity extends AppCompatActivity {
-    @InjectView(R.id.view_progress_pager) ViewPager mViewPager;
+    @InjectView(R.id.view_progress_pager)
+    ViewPager mViewPager;
 
     private RealmRoutine mRealmRoutine;
     private ProgressPagerAdapter mProgressPagerAdapter;
