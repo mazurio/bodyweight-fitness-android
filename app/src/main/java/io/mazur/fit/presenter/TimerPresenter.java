@@ -155,6 +155,10 @@ public class TimerPresenter extends IPresenter<TimerView> {
         TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), (view, minutes, seconds) -> {
             mCurrentSeconds = seconds + (minutes * 60);
 
+            if (mCurrentSeconds < 10) {
+                mCurrentSeconds = 10;
+            }
+
             restartTimer(mCurrentSeconds);
 
             mSeconds = mCurrentSeconds;
