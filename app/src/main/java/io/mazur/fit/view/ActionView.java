@@ -21,7 +21,7 @@ import icepick.State;
 
 import io.mazur.fit.R;
 import io.mazur.fit.presenter.ActionPresenter;
-import io.mazur.fit.view.widget.Fab;
+import io.mazur.fit.view.widget.ActionButton;
 
 public class ActionView extends RelativeLayout {
     @State
@@ -33,10 +33,10 @@ public class ActionView extends RelativeLayout {
     View mActionViewOverlay;
 
     @InjectView(R.id.action_view_log_workout_button)
-    Fab mActionViewLogWorkoutButton;
+    ActionButton mActionViewLogWorkoutButton;
 
     @InjectView(R.id.action_view_action_button)
-    Fab mActionViewActionButton;
+    ActionButton mActionViewActionButton;
 
     @InjectView(R.id.action_view_action_sheet)
     CardView mActionViewActionSheet;
