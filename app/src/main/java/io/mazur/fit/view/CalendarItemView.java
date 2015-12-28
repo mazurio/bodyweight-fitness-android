@@ -52,8 +52,8 @@ public class CalendarItemView extends LinearLayout {
         mCalendarItemPresenter = new CalendarItemPresenter(viewPagerPosition);
     }
 
-    public void onCreateView(int currentViewPagerPosition) {
-        mCalendarItemPresenter.onCreateView(this, currentViewPagerPosition);
+    public void onCreateView() {
+        mCalendarItemPresenter.onCreateView(this);
     }
 
     public void onDestroyView() {

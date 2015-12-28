@@ -1,22 +1,27 @@
 package io.mazur.fit.view;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
+
+import icepick.Icepick;
+import icepick.State;
 
 import io.mazur.fit.R;
+import io.mazur.fit.adapter.CalendarAdapter;
 import io.mazur.fit.presenter.CalendarPresenter;
 import io.mazur.fit.view.widget.ViewPager;
 
 public class CalendarView extends LinearLayout {
-    private CalendarPresenter mCalendarPresenter;
+    @State
+    CalendarPresenter mPresenter;
 
     @InjectView(R.id.view_calendar_pager)
     ViewPager mViewPager;
@@ -26,18 +31,6 @@ public class CalendarView extends LinearLayout {
 
     @InjectView(R.id.view_calendar_date)
     TextView mDate;
-
-    @InjectView(R.id.view_calendar_card)
-    CardView mCardView;
-
-    @InjectView(R.id.view_calendar_card_view_button)
-    Button mViewButton;
-
-    @InjectView(R.id.view_calendar_card_export_button)
-    Button mExportButton;
-
-    @InjectView(R.id.view_calendar_card_remove_button)
-    Button mRemoveButton;
 
     @InjectView(R.id.view_calendar_message)
     View mMessage;
@@ -66,35 +59,61 @@ public class CalendarView extends LinearLayout {
 
         ButterKnife.inject(this);
 
+        mViewPager.addOnPageChangeListener(new android.support.v4.view.ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mPresenter.onPageSelected(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         onCreateView();
     }
 
+    @Override
+    public Parcelable onSaveInstanceState() {
+        mPresenter.onSaveInstanceState();
+
+        return Icepick.saveInstanceState(this, super.onSaveInstanceState());
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        mPresenter.onDestroyView();
+        mPresenter = null;
+
+        super.onRestoreInstanceState(Icepick.restoreInstanceState(this, state));
+
+        mPresenter.onRestoreInstanceState(this);
+    }
+
     public void onCreate() {
-        mCalendarPresenter = new CalendarPresenter();
+        mPresenter = new CalendarPresenter();
     }
 
     public void onCreateView() {
-        mCalendarPresenter.onCreateView(this);
+        mPresenter.onCreateView(this);
     }
 
-    public ViewPager getViewPager() {
-        return mViewPager;
+    public void setAdapter(CalendarAdapter calendarAdapter) {
+        mViewPager.setAdapter(calendarAdapter);
     }
 
-    public TextView getDate() {
-        return mDate;
+    public void scrollToDefaultItem() {
+        mViewPager.setCurrentItem(CalendarAdapter.DEFAULT_POSITION, false);
     }
 
-    public Button getViewButton() {
-        return mViewButton;
-    }
-
-    public Button getExportButton() {
-        return mExportButton;
-    }
-
-    public Button getRemoveButton() {
-        return mRemoveButton;
+    public void setDate(String text) {
+        mDate.setText(text);
     }
 
     public void hideCardView() {
@@ -105,5 +124,20 @@ public class CalendarView extends LinearLayout {
     public void showCardView() {
         mScrollView.setVisibility(View.VISIBLE);
         mMessage.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.view_calendar_card_view_button)
+    public void onClickViewButton(View view) {
+        mPresenter.onClickViewButton();
+    }
+
+    @OnClick(R.id.view_calendar_card_export_button)
+    public void onClickExportButton(View view) {
+        mPresenter.onClickExportButton();
+    }
+
+    @OnClick(R.id.view_calendar_card_remove_button)
+    public void onClickRemoveButton(View view) {
+        mPresenter.onClickRemoveButton();
     }
 }

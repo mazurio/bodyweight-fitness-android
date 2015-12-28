@@ -28,7 +28,7 @@ public class CalendarItemPresenter {
         mViewPagerPosition = viewPagerPosition;
     }
 
-    public void onCreateView(CalendarItemView calendarItemView, int currentViewPagerPosition) {
+    public void onCreateView(CalendarItemView calendarItemView) {
         mCalendarItemView = calendarItemView;
 
         DateTime monday = DateUtils.getDate(mViewPagerPosition);
@@ -52,7 +52,7 @@ public class CalendarItemPresenter {
                  * If we create view when other is visible, we do not want to click on the
                  * current item.
                  */
-                if(currentViewPagerPosition == mViewPagerPosition) {
+                if(CalendarStream.getInstance().getCalendarPage() == mViewPagerPosition) {
                     mCalendarItemView.onDaysClick(view);
                 }
             } else {

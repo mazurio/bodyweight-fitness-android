@@ -21,30 +21,39 @@ import io.mazur.fit.view.CalendarView;
 
 import io.realm.Realm;
 
-public class CalendarPresenter {
-    private transient CalendarView mCalendarView;
-
-    private CalendarAdapter mCalendarAdapter;
-
+public class CalendarPresenter extends IPresenter<CalendarView> {
+    private transient CalendarAdapter mCalendarAdapter;
     private String mRealmRoutineId;
 
-    public void onCreateView(CalendarView calendarView) {
-        mCalendarView = calendarView;
+    @Override
+    public void onCreateView(CalendarView view) {
+        super.onCreateView(view);
 
-        mCalendarAdapter = new CalendarAdapter(
-                mCalendarView.getViewPager()
-        );
+        mCalendarAdapter = new CalendarAdapter();
 
-        mCalendarView.getViewPager().setAdapter(mCalendarAdapter);
-        mCalendarView.getViewPager().setCurrentItem(CalendarAdapter.DEFAULT_POSITION, false);
+        mView.setAdapter(mCalendarAdapter);
+        mView.scrollToDefaultItem();
+    }
 
-        RealmStream.getInstance()
+    @Override
+    public void onSubscribe() {
+        super.onSubscribe();
+
+        subscribe(RealmStream.getInstance()
                 .getRealmRoutineObservable()
                 .subscribe(realmRoutine -> {
-                    notifyDataSetChanged();
-                });
+                    mView.setAdapter(mCalendarAdapter);
+                    mView.scrollToDefaultItem();
+                }));
 
-        CalendarStream.getInstance()
+        subscribe(ToolbarStream.getInstance()
+                .getMenuObservable()
+                .filter(id -> id.equals(R.id.action_today))
+                .subscribe(id -> {
+                    mView.scrollToDefaultItem();
+                }));
+
+        subscribe(CalendarStream.getInstance()
                 .getCalendarDayChangedObservable()
                 .subscribe(calendarDayChanged -> {
                     DateTime dateTime = DateUtils.getDate(
@@ -52,86 +61,16 @@ public class CalendarPresenter {
                             calendarDayChanged.daySelected
                     );
 
-                    mCalendarView.getDate().setText(dateTime.toString("EEEE, d MMMM", Locale.ENGLISH));
+                    mView.setDate(
+                            dateTime.toString("EEEE, d MMMM", Locale.ENGLISH)
+                    );
 
                     if (isRoutineLogged(dateTime)) {
-                        showCardView();
+                        mView.showCardView();
                     } else {
-                        mCalendarView.hideCardView();
+                        mView.hideCardView();
                     }
-                });
-
-        ToolbarStream.getInstance()
-                .getMenuObservable()
-                .filter(id -> id.equals(R.id.action_today))
-                .subscribe(id -> {
-                    mCalendarView.getViewPager().setCurrentItem(
-                            CalendarAdapter.DEFAULT_POSITION, true
-                    );
-                });
-    }
-
-    private void showCardView() {
-        mCalendarView.showCardView();
-
-        mCalendarView.getViewButton().setOnClickListener(view -> {
-            Intent intent = new Intent(mCalendarView.getContext(), ProgressActivity.class);
-
-            intent.putExtra("routineId", mRealmRoutineId);
-
-            mCalendarView.getContext().startActivity(intent);
-        });
-
-        mCalendarView.getExportButton().setOnClickListener(view -> {
-            Realm realm = RealmStream.getInstance().getRealm();
-
-            RealmRoutine realmRoutine = realm.where(RealmRoutine.class)
-                    .equalTo("id", mRealmRoutineId)
-                    .findFirst();
-
-            String s = "Category Title,Section Title,Exercise Title,Exercise Description";
-            for(RealmExercise realmExercise : realmRoutine.getExercises()) {
-                s += realmExercise.getCategory().getTitle() + ",";
-                s += realmExercise.getSection().getTitle() + ",";
-                s += realmExercise.getTitle() + ",";
-                s += realmExercise.getDescription() + "\n";
-            }
-
-            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-
-            sharingIntent.setType("text/plain");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, s);
-
-            mCalendarView.getContext().startActivity(Intent.createChooser(sharingIntent, "Export as CSV"));
-        });
-
-        mCalendarView.getRemoveButton().setOnClickListener(view -> {
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(mCalendarView.getContext())
-                    .setTitle("Remove Logged Workout?")
-                    .setPositiveButton("Ok", (dialog, which) -> {
-                        Realm realm = RealmStream.getInstance().getRealm();
-
-                        RealmRoutine realmRoutine = realm.where(RealmRoutine.class)
-                                .equalTo("id", mRealmRoutineId)
-                                .findFirst();
-
-                        realm.beginTransaction();
-                        realmRoutine.removeFromRealm();
-                        realm.commitTransaction();
-
-                        notifyDataSetChanged();
-                        mCalendarView.hideCardView();
-                    })
-                    .setNegativeButton("Cancel", (dialog, which) -> {});
-
-            alertDialog.show();
-        });
-    }
-
-    private void notifyDataSetChanged() {
-        mCalendarView.getViewPager().setAdapter(mCalendarAdapter);
-        mCalendarView.getViewPager().setCurrentItem(CalendarAdapter.DEFAULT_POSITION, false);
+                }));
     }
 
     public boolean isRoutineLogged(DateTime dateTime) {
@@ -157,5 +96,64 @@ public class CalendarPresenter {
         }
 
         return false;
+    }
+
+    public void onPageSelected(int position) {
+        CalendarStream.getInstance().setCalendarPage(position);
+    }
+
+    public void onClickViewButton() {
+        Intent intent = new Intent(getContext(), ProgressActivity.class);
+        intent.putExtra("routineId", mRealmRoutineId);
+
+        getContext().startActivity(intent);
+    }
+
+    public void onClickExportButton() {
+        Realm realm = RealmStream.getInstance().getRealm();
+
+        RealmRoutine realmRoutine = realm.where(RealmRoutine.class)
+                .equalTo("id", mRealmRoutineId)
+                .findFirst();
+
+        String s = "Category Title,Section Title,Exercise Title,Exercise Description";
+        for(RealmExercise realmExercise : realmRoutine.getExercises()) {
+            s += realmExercise.getCategory().getTitle() + ",";
+            s += realmExercise.getSection().getTitle() + ",";
+            s += realmExercise.getTitle() + ",";
+            s += realmExercise.getDescription() + "\n";
+        }
+
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, s);
+
+        getContext().startActivity(Intent.createChooser(sharingIntent, "Export as CSV"));
+    }
+
+    public void onClickRemoveButton() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext())
+                .setTitle("Remove Logged Workout?")
+                .setPositiveButton("Ok", (dialog, which) -> {
+                    Realm realm = RealmStream.getInstance().getRealm();
+
+                    RealmRoutine realmRoutine = realm.where(RealmRoutine.class)
+                            .equalTo("id", mRealmRoutineId)
+                            .findFirst();
+
+                    realm.beginTransaction();
+                    realmRoutine.removeFromRealm();
+                    realm.commitTransaction();
+
+                    mView.setAdapter(mCalendarAdapter);
+                    mView.scrollToDefaultItem();
+
+                    mView.hideCardView();
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> {});
+
+        alertDialog.show();
     }
 }
