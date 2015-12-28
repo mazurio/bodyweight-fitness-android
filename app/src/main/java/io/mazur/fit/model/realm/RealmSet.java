@@ -9,7 +9,7 @@ public class RealmSet extends RealmObject {
 
     private boolean isTimed = false;
 
-    private double weight = 0; // (kg)
+    private double weight = 0;
     private int reps = 0;
     private int seconds = 0;
 
