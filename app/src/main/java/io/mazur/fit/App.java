@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -31,7 +32,8 @@ public class App extends Application {
         if (!BuildConfig.DEBUG) {
             Fabric.with(
                     getApplicationContext(),
-                    new Crashlytics()
+                    new Crashlytics(),
+                    new Answers()
             );
         }
 

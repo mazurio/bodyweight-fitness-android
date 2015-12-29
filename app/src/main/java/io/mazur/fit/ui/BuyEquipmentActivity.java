@@ -8,6 +8,8 @@ import android.widget.ImageView;
 
 import com.amazon.device.associates.AssociatesAPI;
 import com.amazon.device.associates.OpenProductPageRequest;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -50,6 +52,12 @@ public class BuyEquipmentActivity extends AppCompatActivity {
         loadDrawable(R.drawable.product_powertower, mProducts.get(2));
         loadDrawable(R.drawable.product_rings, mProducts.get(3));
         loadDrawable(R.drawable.product_irongym, mProducts.get(4));
+
+        if (!BuildConfig.DEBUG) {
+            Answers.getInstance().logCustom(
+                    new CustomEvent("Buy Equipment")
+            );
+        }
     }
 
     @Override
@@ -113,6 +121,13 @@ public class BuyEquipmentActivity extends AppCompatActivity {
             );
         } catch (Exception e) {
             Logger.e(e.getMessage());
+        }
+
+        if (!BuildConfig.DEBUG) {
+            Answers.getInstance().logCustom(
+                    new CustomEvent("Open Product Page")
+                            .putCustomAttribute("Product Id", productId)
+            );
         }
     }
 }
