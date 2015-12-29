@@ -20,6 +20,7 @@ import icepick.State;
 
 import io.mazur.fit.R;
 import io.mazur.fit.presenter.TimerPresenter;
+import io.mazur.fit.utils.ViewUtils;
 
 public class TimerView extends LinearLayout {
     @State
@@ -64,9 +65,9 @@ public class TimerView extends LinearLayout {
 
         ButterKnife.inject(this);
 
-        resetFloatingActionButtonMargin(mIncreaseTimerButton);
-        resetFloatingActionButtonMargin(mStartStopTimerButton);
-        resetFloatingActionButtonMargin(mRestartTimerButton);
+        ViewUtils.resetFloatingActionButtonMargin(mIncreaseTimerButton);
+        ViewUtils.resetFloatingActionButtonMargin(mStartStopTimerButton);
+        ViewUtils.resetFloatingActionButtonMargin(mRestartTimerButton);
 
         onCreateView();
     }
@@ -94,14 +95,6 @@ public class TimerView extends LinearLayout {
 
     public void onCreateView() {
         mPresenter.onCreateView(this);
-    }
-
-    private void resetFloatingActionButtonMargin(FloatingActionButton floatingActionButton) {
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) floatingActionButton.getLayoutParams();
-            layoutParams.setMargins(0, 0, 0, 0);
-            floatingActionButton.setLayoutParams(layoutParams);
-        }
     }
 
     public void showPreviousExerciseButton() {

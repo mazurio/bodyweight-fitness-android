@@ -21,6 +21,7 @@ import icepick.State;
 
 import io.mazur.fit.R;
 import io.mazur.fit.presenter.ActionPresenter;
+import io.mazur.fit.utils.ViewUtils;
 import io.mazur.fit.view.dialog.LogWorkoutDialog;
 import io.mazur.fit.view.widget.ActionButton;
 
@@ -68,6 +69,9 @@ public class ActionView extends RelativeLayout {
         super.onFinishInflate();
 
         ButterKnife.inject(this);
+
+        ViewUtils.resetFloatingActionButtonMargin(mActionViewLogWorkoutButton);
+        ViewUtils.resetFloatingActionButtonMargin(mActionViewActionButton);
 
         mMaterialSheet = new MaterialSheetFab<>(
                 mActionViewActionButton,
