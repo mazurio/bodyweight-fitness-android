@@ -27,9 +27,9 @@ public class Routine implements Serializable {
                 mCategories.add(currentCategory);
 
                 /**
-                 * TODO: We avoid categories from Linked Routine for now.
+                 * Whether to show categories in the linked routine (e.g. Drawer).
                  */
-//                mLinkedRoutine.add(currentCategory);
+                mLinkedRoutine.add(currentCategory);
             }
 
             /**

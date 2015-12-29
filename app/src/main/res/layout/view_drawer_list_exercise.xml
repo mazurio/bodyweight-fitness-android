@@ -15,7 +15,6 @@
         android:gravity="center_vertical"
         android:textColor="#57000000"
         android:textSize="12sp"
-        android:text="Level"
         app:typeface="roboto_medium"/>
 
     <com.devspark.robototextview.widget.RobotoTextView
@@ -27,6 +26,5 @@
         android:gravity="center_vertical"
         android:textColor="#87000000"
         android:textSize="14sp"
-        android:text="Title"
         app:typeface="roboto_medium"/>
 </LinearLayout>

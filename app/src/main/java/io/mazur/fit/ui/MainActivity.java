@@ -18,7 +18,6 @@ import io.mazur.fit.stream.DrawerStream;
 import io.mazur.fit.stream.RepositoryStream;
 import io.mazur.fit.stream.ToolbarStream;
 import io.mazur.fit.utils.ApplicationStoreUtils;
-import io.mazur.fit.utils.Logger;
 import io.mazur.fit.view.fragment.NavigationDrawerFragment;
 import io.mazur.fit.utils.PreferenceUtils;
 

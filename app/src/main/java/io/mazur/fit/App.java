@@ -17,6 +17,8 @@ import io.fabric.sdk.android.Fabric;
  * TODO BUG: ProgressActivity missing items sometimes.
  *
  * TODO: Remove delete on upgrade line of code from Realm.
+ *
+ * TODO: Move to Dagger 2 injection rather than using getInstance singletons.
  */
 public class App extends Application {
     private static Context mContext;

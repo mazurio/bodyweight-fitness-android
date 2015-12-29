@@ -6,72 +6,66 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <android.support.design.widget.CoordinatorLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="135dp">
+            android:layout_height="135dp"
+            android:background="@color/primary">
 
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/header"
                 android:layout_width="match_parent"
-                android:layout_height="135dp"
-                android:background="@color/primary"
-                app:layout_scrollFlags="scroll">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="bottom"
+                android:padding="16dp">
 
-                <LinearLayout
-                    android:id="@+id/header"
+                <com.devspark.robototextview.widget.RobotoTextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:gravity="bottom"
-                    android:padding="16dp">
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:text="Bodyweight Fitness"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    app:typeface="roboto_medium"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <com.devspark.robototextview.widget.RobotoTextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="16dp"
-                        android:text="Bodyweight Fitness"
+                        android:text="Beginner Routine"
                         android:textSize="14sp"
                         android:textColor="@color/white"
-                        app:typeface="roboto_medium"/>
+                        app:typeface="roboto_regular"/>
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_arrow_drop_down"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
 
-                        <com.devspark.robototextview.widget.RobotoTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Beginner Routine"
-                            android:textSize="14sp"
-                            android:textColor="@color/white"
-                            app:typeface="roboto_regular"/>
-
-                        <ImageView
-                            android:id="@+id/arrow"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/ic_arrow_drop_down"/>
-                    </RelativeLayout>
-                </LinearLayout>
-            </RelativeLayout>
-        </android.support.design.widget.AppBarLayout>
-
-        <android.support.v4.widget.NestedScrollView
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:id="@+id/menu"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp">
@@ -146,13 +140,12 @@
                     android:text="Settings"
                     app:typeface="roboto_medium"/>
             </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+        </ScrollView>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-    </android.support.design.widget.CoordinatorLayout>
+            android:visibility="gone"/>
+    </LinearLayout>
 </io.mazur.fit.view.DrawerListView>

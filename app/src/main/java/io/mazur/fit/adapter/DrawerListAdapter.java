@@ -90,7 +90,8 @@ public class DrawerListAdapter extends RecyclerView.Adapter<DrawerListAdapter.Ro
     }
 
     public class RoutineCategoryPresenter extends RoutinePresenter<Category> {
-        @InjectView(R.id.routine_category_text_view) TextView mRoutineCategoryTextView;
+        @InjectView(R.id.routine_category_text_view)
+        TextView mRoutineCategoryTextView;
 
         public RoutineCategoryPresenter(View itemView) {
             super(itemView);
@@ -103,7 +104,8 @@ public class DrawerListAdapter extends RecyclerView.Adapter<DrawerListAdapter.Ro
     }
 
     public class RoutineSectionPresenter extends RoutinePresenter<Section> {
-        @InjectView(R.id.routine_section_text_view) TextView mRoutineSectionTextView;
+        @InjectView(R.id.routine_section_text_view)
+        TextView mRoutineSectionTextView;
 
         public RoutineSectionPresenter(View itemView) {
             super(itemView);
@@ -116,8 +118,11 @@ public class DrawerListAdapter extends RecyclerView.Adapter<DrawerListAdapter.Ro
     }
 
     public class RoutineExercisePresenter extends RoutinePresenter<Exercise> {
-        @InjectView(R.id.routine_exercise_level_text_view) TextView mRoutineExerciseLevelTextView;
-        @InjectView(R.id.routine_exercise_text_view) TextView mRoutineExerciseTextView;
+        @InjectView(R.id.routine_exercise_level_text_view)
+        TextView mRoutineExerciseLevelTextView;
+
+        @InjectView(R.id.routine_exercise_text_view)
+        TextView mRoutineExerciseTextView;
 
         public RoutineExercisePresenter(View itemView) {
             super(itemView);
