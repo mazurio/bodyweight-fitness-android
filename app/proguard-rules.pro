@@ -1,6 +1,4 @@
 # Add project specific ProGuard rules here.
-# By default, the flags in this file are appended to flags specified
-# in /Users/Mazur/Library/Android/sdk/tools/proguard/proguard-android.txt
 # You can edit the include path and order by changing the proguardFiles
 # directive in build.gradle.
 #
@@ -15,3 +13,16 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+
+# Workaround for Samsung Android 4.2 bug
+# https://code.google.com/p/android/issues/detail?id=78377
+# https://code.google.com/p/android/issues/detail?id=78377#c188
+# https://code.google.com/p/android/issues/detail?id=78377#c302
+-keepattributes **
+-keep class !android.support.v7.view.menu.**,** {*;}
+-dontpreverify
+-dontoptimize
+-dontshrink
+-dontwarn **
+-dontnote **

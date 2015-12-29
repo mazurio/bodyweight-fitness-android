@@ -3,9 +3,11 @@ apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'io.fabric'
 
 def getApiKey(){
-    def Properties props = new Properties()
-    props.load(new FileInputStream(new File('api.properties')))
-    return props['AMAZON_API_KEY']
+    def Properties properties = new Properties()
+
+    properties.load(new FileInputStream(new File('api.properties')))
+
+    return properties['AMAZON_API_KEY']
 }
 
 android {
@@ -14,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId 'io.mazur.fit'
-        minSdkVersion 21
+        minSdkVersion 14
         targetSdkVersion 23
     }
 
@@ -58,6 +60,10 @@ android {
 
         debug {
             ext.enableCrashlytics = false
+        }
+
+        release {
+            minifyEnabled true
         }
     }
 }
