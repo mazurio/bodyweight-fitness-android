@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="view_action_elevation">6dp</dimen>
+</resources>

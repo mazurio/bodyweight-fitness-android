@@ -22,7 +22,7 @@
         android:layout_marginRight="12dp"
         app:backgroundTint="@color/white"
         app:borderWidth="0dp"
-        app:elevation="6dp"/>
+        app:elevation="@dimen/view_action_elevation"/>
 
     <io.mazur.fit.view.widget.ActionButton
         android:id="@+id/action_view_action_button"
@@ -37,7 +37,7 @@
         android:layout_marginRight="12dp"
         app:backgroundTint="@color/primaryDark"
         app:borderWidth="0dp"
-        app:elevation="6dp"/>
+        app:elevation="@dimen/view_action_elevation"/>
 
     <io.codetail.widget.RevealLinearLayout
         android:layout_width="match_parent"

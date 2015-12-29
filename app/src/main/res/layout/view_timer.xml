@@ -66,7 +66,7 @@
             android:layout_marginRight="12dp"
             android:src="@drawable/ic_add"
             app:borderWidth="0dp"
-            app:elevation="12dp"
+            app:elevation="0dp"
             app:fabSize="mini"/>
 
         <android.support.design.widget.FloatingActionButton
@@ -77,7 +77,7 @@
             android:src="@drawable/ic_play"
             android:layout_centerInParent="true"
             app:borderWidth="0dp"
-            app:elevation="12dp"/>
+            app:elevation="0dp"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/restart_timer_button"
@@ -89,7 +89,7 @@
             android:layout_toRightOf="@+id/start_stop_timer_button"
             android:layout_marginLeft="12dp"
             app:borderWidth="0dp"
-            app:elevation="12dp"
+            app:elevation="0dp"
             app:fabSize="mini"/>
     </RelativeLayout>
 
