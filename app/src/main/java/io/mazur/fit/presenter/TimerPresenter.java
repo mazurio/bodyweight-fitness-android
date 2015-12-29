@@ -7,7 +7,7 @@ import android.os.CountDownTimer;
 import io.mazur.fit.R;
 import io.mazur.fit.model.Exercise;
 import io.mazur.fit.stream.RoutineStream;
-import io.mazur.fit.utils.PreferenceUtil;
+import io.mazur.fit.utils.PreferenceUtils;
 import io.mazur.fit.view.TimerView;
 
 import rx.Observable;
@@ -130,7 +130,7 @@ public class TimerPresenter extends IPresenter<TimerView> {
     }
 
     public void playSound() {
-        if(PreferenceUtil.getInstance().playSoundWhenTimerStops()) {
+        if(PreferenceUtils.getInstance().playSoundWhenTimerStops()) {
             MediaPlayer mediaPlayer = MediaPlayer.create(getContext(), R.raw.finished);
             mediaPlayer.setLooping(false);
             mediaPlayer.start();
@@ -163,7 +163,7 @@ public class TimerPresenter extends IPresenter<TimerView> {
 
             mSeconds = mCurrentSeconds;
 
-            PreferenceUtil.getInstance().setTimerValue(mSeconds * 1000);
+            PreferenceUtils.getInstance().setTimerValue(mSeconds * 1000);
         }, formatMinutesAsNumber(mCurrentSeconds), formatSecondsAsNumber(mCurrentSeconds), true);
 
         timePickerDialog.show();
@@ -186,7 +186,7 @@ public class TimerPresenter extends IPresenter<TimerView> {
     }
 
     public int getSeconds() {
-        return (int) PreferenceUtil.getInstance().getTimerValue(mSeconds * 1000) / 1000;
+        return (int) PreferenceUtils.getInstance().getTimerValue(mSeconds * 1000) / 1000;
     }
 
     public CountDownTimer buildCountDownTimer(int seconds) {

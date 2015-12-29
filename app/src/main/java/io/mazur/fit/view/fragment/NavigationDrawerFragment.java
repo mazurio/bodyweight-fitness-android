@@ -22,6 +22,7 @@ import icepick.Icepick;
 import icepick.State;
 
 import io.mazur.fit.App;
+import io.mazur.fit.BuildConfig;
 import io.mazur.fit.R;
 import io.mazur.fit.stream.DrawerStream;
 import io.mazur.fit.stream.RoutineStream;
@@ -40,6 +41,9 @@ public class NavigationDrawerFragment extends Fragment {
 
     @InjectView(R.id.action_menu_home)
     View mActionMenuHome;
+
+    @InjectView(R.id.action_menu_support_developer)
+    TextView mActionMenuSupportDeveloper;
 
     @State
     int mMenuId = -1;
@@ -89,6 +93,12 @@ public class NavigationDrawerFragment extends Fragment {
         final View view = inflater.inflate(R.layout.view_drawer, container, false);
 
         ButterKnife.inject(this, view);
+
+        if (BuildConfig.FLAVOR.equalsIgnoreCase("free")) {
+            mActionMenuSupportDeveloper.setVisibility(View.VISIBLE);
+        } else {
+            mActionMenuSupportDeveloper.setVisibility(View.GONE);
+        }
 
         subscribe(view);
 
@@ -148,7 +158,9 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void setMenu(View view, int id) {
-        if (id == R.id.action_menu_faq || id == R.id.action_menu_settings) {
+        if (id == R.id.action_menu_faq ||
+                id == R.id.action_menu_support_developer ||
+                id == R.id.action_menu_settings) {
             closeDrawer();
 
             return;
@@ -208,6 +220,7 @@ public class NavigationDrawerFragment extends Fragment {
             R.id.action_menu_home,
             R.id.action_menu_workout_log,
             R.id.action_menu_faq,
+            R.id.action_menu_support_developer,
             R.id.action_menu_settings
     })
     @SuppressWarnings("unused")

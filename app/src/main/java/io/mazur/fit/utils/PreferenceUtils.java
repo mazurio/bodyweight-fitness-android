@@ -7,16 +7,16 @@ import io.mazur.fit.Constants;
 import io.mazur.fit.R;
 import io.mazur.fit.model.WeightMeasurementUnit;
 
-public class PreferenceUtil {
+public class PreferenceUtils {
     private static class InstanceHolder {
-        private static final PreferenceUtil mInstance = new PreferenceUtil();
+        private static final PreferenceUtils mInstance = new PreferenceUtils();
     }
 
-    public static PreferenceUtil getInstance() {
+    public static PreferenceUtils getInstance() {
         return InstanceHolder.mInstance;
     }
 
-    private PreferenceUtil() {
+    private PreferenceUtils() {
         PreferenceManager.setDefaultValues(App.getContext(), R.xml.settings, false);
     }
 

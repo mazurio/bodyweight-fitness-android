@@ -30,7 +30,7 @@ import io.mazur.fit.model.repository.RepositoryRoutine;
 import io.mazur.fit.model.repository.RepositorySet;
 import io.mazur.fit.stream.RepositoryStream;
 import io.mazur.fit.stream.RoutineStream;
-import io.mazur.fit.utils.PreferenceUtil;
+import io.mazur.fit.utils.PreferenceUtils;
 import io.realm.Realm;
 
 public class LogWorkoutDialog {
@@ -117,7 +117,7 @@ public class LogWorkoutDialog {
 
         ButterKnife.inject(this, mDialog);
 
-        mWeightMeasurementUnit = PreferenceUtil
+        mWeightMeasurementUnit = PreferenceUtils
                 .getInstance()
                 .getWeightMeasurementUnit();
 

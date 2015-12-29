@@ -17,8 +17,9 @@ import io.mazur.fit.R;
 import io.mazur.fit.stream.DrawerStream;
 import io.mazur.fit.stream.RepositoryStream;
 import io.mazur.fit.stream.ToolbarStream;
+import io.mazur.fit.utils.ApplicationStoreUtils;
 import io.mazur.fit.view.fragment.NavigationDrawerFragment;
-import io.mazur.fit.utils.PreferenceUtil;
+import io.mazur.fit.utils.PreferenceUtils;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private NavigationDrawerFragment mNavigationDrawerFragment;
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     private void keepScreenOnWhenAppIsRunning() {
-        if(PreferenceUtil.getInstance().keepScreenOnWhenAppIsRunning()) {
+        if(PreferenceUtils.getInstance().keepScreenOnWhenAppIsRunning()) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         } else {
             clearFlagKeepScreenOn();
@@ -116,14 +117,37 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         DrawerStream.getInstance()
                 .getMenuObservable()
                 .subscribe(id -> {
-                    if (id.equals(R.id.action_menu_faq)) {
-                        startActivity(
-                                new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.reddit.com/r/bodyweightfitness/wiki/faq"))
-                        );
-                    } else if (id.equals(R.id.action_menu_settings)) {
-                        startActivity(
-                                new Intent(getApplicationContext(), SettingsActivity.class)
-                        );
+                    switch (id) {
+                        case (R.id.action_menu_faq): {
+                            startActivity(
+                                    new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.reddit.com/r/bodyweightfitness/wiki/faq"))
+                            );
+
+                            break;
+                        }
+
+                        case (R.id.action_menu_support_developer): {
+                            String installerPackageName = getPackageManager()
+                                    .getInstallerPackageName(getPackageName());
+
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(ApplicationStoreUtils
+                                    .getApplicationStoreUrl(installerPackageName)
+                                    .getApplicationStoreAppUrl()
+                            ));
+
+                            startActivity(intent);
+
+                            break;
+                        }
+
+                        case (R.id.action_menu_settings): {
+                            startActivity(
+                                    new Intent(getApplicationContext(), SettingsActivity.class)
+                            );
+
+                            break;
+                        }
                     }
                 });
     }
