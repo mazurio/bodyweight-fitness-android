@@ -81,6 +81,10 @@ public abstract class IPresenter<V extends View> implements Serializable {
      * Remove all Rx subscriptions.
      */
     private void unsubscribeAll() {
+        if (mSubscriptions == null) {
+            return;
+        }
+
         for(Subscription s : mSubscriptions) {
             s.unsubscribe();
             s = null;
