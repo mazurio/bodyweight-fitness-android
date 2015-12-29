@@ -18,11 +18,15 @@ import io.mazur.fit.stream.DrawerStream;
 import io.mazur.fit.stream.RepositoryStream;
 import io.mazur.fit.stream.ToolbarStream;
 import io.mazur.fit.utils.ApplicationStoreUtils;
+import io.mazur.fit.utils.Logger;
 import io.mazur.fit.view.fragment.NavigationDrawerFragment;
 import io.mazur.fit.utils.PreferenceUtils;
 
+import rx.Subscription;
+
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private NavigationDrawerFragment mNavigationDrawerFragment;
+    private Subscription mSubscription;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         setDrawer();
 
         keepScreenOnWhenAppIsRunning();
-        subscribe();
 	}
 
     @Override
@@ -49,10 +52,18 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+        unsubscribe();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
         keepScreenOnWhenAppIsRunning();
+        subscribe();
     }
 
     @Override
@@ -114,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     private void subscribe() {
-        DrawerStream.getInstance()
+        mSubscription = DrawerStream.getInstance()
                 .getMenuObservable()
                 .subscribe(id -> {
                     switch (id) {
@@ -150,6 +161,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         }
                     }
                 });
+    }
+
+    private void unsubscribe() {
+        mSubscription.unsubscribe();
     }
 
     private void clearFlagKeepScreenOn() {
