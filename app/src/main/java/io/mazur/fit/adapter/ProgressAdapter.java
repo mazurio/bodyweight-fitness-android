@@ -2,7 +2,6 @@ package io.mazur.fit.adapter;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.design.widget.TabLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.devspark.robototextview.util.RobotoTypefaceManager;
 import com.github.mikephil.charting.charts.LineChart;
@@ -20,42 +18,33 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.YAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 
 import io.mazur.fit.R;
-import io.mazur.fit.model.realm.RealmCategory;
-import io.mazur.fit.model.realm.RealmExercise;
-import io.mazur.fit.model.realm.RealmSection;
-import io.mazur.fit.model.realm.RealmSet;
-import io.mazur.fit.stream.RealmStream;
-import io.mazur.fit.utils.Logger;
+import io.mazur.fit.model.repository.RepositoryCategory;
+import io.mazur.fit.model.repository.RepositoryExercise;
+import io.mazur.fit.model.repository.RepositorySection;
+import io.mazur.fit.model.repository.RepositorySet;
 import io.mazur.fit.view.dialog.LogWorkoutDialog;
-import io.realm.Realm;
-import io.realm.RealmList;
-import rx.Observable;
-import rx.functions.Func1;
 
 public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.ProgressPresenter>
         implements LogWorkoutDialog.OnDismissLogWorkoutDialogListener {
-    private RealmCategory mRealmCategory;
+    private RepositoryCategory mRepositoryCategory;
 
-    private HashMap<Integer, RealmSection> mItemViewMapping = new HashMap<>();
-    private HashMap<Integer, RealmExercise> mExerciseViewMapping = new HashMap<>();
+    private HashMap<Integer, RepositorySection> mItemViewMapping = new HashMap<>();
+    private HashMap<Integer, RepositoryExercise> mExerciseViewMapping = new HashMap<>();
 
     private int mTotalSize = 0;
 
-    public ProgressAdapter(RealmCategory realmCategory) {
+    public ProgressAdapter(RepositoryCategory repositoryCategory) {
         super();
 
-        mRealmCategory = realmCategory;
+        mRepositoryCategory = repositoryCategory;
 
         /**
          * We loop over the sections in order to find out the item view id
@@ -63,14 +52,14 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
          */
         int sectionId = 0;
         int exerciseId = 1;
-        for(RealmSection realmSection : mRealmCategory.getSections()) {
-            mItemViewMapping.put(sectionId, realmSection);
+        for(RepositorySection repositorySection : mRepositoryCategory.getSections()) {
+            mItemViewMapping.put(sectionId, repositorySection);
 
             int numberOfExercises = 0;
 
-            for(RealmExercise realmExercise : realmSection.getExercises()) {
-                if(realmExercise.isVisible()) {
-                    mExerciseViewMapping.put(exerciseId, realmExercise);
+            for(RepositoryExercise repositoryExercise : repositorySection.getExercises()) {
+                if(repositoryExercise.isVisible()) {
+                    mExerciseViewMapping.put(exerciseId, repositoryExercise);
 
                     exerciseId += 1;
                     mTotalSize += 1;
@@ -140,7 +129,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         @InjectView(R.id.chart1) LineChart mLineChart;
         @InjectView(R.id.view_button) Button mButton;
 
-        private RealmExercise mRealmExercise;
+        private RepositoryExercise mRepositoryExercise;
 
         public ProgressCardPresenter(View itemView) {
             super(itemView);
@@ -148,13 +137,13 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
             ButterKnife.inject(this, itemView);
         }
 
-        public void bindView(RealmExercise realmExercise, LogWorkoutDialog.OnDismissLogWorkoutDialogListener onDismissLogWorkoutDialogListener) {
-            mRealmExercise = realmExercise;
+        public void bindView(RepositoryExercise repositoryExercise, LogWorkoutDialog.OnDismissLogWorkoutDialogListener onDismissLogWorkoutDialogListener) {
+            mRepositoryExercise = repositoryExercise;
 
-            mToolbar.setTitle(realmExercise.getTitle());
-            mToolbar.setSubtitle(realmExercise.getDescription());
+            mToolbar.setTitle(repositoryExercise.getTitle());
+            mToolbar.setSubtitle(repositoryExercise.getDescription());
 
-            if(isCompleted(mRealmExercise)) {
+            if(isCompleted(mRepositoryExercise)) {
                 mChartLayout.setVisibility(View.VISIBLE);
                 updateChart();
             } else {
@@ -163,27 +152,27 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
             }
 
             mButton.setOnClickListener(view -> {
-                LogWorkoutDialog logWorkoutDialog = new LogWorkoutDialog(itemView.getContext(), mRealmExercise);
+                LogWorkoutDialog logWorkoutDialog = new LogWorkoutDialog(itemView.getContext(), mRepositoryExercise);
                 logWorkoutDialog.setOnDismissLogWorkoutDialogListener(onDismissLogWorkoutDialogListener);
                 logWorkoutDialog.show();
             });
         }
 
         private void updateChart() {
-            boolean isTimed = mRealmExercise.getDefaultSet().equals("timed");
+            boolean isTimed = mRepositoryExercise.getDefaultSet().equals("timed");
 
             ArrayList<Entry> valsComp1 = new ArrayList<>();
             ArrayList<String> xVals = new ArrayList<>();
 
             int index = 1;
-            for(RealmSet realmSet : mRealmExercise.getSets()) {
+            for(RepositorySet repositorySet : mRepositoryExercise.getSets()) {
                 if (isTimed) {
-                    int seconds = realmSet.getSeconds();
+                    int seconds = repositorySet.getSeconds();
 
                     xVals.add(String.format("Set %d", index));
                     valsComp1.add(new Entry(seconds, (index - 1)));
                 } else {
-                    int reps = realmSet.getReps();
+                    int reps = repositorySet.getReps();
 
                     xVals.add(String.format("Set %d", index));
 
@@ -282,7 +271,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
             ButterKnife.inject(this, itemView);
         }
 
-        public void bindView(RealmSection realmSection) {
+        public void bindView(RepositorySection repositorySection) {
             mTitle.getPaddingTop();
 
             if (getLayoutPosition() == 0) {
@@ -301,18 +290,18 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
                 );
             }
 
-            mTitle.setText(realmSection.getTitle());
+            mTitle.setText(repositorySection.getTitle());
         }
     }
 
-    public boolean isCompleted(RealmExercise realmExercise) {
-        int size = realmExercise.getSets().size();
+    public boolean isCompleted(RepositoryExercise repositoryExercise) {
+        int size = repositoryExercise.getSets().size();
 
         if (size == 0) {
             return false;
         }
 
-        RealmSet firstSet = realmExercise.getSets().get(0);
+        RepositorySet firstSet = repositoryExercise.getSets().get(0);
 
         if(size == 1 && firstSet.getSeconds() == 0 && firstSet.getReps() == 0) {
             return false;

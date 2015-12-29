@@ -8,9 +8,9 @@ import java.util.Date;
 
 import io.mazur.fit.R;
 import io.mazur.fit.adapter.CalendarAdapter;
-import io.mazur.fit.model.realm.RealmRoutine;
+import io.mazur.fit.model.repository.RepositoryRoutine;
 import io.mazur.fit.stream.CalendarStream;
-import io.mazur.fit.stream.RealmStream;
+import io.mazur.fit.stream.RepositoryStream;
 import io.mazur.fit.utils.DateUtils;
 import io.mazur.fit.utils.ViewUtils;
 import io.mazur.fit.view.CalendarItemView;
@@ -114,8 +114,8 @@ public class CalendarItemPresenter {
                 .minusSeconds(1)
                 .toDate();
 
-        Realm realm = RealmStream.getInstance().getRealm();
-        RealmRoutine routine = realm.where(RealmRoutine.class)
+        Realm realm = RepositoryStream.getInstance().getRealm();
+        RepositoryRoutine routine = realm.where(RepositoryRoutine.class)
                 .between("startTime", start, end)
                 .findFirst();
 

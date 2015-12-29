@@ -25,10 +25,10 @@ import io.mazur.fit.R;
 import io.mazur.fit.model.Exercise;
 import io.mazur.fit.model.SectionMode;
 import io.mazur.fit.model.WeightMeasurementUnit;
-import io.mazur.fit.model.realm.RealmExercise;
-import io.mazur.fit.model.realm.RealmRoutine;
-import io.mazur.fit.model.realm.RealmSet;
-import io.mazur.fit.stream.RealmStream;
+import io.mazur.fit.model.repository.RepositoryExercise;
+import io.mazur.fit.model.repository.RepositoryRoutine;
+import io.mazur.fit.model.repository.RepositorySet;
+import io.mazur.fit.stream.RepositoryStream;
 import io.mazur.fit.stream.RoutineStream;
 import io.mazur.fit.utils.PreferenceUtil;
 import io.realm.Realm;
@@ -43,98 +43,112 @@ public class LogWorkoutDialog {
     private Dialog mDialog;
     private OnDismissLogWorkoutDialogListener mOnDismissLogWorkoutDialogListener;
 
-    @InjectView(R.id.toolbar) Toolbar mToolbar;
-    @InjectView(R.id.saveButton) Button mSaveButton;
+    @InjectView(R.id.toolbar)
+    Toolbar mToolbar;
 
-    @InjectView(R.id.setView) LinearLayout mSetView;
-    @InjectView(R.id.actionView) View mActionView;
-    @InjectView(R.id.setValue) TextView mActionViewSetValue;
+    @InjectView(R.id.saveButton)
+    Button mSaveButton;
 
-    @InjectView(R.id.weightValue) TextView mActionViewWeightValue;
-    @InjectView(R.id.weightDescription) TextView mActionViewWeightDescription;
+    @InjectView(R.id.setView)
+    LinearLayout mSetView;
 
-    @InjectView(R.id.repsValue) TextView mActionViewRepsValue;
-    @InjectView(R.id.repsDescription) TextView mActionViewRepsDescription;
+    @InjectView(R.id.actionView)
+    View mActionView;
+
+    @InjectView(R.id.setValue)
+    TextView mActionViewSetValue;
+
+    @InjectView(R.id.weightValue)
+    TextView mActionViewWeightValue;
+
+    @InjectView(R.id.weightDescription)
+    TextView mActionViewWeightDescription;
+
+    @InjectView(R.id.repsValue)
+    TextView mActionViewRepsValue;
+
+    @InjectView(R.id.repsDescription)
+    TextView mActionViewRepsDescription;
 
     private LinearLayout mRowLayout;
 
     private ArrayList<View> mViewSets = new ArrayList<>();
 
-    private RealmRoutine mRealmRoutine;
-    private RealmExercise mRealmExercise;
-    private RealmSet mSet;
+    private RepositoryRoutine mRepositoryRoutine;
+    private RepositoryExercise mRepositoryExercise;
+    private RepositorySet mSet;
 
     private Realm mRealm;
 
     private WeightMeasurementUnit mWeightMeasurementUnit;
 
     public LogWorkoutDialog(Context context) {
-        mRealm = RealmStream.getInstance().getRealm();
+        mRealm = RepositoryStream.getInstance().getRealm();
 
         Exercise exercise = RoutineStream.getInstance().getExercise();
 
-        mRealmRoutine = RealmStream.getInstance().getRealmRoutineForToday();
+        mRepositoryRoutine = RepositoryStream.getInstance().getRepositoryRoutineForToday();
 
-        for(RealmExercise realmExercise : mRealmRoutine.getExercises()) {
-            if(realmExercise.getTitle().equals(exercise.getTitle())) {
-                mRealmExercise = realmExercise;
+        for(RepositoryExercise repositoryExercise : mRepositoryRoutine.getExercises()) {
+            if(repositoryExercise.getTitle().equals(exercise.getTitle())) {
+                mRepositoryExercise = repositoryExercise;
 
                 break;
             }
         }
 
+        buildDialog(context);
+    }
+
+    public LogWorkoutDialog(Context context, RepositoryExercise repositoryExercise) {
+        mRealm = RepositoryStream.getInstance().getRealm();
+
+        mRepositoryRoutine = null;
+        mRepositoryExercise = repositoryExercise;
+
+        buildDialog(context);
+    }
+
+    private void buildDialog(Context context) {
         mDialog = new Dialog(context);
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mDialog.setContentView(R.layout.view_dialog_log_workout);
         mDialog.setCanceledOnTouchOutside(true);
-    }
 
-    public LogWorkoutDialog(Context context, RealmExercise realmExercise) {
-        mRealm = RealmStream.getInstance().getRealm();
+        ButterKnife.inject(this, mDialog);
 
-        mRealmRoutine = null;
-        mRealmExercise = realmExercise;
-
-        mDialog = new Dialog(context);
-        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mDialog.setContentView(R.layout.view_dialog_log_workout);
-        mDialog.setCanceledOnTouchOutside(true);
-    }
-
-    public void show() {
         mWeightMeasurementUnit = PreferenceUtil
                 .getInstance()
                 .getWeightMeasurementUnit();
 
+        mActionView.setVisibility(View.GONE);
+    }
+
+    public void show() {
         mRealm.beginTransaction();
 
-        ButterKnife.inject(this, mDialog);
-
-        mActionView.setVisibility(View.GONE);
-
-        mToolbar.setTitle(mRealmExercise.getTitle());
-        mToolbar.setSubtitle(mRealmExercise.getDescription());
+        mToolbar.setTitle(mRepositoryExercise.getTitle());
+        mToolbar.setSubtitle(mRepositoryExercise.getDescription());
 
         inflateToolbarMenu();
 
         buildSets();
 
         mSaveButton.setOnClickListener(v -> mDialog.dismiss());
-
         mDialog.setOnDismissListener(l -> {
-            String mode = mRealmExercise.getSection().getMode();
+            String mode = mRepositoryExercise.getSection().getMode();
 
             if (mode.equals(SectionMode.LEVELS.toString()) ||
                     mode.equals(SectionMode.PICK.toString())) {
 
-                if(isCompleted(mRealmExercise)) {
-                    mRealmExercise.setVisible(true);
+                if (isCompleted(mRepositoryExercise)) {
+                    mRepositoryExercise.setVisible(true);
                 } else {
-                    mRealmExercise.setVisible(false);
+                    mRepositoryExercise.setVisible(false);
                 }
             }
 
-            mRealm.copyToRealmOrUpdate(mRealmExercise);
+            mRealm.copyToRealmOrUpdate(mRepositoryExercise);
             mRealm.commitTransaction();
 
             if (mOnDismissLogWorkoutDialogListener != null) {
@@ -145,14 +159,18 @@ public class LogWorkoutDialog {
         mDialog.show();
     }
 
+    public void dismiss() {
+        mDialog.dismiss();
+    }
+
     public void setOnDismissLogWorkoutDialogListener(OnDismissLogWorkoutDialogListener onDismissLogWorkoutDialogListener) {
         mOnDismissLogWorkoutDialogListener = onDismissLogWorkoutDialogListener;
     }
 
     public void buildSets() {
-        for(RealmSet set : mRealmExercise.getSets()) {
-            if(shouldAddSet()) {
-                if(set.isTimed()) {
+        for (RepositorySet set : mRepositoryExercise.getSets()) {
+            if (shouldAddSet()) {
+                if (set.isTimed()) {
                     addTimedSet(set);
                 } else {
                     addSet(set);
@@ -189,7 +207,7 @@ public class LogWorkoutDialog {
     public void updateSets() {
         int i = 0;
         for(View view : mViewSets) {
-            RealmSet set = mRealmExercise.getSets().get(i);
+            RepositorySet set = mRepositoryExercise.getSets().get(i);
 
             if(set.isTimed()) {
                 updateTimedSet(set, view);
@@ -233,7 +251,7 @@ public class LogWorkoutDialog {
         }
     }
 
-    public boolean addSet(RealmSet set) {
+    public boolean addSet(RepositorySet set) {
         addRow();
 
         View view = LayoutInflater.from(mDialog.getContext())
@@ -242,7 +260,7 @@ public class LogWorkoutDialog {
         updateSet(set, view);
 
         view.setOnClickListener(v -> {
-            updateActionView(set, mRealmExercise.getSets().indexOf(set) + 1);
+            updateActionView(set, mRepositoryExercise.getSets().indexOf(set) + 1);
 
             mSetView.setVisibility(View.GONE);
             mActionView.setVisibility(View.VISIBLE);
@@ -252,8 +270,8 @@ public class LogWorkoutDialog {
 
         mRowLayout.addView(view);
 
-        if(!mRealmExercise.getSets().contains(set)) {
-            mRealmExercise.getSets().add(set);
+        if(!mRepositoryExercise.getSets().contains(set)) {
+            mRepositoryExercise.getSets().add(set);
         }
 
         mViewSets.add(view);
@@ -263,7 +281,7 @@ public class LogWorkoutDialog {
         return true;
     }
 
-    public boolean addTimedSet(RealmSet set) {
+    public boolean addTimedSet(RepositorySet set) {
         addRow();
 
         View view = LayoutInflater.from(mDialog.getContext())
@@ -272,7 +290,7 @@ public class LogWorkoutDialog {
         updateTimedSet(set, view);
 
         view.setOnClickListener(v -> {
-            updateActionViewForTimedSet(set, mRealmExercise.getSets().indexOf(set) + 1);
+            updateActionViewForTimedSet(set, mRepositoryExercise.getSets().indexOf(set) + 1);
 
             mSetView.setVisibility(View.GONE);
             mActionView.setVisibility(View.VISIBLE);
@@ -282,8 +300,8 @@ public class LogWorkoutDialog {
 
         mRowLayout.addView(view);
 
-        if(!mRealmExercise.getSets().contains(set)) {
-            mRealmExercise.getSets().add(set);
+        if(!mRepositoryExercise.getSets().contains(set)) {
+            mRepositoryExercise.getSets().add(set);
         }
 
         setLastUpdatedTime();
@@ -294,7 +312,7 @@ public class LogWorkoutDialog {
     }
 
     public boolean removeLastSet() {
-        mRealmExercise.getSets().remove(mRealmExercise.getSets().size() - 1);
+        mRepositoryExercise.getSets().remove(mRepositoryExercise.getSets().size() - 1);
         mViewSets.remove(mViewSets.size() - 1);
 
         mRowLayout.removeViewAt(mRowLayout.getChildCount() - 1);
@@ -308,7 +326,7 @@ public class LogWorkoutDialog {
         return true;
     }
 
-    public void updateActionView(RealmSet set, int index) {
+    public void updateActionView(RepositorySet set, int index) {
         mSet = set;
 
         mActionViewSetValue.setText(String.valueOf(index));
@@ -320,7 +338,7 @@ public class LogWorkoutDialog {
         mActionViewRepsDescription.setText("Reps");
     }
 
-    public void updateActionViewForTimedSet(RealmSet set, int index) {
+    public void updateActionViewForTimedSet(RepositorySet set, int index) {
         mSet = set;
 
         mActionViewSetValue.setText(String.valueOf(index));
@@ -332,7 +350,7 @@ public class LogWorkoutDialog {
         mActionViewWeightDescription.setText("Seconds");
     }
 
-    public void updateSet(RealmSet set, View view) {
+    public void updateSet(RepositorySet set, View view) {
         TextView repsOnlyValue = (TextView) view.findViewById(R.id.repsOnlyValue);
 
         TextView reps = (TextView) view.findViewById(R.id.repsValue);
@@ -362,7 +380,7 @@ public class LogWorkoutDialog {
         }
     }
 
-    public void updateTimedSet(RealmSet set, View view) {
+    public void updateTimedSet(RepositorySet set, View view) {
         TextView secondsOnlyValue = (TextView) view.findViewById(R.id.secondsOnlyValue);
 
         TextView minutes = (TextView) view.findViewById(R.id.minutesValue);
@@ -403,7 +421,7 @@ public class LogWorkoutDialog {
             menu.findItem(R.id.action_add_set).setVisible(false);
             menu.findItem(R.id.action_add_timed_set).setVisible(false);
         } else if (numberOfSets == 1) {
-            if (mRealmExercise.getDefaultSet().equals("timed")) {
+            if (mRepositoryExercise.getDefaultSet().equals("timed")) {
                 menu.findItem(R.id.action_add_set).setVisible(false);
                 menu.findItem(R.id.action_add_timed_set).setVisible(true);
             } else {
@@ -413,7 +431,7 @@ public class LogWorkoutDialog {
 
             menu.findItem(R.id.action_remove_last_set).setVisible(false);
         } else {
-            if (mRealmExercise.getDefaultSet().equals("timed")) {
+            if (mRepositoryExercise.getDefaultSet().equals("timed")) {
                 menu.findItem(R.id.action_add_set).setVisible(false);
                 menu.findItem(R.id.action_add_timed_set).setVisible(true);
             } else {
@@ -431,15 +449,15 @@ public class LogWorkoutDialog {
             switch (item.getItemId()) {
                 case R.id.action_add_set: {
                     if (shouldAddSet()) {
-                        RealmSet realmSet = mRealm.createObject(RealmSet.class);
+                        RepositorySet repositorySet = mRealm.createObject(RepositorySet.class);
 
-                        realmSet.setId("Set-" + UUID.randomUUID().toString());
-                        realmSet.setIsTimed(false);
-                        realmSet.setSeconds(0);
-                        realmSet.setWeight(0);
-                        realmSet.setReps(0);
+                        repositorySet.setId("Set-" + UUID.randomUUID().toString());
+                        repositorySet.setIsTimed(false);
+                        repositorySet.setSeconds(0);
+                        repositorySet.setWeight(0);
+                        repositorySet.setReps(0);
 
-                        addSet(realmSet);
+                        addSet(repositorySet);
                         updateToolbarMenu();
                     }
 
@@ -448,15 +466,15 @@ public class LogWorkoutDialog {
 
                 case R.id.action_add_timed_set: {
                     if (shouldAddSet()) {
-                        RealmSet realmSet = mRealm.createObject(RealmSet.class);
+                        RepositorySet repositorySet = mRealm.createObject(RepositorySet.class);
 
-                        realmSet.setId("Set-" + UUID.randomUUID().toString());
-                        realmSet.setIsTimed(true);
-                        realmSet.setSeconds(0);
-                        realmSet.setWeight(0);
-                        realmSet.setReps(0);
+                        repositorySet.setId("Set-" + UUID.randomUUID().toString());
+                        repositorySet.setIsTimed(true);
+                        repositorySet.setSeconds(0);
+                        repositorySet.setWeight(0);
+                        repositorySet.setReps(0);
 
-                        addTimedSet(realmSet);
+                        addTimedSet(repositorySet);
                         updateToolbarMenu();
                     }
 
@@ -638,14 +656,14 @@ public class LogWorkoutDialog {
         return String.valueOf(s);
     }
 
-    public boolean isCompleted(RealmExercise realmExercise) {
-        int size = realmExercise.getSets().size();
+    public boolean isCompleted(RepositoryExercise repositoryExercise) {
+        int size = repositoryExercise.getSets().size();
 
         if (size == 0) {
             return false;
         }
 
-        RealmSet firstSet = realmExercise.getSets().get(0);
+        RepositorySet firstSet = repositoryExercise.getSets().get(0);
 
         if(size == 1 && firstSet.getSeconds() == 0 && firstSet.getReps() == 0) {
             return false;
@@ -662,14 +680,14 @@ public class LogWorkoutDialog {
          * 120 minutes (it ignores changing the time later in the day after the workout ends
          * if we decide to update some values).
          */
-        if (mRealmRoutine != null) {
-            DateTime startTime = new DateTime(mRealmRoutine.getStartTime());
-            DateTime lastUpdatedTime = new DateTime(mRealmRoutine.getLastUpdatedTime());
+        if (mRepositoryRoutine != null) {
+            DateTime startTime = new DateTime(mRepositoryRoutine.getStartTime());
+            DateTime lastUpdatedTime = new DateTime(mRepositoryRoutine.getLastUpdatedTime());
 
             Duration duration = new Duration(startTime, lastUpdatedTime);
 
             if (duration.toStandardMinutes().getMinutes() < 120) {
-                mRealmRoutine.setLastUpdatedTime(new DateTime().toDate());
+                mRepositoryRoutine.setLastUpdatedTime(new DateTime().toDate());
             }
         }
     }

@@ -21,13 +21,14 @@ import icepick.State;
 
 import io.mazur.fit.R;
 import io.mazur.fit.presenter.ActionPresenter;
+import io.mazur.fit.view.dialog.LogWorkoutDialog;
 import io.mazur.fit.view.widget.ActionButton;
 
 public class ActionView extends RelativeLayout {
     @State
     ActionPresenter mPresenter;
 
-    private MaterialSheetFab mMaterialSheet;
+    MaterialSheetFab mMaterialSheet;
 
     @InjectView(R.id.action_view_overlay)
     View mActionViewOverlay;

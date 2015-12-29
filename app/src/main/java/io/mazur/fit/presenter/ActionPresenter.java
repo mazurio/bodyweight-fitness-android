@@ -6,7 +6,7 @@ import android.net.Uri;
 
 import io.mazur.fit.R;
 import io.mazur.fit.stream.DrawerStream;
-import io.mazur.fit.stream.RealmStream;
+import io.mazur.fit.stream.RepositoryStream;
 import io.mazur.fit.stream.RoutineStream;
 import io.mazur.fit.ui.BuyEquipmentActivity;
 import io.mazur.fit.ui.ProgressActivity;
@@ -15,6 +15,28 @@ import io.mazur.fit.view.dialog.LogWorkoutDialog;
 import io.mazur.fit.view.dialog.ProgressDialog;
 
 public class ActionPresenter extends IPresenter<ActionView> {
+    private transient LogWorkoutDialog mLogWorkoutDialog;
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (mLogWorkoutDialog != null) {
+            mLogWorkoutDialog.dismiss();
+            mLogWorkoutDialog = null;
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState() {
+        super.onSaveInstanceState();
+
+        if (mLogWorkoutDialog != null) {
+            mLogWorkoutDialog.dismiss();
+            mLogWorkoutDialog = null;
+        }
+    }
+
     @Override
     public void onSubscribe() {
         super.onSubscribe();
@@ -44,8 +66,8 @@ public class ActionPresenter extends IPresenter<ActionView> {
     }
 
     public void onClickLogWorkoutButton() {
-        LogWorkoutDialog logWorkoutDialog = new LogWorkoutDialog(getContext());
-        logWorkoutDialog.show();
+        mLogWorkoutDialog = new LogWorkoutDialog(getContext());
+        mLogWorkoutDialog.show();
     }
 
     public void onClickBuyEquipment() {
@@ -76,7 +98,7 @@ public class ActionPresenter extends IPresenter<ActionView> {
     }
 
     public void onClickLogWorkout() {
-        String routineId = RealmStream.getInstance().getRealmRoutineForToday().getId();
+        String routineId = RepositoryStream.getInstance().getRepositoryRoutineForToday().getId();
 
         getContext().startActivity(
                 new Intent(getContext(), ProgressActivity.class)

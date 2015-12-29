@@ -1,4 +1,4 @@
-package io.mazur.fit.model.realm;
+package io.mazur.fit.model.repository;
 
 import java.util.Date;
 
@@ -7,7 +7,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
 
-public class RealmRoutine extends RealmObject {
+public class RepositoryRoutine extends RealmObject {
     @PrimaryKey
     private String id;
 
@@ -20,8 +20,8 @@ public class RealmRoutine extends RealmObject {
     @Index
     private Date lastUpdatedTime;
 
-    private RealmList<RealmCategory> categories = new RealmList<>();
-    private RealmList<RealmExercise> exercises = new RealmList<>();
+    private RealmList<RepositoryCategory> categories = new RealmList<>();
+    private RealmList<RepositoryExercise> exercises = new RealmList<>();
 
     public void setId(String id) {
         this.id = id;
@@ -47,19 +47,19 @@ public class RealmRoutine extends RealmObject {
         return lastUpdatedTime;
     }
 
-    public RealmList<RealmCategory> getCategories() {
+    public RealmList<RepositoryCategory> getCategories() {
         return categories;
     }
 
-    public void setCategories(RealmList<RealmCategory> categories) {
+    public void setCategories(RealmList<RepositoryCategory> categories) {
         this.categories = categories;
     }
 
-    public RealmList<RealmExercise> getExercises() {
+    public RealmList<RepositoryExercise> getExercises() {
         return exercises;
     }
 
-    public void setExercises(RealmList<RealmExercise> exercises) {
+    public void setExercises(RealmList<RepositoryExercise> exercises) {
         this.exercises = exercises;
     }
 }

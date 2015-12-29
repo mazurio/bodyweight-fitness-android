@@ -18,19 +18,16 @@ import com.hookedonplay.decoviewlib.events.DecoEvent;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
-import org.joda.time.Minutes;
-import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
 import io.mazur.fit.R;
-import io.mazur.fit.model.realm.RealmCategory;
-import io.mazur.fit.model.realm.RealmExercise;
-import io.mazur.fit.model.realm.RealmRoutine;
-import io.mazur.fit.model.realm.RealmSet;
+import io.mazur.fit.model.repository.RepositoryCategory;
+import io.mazur.fit.model.repository.RepositoryExercise;
+import io.mazur.fit.model.repository.RepositoryRoutine;
+import io.mazur.fit.model.repository.RepositorySet;
 
 public class ProgressPagerAdapter extends PagerAdapter {
     private DecoView mDecoView;
@@ -40,19 +37,19 @@ public class ProgressPagerAdapter extends PagerAdapter {
     private int mNumberOfExercises;
     private int mCurrentExercise;
 
-    private RealmRoutine mRealmRoutine;
+    private RepositoryRoutine mRepositoryRoutine;
     private HashMap<Integer, RecyclerView> mRecyclerViewMap = new HashMap<>();
 
-    public ProgressPagerAdapter(RealmRoutine realmRoutine) {
+    public ProgressPagerAdapter(RepositoryRoutine repositoryRoutine) {
         super();
 
-        mRealmRoutine = realmRoutine;
+        mRepositoryRoutine = repositoryRoutine;
 
-        for (RealmExercise realmExercise : realmRoutine.getExercises()) {
-            if (realmExercise.isVisible()) {
+        for (RepositoryExercise repositoryExercise : repositoryRoutine.getExercises()) {
+            if (repositoryExercise.isVisible()) {
                 mNumberOfExercises++;
 
-                if (isCompleted(realmExercise)) {
+                if (isCompleted(repositoryExercise)) {
                     mCurrentExercise++;
                 }
             }
@@ -100,7 +97,7 @@ public class ProgressPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return mRealmRoutine.getCategories().size() + 1;
+        return mRepositoryRoutine.getCategories().size() + 1;
     }
 
     @Override
@@ -109,7 +106,7 @@ public class ProgressPagerAdapter extends PagerAdapter {
             case 0:
                 return "General";
             default:
-                return mRealmRoutine.getCategories().get(position - 1).getTitle();
+                return mRepositoryRoutine.getCategories().get(position - 1).getTitle();
         }
     }
 
@@ -123,8 +120,8 @@ public class ProgressPagerAdapter extends PagerAdapter {
         TextView endTimeText = (TextView) view.findViewById(R.id.end_time_text);
         TextView workoutLengthText = (TextView) view.findViewById(R.id.workout_length_text);
 
-        DateTime startTime = new DateTime(mRealmRoutine.getStartTime());
-        DateTime lastUpdatedTime = new DateTime(mRealmRoutine.getLastUpdatedTime());
+        DateTime startTime = new DateTime(mRepositoryRoutine.getStartTime());
+        DateTime lastUpdatedTime = new DateTime(mRepositoryRoutine.getLastUpdatedTime());
 
         Duration duration = new Duration(startTime, lastUpdatedTime);
 
@@ -158,11 +155,11 @@ public class ProgressPagerAdapter extends PagerAdapter {
     }
 
     private void createRecyclerView(View view, int position) {
-        RealmCategory realmCategory = mRealmRoutine.getCategories().get(position - 1);
+        RepositoryCategory repositoryCategory = mRepositoryRoutine.getCategories().get(position - 1);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        recyclerView.setAdapter(new ProgressAdapter(realmCategory));
+        recyclerView.setAdapter(new ProgressAdapter(repositoryCategory));
 
         mRecyclerViewMap.put(position, recyclerView);
     }
@@ -170,14 +167,14 @@ public class ProgressPagerAdapter extends PagerAdapter {
     /**
      * Methods below could be cleaned up with a graph presenter.
      */
-    public boolean isCompleted(RealmExercise realmExercise) {
-        int size = realmExercise.getSets().size();
+    public boolean isCompleted(RepositoryExercise repositoryExercise) {
+        int size = repositoryExercise.getSets().size();
 
         if (size == 0) {
             return false;
         }
 
-        RealmSet firstSet = realmExercise.getSets().get(0);
+        RepositorySet firstSet = repositoryExercise.getSets().get(0);
 
         if(size == 1 && firstSet.getSeconds() == 0 && firstSet.getReps() == 0) {
             return false;

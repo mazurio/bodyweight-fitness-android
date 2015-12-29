@@ -1,9 +1,9 @@
-package io.mazur.fit.model.realm;
+package io.mazur.fit.model.repository;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class RealmSet extends RealmObject {
+public class RepositorySet extends RealmObject {
     @PrimaryKey
     private String id;
 

@@ -1,10 +1,10 @@
-package io.mazur.fit.model.realm;
+package io.mazur.fit.model.repository;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class RealmExercise extends RealmObject {
+public class RepositoryExercise extends RealmObject {
     @PrimaryKey
     private String id;
 
@@ -14,10 +14,10 @@ public class RealmExercise extends RealmObject {
 
     private boolean visible = false;
 
-    private RealmCategory category;
-    private RealmSection section;
+    private RepositoryCategory category;
+    private RepositorySection section;
 
-    private RealmList<RealmSet> sets = new RealmList<>();
+    private RealmList<RepositorySet> sets = new RealmList<>();
 
     public void setId(String id) {
         this.id = id;
@@ -59,27 +59,27 @@ public class RealmExercise extends RealmObject {
         return visible;
     }
 
-    public RealmCategory getCategory() {
+    public RepositoryCategory getCategory() {
         return category;
     }
 
-    public void setCategory(RealmCategory category) {
+    public void setCategory(RepositoryCategory category) {
         this.category = category;
     }
 
-    public RealmSection getSection() {
+    public RepositorySection getSection() {
         return section;
     }
 
-    public void setSection(RealmSection section) {
+    public void setSection(RepositorySection section) {
         this.section = section;
     }
 
-    public void setSets(RealmList<RealmSet> sets) {
+    public void setSets(RealmList<RepositorySet> sets) {
         this.sets = sets;
     }
 
-    public RealmList<RealmSet> getSets() {
+    public RealmList<RepositorySet> getSets() {
         return this.sets;
     }
 }

@@ -15,7 +15,7 @@ import android.view.WindowManager;
 
 import io.mazur.fit.R;
 import io.mazur.fit.stream.DrawerStream;
-import io.mazur.fit.stream.RealmStream;
+import io.mazur.fit.stream.RepositoryStream;
 import io.mazur.fit.stream.ToolbarStream;
 import io.mazur.fit.view.fragment.NavigationDrawerFragment;
 import io.mazur.fit.utils.PreferenceUtil;
@@ -42,7 +42,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         clearFlagKeepScreenOn();
 
-        RealmStream.getInstance().getRealm().close();
+        RepositoryStream.getInstance()
+                .getRealm()
+                .close();
     }
 
     @Override

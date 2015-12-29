@@ -17,8 +17,8 @@ import butterknife.InjectView;
 
 import io.mazur.fit.R;
 import io.mazur.fit.adapter.ProgressPagerAdapter;
-import io.mazur.fit.model.realm.RealmRoutine;
-import io.mazur.fit.stream.RealmStream;
+import io.mazur.fit.model.repository.RepositoryRoutine;
+import io.mazur.fit.stream.RepositoryStream;
 
 import io.realm.Realm;
 
@@ -26,7 +26,7 @@ public class ProgressActivity extends AppCompatActivity {
     @InjectView(R.id.view_progress_pager)
     ViewPager mViewPager;
 
-    private RealmRoutine mRealmRoutine;
+    private RepositoryRoutine mRepositoryRoutine;
     private ProgressPagerAdapter mProgressPagerAdapter;
 
     @Override
@@ -41,7 +41,7 @@ public class ProgressActivity extends AppCompatActivity {
 
         buildRoutine(routineId);
 
-        setPager(mRealmRoutine);
+        setPager(mRepositoryRoutine);
 
         setToolbar();
         setTabLayout();
@@ -61,9 +61,9 @@ public class ProgressActivity extends AppCompatActivity {
     }
 
     private void buildRoutine(String routineId) {
-        Realm realm = RealmStream.getInstance().getRealm();
+        Realm realm = RepositoryStream.getInstance().getRealm();
 
-        mRealmRoutine = realm.where(RealmRoutine.class)
+        mRepositoryRoutine = realm.where(RepositoryRoutine.class)
                 .equalTo("id", routineId)
                 .findFirst();
     }
@@ -74,7 +74,7 @@ public class ProgressActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
-            actionBar.setTitle(new DateTime(mRealmRoutine.getStartTime()).toString("d MMMM", Locale.ENGLISH));
+            actionBar.setTitle(new DateTime(mRepositoryRoutine.getStartTime()).toString("d MMMM", Locale.ENGLISH));
             actionBar.setElevation(0);
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
             actionBar.setHomeButtonEnabled(true);
@@ -105,8 +105,8 @@ public class ProgressActivity extends AppCompatActivity {
         });
     }
 
-    private void setPager(RealmRoutine realmRoutine) {
-        mProgressPagerAdapter = new ProgressPagerAdapter(realmRoutine);
+    private void setPager(RepositoryRoutine repositoryRoutine) {
+        mProgressPagerAdapter = new ProgressPagerAdapter(repositoryRoutine);
 
         mViewPager.setOffscreenPageLimit(4);
         mViewPager.setAdapter(mProgressPagerAdapter);

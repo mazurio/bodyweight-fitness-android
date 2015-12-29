@@ -10,10 +10,10 @@ import java.util.Locale;
 
 import io.mazur.fit.R;
 import io.mazur.fit.adapter.CalendarAdapter;
-import io.mazur.fit.model.realm.RealmExercise;
-import io.mazur.fit.model.realm.RealmRoutine;
+import io.mazur.fit.model.repository.RepositoryExercise;
+import io.mazur.fit.model.repository.RepositoryRoutine;
 import io.mazur.fit.stream.CalendarStream;
-import io.mazur.fit.stream.RealmStream;
+import io.mazur.fit.stream.RepositoryStream;
 import io.mazur.fit.stream.ToolbarStream;
 import io.mazur.fit.ui.ProgressActivity;
 import io.mazur.fit.utils.DateUtils;
@@ -39,8 +39,8 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
     public void onSubscribe() {
         super.onSubscribe();
 
-        subscribe(RealmStream.getInstance()
-                .getRealmRoutineObservable()
+        subscribe(RepositoryStream.getInstance()
+                .getRepositoryRoutineObservable()
                 .subscribe(realmRoutine -> {
                     mView.setAdapter(mCalendarAdapter);
                     mView.scrollToDefaultItem();
@@ -84,13 +84,13 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
                 .minusSeconds(1)
                 .toDate();
 
-        Realm realm = RealmStream.getInstance().getRealm();
-        RealmRoutine realmRoutine = realm.where(RealmRoutine.class)
+        Realm realm = RepositoryStream.getInstance().getRealm();
+        RepositoryRoutine repositoryRoutine = realm.where(RepositoryRoutine.class)
                 .between("startTime", start, end)
                 .findFirst();
 
-        if(realmRoutine != null) {
-            mRealmRoutineId = realmRoutine.getId();
+        if(repositoryRoutine != null) {
+            mRealmRoutineId = repositoryRoutine.getId();
 
             return true;
         }
@@ -110,18 +110,18 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
     }
 
     public void onClickExportButton() {
-        Realm realm = RealmStream.getInstance().getRealm();
+        Realm realm = RepositoryStream.getInstance().getRealm();
 
-        RealmRoutine realmRoutine = realm.where(RealmRoutine.class)
+        RepositoryRoutine repositoryRoutine = realm.where(RepositoryRoutine.class)
                 .equalTo("id", mRealmRoutineId)
                 .findFirst();
 
         String s = "Category Title,Section Title,Exercise Title,Exercise Description";
-        for(RealmExercise realmExercise : realmRoutine.getExercises()) {
-            s += realmExercise.getCategory().getTitle() + ",";
-            s += realmExercise.getSection().getTitle() + ",";
-            s += realmExercise.getTitle() + ",";
-            s += realmExercise.getDescription() + "\n";
+        for(RepositoryExercise repositoryExercise : repositoryRoutine.getExercises()) {
+            s += repositoryExercise.getCategory().getTitle() + ",";
+            s += repositoryExercise.getSection().getTitle() + ",";
+            s += repositoryExercise.getTitle() + ",";
+            s += repositoryExercise.getDescription() + "\n";
         }
 
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -137,14 +137,14 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext())
                 .setTitle("Remove Logged Workout?")
                 .setPositiveButton("Ok", (dialog, which) -> {
-                    Realm realm = RealmStream.getInstance().getRealm();
+                    Realm realm = RepositoryStream.getInstance().getRealm();
 
-                    RealmRoutine realmRoutine = realm.where(RealmRoutine.class)
+                    RepositoryRoutine repositoryRoutine = realm.where(RepositoryRoutine.class)
                             .equalTo("id", mRealmRoutineId)
                             .findFirst();
 
                     realm.beginTransaction();
-                    realmRoutine.removeFromRealm();
+                    repositoryRoutine.removeFromRealm();
                     realm.commitTransaction();
 
                     mView.setAdapter(mCalendarAdapter);
