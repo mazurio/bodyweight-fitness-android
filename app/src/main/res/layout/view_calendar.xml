@@ -200,6 +200,7 @@
                             android:textColor="@color/primaryDark"
                             android:textSize="14sp"
                             android:text="Export"
+                            android:visibility="gone"
                             app:typeface="roboto_medium" />
 
                         <com.devspark.robototextview.widget.RobotoButton

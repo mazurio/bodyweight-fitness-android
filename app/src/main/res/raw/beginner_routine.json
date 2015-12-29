@@ -150,6 +150,7 @@
       "title": "Wall Plank",
       "description": "5 min",
       "type": "exercise",
+      "youTubeId": "6jm4R3K4sJA",
       "defaultSet": "timed"
     },
     {
@@ -158,6 +159,7 @@
       "title": "Stomach-to-Wall Handstand",
       "description": "5 min",
       "type": "exercise",
+      "youTubeId": "dRycbwdcz7Y",
       "defaultSet": "timed"
     },
     {
@@ -166,6 +168,7 @@
       "title": "Freestanding Handstand",
       "description": "5 min",
       "type": "exercise",
+      "youTubeId": "Y3FSeSecjKA",
       "defaultSet": "timed"
     },
     {
@@ -180,6 +183,7 @@
       "title": "Parallel Bar support",
       "description": "2-3 min",
       "type": "exercise",
+      "youTubeId": "Zv87Teu51tQ",
       "defaultSet": "timed"
     },
     {
@@ -188,6 +192,7 @@
       "title": "Ring Support",
       "description": "2-3 min",
       "type": "exercise",
+      "youTubeId": "V3IkFK5lvRw",
       "defaultSet": "timed"
     },
     {
@@ -196,6 +201,7 @@
       "title": "Rings Turned Out Support Hold",
       "description": "2-3 min",
       "type": "exercise",
+      "youTubeId": "8gmyhBScTLk",
       "defaultSet": "timed"
     },
     {
@@ -215,6 +221,7 @@
       "title": "Negative Pullups",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "y5sqSwcRZzo",
       "defaultSet": "weighted"
     },
     {
@@ -223,6 +230,7 @@
       "title": "Pull Up",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "RsnbDcsZbpk",
       "defaultSet": "weighted"
     },
     {
@@ -231,6 +239,7 @@
       "title": "L-sit Pull Up",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "quFBLtkxMRM",
       "defaultSet": "weighted"
     },
     {
@@ -239,6 +248,7 @@
       "title": "Pull Over",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "saLtuweg8As",
       "defaultSet": "weighted"
     },
     {
@@ -253,6 +263,7 @@
       "title": "Parallel Bar Dips",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "_3RaUMKcGQI",
       "defaultSet": "weighted"
     },
     {
@@ -261,6 +272,7 @@
       "title": "Ring Dips",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "cPFmMwC62d8",
       "defaultSet": "weighted"
     },
     {
@@ -269,6 +281,7 @@
       "title": "Ring Dips in L-sit",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "K-fNLVAstcw",
       "defaultSet": "weighted"
     },
     {
@@ -283,6 +296,7 @@
       "title": "Assisted Bodyweight Squat",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "OuR_Fp7AB0c",
       "defaultSet": "weighted"
     },
     {
@@ -291,6 +305,7 @@
       "title": "Bodyweight Squat",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "AkQbbDGMzJk",
       "defaultSet": "weighted"
     },
     {
@@ -299,6 +314,7 @@
       "title": "Deep Step-up",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "487aR3A7HvM",
       "defaultSet": "weighted"
     },
     {
@@ -313,6 +329,7 @@
       "title": "Foot-supported L-sit",
       "description": "3x(10-30s)",
       "type": "exercise",
+      "youTubeId": "IUZJoSP66HI",
       "defaultSet": "timed"
     },
     {
@@ -321,6 +338,7 @@
       "title": "One-Leg Foot Supported L-sit",
       "description": "3x(10-30s)",
       "type": "exercise",
+      "youTubeId": "IUZJoSP66HI",
       "defaultSet": "timed"
     },
     {
@@ -329,6 +347,7 @@
       "title": "Tuck L-sit",
       "description": "3x(10-30s)",
       "type": "exercise",
+      "youTubeId": "IUZJoSP66HI",
       "defaultSet": "timed"
     },
     {
@@ -337,6 +356,7 @@
       "title": "L-sit",
       "description": "3x(10-30s)",
       "type": "exercise",
+      "youTubeId": "ek76IXnE9tE",
       "defaultSet": "timed"
     },
     {
@@ -351,6 +371,7 @@
       "title": "Wall Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "a6YHbXD2XlU",
       "defaultSet": "weighted"
     },
     {
@@ -359,6 +380,7 @@
       "title": "Incline Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "4dF1DOWzf20",
       "defaultSet": "weighted"
     },
     {
@@ -367,6 +389,7 @@
       "title": "Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "4dF1DOWzf20",
       "defaultSet": "weighted"
     },
     {
@@ -375,38 +398,52 @@
       "title": "Diamond Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "s8Ft6xyN5fw",
+      "defaultSet": "weighted"
+    },
+    {
+      "id": "ring_wide_pushup",
+      "level": "Level 5",
+      "title": "Rings Wide Pushups",
+      "description": "3x(5-8)",
+      "type": "exercise",
+      "youTubeId": "jbQyi9xshOU",
       "defaultSet": "weighted"
     },
     {
       "id": "ring_pushup",
-      "level": "Level 5",
-      "title": "Rings Push Ups",
+      "level": "Level 6",
+      "title": "Rings Pushups",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "jbQyi9xshOU",
       "defaultSet": "weighted"
     },
     {
       "id": "rings_turned_out_pushup",
-      "level": "Level 6",
-      "title": "Rings Turned Out Push Up",
+      "level": "Level 7",
+      "title": "Rings Turned Out Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "MrlyEIpe0LI",
       "defaultSet": "weighted"
     },
     {
       "id": "pseudo_planche_pushup",
-      "level": "Level 7",
+      "level": "Level 8",
       "title": "Rings Turned Out PPPU",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "-kwe1EOiWMY",
       "defaultSet": "weighted"
     },
     {
       "id": "pseudo_planche",
-      "level": "Level 5-7 (No Rings)",
+      "level": "Level 5-8",
       "title": "Pseudo Planche Push Ups",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "Cdmg0CfMZeo",
       "defaultSet": "weighted"
     },
     {
@@ -421,6 +458,7 @@
       "title": "Vertical Row",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "e5fdh9_kH_Y",
       "defaultSet": "weighted"
     },
     {
@@ -429,6 +467,7 @@
       "title": "Incline Row",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "1G28qN9FCKE",
       "defaultSet": "weighted"
     },
     {
@@ -437,6 +476,7 @@
       "title": "Horizontal Row",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "dvkIaarnf0g",
       "defaultSet": "weighted"
     },
     {
@@ -445,6 +485,7 @@
       "title": "Wide Row",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "1yMRvsuk9Xg",
       "defaultSet": "weighted"
     },
     {
@@ -453,6 +494,7 @@
       "title": "Tuck Front Lever",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "tiST0765Sfo",
       "defaultSet": "weighted"
     },
     {
@@ -461,6 +503,7 @@
       "title": "Tuck Ice Cream Maker",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "AszLwoAvLKg",
       "defaultSet": "weighted"
     },
     {
@@ -469,6 +512,7 @@
       "title": "Tuck Front Lever Row",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "F-xEL0Ot0HA",
       "defaultSet": "weighted"
     },
     {
@@ -477,6 +521,7 @@
       "title": "Advanced Tuck Front Lever Row",
       "description": "3x(5-8)",
       "type": "exercise",
+      "youTubeId": "cVdb8oUGKAw",
       "defaultSet": "weighted"
     }
   ]
