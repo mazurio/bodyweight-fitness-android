@@ -73,6 +73,7 @@ public class RepositoryStream {
             repositorySet.setSeconds(0);
             repositorySet.setWeight(0);
             repositorySet.setReps(0);
+            repositorySet.setExercise(repositoryExercise);
 
             repositoryExercise.getSets().add(repositorySet);
 
@@ -80,6 +81,7 @@ public class RepositoryStream {
                 repositoryCategory = getRealm().createObject(RepositoryCategory.class);
                 repositoryCategory.setId("Category-" + UUID.randomUUID().toString());
                 repositoryCategory.setTitle(exercise.getCategory().getTitle());
+                repositoryCategory.setRoutine(repositoryRoutine);
 
                 repositoryRoutine.getCategories().add(repositoryCategory);
             }
@@ -89,11 +91,14 @@ public class RepositoryStream {
                 repositorySection.setId("Section-" + UUID.randomUUID().toString());
                 repositorySection.setTitle(exercise.getSection().getTitle());
                 repositorySection.setMode(exercise.getSection().getSectionMode().toString());
-                repositorySection.setRepositoryCategory(repositoryCategory);
+                repositorySection.setRoutine(repositoryRoutine);
+                repositorySection.setCategory(repositoryCategory);
 
+                repositoryRoutine.getSections().add(repositorySection);
                 repositoryCategory.getSections().add(repositorySection);
             }
 
+            repositoryExercise.setRoutine(repositoryRoutine);
             repositoryExercise.setCategory(repositoryCategory);
             repositoryExercise.setSection(repositorySection);
 

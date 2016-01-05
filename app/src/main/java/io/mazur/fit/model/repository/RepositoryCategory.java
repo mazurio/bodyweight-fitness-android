@@ -7,21 +7,12 @@ import io.realm.annotations.PrimaryKey;
 public class RepositoryCategory extends RealmObject {
     @PrimaryKey
     private String id;
-
-    private RepositoryRoutine repositoryRoutine;
-
     private String title;
+
+    private RepositoryRoutine routine;
 
     private RealmList<RepositorySection> sections = new RealmList<>();
     private RealmList<RepositoryExercise> exercises = new RealmList<>();
-
-    public void setRepositoryRoutine(RepositoryRoutine repositoryRoutine) {
-        this.repositoryRoutine = repositoryRoutine;
-    }
-
-    public RepositoryRoutine getRepositoryRoutine() {
-        return repositoryRoutine;
-    }
 
     public void setId(String id) {
         this.id = id;
@@ -37,6 +28,14 @@ public class RepositoryCategory extends RealmObject {
 
     public String getTitle() {
         return title;
+    }
+
+    public void setRoutine(RepositoryRoutine routine) {
+        this.routine = routine;
+    }
+
+    public RepositoryRoutine getRoutine() {
+        return routine;
     }
 
     public void setSections(RealmList<RepositorySection> sections) {

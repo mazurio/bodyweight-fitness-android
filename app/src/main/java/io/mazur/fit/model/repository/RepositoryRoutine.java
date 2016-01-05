@@ -21,6 +21,7 @@ public class RepositoryRoutine extends RealmObject {
     private Date lastUpdatedTime;
 
     private RealmList<RepositoryCategory> categories = new RealmList<>();
+    private RealmList<RepositorySection> sections = new RealmList<>();
     private RealmList<RepositoryExercise> exercises = new RealmList<>();
 
     public void setId(String id) {
@@ -47,19 +48,27 @@ public class RepositoryRoutine extends RealmObject {
         return lastUpdatedTime;
     }
 
-    public RealmList<RepositoryCategory> getCategories() {
-        return categories;
-    }
-
     public void setCategories(RealmList<RepositoryCategory> categories) {
         this.categories = categories;
     }
 
-    public RealmList<RepositoryExercise> getExercises() {
-        return exercises;
+    public RealmList<RepositoryCategory> getCategories() {
+        return categories;
+    }
+
+    public void setSections(RealmList<RepositorySection> sections) {
+        this.sections = sections;
+    }
+
+    public RealmList<RepositorySection> getSections() {
+        return sections;
     }
 
     public void setExercises(RealmList<RepositoryExercise> exercises) {
         this.exercises = exercises;
+    }
+
+    public RealmList<RepositoryExercise> getExercises() {
+        return exercises;
     }
 }

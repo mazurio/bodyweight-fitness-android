@@ -457,6 +457,8 @@ public class LogWorkoutDialog {
                         repositorySet.setWeight(0);
                         repositorySet.setReps(0);
 
+                        repositorySet.setExercise(mRepositoryExercise);
+
                         addSet(repositorySet);
                         updateToolbarMenu();
                     }
@@ -473,6 +475,8 @@ public class LogWorkoutDialog {
                         repositorySet.setSeconds(0);
                         repositorySet.setWeight(0);
                         repositorySet.setReps(0);
+
+                        repositorySet.setExercise(mRepositoryExercise);
 
                         addTimedSet(repositorySet);
                         updateToolbarMenu();

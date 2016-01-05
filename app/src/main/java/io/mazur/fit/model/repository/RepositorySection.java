@@ -8,9 +8,11 @@ public class RepositorySection extends RealmObject {
     @PrimaryKey
     private String id;
 
-    private RepositoryCategory repositoryCategory;
     private String title;
     private String mode;
+
+    private RepositoryRoutine routine;
+    private RepositoryCategory category;
 
     private RealmList<RepositoryExercise> exercises = new RealmList<>();
 
@@ -20,14 +22,6 @@ public class RepositorySection extends RealmObject {
 
     public String getId() {
         return id;
-    }
-
-    public void setRepositoryCategory(RepositoryCategory repositoryCategory) {
-        this.repositoryCategory = repositoryCategory;
-    }
-
-    public RepositoryCategory getRepositoryCategory() {
-        return repositoryCategory;
     }
 
     public void setTitle(String title) {
@@ -44,6 +38,22 @@ public class RepositorySection extends RealmObject {
 
     public String getMode() {
         return mode;
+    }
+
+    public void setRoutine(RepositoryRoutine routine) {
+        this.routine = routine;
+    }
+
+    public RepositoryRoutine getRoutine() {
+        return routine;
+    }
+
+    public void setCategory(RepositoryCategory category) {
+        this.category = category;
+    }
+
+    public RepositoryCategory getCategory() {
+        return category;
     }
 
     public void setExercises(RealmList<RepositoryExercise> exercises) {

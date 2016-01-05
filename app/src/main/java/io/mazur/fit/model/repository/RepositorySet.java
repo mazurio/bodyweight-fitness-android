@@ -13,6 +13,8 @@ public class RepositorySet extends RealmObject {
     private int reps = 0;
     private int seconds = 0;
 
+    private RepositoryExercise exercise;
+
     public void setId(String id) {
         this.id = id;
     }
@@ -51,5 +53,13 @@ public class RepositorySet extends RealmObject {
 
     public int getSeconds() {
         return this.seconds;
+    }
+
+    public void setExercise(RepositoryExercise exercise) {
+        this.exercise = exercise;
+    }
+
+    public RepositoryExercise getExercise() {
+        return exercise;
     }
 }

@@ -14,6 +14,7 @@ public class RepositoryExercise extends RealmObject {
 
     private boolean visible = false;
 
+    private RepositoryRoutine routine;
     private RepositoryCategory category;
     private RepositorySection section;
 
@@ -59,20 +60,28 @@ public class RepositoryExercise extends RealmObject {
         return visible;
     }
 
-    public RepositoryCategory getCategory() {
-        return category;
+    public void setRoutine(RepositoryRoutine routine) {
+        this.routine = routine;
+    }
+
+    public RepositoryRoutine getRoutine() {
+        return routine;
     }
 
     public void setCategory(RepositoryCategory category) {
         this.category = category;
     }
 
-    public RepositorySection getSection() {
-        return section;
+    public RepositoryCategory getCategory() {
+        return category;
     }
 
     public void setSection(RepositorySection section) {
         this.section = section;
+    }
+
+    public RepositorySection getSection() {
+        return section;
     }
 
     public void setSets(RealmList<RepositorySet> sets) {
