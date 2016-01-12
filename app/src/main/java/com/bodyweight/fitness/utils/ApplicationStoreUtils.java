@@ -5,7 +5,7 @@ public class ApplicationStoreUtils {
     private static final String amazonInstallerPackage = "com.amazon.venezia";
 
     public enum ApplicationStore {
-        GooglePlay("https://play.google.com/store/apps/details?id=io.mazur.fit.pro"),
+        GooglePlay("https://play.google.com/store/apps/details?id=com.bodyweight.fitness.pro"),
         AmazonStore("amzn://apps/android?p=io.mazur.fit.pro");
 
         private String mApplicationStoreAppUrl;
