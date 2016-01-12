@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.mazur.fit.view.CalendarView
+<com.bodyweight.fitness.view.CalendarView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/calendar_view"
@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="#EEEEEE">
 
-    <io.mazur.fit.view.widget.DrawShadowFrameLayout
+    <com.bodyweight.fitness.view.widget.DrawShadowFrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary">
@@ -97,12 +97,12 @@
                     android:text="Sun"/>
             </LinearLayout>
 
-            <io.mazur.fit.view.widget.ViewPager
+            <com.bodyweight.fitness.view.widget.ViewPager
                 android:id="@+id/view_calendar_pager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-    </io.mazur.fit.view.widget.DrawShadowFrameLayout>
+    </com.bodyweight.fitness.view.widget.DrawShadowFrameLayout>
 
     <ScrollView
         android:id="@+id/view_calendar_scrollview"
@@ -238,4 +238,4 @@
             android:text="When you log a workout, you'll see it here."
             app:typeface="roboto_regular" />
     </RelativeLayout>
-</io.mazur.fit.view.CalendarView>
+</com.bodyweight.fitness.view.CalendarView>

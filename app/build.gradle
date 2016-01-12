@@ -45,15 +45,15 @@ android {
     }
     productFlavors {
         pro {
-            applicationId 'io.mazur.fit.pro'
-            versionCode 102
-            versionName "1.0.2"
+            applicationId 'com.bodyweight.fitness.pro'
+            versionCode 110
+            versionName "1.1.0"
         }
 
         free {
-            applicationId 'io.mazur.fit.free'
-            versionCode 102
-            versionName "1.0.2"
+            applicationId 'com.bodyweight.fitness.free'
+            versionCode 110
+            versionName "1.1.0"
         }
     }
     buildTypes {

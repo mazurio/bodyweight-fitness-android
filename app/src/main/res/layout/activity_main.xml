@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="false">
 
-    <io.mazur.fit.view.ContentView
+    <com.bodyweight.fitness.view.ContentView
         android:id="@+id/content_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,7 +30,7 @@
             android:visibility="gone"/>
 
         <include layout="@layout/view_action" />
-    </io.mazur.fit.view.ContentView>
+    </com.bodyweight.fitness.view.ContentView>
 
     <fragment
         android:id="@+id/drawer_fragment"
@@ -38,5 +38,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:name="io.mazur.fit.view.fragment.NavigationDrawerFragment"/>
+        android:name="com.bodyweight.fitness.view.fragment.NavigationDrawerFragment"/>
 </android.support.v4.widget.DrawerLayout>

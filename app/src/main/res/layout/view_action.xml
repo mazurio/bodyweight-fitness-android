@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.mazur.fit.view.ActionView
+<com.bodyweight.fitness.view.ActionView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/action_view"
@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <io.mazur.fit.view.widget.ActionButton
+    <com.bodyweight.fitness.view.widget.ActionButton
         android:id="@+id/action_view_log_workout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         app:borderWidth="0dp"
         app:elevation="@dimen/view_action_elevation"/>
 
-    <io.mazur.fit.view.widget.ActionButton
+    <com.bodyweight.fitness.view.widget.ActionButton
         android:id="@+id/action_view_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -119,4 +119,4 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </io.codetail.widget.RevealLinearLayout>
-</io.mazur.fit.view.ActionView>
+</com.bodyweight.fitness.view.ActionView>

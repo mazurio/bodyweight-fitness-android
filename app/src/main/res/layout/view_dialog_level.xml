@@ -61,7 +61,7 @@
                         android:layout_alignBottom="@+id/level_progress_bar"
                         app:typeface="roboto_bold"/>
 
-                    <io.mazur.fit.view.widget.CircularProgressBar
+                    <com.bodyweight.fitness.view.widget.CircularProgressBar
                         android:id="@+id/level_progress_bar"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
