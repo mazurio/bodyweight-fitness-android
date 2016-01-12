@@ -1,10 +1,12 @@
-package io.mazur.fit.model;
+package io.mazur.fitness.model;
 
 import com.google.gson.Gson;
 
 import org.junit.*;
 
 import java.util.ArrayList;
+
+import io.mazur.fitness.model.json.JSONRoutine;
 
 import static org.junit.Assert.*;
 

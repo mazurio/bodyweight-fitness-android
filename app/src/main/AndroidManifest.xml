@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="io.mazur.fit">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.bodyweight.fitness"
+    android:installLocation="auto">
+
 	<uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -21,9 +23,19 @@
         </activity>
 
         <activity
-            android:name=".ui.AboutActivity"
+            android:name=".ui.BuyEquipmentActivity"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.Activity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".ui.ProgressActivity"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/AppTheme.Activity.Progress">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -42,6 +54,6 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="REPLACE_IT" />
+            android:value="${fabric_api_key}" />
     </application>
 </manifest>

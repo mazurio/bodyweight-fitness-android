@@ -1,4 +1,4 @@
-package io.mazur.fit.model;
+package io.mazur.fitness.model;
 
 import org.junit.*;
 

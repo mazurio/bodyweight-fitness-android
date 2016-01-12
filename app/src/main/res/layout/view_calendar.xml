@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bodyweight.fitness.view.CalendarView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/calendar_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#EEEEEE">
+
+    <com.bodyweight.fitness.view.widget.DrawShadowFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="7"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/primaryDark"
+                    android:textSize="14sp"
+                    app:typeface="roboto_regular"
+                    android:text="Mon"/>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/primaryDark"
+                    android:textSize="14sp"
+                    app:typeface="roboto_regular"
+                    android:text="Tue"/>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/primaryDark"
+                    android:textSize="14sp"
+                    app:typeface="roboto_regular"
+                    android:text="Wed"/>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/primaryDark"
+                    android:textSize="14sp"
+                    app:typeface="roboto_regular"
+                    android:text="Thu"/>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/primaryDark"
+                    android:textSize="14sp"
+                    app:typeface="roboto_regular"
+                    android:text="Fri"/>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/primaryDark"
+                    android:textSize="14sp"
+                    app:typeface="roboto_regular"
+                    android:text="Sat"/>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/primaryDark"
+                    android:textSize="14sp"
+                    app:typeface="roboto_regular"
+                    android:text="Sun"/>
+            </LinearLayout>
+
+            <com.bodyweight.fitness.view.widget.ViewPager
+                android:id="@+id/view_calendar_pager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </com.bodyweight.fitness.view.widget.DrawShadowFrameLayout>
+
+    <ScrollView
+        android:id="@+id/view_calendar_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:id="@+id/view_calendar_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:textSize="14sp"
+                android:textColor="#80000000"
+                app:typeface="roboto_regular" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/view_calendar_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#fff">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.Toolbar
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="@color/white">
+
+                        <com.devspark.robototextview.widget.RobotoTextView
+                            android:id="@+id/view_calendar_routine_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="24sp"
+                            android:textColor="#000"
+                            android:text="Bodyweight Fitness"
+                            app:typeface="roboto_regular" />
+                    </android.support.v7.widget.Toolbar>
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:paddingBottom="16dp"
+                        android:textSize="16sp"
+                        android:textColor="#80000000"
+                        android:text="Beginner Routine"
+                        app:typeface="roboto_regular" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#E4E4E4"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.devspark.robototextview.widget.RobotoButton
+                            android:id="@+id/view_calendar_card_view_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="16dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="16dp"
+                            android:background="@android:color/transparent"
+                            android:textAllCaps="true"
+                            android:textColor="#000000"
+                            android:textSize="14sp"
+                            android:text="View"
+                            app:typeface="roboto_medium" />
+
+                        <com.devspark.robototextview.widget.RobotoButton
+                            android:id="@+id/view_calendar_card_export_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="16dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="16dp"
+                            android:background="@android:color/transparent"
+                            android:textAllCaps="true"
+                            android:textColor="@color/primaryDark"
+                            android:textSize="14sp"
+                            android:text="Export"
+                            android:visibility="gone"
+                            app:typeface="roboto_medium" />
+
+                        <com.devspark.robototextview.widget.RobotoButton
+                            android:id="@+id/view_calendar_card_remove_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="16dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="16dp"
+                            android:background="@android:color/transparent"
+                            android:textAllCaps="true"
+                            android:textColor="#80000000"
+                            android:textSize="14sp"
+                            android:text="Remove"
+                            app:typeface="roboto_medium" />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/view_calendar_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="#676767"
+            android:textSize="14sp"
+            android:text="When you log a workout, you'll see it here."
+            app:typeface="roboto_regular" />
+    </RelativeLayout>
+</com.bodyweight.fitness.view.CalendarView>

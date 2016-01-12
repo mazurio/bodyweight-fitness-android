@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E2E2E2"
+    android:clickable="true">
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/routine_exercise_level_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:gravity="center_vertical"
+        android:textColor="#57000000"
+        android:textSize="12sp"
+        app:typeface="roboto_medium"/>
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/routine_exercise_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:gravity="center_vertical"
+        android:textColor="#87000000"
+        android:textSize="14sp"
+        app:typeface="roboto_medium"/>
+</LinearLayout>

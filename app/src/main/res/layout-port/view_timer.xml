@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.mazur.fit.view.TimerView
+<com.bodyweight.fitness.view.TimerView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/timer_view"
@@ -72,7 +72,7 @@
                 android:layout_marginRight="12dp"
                 android:src="@drawable/ic_add"
                 app:borderWidth="0dp"
-                app:elevation="6dp"
+                app:elevation="0dp"
                 app:fabSize="mini"/>
 
             <android.support.design.widget.FloatingActionButton
@@ -83,7 +83,7 @@
                 android:src="@drawable/ic_play"
                 android:layout_centerInParent="true"
                 app:borderWidth="0dp"
-                app:elevation="6dp"/>
+                app:elevation="@dimen/view_action_elevation"/>
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/restart_timer_button"
@@ -95,7 +95,7 @@
                 android:layout_toRightOf="@+id/start_stop_timer_button"
                 android:layout_marginLeft="12dp"
                 app:borderWidth="0dp"
-                app:elevation="6dp"
+                app:elevation="0dp"
                 app:fabSize="mini"/>
         </RelativeLayout>
     </LinearLayout>
@@ -108,4 +108,4 @@
         android:background="@drawable/view_action_exercise_drawable"
         android:scaleType="center"
         android:src="@drawable/ic_next"/>
-</io.mazur.fit.view.TimerView>
+</com.bodyweight.fitness.view.TimerView>

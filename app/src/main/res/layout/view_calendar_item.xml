@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bodyweight.fitness.view.CalendarItemView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="14dp"
+        android:orientation="horizontal"
+        android:weightSum="7">
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/day_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/primaryDark"
+            android:textSize="14sp"
+            app:typeface="roboto_regular"/>
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/day_2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/primaryDark"
+            android:textSize="14sp"
+            app:typeface="roboto_regular"/>
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/day_3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/primaryDark"
+            android:textSize="14sp"
+            app:typeface="roboto_regular"/>
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/day_4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/primaryDark"
+            android:textSize="14sp"
+            app:typeface="roboto_regular" />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/day_5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/primaryDark"
+            android:textSize="14sp"
+            app:typeface="roboto_regular"/>
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/day_6"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/primaryDark"
+            android:textSize="14sp"
+            app:typeface="roboto_regular"/>
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/day_7"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/primaryDark"
+            android:textSize="14sp"
+            app:typeface="roboto_regular"/>
+    </LinearLayout>
+</com.bodyweight.fitness.view.CalendarItemView>
