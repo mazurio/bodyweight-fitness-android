@@ -12,9 +12,6 @@ import io.mazur.glacier.Glacier;
 import io.fabric.sdk.android.Fabric;
 
 /**
- * TODO: Update the beginner routine JSON schema to provide unique IDs for categories, sections and exercises.
- * TODO: Update the logic to save sectionId for chosen level/exercise.
- * TODO: Update the realm logic to save those id's into the database as well.
  * TODO: Rename drawables to use the uniqueId's.
  *
  * TODO: Update all gif videos to match 16:9 format.
