@@ -161,6 +161,7 @@ public class NavigationDrawerFragment extends Fragment {
     private void setMenu(View view, int id) {
         if (id == R.id.action_menu_faq ||
                 id == R.id.action_menu_support_developer ||
+                id == R.id.action_menu_login ||
                 id == R.id.action_menu_settings) {
             closeDrawer();
 
@@ -222,6 +223,7 @@ public class NavigationDrawerFragment extends Fragment {
             R.id.action_menu_workout_log,
             R.id.action_menu_faq,
             R.id.action_menu_support_developer,
+            R.id.action_menu_login,
             R.id.action_menu_settings
     })
     @SuppressWarnings("unused")
