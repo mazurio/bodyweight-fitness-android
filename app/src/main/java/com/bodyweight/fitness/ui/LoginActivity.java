@@ -112,6 +112,8 @@ public class LoginActivity extends AppCompatActivity {
                             );
 
                             print("Logged in : " + response.getIdentityId());
+
+                            LoginActivity.this.finish();
                         },
                         (error) -> {
                             print(error.getMessage());
