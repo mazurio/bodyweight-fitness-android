@@ -73,6 +73,10 @@ public abstract class IPresenter<V extends View> implements Serializable {
      * @param subscription subscription.
      */
     public void subscribe(Subscription subscription) {
+        if (mSubscriptions == null) {
+            mSubscriptions = new ArrayList<>();
+        }
+
         mSubscriptions.add(subscription);
     }
 
@@ -81,7 +85,7 @@ public abstract class IPresenter<V extends View> implements Serializable {
      */
     private void unsubscribeAll() {
         if (mSubscriptions == null) {
-            return;
+            mSubscriptions = new ArrayList<>();
         }
 
         for(Subscription s : mSubscriptions) {
