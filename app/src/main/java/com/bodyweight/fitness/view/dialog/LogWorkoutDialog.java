@@ -484,13 +484,24 @@ public class LogWorkoutDialog {
             switch (item.getItemId()) {
                 case R.id.action_add_set: {
                     if (shouldAddSet()) {
+                        int seconds = 0;
+                        double weight = 0;
+                        int reps = 0;
+
+                        if (!mRepositoryExercise.getSets().isEmpty()) {
+                            RepositorySet repositorySet = mRepositoryExercise.getSets().last();
+                            seconds = repositorySet.getSeconds();
+                            weight = repositorySet.getWeight();
+                            reps = repositorySet.getReps();
+                        }
+
                         RepositorySet repositorySet = mRealm.createObject(RepositorySet.class);
 
                         repositorySet.setId("Set-" + UUID.randomUUID().toString());
                         repositorySet.setIsTimed(false);
-                        repositorySet.setSeconds(0);
-                        repositorySet.setWeight(0);
-                        repositorySet.setReps(0);
+                        repositorySet.setSeconds(seconds);
+                        repositorySet.setWeight(weight);
+                        repositorySet.setReps(reps);
 
                         repositorySet.setExercise(mRepositoryExercise);
 
@@ -503,13 +514,24 @@ public class LogWorkoutDialog {
 
                 case R.id.action_add_timed_set: {
                     if (shouldAddSet()) {
+                        int seconds = 0;
+                        double weight = 0;
+                        int reps = 0;
+
+                        if (!mRepositoryExercise.getSets().isEmpty()) {
+                            RepositorySet repositorySet = mRepositoryExercise.getSets().last();
+                            seconds = repositorySet.getSeconds();
+                            weight = repositorySet.getWeight();
+                            reps = repositorySet.getReps();
+                        }
+
                         RepositorySet repositorySet = mRealm.createObject(RepositorySet.class);
 
                         repositorySet.setId("Set-" + UUID.randomUUID().toString());
                         repositorySet.setIsTimed(true);
-                        repositorySet.setSeconds(0);
-                        repositorySet.setWeight(0);
-                        repositorySet.setReps(0);
+                        repositorySet.setSeconds(seconds);
+                        repositorySet.setWeight(weight);
+                        repositorySet.setReps(reps);
 
                         repositorySet.setExercise(mRepositoryExercise);
 
