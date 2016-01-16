@@ -27,6 +27,7 @@
                 android:padding="16dp">
 
                 <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/routine_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="16dp"
@@ -138,6 +139,35 @@
                     android:textColor="#87000000"
                     android:textSize="14sp"
                     android:text="Login"
+                    app:typeface="roboto_medium"/>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/action_menu_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:visibility="gone"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:gravity="center_vertical"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:textColor="#87000000"
+                    android:textSize="14sp"
+                    android:text="Logout"
+                    app:typeface="roboto_medium"/>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/action_menu_sync"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:gravity="center_vertical"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:textColor="#87000000"
+                    android:textSize="14sp"
+                    android:text="(Debug) Sync"
                     app:typeface="roboto_medium"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView

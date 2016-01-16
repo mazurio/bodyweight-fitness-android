@@ -1,5 +1,6 @@
 package com.bodyweight.fitness.ui;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -50,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     @InjectView(R.id.button_login)
     Button _loginButton;
 
-    @InjectView(R.id.link_signup)
+    @InjectView(R.id.button_signup)
     TextView _signupLink;
 
     @Override
@@ -107,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                         (response) -> {
                             LoginImpl.getInstance().login(
                                     email,
+                                    password,
                                     response.getIdentityId(),
                                     response.getToken()
                             );
@@ -121,6 +123,11 @@ public class LoginActivity extends AppCompatActivity {
                         () -> {
                             Logger.d("Completed");
                         });
+    }
+
+    @OnClick(R.id.button_signup)
+    public void onClickButtonSignup(View view) {
+        startActivity(new Intent(this, SignupActivity.class));
     }
 
     public void onLoginFailed() {

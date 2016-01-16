@@ -1,19 +1,36 @@
 package com.bodyweight.fitness.network;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.auth.IdentityChangedListener;
 import com.amazonaws.mobileconnectors.cognito.CognitoSyncManager;
+import com.amazonaws.mobileconnectors.cognito.Dataset;
+import com.amazonaws.mobileconnectors.cognito.Record;
+import com.amazonaws.mobileconnectors.cognito.SyncConflict;
+import com.amazonaws.mobileconnectors.cognito.exceptions.DataStorageException;
 import com.amazonaws.mobileconnectors.lambdainvoker.LambdaInvokerFactory;
 import com.amazonaws.regions.Regions;
 
 import com.bodyweight.fitness.App;
 import com.bodyweight.fitness.BuildConfig;
+import com.bodyweight.fitness.utils.Logger;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.util.HashMap;
+import java.util.List;
 
 import rx.Observable;
 import rx.subjects.PublishSubject;
 
-public class LoginImpl {
+/**
+ * TODO: Logout.
+ * TODO: Get new token while logged in.
+ * TODO: Restart the app and keep user logged in.
+ *
+ * TODO: Sync data.
+ */
+public class LoginImpl implements IdentityChangedListener {
     private static LoginImpl sInstance;
 
     public static LoginImpl getInstance() {
@@ -52,6 +69,15 @@ public class LoginImpl {
                 REGION
         );
 
+        DateTime dateTime = new DateTime(
+                mCognitoProvider.getSessionCredentitalsExpiration()
+        ).toDateTime(DateTimeZone.UTC);
+
+        Logger.d("identityId: " + mCognitoProvider.getIdentityId());
+        Logger.d("cachedIdentityId: " + mCognitoProvider.getCachedIdentityId());
+        Logger.d("sessionCredentialsExpiration: " + dateTime.toString());
+        Logger.d("refreshThreshold: " + mCognitoProvider.getRefreshThreshold());
+
         mCognitoSyncManager = new CognitoSyncManager(
                 App.getContext(),
                 REGION,
@@ -65,13 +91,20 @@ public class LoginImpl {
         );
 
         mLoginInterface = mLambdaInvoker.build(LoginInterface.class);
+        mCognitoProvider.registerIdentityChangedListener(this);
     }
 
     public LoginResponse invokeLogin(LoginRequest loginRequest) {
         return mLoginInterface.LambdAuthLogin(loginRequest);
     }
 
-    public void login(String email, String identityId, String token) {
+    public void isLoggedIn() {
+
+    }
+
+    public void login(String email, String password, String identityId, String token) {
+        Logger.d("Email: " + email + "\nidentityId:" + identityId + "\ntoken:" + token);
+
         mAuthenticationProvider.login(identityId, token);
 
         HashMap<String, String> logins = new HashMap<>();
@@ -82,50 +115,88 @@ public class LoginImpl {
         mCognitoProvider.setLogins(logins);
 
         /**
+         * Session credentials expiration to 1 year.
+         *
+         * TODO: Is this right to do? Better than storing passwords and authenticating.
+         */
+        mCognitoProvider.setSessionCredentialsExpiration(
+                new DateTime().plusYears(1).toDate()
+        );
+
+        /**
          * It should publish an object with email, identityId and token(?).
          * First Name, Last Name as well (or Username).
          */
         mAuthSubject.onNext(email);
     }
 
+    public void logout() {
+        mCognitoProvider.clear();
+        mCognitoProvider.clearCredentials();
+
+        mAuthSubject.onNext("null");
+    }
+
     public Observable<String> getAuthSubject() {
         return mAuthSubject.asObservable();
     }
 
-    /**
-     * For later
-     */
+    @Override
+    public void identityChanged(String oldIdentityId, String newIdentityId) {
+        Logger.e("identityChanged: " + newIdentityId);
+    }
 
-//    Dataset dataset = client.openOrCreateDataset("datasetname");
-//    dataset.put("myKey", "my value");
-//    dataset.synchronize(new Dataset.SyncCallback() {
-//        @Override
-//        public void onSuccess(Dataset dataset, List< Record > updatedRecords) {
-//            print("success");
-//        }
-//
-//        @Override
-//        public boolean onConflict(Dataset dataset, List< SyncConflict > conflicts) {
-//            print("conflict");
-//            return false;
-//        }
-//
-//        @Override
-//        public boolean onDatasetDeleted(Dataset dataset, String datasetName) {
-//            print("data-set-deleted");
-//            return false;
-//        }
-//
-//        @Override
-//        public boolean onDatasetsMerged(Dataset dataset, List<String> datasetNames) {
-//            print("data-set-merged");
-//            return false;
-//        }
-//
-//        @Override
-//        public void onFailure(DataStorageException dse) {
-//            Logger.d(dse.getMessage());
-//            print("data-set-failure");
-//        }
-//    });
+    public void syncData() {
+        mCognitoProvider.setSessionCredentialsExpiration(
+                new DateTime().plusYears(1).toDate()
+        );
+
+        DateTime dateTime = new DateTime(
+                mCognitoProvider.getSessionCredentitalsExpiration()
+        ).toDateTime(DateTimeZone.UTC);
+
+        Logger.d("identityId: " + mCognitoProvider.getIdentityId());
+        Logger.d("cachedIdentityId: " + mCognitoProvider.getCachedIdentityId());
+        Logger.d("sessionCredentialsExpiration: " + dateTime.toString());
+        Logger.d("refreshThreshold: " + mCognitoProvider.getRefreshThreshold());
+
+
+
+
+
+
+        Dataset dataset = mCognitoSyncManager.openOrCreateDataset("datasetname");
+        dataset.put("myKey", "my test");
+        dataset.put("date", new DateTime().toString());
+        dataset.synchronize(new Dataset.SyncCallback() {
+            @Override
+            public void onSuccess(Dataset dataset, List<Record> updatedRecords) {
+                Logger.d("Sync success.");
+            }
+
+            @Override
+            public boolean onConflict(Dataset dataset, List<SyncConflict> conflicts) {
+                Logger.d("Sync conflict.");
+                return false;
+            }
+
+            @Override
+            public boolean onDatasetDeleted(Dataset dataset, String datasetName) {
+                Logger.d("Sync deleted.");
+                return false;
+            }
+
+            @Override
+            public boolean onDatasetsMerged(Dataset dataset, List<String> datasetNames) {
+                Logger.d("Sync merged.");
+                return false;
+            }
+
+            @Override
+            public void onFailure(DataStorageException dse) {
+                Logger.d(dse.getMessage());
+                Logger.d("Sync failure.");
+            }
+        });
+    }
 }

@@ -166,6 +166,18 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             break;
                         }
 
+                        case (R.id.action_menu_logout): {
+                            LoginImpl.getInstance().logout();
+
+                            break;
+                        }
+
+                        case (R.id.action_menu_sync): {
+                            LoginImpl.getInstance().syncData();
+
+                            break;
+                        }
+
                         case (R.id.action_menu_settings): {
                             startActivity(
                                     new Intent(getApplicationContext(), SettingsActivity.class)
