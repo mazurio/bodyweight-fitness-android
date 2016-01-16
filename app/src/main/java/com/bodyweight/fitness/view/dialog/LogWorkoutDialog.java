@@ -2,6 +2,7 @@ package com.bodyweight.fitness.view.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,6 +33,9 @@ import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.utils.PreferenceUtils;
+import com.bodyweight.fitness.view.listener.RepeatListener;
+
+import butterknife.OnTouch;
 import io.realm.Realm;
 
 public class LogWorkoutDialog {
@@ -40,6 +44,8 @@ public class LogWorkoutDialog {
     }
 
     private static final int MAXIMUM_NUMBER_OF_SETS = 12;
+    private static final int REPEAT_INITIAL_INTERVAL = 400;
+    private static final int REPEAT_NORMAL_INTERVAL = 100;
 
     private Dialog mDialog;
     private OnDismissLogWorkoutDialogListener mOnDismissLogWorkoutDialogListener;
@@ -70,6 +76,18 @@ public class LogWorkoutDialog {
 
     @InjectView(R.id.repsDescription)
     TextView mActionViewRepsDescription;
+
+    @InjectView(R.id.weightIncrease)
+    AppCompatImageButton mWeightIncrease;
+
+    @InjectView(R.id.weightDecrease)
+    AppCompatImageButton mWeightDecrease;
+
+    @InjectView(R.id.repsIncrease)
+    AppCompatImageButton mRepsIncrease;
+
+    @InjectView(R.id.repsDecrease)
+    AppCompatImageButton mRepsDecrease;
 
     private LinearLayout mRowLayout;
 
@@ -117,6 +135,22 @@ public class LogWorkoutDialog {
         mDialog.setCanceledOnTouchOutside(true);
 
         ButterKnife.inject(this, mDialog);
+
+        mWeightIncrease.setOnTouchListener(
+                new RepeatListener(REPEAT_INITIAL_INTERVAL, REPEAT_NORMAL_INTERVAL, (view) -> onClickIncreaseWeight())
+        );
+
+        mWeightDecrease.setOnTouchListener(
+                new RepeatListener(REPEAT_INITIAL_INTERVAL, REPEAT_NORMAL_INTERVAL, (view) -> onClickDecreaseWeight())
+        );
+
+        mRepsIncrease.setOnTouchListener(
+                new RepeatListener(REPEAT_INITIAL_INTERVAL, REPEAT_NORMAL_INTERVAL, (view) -> onClickIncreaseReps())
+        );
+
+        mRepsDecrease.setOnTouchListener(
+                new RepeatListener(REPEAT_INITIAL_INTERVAL, REPEAT_NORMAL_INTERVAL, (view) -> onClickDecreaseReps())
+        );
 
         mWeightMeasurementUnit = PreferenceUtils
                 .getInstance()
@@ -450,13 +484,24 @@ public class LogWorkoutDialog {
             switch (item.getItemId()) {
                 case R.id.action_add_set: {
                     if (shouldAddSet()) {
+                        int seconds = 0;
+                        double weight = 0;
+                        int reps = 0;
+
+                        if (!mRepositoryExercise.getSets().isEmpty()) {
+                            RepositorySet repositorySet = mRepositoryExercise.getSets().last();
+                            seconds = repositorySet.getSeconds();
+                            weight = repositorySet.getWeight();
+                            reps = repositorySet.getReps();
+                        }
+
                         RepositorySet repositorySet = mRealm.createObject(RepositorySet.class);
 
                         repositorySet.setId("Set-" + UUID.randomUUID().toString());
                         repositorySet.setIsTimed(false);
-                        repositorySet.setSeconds(0);
-                        repositorySet.setWeight(0);
-                        repositorySet.setReps(0);
+                        repositorySet.setSeconds(seconds);
+                        repositorySet.setWeight(weight);
+                        repositorySet.setReps(reps);
 
                         repositorySet.setExercise(mRepositoryExercise);
 
@@ -469,13 +514,24 @@ public class LogWorkoutDialog {
 
                 case R.id.action_add_timed_set: {
                     if (shouldAddSet()) {
+                        int seconds = 0;
+                        double weight = 0;
+                        int reps = 0;
+
+                        if (!mRepositoryExercise.getSets().isEmpty()) {
+                            RepositorySet repositorySet = mRepositoryExercise.getSets().last();
+                            seconds = repositorySet.getSeconds();
+                            weight = repositorySet.getWeight();
+                            reps = repositorySet.getReps();
+                        }
+
                         RepositorySet repositorySet = mRealm.createObject(RepositorySet.class);
 
                         repositorySet.setId("Set-" + UUID.randomUUID().toString());
                         repositorySet.setIsTimed(true);
-                        repositorySet.setSeconds(0);
-                        repositorySet.setWeight(0);
-                        repositorySet.setReps(0);
+                        repositorySet.setSeconds(seconds);
+                        repositorySet.setWeight(weight);
+                        repositorySet.setReps(reps);
 
                         repositorySet.setExercise(mRepositoryExercise);
 
@@ -506,9 +562,7 @@ public class LogWorkoutDialog {
         mToolbar.getMenu().clear();
     }
 
-    @OnClick(R.id.weightIncrease)
-    @SuppressWarnings("unused")
-    public void onClickIncreaseWeight(View view) {
+    public void onClickIncreaseWeight() {
         if(mSet.isTimed()) {
             if(mSet.getSeconds() % 60 == 59) {
                 mSet.setSeconds(mSet.getSeconds() - 59);
@@ -521,7 +575,7 @@ public class LogWorkoutDialog {
 
             setLastUpdatedTime();
         } else {
-            if(mSet.getWeight() >= 500) {
+            if(mSet.getWeight() >= 250) {
                 return;
             }
 
@@ -537,9 +591,7 @@ public class LogWorkoutDialog {
         }
     }
 
-    @OnClick(R.id.weightDecrease)
-    @SuppressWarnings("unused")
-    public void onClickDecreaseWeight(View view) {
+    public void onClickDecreaseWeight() {
         if(mSet.isTimed()) {
             if(mSet.getSeconds() % 60 == 0) {
                 mSet.setSeconds(mSet.getSeconds() + 59);
@@ -568,9 +620,7 @@ public class LogWorkoutDialog {
         }
     }
 
-    @OnClick(R.id.repsIncrease)
-    @SuppressWarnings("unused")
-    public void onClickIncreaseReps(View view) {
+    public void onClickIncreaseReps() {
         if(mSet.isTimed()) {
             if (mSet.getSeconds() / 60 >= 5) {
                 return;
@@ -595,9 +645,7 @@ public class LogWorkoutDialog {
         }
     }
 
-    @OnClick(R.id.repsDecrease)
-    @SuppressWarnings("unused")
-    public void onClickDecreaseReps(View view) {
+    public void onClickDecreaseReps() {
         if(mSet.isTimed()) {
             if(mSet.getSeconds() >= 60) {
                 mSet.setSeconds(mSet.getSeconds() - 60);
