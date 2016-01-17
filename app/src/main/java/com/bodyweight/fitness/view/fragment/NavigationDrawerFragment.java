@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bodyweight.fitness.App;
+import com.bodyweight.fitness.network.LoginImpl;
 import com.bodyweight.fitness.stream.DrawerStream;
 import com.bodyweight.fitness.stream.RoutineStream;
 
@@ -34,6 +35,9 @@ public class NavigationDrawerFragment extends Fragment {
     @InjectView(R.id.arrow)
     ImageView mImageViewArrow;
 
+    @InjectView(R.id.routine_name)
+    TextView mRoutineName;
+
     @InjectView(R.id.menu)
     View mMenu;
 
@@ -42,6 +46,12 @@ public class NavigationDrawerFragment extends Fragment {
 
     @InjectView(R.id.action_menu_home)
     View mActionMenuHome;
+
+    @InjectView(R.id.action_menu_login)
+    View mActionMenuLogin;
+
+    @InjectView(R.id.action_menu_logout)
+    View mActionMenuLogout;
 
     @InjectView(R.id.action_menu_support_developer)
     TextView mActionMenuSupportDeveloper;
@@ -57,6 +67,7 @@ public class NavigationDrawerFragment extends Fragment {
     private View mFragmentContainerView;
 
     private Subscription mExerciseChangedSubscription;
+    private Subscription mUserChangedSubscription;
     private Subscription mDrawerMenuSubscription;
 
     public NavigationDrawerFragment() {}
@@ -79,6 +90,11 @@ public class NavigationDrawerFragment extends Fragment {
         if (mExerciseChangedSubscription != null) {
             mExerciseChangedSubscription.unsubscribe();
             mExerciseChangedSubscription = null;
+        }
+
+        if (mUserChangedSubscription != null) {
+            mUserChangedSubscription.unsubscribe();
+            mUserChangedSubscription = null;
         }
 
         if (mDrawerMenuSubscription != null) {
@@ -155,12 +171,34 @@ public class NavigationDrawerFragment extends Fragment {
                     closeDrawer();
                 });
 
+        mUserChangedSubscription = LoginImpl.getInstance().getAuthSubject().subscribe(userChanged -> {
+            if (userChanged.equals("null")) {
+                mRoutineName.setText("Bodyweight Fitness");
+
+                mActionMenuLogin.setVisibility(View.VISIBLE);
+                mActionMenuLogout.setVisibility(View.GONE);
+
+                return;
+            }
+
+            mRoutineName.setText(userChanged);
+
+            mActionMenuLogin.setVisibility(View.GONE);
+            mActionMenuLogout.setVisibility(View.VISIBLE);
+
+            // show logout
+            // hide login
+        });
+
         DrawerStream.getInstance().setMenu(mMenuId);
     }
 
     private void setMenu(View view, int id) {
         if (id == R.id.action_menu_faq ||
                 id == R.id.action_menu_support_developer ||
+                id == R.id.action_menu_login ||
+                id == R.id.action_menu_logout ||
+                id == R.id.action_menu_sync ||
                 id == R.id.action_menu_settings) {
             closeDrawer();
 
@@ -222,6 +260,9 @@ public class NavigationDrawerFragment extends Fragment {
             R.id.action_menu_workout_log,
             R.id.action_menu_faq,
             R.id.action_menu_support_developer,
+            R.id.action_menu_login,
+            R.id.action_menu_logout,
+            R.id.action_menu_sync,
             R.id.action_menu_settings
     })
     @SuppressWarnings("unused")

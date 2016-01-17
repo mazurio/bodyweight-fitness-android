@@ -2,20 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'io.fabric'
 
-def getApiKey(){
+def getKey(key) {
     def Properties properties = new Properties()
 
     properties.load(new FileInputStream(new File('api.properties')))
 
-    return properties['AMAZON_API_KEY']
-}
-
-def getFabricAPIKey() {
-    def Properties properties = new Properties()
-
-    properties.load(new FileInputStream(new File('api.properties')))
-
-    return properties['FABRIC_API_KEY']
+    return properties[key]
 }
 
 android {
@@ -58,18 +50,12 @@ android {
     }
     buildTypes {
         applicationVariants.all { variant ->
-            variant.buildConfigField "String", "AMAZON_API_KEY", "\"" + getApiKey() + "\""
+            variant.buildConfigField "String", "AMAZON_API_KEY", "\"" + getKey("AMAZON_API_KEY") + "\""
+            variant.buildConfigField "String", "IDENTITY_POOL_ID", "\"" + getKey("IDENTITY_POOL_ID") + "\""
         }
 
         debug {
             ext.enableCrashlytics = false
-
-            manifestPlaceholders = [ fabric_api_key: "\"" + getFabricAPIKey() + "\""]
-
-        }
-
-        release {
-            manifestPlaceholders = [ fabric_api_key: "\"" + getFabricAPIKey() + "\""]
         }
     }
 }
@@ -102,6 +88,11 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'frankiesardo:icepick:3.1.0'
     provided 'frankiesardo:icepick-processor:3.1.0'
+
+    compile 'com.amazonaws:aws-android-sdk-core:2.2.10'
+    compile 'com.amazonaws:aws-android-sdk-lambda:2.2.10'
+    compile 'com.amazonaws:aws-android-sdk-cognito:2.2.10'
+
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }

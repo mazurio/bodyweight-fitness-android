@@ -13,12 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
+import com.bodyweight.fitness.network.LoginImpl;
 import com.bodyweight.fitness.stream.RepositoryStream;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.stream.DrawerStream;
 import com.bodyweight.fitness.stream.ToolbarStream;
 import com.bodyweight.fitness.utils.ApplicationStoreUtils;
+import com.bodyweight.fitness.utils.Logger;
 import com.bodyweight.fitness.view.fragment.NavigationDrawerFragment;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 
@@ -38,6 +40,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         setDrawer();
 
         keepScreenOnWhenAppIsRunning();
+
+        LoginImpl.getInstance().getAuthSubject().subscribe(email -> {
+           Logger.e("Logged in with email: " + email);
+        });
 	}
 
     @Override
@@ -148,6 +154,26 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             ));
 
                             startActivity(intent);
+
+                            break;
+                        }
+
+                        case (R.id.action_menu_login): {
+                            startActivity(
+                                    new Intent(getApplicationContext(), LoginActivity.class)
+                            );
+
+                            break;
+                        }
+
+                        case (R.id.action_menu_logout): {
+                            LoginImpl.getInstance().logout();
+
+                            break;
+                        }
+
+                        case (R.id.action_menu_sync): {
+                            LoginImpl.getInstance().syncData();
 
                             break;
                         }
