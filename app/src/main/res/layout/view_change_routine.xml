@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bodyweight.fitness.view.ChangeRoutineView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/change_routine_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEEE">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choose Routine"/>
+
+        <Button
+            android:id="@+id/routine0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bodyweight Fitness - Beginner Routine"/>
+
+        <Button
+            android:id="@+id/routine1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Test Routine 1"/>
+
+        <Button
+            android:id="@+id/routine2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Test Routine 2"/>
+    </LinearLayout>
+</com.bodyweight.fitness.view.ChangeRoutineView>

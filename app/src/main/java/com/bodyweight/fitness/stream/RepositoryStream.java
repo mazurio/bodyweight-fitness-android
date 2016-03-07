@@ -15,10 +15,17 @@ import com.bodyweight.fitness.model.repository.RepositoryExercise;
 import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.model.repository.RepositorySection;
 import com.bodyweight.fitness.model.repository.RepositorySet;
+import com.bodyweight.fitness.utils.Logger;
 
+import io.realm.DynamicRealm;
+import io.realm.DynamicRealmObject;
+import io.realm.FieldAttribute;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
+import io.realm.RealmMigration;
+import io.realm.RealmObjectSchema;
+import io.realm.RealmSchema;
 import rx.Observable;
 import rx.subjects.PublishSubject;
 
@@ -40,7 +47,24 @@ public class RepositoryStream {
     public Realm getRealm() {
         return Realm.getInstance(new RealmConfiguration.Builder(App.getContext())
                 .name("bodyweight.fitness.realm")
-                .schemaVersion(1)
+                .schemaVersion(2)
+                .migration((DynamicRealm realm, long oldVersion, long newVersion) -> {
+                    Logger.d("old= " + oldVersion + " new=" + newVersion);
+
+                    RealmSchema schema = realm.getSchema();
+
+//                    if (oldVersion == 0) {
+                        RealmObjectSchema routineSchema = schema.get("RepositoryRoutine");
+
+                        routineSchema
+                                .addField("title", String.class)
+                                .addField("subtitle", String.class)
+                                .transform((DynamicRealmObject obj) -> {
+                                    obj.set("title", "Bodyweight Fitness");
+                                    obj.set("subtitle", "Beginner Routine");
+                                });
+//                    }
+                })
                 .build());
     }
 
@@ -49,8 +73,9 @@ public class RepositoryStream {
 
         RepositoryRoutine repositoryRoutine = getRealm().createObject(RepositoryRoutine.class);
         repositoryRoutine.setId("Routine-" + UUID.randomUUID().toString());
-        // TODO: This will change when more routines are added.
-        repositoryRoutine.setRoutineId("routine0");
+        repositoryRoutine.setRoutineId(routine.getRoutineId());
+        repositoryRoutine.setTitle(routine.getTitle());
+        repositoryRoutine.setSubtitle(routine.getSubtitle());
         repositoryRoutine.setStartTime(new DateTime().toDate());
         repositoryRoutine.setLastUpdatedTime(new DateTime().toDate());
 
@@ -143,9 +168,12 @@ public class RepositoryStream {
                 .minusSeconds(1)
                 .toDate();
 
+        String routineId = RoutineStream.getInstance().getRoutine().getRoutineId();
+
         RepositoryRoutine repositoryRoutine = getRealm()
                 .where(RepositoryRoutine.class)
                 .between("startTime", start, end)
+                .equalTo("routineId", routineId)
                 .findFirst();
 
         if(repositoryRoutine == null) {

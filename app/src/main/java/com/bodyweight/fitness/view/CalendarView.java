@@ -2,11 +2,14 @@ package com.bodyweight.fitness.view;
 
 import android.content.Context;
 import android.os.Parcelable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bodyweight.fitness.adapter.CalendarListAdapter;
 import com.bodyweight.fitness.presenter.CalendarPresenter;
 
 import butterknife.ButterKnife;
@@ -27,11 +30,8 @@ public class CalendarView extends LinearLayout {
     @InjectView(R.id.view_calendar_pager)
     ViewPager mViewPager;
 
-    @InjectView(R.id.view_calendar_scrollview)
-    View mScrollView;
-
-    @InjectView(R.id.view_calendar_date)
-    TextView mDate;
+    @InjectView(R.id.view_calendar_list)
+    RecyclerView mList;
 
     @InjectView(R.id.view_calendar_message)
     View mMessage;
@@ -59,6 +59,8 @@ public class CalendarView extends LinearLayout {
         super.onFinishInflate();
 
         ButterKnife.inject(this);
+
+        mList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mViewPager.addOnPageChangeListener(new android.support.v4.view.ViewPager.OnPageChangeListener() {
             @Override
@@ -109,36 +111,21 @@ public class CalendarView extends LinearLayout {
         mViewPager.setAdapter(calendarAdapter);
     }
 
+    public void setListAdapter(CalendarListAdapter calendarListAdapter) {
+        mList.setAdapter(calendarListAdapter);
+    }
+
     public void scrollToDefaultItem() {
         mViewPager.setCurrentItem(CalendarAdapter.DEFAULT_POSITION, false);
     }
 
-    public void setDate(String text) {
-        mDate.setText(text);
-    }
-
     public void hideCardView() {
-        mScrollView.setVisibility(View.GONE);
+        mList.setVisibility(View.GONE);
         mMessage.setVisibility(View.VISIBLE);
     }
 
     public void showCardView() {
-        mScrollView.setVisibility(View.VISIBLE);
+        mList.setVisibility(View.VISIBLE);
         mMessage.setVisibility(View.GONE);
-    }
-
-    @OnClick(R.id.view_calendar_card_view_button)
-    public void onClickViewButton(View view) {
-        mPresenter.onClickViewButton();
-    }
-
-    @OnClick(R.id.view_calendar_card_export_button)
-    public void onClickExportButton(View view) {
-        mPresenter.onClickExportButton();
-    }
-
-    @OnClick(R.id.view_calendar_card_remove_button)
-    public void onClickRemoveButton(View view) {
-        mPresenter.onClickRemoveButton();
     }
 }

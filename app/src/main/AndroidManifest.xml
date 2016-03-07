@@ -4,7 +4,7 @@
 
     <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="23" />
 
-	<uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <supports-screens
         android:smallScreens="true"
@@ -63,6 +63,6 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="${fabric_api_key}" />
+            android:value="5dcec45142f2b7beb83af419bcb06344e8598390" />
     </application>
 </manifest>

@@ -27,14 +27,38 @@ public class RoutineStream {
     private Exercise mExercise;
 
     private final PublishSubject<Routine> mRoutineSubject = PublishSubject.create();
+    private final PublishSubject<Routine> mRoutineChangedSubject = PublishSubject.create();
     private final PublishSubject<Exercise> mExerciseSubject = PublishSubject.create();
     private final PublishSubject<Routine> mLevelChangedSubject = PublishSubject.create();
 
     private RoutineStream() {
+        // should load default routine instead.
+        changeRoutine(R.raw.beginner_routine);
+    }
+
+    public static RoutineStream getInstance() {
+        if(sInstance == null) {
+            sInstance = new RoutineStream();
+        }
+
+        return sInstance;
+    }
+
+    public void setRoutine(int routineId) {
+        if (routineId == 0) {
+            changeRoutine(R.raw.beginner_routine);
+        } else {
+            changeRoutine(R.raw.molding_mobility);
+        }
+
+        mRoutineChangedSubject.onNext(mRoutine);
+    }
+
+    private void changeRoutine(int resource) {
         try {
             JSONRoutine jsonRoutine = new Gson().fromJson(IOUtils.toString(App.getContext()
-                            .getResources()
-                            .openRawResource(R.raw.beginner_routine)
+                    .getResources()
+                    .openRawResource(resource)
             ), JSONRoutine.class);
 
             mRoutine = new Routine(jsonRoutine);
@@ -46,14 +70,6 @@ public class RoutineStream {
 
         mRoutineSubject.onNext(mRoutine);
         mExerciseSubject.onNext(mExercise);
-    }
-
-    public static RoutineStream getInstance() {
-        if(sInstance == null) {
-            sInstance = new RoutineStream();
-        }
-
-        return sInstance;
     }
 
     public Routine getRoutine() {
@@ -95,6 +111,10 @@ public class RoutineStream {
         }).observeOn(AndroidSchedulers.mainThread()).publish().refCount();
 
         return Observable.merge(mRoutineSubject, routineObservable);
+    }
+
+    public Observable<Routine> getRoutineChangedObservable() {
+        return mRoutineChangedSubject;
     }
 
     public Observable<Exercise> getExerciseChangedObservable() {

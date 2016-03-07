@@ -46,14 +46,14 @@ android {
     productFlavors {
         pro {
             applicationId 'com.bodyweight.fitness.pro'
-            versionCode 117
-            versionName "1.1.7"
+            versionCode 118
+            versionName "1.1.8"
         }
 
         free {
             applicationId 'com.bodyweight.fitness.free'
-            versionCode 117
-            versionName "1.1.7"
+            versionCode 118
+            versionName "1.1.8"
         }
     }
     buildTypes {
@@ -100,6 +100,7 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'io.reactivex:rxjava:1.1.0'
+    compile 'io.realm:realm-android:0.87.3'
     compile 'frankiesardo:icepick:3.1.0'
     provided 'frankiesardo:icepick-processor:3.1.0'
     compile 'io.realm:realm-android:0.87.5'

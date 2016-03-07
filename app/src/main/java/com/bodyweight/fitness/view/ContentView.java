@@ -11,8 +11,11 @@ import butterknife.InjectView;
 
 import icepick.Icepick;
 import icepick.State;
+import rx.Observable;
 
 import com.bodyweight.fitness.R;
+import com.bodyweight.fitness.model.Routine;
+import com.bodyweight.fitness.presenter.ChangeRoutinePresenter;
 import com.bodyweight.fitness.presenter.ContentPresenter;
 
 public class ContentView extends RelativeLayout {
@@ -21,6 +24,9 @@ public class ContentView extends RelativeLayout {
 
     @InjectView(R.id.view_home)
     View mHomeView;
+
+    @InjectView(R.id.view_change_routine)
+    ChangeRoutineView mChangeRoutineView;
 
     @InjectView(R.id.view_calendar)
     CalendarView mCalendarView;
@@ -79,11 +85,19 @@ public class ContentView extends RelativeLayout {
 
     public void showHome() {
         mHomeView.setVisibility(View.VISIBLE);
+        mChangeRoutineView.setVisibility(View.GONE);
+        mCalendarView.setVisibility(View.GONE);
+    }
+
+    public void showChangeRoutine() {
+        mHomeView.setVisibility(View.GONE);
+        mChangeRoutineView.setVisibility(View.VISIBLE);
         mCalendarView.setVisibility(View.GONE);
     }
 
     public void showCalendar() {
         mHomeView.setVisibility(View.GONE);
+        mChangeRoutineView.setVisibility(View.GONE);
         mCalendarView.setVisibility(View.VISIBLE);
     }
 }

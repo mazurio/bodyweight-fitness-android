@@ -56,11 +56,15 @@ public class ActionPresenter extends IPresenter<ActionView> {
 
         subscribe(DrawerStream.getInstance()
                 .getMenuObservable()
-                .filter(id -> id.equals(R.id.action_menu_home) || id.equals(R.id.action_menu_workout_log))
+                .filter(id ->
+                        id.equals(R.id.action_menu_home) ||
+                        id.equals(R.id.action_menu_change_routine) ||
+                        id.equals(R.id.action_menu_workout_log)
+                )
                 .subscribe(id -> {
                     if (id.equals(R.id.action_menu_home)) {
                         mView.showActionButtons();
-                    } else if (id.equals(R.id.action_menu_workout_log)) {
+                    } else {
                         mView.hideActionButtons();
                     }
                 }));

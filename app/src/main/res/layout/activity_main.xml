@@ -22,6 +22,13 @@
             android:layout_below="@+id/view_toolbar"
             android:visibility="visible"/>
 
+        <include layout="@layout/view_change_routine"
+            android:id="@+id/view_change_routine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/view_toolbar"
+            android:visibility="gone"/>
+
         <include layout="@layout/view_calendar"
             android:id="@+id/view_calendar"
             android:layout_width="match_parent"

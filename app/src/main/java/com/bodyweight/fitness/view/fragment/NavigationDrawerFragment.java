@@ -34,6 +34,12 @@ public class NavigationDrawerFragment extends Fragment {
     @InjectView(R.id.arrow)
     ImageView mImageViewArrow;
 
+    @InjectView(R.id.routine_title)
+    TextView mRoutineTitle;
+
+    @InjectView(R.id.routine_subtitle)
+    TextView mRoutineSubtitle;
+
     @InjectView(R.id.menu)
     View mMenu;
 
@@ -56,6 +62,8 @@ public class NavigationDrawerFragment extends Fragment {
     private DrawerLayout mNavigationDrawerLayout;
     private View mFragmentContainerView;
 
+    private Subscription mRoutineSubscription;
+    private Subscription mRoutineChangedSubscription;
     private Subscription mExerciseChangedSubscription;
     private Subscription mDrawerMenuSubscription;
 
@@ -64,6 +72,22 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mRoutineSubscription = RoutineStream.getInstance()
+                .getRoutineObservable()
+                .subscribe(routine -> {
+                    mRoutineTitle.setText(routine.getTitle());
+                    mRoutineSubtitle.setText(routine.getSubtitle());
+                });
+
+        mRoutineChangedSubscription = RoutineStream.getInstance()
+                .getRoutineChangedObservable()
+                .subscribe(routine -> {
+                    mRoutineTitle.setText(routine.getTitle());
+                    mRoutineSubtitle.setText(routine.getSubtitle());
+
+                    DrawerStream.getInstance().setMenu(R.id.action_menu_home);
+                });
 
         mExerciseChangedSubscription = RoutineStream.getInstance()
                 .getExerciseChangedObservable()
@@ -75,6 +99,16 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        if (mRoutineSubscription != null) {
+            mRoutineSubscription.unsubscribe();
+            mRoutineSubscription = null;
+        }
+
+        if (mRoutineChangedSubscription != null) {
+            mRoutineChangedSubscription.unsubscribe();
+            mRoutineChangedSubscription = null;
+        }
 
         if (mExerciseChangedSubscription != null) {
             mExerciseChangedSubscription.unsubscribe();
@@ -169,6 +203,8 @@ public class NavigationDrawerFragment extends Fragment {
 
         if (id == R.id.action_menu_home) {
             mImageViewArrow.setVisibility(View.VISIBLE);
+        } else if (id == R.id.action_menu_change_routine) {
+            mImageViewArrow.setVisibility(View.INVISIBLE);
         } else if (id == R.id.action_menu_workout_log) {
             mImageViewArrow.setVisibility(View.INVISIBLE);
         }
@@ -219,6 +255,7 @@ public class NavigationDrawerFragment extends Fragment {
 
     @OnClick({
             R.id.action_menu_home,
+            R.id.action_menu_change_routine,
             R.id.action_menu_workout_log,
             R.id.action_menu_faq,
             R.id.action_menu_support_developer,

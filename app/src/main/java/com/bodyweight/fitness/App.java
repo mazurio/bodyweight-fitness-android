@@ -20,6 +20,9 @@ import io.fabric.sdk.android.Fabric;
  * TODO BUG: ProgressActivity missing items sometimes.
  *
  * TODO: Move to Dagger 2 injection rather than using getInstance singletons.
+ *
+ * TODO: If you change the routine, save it as default routine (next time you open the app).
+ * TODO: If your default routine does not exist - revert back.
  */
 public class App extends Application {
     private static Context mContext;

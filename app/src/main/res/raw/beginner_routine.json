@@ -1,4 +1,7 @@
 {
+  "routineId": "routine0",
+  "title": "Bodyweight Fitness",
+  "subtitle": "Beginner Routine",
   "routine" : [
 	{
 		"categoryId": "category0",

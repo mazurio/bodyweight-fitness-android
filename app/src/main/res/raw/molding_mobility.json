@@ -1,0 +1,37 @@
+{
+  "routineId": "routine-1564cc76-24fc-4a02-bc57-0c99e632f6af",
+  "title": "Molding Mobility",
+  "subtitle": "Flexibility Routine",
+  "routine" : [
+    {
+      "categoryId": "category-2c3b5ecf-428d-4637-bfd2-de630461430a",
+      "title": "General",
+      "type": "category"
+    },
+    {
+      "sectionId": "section-89f9c278-c1ba-48aa-ae46-7985755d480b",
+      "title": "Warmup",
+      "description": "Do all, 1x(5-10)",
+      "type": "section",
+      "mode": "all"
+    },
+    {
+      "exerciseId": "exercise-52af35cc-d0c7-49b7-a47f-09d128fe5584",
+      "id": "dupka",
+      "title": "Exercise 1",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "d6V2Exzb324",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "exercise-780ccebb-4aaf-416c-9ed3-3dced0724a0c",
+      "id": "dupka",
+      "title": "Exercise 2",
+      "description": "3x10",
+      "type": "exercise",
+      "youTubeId": "d6V2Exzb324",
+      "defaultSet": "weighted"
+    }
+  ]
+}

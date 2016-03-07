@@ -27,10 +27,10 @@
                 android:padding="16dp">
 
                 <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/routine_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="16dp"
-                    android:text="Bodyweight Fitness"
                     android:textSize="14sp"
                     android:textColor="@color/white"
                     app:typeface="roboto_medium"/>
@@ -40,9 +40,9 @@
                     android:layout_height="wrap_content">
 
                     <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/routine_subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Recommended Routine"
                         android:textSize="14sp"
                         android:textColor="@color/white"
                         app:typeface="roboto_regular"/>
@@ -85,6 +85,20 @@
                     app:typeface="roboto_medium"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/action_menu_change_routine"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:gravity="center_vertical"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:textColor="#87000000"
+                    android:textSize="14sp"
+                    android:text="Change Routine"
+                    app:typeface="roboto_medium"/>
+
+                <com.devspark.robototextview.widget.RobotoTextView
                     android:id="@+id/action_menu_workout_log"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -96,20 +110,6 @@
                     android:textColor="#87000000"
                     android:textSize="14sp"
                     android:text="Workout Log"
-                    app:typeface="roboto_medium"/>
-
-                <com.devspark.robototextview.widget.RobotoTextView
-                    android:id="@+id/action_menu_faq"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:gravity="center_vertical"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:textColor="#87000000"
-                    android:textSize="14sp"
-                    android:text="FAQ"
                     app:typeface="roboto_medium"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
@@ -138,6 +138,20 @@
                     android:textColor="#87000000"
                     android:textSize="14sp"
                     android:text="Settings"
+                    app:typeface="roboto_medium"/>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/action_menu_faq"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:gravity="center_vertical"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:textColor="#87000000"
+                    android:textSize="14sp"
+                    android:text="FAQ"
                     app:typeface="roboto_medium"/>
             </LinearLayout>
         </ScrollView>

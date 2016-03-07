@@ -3,6 +3,7 @@ package com.bodyweight.fitness.presenter;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 
+import com.bodyweight.fitness.adapter.CalendarListAdapter;
 import com.bodyweight.fitness.model.repository.RepositoryExercise;
 import com.bodyweight.fitness.stream.RepositoryStream;
 import com.bodyweight.fitness.utils.DateUtils;
@@ -21,9 +22,12 @@ import com.bodyweight.fitness.ui.ProgressActivity;
 import com.bodyweight.fitness.view.CalendarView;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class CalendarPresenter extends IPresenter<CalendarView> {
     private transient CalendarAdapter mCalendarAdapter;
+    private transient CalendarListAdapter mCalendarListAdapter;
+
     private String mRealmRoutineId;
 
     @Override
@@ -31,8 +35,10 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
         super.onCreateView(view);
 
         mCalendarAdapter = new CalendarAdapter();
+        mCalendarListAdapter = new CalendarListAdapter();
 
         mView.setAdapter(mCalendarAdapter);
+        mView.setListAdapter(mCalendarListAdapter);
         mView.scrollToDefaultItem();
     }
 
@@ -62,9 +68,10 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
                             calendarDayChanged.daySelected
                     );
 
-                    mView.setDate(
-                            dateTime.toString("EEEE, d MMMM", Locale.ENGLISH)
-                    );
+                    // todo:
+//                    mView.setDate(
+//                            dateTime.toString("EEEE, d MMMM", Locale.ENGLISH)
+//                    );
 
                     if (isRoutineLogged(dateTime)) {
                         mView.showCardView();
@@ -86,12 +93,14 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
                 .toDate();
 
         Realm realm = RepositoryStream.getInstance().getRealm();
-        RepositoryRoutine repositoryRoutine = realm.where(RepositoryRoutine.class)
+        RealmResults<RepositoryRoutine> results = realm.where(RepositoryRoutine.class)
                 .between("startTime", start, end)
-                .findFirst();
+                .findAll();
 
-        if(repositoryRoutine != null) {
-            mRealmRoutineId = repositoryRoutine.getId();
+        if(!results.isEmpty()) {
+//            mRealmRoutineId = repositoryRoutine.getId();
+
+            mCalendarListAdapter.setItems(results);
 
             return true;
         }

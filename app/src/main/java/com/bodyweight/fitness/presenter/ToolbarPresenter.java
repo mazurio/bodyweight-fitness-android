@@ -40,7 +40,11 @@ public class ToolbarPresenter extends IPresenter<ToolbarView> {
 
         subscribe(DrawerStream.getInstance()
                 .getMenuObservable()
-                .filter(id -> id.equals(R.id.action_menu_home) || id.equals(R.id.action_menu_workout_log))
+                .filter(id ->
+                        id.equals(R.id.action_menu_home) ||
+                        id.equals(R.id.action_menu_change_routine) ||
+                        id.equals(R.id.action_menu_workout_log)
+                )
                 .subscribe(id -> {
                     mId = id;
 
@@ -53,6 +57,8 @@ public class ToolbarPresenter extends IPresenter<ToolbarView> {
             Exercise exercise = RoutineStream.getInstance().getExercise();
 
             setToolbarForHome(exercise);
+        } else if (id.equals(R.id.action_menu_change_routine)) {
+            setToolbarForChangeRoutine();
         } else if (id.equals(R.id.action_menu_workout_log)) {
             CalendarDayChanged calendarDayChanged = CalendarStream.getInstance().getCalendarDayChanged();
 
@@ -70,6 +76,14 @@ public class ToolbarPresenter extends IPresenter<ToolbarView> {
         mView.setTitle(exercise.getTitle());
         mView.setSubtitle(exercise.getSection().getTitle());
         mView.setDescription(exercise.getDescription());
+    }
+
+    private void setToolbarForChangeRoutine() {
+        mView.invalidateOptionsMenu();
+
+        mView.setTitle("Title");
+        mView.setSubtitle("Subtitle");
+        mView.setDescription("Description");
     }
 
     private void setToolbarForCalendar(CalendarDayChanged calendarDayChanged) {

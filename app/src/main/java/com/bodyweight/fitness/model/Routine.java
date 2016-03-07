@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import io.mazur.glacier.Glacier;
 
 public class Routine implements Serializable {
+    private String mRoutineId;
+    private String mTitle;
+    private String mSubtitle;
+
     private ArrayList<Category> mCategories = new ArrayList<>();
     private ArrayList<Section> mSections = new ArrayList<>();
     private ArrayList<Exercise> mExercises = new ArrayList<>();
@@ -15,6 +19,10 @@ public class Routine implements Serializable {
     private ArrayList<LinkedRoutine> mLinkedRoutine = new ArrayList<>();
 
     public Routine(JSONRoutine JSONRoutine) {
+        mRoutineId = JSONRoutine.getRoutineId();
+        mTitle = JSONRoutine.getTitle();
+        mSubtitle = JSONRoutine.getSubtitle();
+
         Category currentCategory = null;
         Section currentSection = null;
         Exercise currentExercise = null;
@@ -123,6 +131,18 @@ public class Routine implements Serializable {
                 }
             }
         }
+    }
+
+    public String getRoutineId() {
+        return mRoutineId;
+    }
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public String getSubtitle() {
+        return mSubtitle;
     }
 
     public ArrayList<Category> getCategories() {
