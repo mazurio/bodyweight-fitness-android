@@ -22,7 +22,7 @@ android {
     compileSdkVersion 23
     buildToolsVersion '23.0.2'
     defaultConfig {
-        applicationId 'io.mazur.fit'
+        applicationId 'com.bodyweight.fitness'
         minSdkVersion 14
         targetSdkVersion 23
     }
@@ -46,14 +46,14 @@ android {
     productFlavors {
         pro {
             applicationId 'com.bodyweight.fitness.pro'
-            versionCode 114
-            versionName "1.1.4"
+            versionCode 117
+            versionName "1.1.7"
         }
 
         free {
             applicationId 'com.bodyweight.fitness.free'
-            versionCode 114
-            versionName "1.1.4"
+            versionCode 117
+            versionName "1.1.7"
         }
     }
     buildTypes {
@@ -102,6 +102,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'frankiesardo:icepick:3.1.0'
     provided 'frankiesardo:icepick-processor:3.1.0'
+    compile 'io.realm:realm-android:0.87.5'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }

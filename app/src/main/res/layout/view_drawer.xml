@@ -42,7 +42,7 @@
                     <com.devspark.robototextview.widget.RobotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Beginner Routine"
+                        android:text="Recommended Routine"
                         android:textSize="14sp"
                         android:textColor="@color/white"
                         app:typeface="roboto_regular"/>
