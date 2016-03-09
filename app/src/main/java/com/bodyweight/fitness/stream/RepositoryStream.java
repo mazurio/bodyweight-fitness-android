@@ -61,7 +61,7 @@ public class RepositoryStream {
                                 .addField("subtitle", String.class)
                                 .transform((DynamicRealmObject obj) -> {
                                     obj.set("title", "Bodyweight Fitness");
-                                    obj.set("subtitle", "Beginner Routine");
+                                    obj.set("subtitle", "Recommended Routine");
                                 });
 //                    }
                 })
