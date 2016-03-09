@@ -71,7 +71,7 @@ public class CalendarListAdapter extends RecyclerView.Adapter<CalendarListAdapte
 
         @OnClick(R.id.view_calendar_card_view_button)
         public void onClickViewButton(View view) {
-            
+
         }
 
         @OnClick(R.id.view_calendar_card_remove_button)
