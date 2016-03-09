@@ -12,6 +12,7 @@ import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import butterknife.OnClick;
 import io.realm.RealmResults;
 
 public class CalendarListAdapter extends RecyclerView.Adapter<CalendarListAdapter.CalendarRoutinePresenter> {
@@ -66,6 +67,16 @@ public class CalendarListAdapter extends RecyclerView.Adapter<CalendarListAdapte
         public void onBindView(RepositoryRoutine repositoryRoutine) {
             mTitle.setText(repositoryRoutine.getTitle());
             mSubtitle.setText(repositoryRoutine.getSubtitle());
+        }
+
+        @OnClick(R.id.view_calendar_card_view_button)
+        public void onClickViewButton(View view) {
+            
+        }
+
+        @OnClick(R.id.view_calendar_card_remove_button)
+        public void onClickRemoveButton(View view) {
+
         }
     }
 }
