@@ -22,18 +22,20 @@
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "d6V2Exzb324",
-      "gifUrl": "",
+      "gifId": "jxzZW6C",
+      "gifUrl": "http://i.imgur.com/jxzZW6C.gif",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise-780ccebb-4aaf-416c-9ed3-3dced0724a0c",
       "id": "dupka",
       "title": "Exercise 2",
-      "description": "3x10",
+      "description": "3x(10-20)",
       "type": "exercise",
       "youTubeId": "d6V2Exzb324",
-      "gifUrl": "",
-      "defaultSet": "weighted"
+      "gifId": "7zKAgAa",
+      "gifUrl": "http://i.imgur.com/7zKAgAa.gif",
+      "defaultSet": "timed"
     }
   ]
 }

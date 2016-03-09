@@ -63,6 +63,6 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="${fabric_api_key}" />
+            android:value="REPLACE_HERE" />
     </application>
 </manifest>

@@ -1,11 +1,15 @@
 package com.bodyweight.fitness.presenter;
 
+import android.net.Uri;
+
 import java.io.File;
 import java.io.Serializable;
 
+import com.bodyweight.fitness.model.Routine;
 import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.utils.Logger;
 import com.bodyweight.fitness.view.PreviewView;
+import com.bumptech.glide.Glide;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.squareup.picasso.Picasso;
 
@@ -17,20 +21,27 @@ public class PreviewPresenter extends IPresenter<PreviewView> implements Seriali
         subscribe(RoutineStream.getInstance()
                 .getExerciseObservable()
                 .subscribe(exercise -> {
+                    Routine routine = RoutineStream.getInstance().getRoutine();
 
-                    String savePath = FileDownloadUtils.getDefaultSaveRootPath() + File.separator + "ted.jpg";
+                    if (routine.getRoutineId().equals("routine0")) {
+                        mView.getPreviewGifImageView().setImageResource(
+                            mView.getContext()
+                                    .getResources()
+                                    .getIdentifier(exercise.getId(), "drawable", mView.getContext().getPackageName())
+                        );
+                    } else {
+                        String filePath = String.format("%s%s%s.gif",
+                                FileDownloadUtils.getDefaultSaveRootPath(),
+                                File.separator, exercise.getGifId());
 
-                    Logger.d(savePath);
+                        Logger.d(filePath);
 
-                    Picasso.with(getContext())
-                            .load(savePath)
-                            .into(mView.getPreviewGifImageView());
+                        Picasso.with(getContext())
+                                .load(new File(filePath))
+                                .into(mView.getPreviewGifImageView());
 
-//                    mView.getPreviewGifImageView().setImageResource(
-//                            mView.getContext()
-//                                    .getResources()
-//                                    .getIdentifier(exercise.getId(), "drawable", mView.getContext().getPackageName())
-//                    );
+                        // TODO: Picasso errors image.
+                    }
                 }));
     }
 }

@@ -29,6 +29,12 @@ public class JSONLinkedRoutine {
     @SerializedName("youTubeId")
     private String mYouTubeId;
 
+    @SerializedName("gifId")
+    private String mGifId;
+
+    @SerializedName("gifUrl")
+    private String mGifUrl;
+
     @SerializedName("type")
     private String mType;
 
@@ -71,6 +77,14 @@ public class JSONLinkedRoutine {
 
     public String getYouTubeId() {
         return mYouTubeId;
+    }
+
+    public String getGifId() {
+        return mGifId;
+    }
+
+    public String getGifUrl() {
+        return mGifUrl;
     }
 
     public RoutineType getType() {

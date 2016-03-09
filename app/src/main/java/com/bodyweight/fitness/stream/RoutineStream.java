@@ -62,26 +62,23 @@ public class RoutineStream {
         mRoutineChangedSubject.onNext(mRoutine);
     }
 
-    private void changeRoutine(int resource) {
-        try {
-            JSONRoutine jsonRoutine = new Gson().fromJson(IOUtils.toString(App.getContext()
-                    .getResources()
-                    .openRawResource(resource)
-            ), JSONRoutine.class);
-
-            mRoutine = new Routine(jsonRoutine);
-        } catch(IOException e) {
-            Logger.e("Exception when loading Beginner Routine from JSON file: " + e.getMessage());
-        }
-
-        mExercise = mRoutine.getLinkedExercises().get(0);
-
-        mRoutineSubject.onNext(mRoutine);
-        mExerciseSubject.onNext(mExercise);
-    }
-
     public Routine getRoutine() {
         return mRoutine;
+    }
+
+    public Routine getRoutine(int resource) {
+        try {
+            JSONRoutine jsonRoutine = new Gson().fromJson(IOUtils.toString(App.getContext()
+                            .getResources()
+                            .openRawResource(resource)
+            ), JSONRoutine.class);
+
+            return new Routine(jsonRoutine);
+        } catch(IOException e) {
+            Logger.e("Exception when loading routine from JSON file: " + e.getMessage());
+        }
+
+        return null;
     }
 
     public void setExercise(Exercise exercise) {
@@ -105,6 +102,15 @@ public class RoutineStream {
         );
 
         mLevelChangedSubject.onNext(mRoutine);
+    }
+
+    private void changeRoutine(int resource) {
+        mRoutine = getRoutine(resource);
+
+        mExercise = mRoutine.getLinkedExercises().get(0);
+
+        mRoutineSubject.onNext(mRoutine);
+        mExerciseSubject.onNext(mExercise);
     }
 
     /**
