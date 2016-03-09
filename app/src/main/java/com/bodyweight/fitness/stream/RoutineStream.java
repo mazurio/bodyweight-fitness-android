@@ -32,7 +32,7 @@ public class RoutineStream {
     private final PublishSubject<Routine> mLevelChangedSubject = PublishSubject.create();
 
     private RoutineStream() {
-        // should load default routine instead.
+        // TODO: should load default routine instead.
         changeRoutine(R.raw.beginner_routine);
     }
 
@@ -45,10 +45,18 @@ public class RoutineStream {
     }
 
     public void setRoutine(int routineId) {
-        if (routineId == 0) {
-            changeRoutine(R.raw.beginner_routine);
-        } else {
-            changeRoutine(R.raw.molding_mobility);
+        switch (routineId) {
+            case 1: {
+                changeRoutine(R.raw.molding_mobility);
+
+                break;
+            }
+
+            default: {
+                changeRoutine(R.raw.beginner_routine);
+
+                break;
+            }
         }
 
         mRoutineChangedSubject.onNext(mRoutine);

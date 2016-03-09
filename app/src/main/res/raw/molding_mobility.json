@@ -22,6 +22,7 @@
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "d6V2Exzb324",
+      "gifUrl": "",
       "defaultSet": "weighted"
     },
     {
@@ -31,6 +32,7 @@
       "description": "3x10",
       "type": "exercise",
       "youTubeId": "d6V2Exzb324",
+      "gifUrl": "",
       "defaultSet": "weighted"
     }
   ]

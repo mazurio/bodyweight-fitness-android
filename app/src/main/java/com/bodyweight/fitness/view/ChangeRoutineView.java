@@ -76,13 +76,13 @@ public class ChangeRoutineView extends RelativeLayout {
         mPresenter.onClickRoutine0();
     }
 
+    @OnClick(R.id.routine0download)
+    public void onClickRoutine0Download(View view) {
+        mPresenter.onClickRoutine0Download();
+    }
+
     @OnClick(R.id.routine1)
     public void onClickRoutine1(View view) {
         mPresenter.onClickRoutine1();
-    }
-
-    @OnClick(R.id.routine2)
-    public void onClickRoutine2(View view) {
-        mPresenter.onClickRoutine2();
     }
 }

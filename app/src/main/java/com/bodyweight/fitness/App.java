@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
+import com.liulishuo.filedownloader.FileDownloader;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -41,6 +42,8 @@ public class App extends Application {
                     new Answers()
             );
         }
+
+        FileDownloader.init(this);
 
         mContext = getApplicationContext();
     }
