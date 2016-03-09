@@ -97,7 +97,6 @@ dependencies {
     compile 'com.github.johnkil.android-robototextview:robototextview:2.3.0'
     compile 'com.gordonwong:material-sheet-fab:1.2'
     compile 'com.github.bmarrdev:android-DecoView-charting:v0.9.4'
-    compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'frankiesardo:icepick:3.1.0'

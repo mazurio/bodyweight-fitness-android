@@ -1,14 +1,11 @@
 package com.bodyweight.fitness.adapter;
 
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bodyweight.fitness.model.repository.RepositoryCategory;
@@ -16,15 +13,7 @@ import com.bodyweight.fitness.model.repository.RepositoryExercise;
 import com.bodyweight.fitness.model.repository.RepositorySection;
 import com.bodyweight.fitness.model.repository.RepositorySet;
 import com.bodyweight.fitness.view.dialog.LogWorkoutDialog;
-import com.devspark.robototextview.util.RobotoTypefaceManager;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.ButterKnife;
@@ -125,8 +114,6 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
 
     public class ProgressCardPresenter extends ProgressPresenter {
         @InjectView(R.id.toolbar) Toolbar mToolbar;
-        @InjectView(R.id.chartLayout) RelativeLayout mChartLayout;
-        @InjectView(R.id.chart1) LineChart mLineChart;
         @InjectView(R.id.view_button) Button mButton;
 
         private RepositoryExercise mRepositoryExercise;
@@ -143,11 +130,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
             mToolbar.setTitle(repositoryExercise.getTitle());
             mToolbar.setSubtitle(repositoryExercise.getDescription());
 
-            if(isCompleted(mRepositoryExercise)) {
-                mChartLayout.setVisibility(View.VISIBLE);
-                updateChart();
-            } else {
-                mChartLayout.setVisibility(View.GONE);
+            if(!isCompleted(mRepositoryExercise)) {
                 mToolbar.setSubtitle("Not completed");
             }
 
@@ -156,109 +139,6 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
                 logWorkoutDialog.setOnDismissLogWorkoutDialogListener(onDismissLogWorkoutDialogListener);
                 logWorkoutDialog.show();
             });
-        }
-
-        private void updateChart() {
-            boolean isTimed = mRepositoryExercise.getDefaultSet().equals("timed");
-
-            ArrayList<Entry> valsComp1 = new ArrayList<>();
-            ArrayList<String> xVals = new ArrayList<>();
-
-            int index = 1;
-            for(RepositorySet repositorySet : mRepositoryExercise.getSets()) {
-                if (isTimed) {
-                    int seconds = repositorySet.getSeconds();
-
-                    xVals.add(String.format("Set %d", index));
-                    valsComp1.add(new Entry(seconds, (index - 1)));
-                } else {
-                    int reps = repositorySet.getReps();
-
-                    xVals.add(String.format("Set %d", index));
-
-                    valsComp1.add(new Entry(reps, (index - 1)));
-                }
-
-                index++;
-            }
-
-            mLineChart.setDescription("");
-            mLineChart.setDrawGridBackground(false);
-            mLineChart.setDrawBorders(false);
-            mLineChart.setBorderColor(Color.parseColor("#EAEAEA"));
-            mLineChart.setBackgroundColor(Color.parseColor("#ffffff"));
-
-            mLineChart.getLegend().setEnabled(false);
-            mLineChart.getAxisRight().setEnabled(false);
-
-            mLineChart.setGridBackgroundColor(Color.parseColor("#111111"));
-
-            mLineChart.setExtraRightOffset(10f);
-
-            mLineChart.setClickable(false);
-            mLineChart.setTouchEnabled(false);
-            mLineChart.setDragEnabled(false);
-            mLineChart.setScaleEnabled(false);
-            mLineChart.setPinchZoom(false);
-
-            int fillColor = Color.parseColor("#00453E"); // #1194F6 darkBlue
-
-            LineDataSet setComp1 = new LineDataSet(valsComp1, "Day 1");
-            setComp1.setCircleColor(fillColor);
-            setComp1.setColor(Color.parseColor("#ffffff"));
-            setComp1.setHighLightColor(Color.parseColor("#ffffff"));
-            setComp1.setCircleSize(6f);
-            setComp1.setLineWidth(2f);
-            setComp1.setColor(fillColor);
-            setComp1.setDrawCubic(true);
-            setComp1.setFillAlpha(50);
-            setComp1.setFillColor(fillColor);
-
-            setComp1.setDrawCircleHole(false);
-            setComp1.setDrawFilled(true);
-            setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
-
-
-            ArrayList<LineDataSet> dataSets = new ArrayList<>();
-            dataSets.add(setComp1);
-
-            LineData data = new LineData(xVals, dataSets);
-            // Values above circles.
-            data.setDrawValues(false);
-
-            Typeface typeface = RobotoTypefaceManager.obtainTypeface(
-                    itemView.getContext(),
-                    RobotoTypefaceManager.Typeface.ROBOTO_REGULAR);
-
-            XAxis xAxis = mLineChart.getXAxis();
-            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xAxis.setTextSize(12f);
-            xAxis.setTextColor(Color.parseColor("#A1A1A1"));
-            xAxis.setTypeface(typeface);
-            // Space between chart and labels.
-            xAxis.setYOffset(15f);
-            xAxis.setAxisLineColor(Color.parseColor("#EAEAEA"));
-            xAxis.setDrawAxisLine(true);
-            xAxis.setDrawGridLines(true);
-
-            YAxis yAxis = mLineChart.getAxisLeft();
-
-            yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
-            yAxis.setTextSize(12f);
-            yAxis.setTypeface(typeface);
-            yAxis.setAxisLineColor(Color.parseColor("#FFFFFF"));
-
-            // Space between chart and labels.
-            yAxis.setXOffset(15f);
-            yAxis.setTextColor(Color.parseColor("#A1A1A1"));
-            yAxis.setGridColor(Color.parseColor("#EAEAEA"));
-            yAxis.setAxisLineColor(Color.parseColor("#EAEAEA"));
-            yAxis.setDrawAxisLine(true);
-            yAxis.setDrawGridLines(true);
-            yAxis.setYOffset(5f);
-
-            mLineChart.setData(data);
-            mLineChart.invalidate();
         }
     }
 

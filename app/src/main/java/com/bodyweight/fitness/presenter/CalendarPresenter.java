@@ -1,24 +1,18 @@
 package com.bodyweight.fitness.presenter;
 
-import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-
 import com.bodyweight.fitness.adapter.CalendarListAdapter;
-import com.bodyweight.fitness.model.repository.RepositoryExercise;
 import com.bodyweight.fitness.stream.RepositoryStream;
 import com.bodyweight.fitness.utils.DateUtils;
 
 import org.joda.time.DateTime;
 
 import java.util.Date;
-import java.util.Locale;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.adapter.CalendarAdapter;
 import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.stream.CalendarStream;
 import com.bodyweight.fitness.stream.ToolbarStream;
-import com.bodyweight.fitness.ui.ProgressActivity;
 import com.bodyweight.fitness.view.CalendarView;
 
 import io.realm.Realm;
@@ -27,8 +21,6 @@ import io.realm.RealmResults;
 public class CalendarPresenter extends IPresenter<CalendarView> {
     private transient CalendarAdapter mCalendarAdapter;
     private transient CalendarListAdapter mCalendarListAdapter;
-
-    private String mRealmRoutineId;
 
     @Override
     public void onCreateView(CalendarView view) {
@@ -98,8 +90,6 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
                 .findAll();
 
         if(!results.isEmpty()) {
-//            mRealmRoutineId = repositoryRoutine.getId();
-
             mCalendarListAdapter.setItems(results);
 
             return true;
@@ -110,60 +100,5 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
 
     public void onPageSelected(int position) {
         CalendarStream.getInstance().setCalendarPage(position);
-    }
-
-    public void onClickViewButton() {
-        Intent intent = new Intent(getContext(), ProgressActivity.class);
-        intent.putExtra("routineId", mRealmRoutineId);
-
-        getContext().startActivity(intent);
-    }
-
-    public void onClickExportButton() {
-        Realm realm = RepositoryStream.getInstance().getRealm();
-
-        RepositoryRoutine repositoryRoutine = realm.where(RepositoryRoutine.class)
-                .equalTo("id", mRealmRoutineId)
-                .findFirst();
-
-        String s = "Category Title,Section Title,Exercise Title,Exercise Description";
-        for(RepositoryExercise repositoryExercise : repositoryRoutine.getExercises()) {
-            s += repositoryExercise.getCategory().getTitle() + ",";
-            s += repositoryExercise.getSection().getTitle() + ",";
-            s += repositoryExercise.getTitle() + ",";
-            s += repositoryExercise.getDescription() + "\n";
-        }
-
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-
-        sharingIntent.setType("text/plain");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, s);
-
-        getContext().startActivity(Intent.createChooser(sharingIntent, "Export as CSV"));
-    }
-
-    public void onClickRemoveButton() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext())
-                .setTitle("Remove Logged Workout?")
-                .setPositiveButton("Ok", (dialog, which) -> {
-                    Realm realm = RepositoryStream.getInstance().getRealm();
-
-                    RepositoryRoutine repositoryRoutine = realm.where(RepositoryRoutine.class)
-                            .equalTo("id", mRealmRoutineId)
-                            .findFirst();
-
-                    realm.beginTransaction();
-                    repositoryRoutine.removeFromRealm();
-                    realm.commitTransaction();
-
-                    mView.setAdapter(mCalendarAdapter);
-                    mView.scrollToDefaultItem();
-
-                    mView.hideCardView();
-                })
-                .setNegativeButton("Cancel", (dialog, which) -> {});
-
-        alertDialog.show();
     }
 }

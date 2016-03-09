@@ -38,9 +38,9 @@ public class ProgressActivity extends AppCompatActivity {
 
         ButterKnife.inject(this);
 
-        String routineId = getIntent().getStringExtra("routineId");
+        String primaryKeyRoutineId = getIntent().getStringExtra("primaryKeyRoutineId");
 
-        buildRoutine(routineId);
+        buildRoutine(primaryKeyRoutineId);
 
         setPager(mRepositoryRoutine);
 
@@ -61,11 +61,11 @@ public class ProgressActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void buildRoutine(String routineId) {
+    private void buildRoutine(String primaryKeyRoutineId) {
         Realm realm = RepositoryStream.getInstance().getRealm();
 
         mRepositoryRoutine = realm.where(RepositoryRoutine.class)
-                .equalTo("id", routineId)
+                .equalTo("id", primaryKeyRoutineId)
                 .findFirst();
     }
 
