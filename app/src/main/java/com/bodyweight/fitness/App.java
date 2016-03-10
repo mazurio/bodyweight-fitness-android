@@ -14,17 +14,14 @@ import io.fabric.sdk.android.Fabric;
 
 /**
  * TODO: Rename drawables to use the uniqueId's.
- *
  * TODO: Update all gif videos to match 16:9 format.
  * TODO: Update videos for Antranik new video.
- *
  * TODO BUG: ProgressActivity missing items sometimes.
- *
  * TODO: Move to Dagger 2 injection rather than using getInstance singletons.
- *
  * TODO: If your default routine does not exist - revert back.
- *
  * TODO: With new Realm we can now migrate current POJOs to use RealmObjects only.
+ * TODO: Move to BottomSheets instead of dialogs for Logging Workouts.
+ * TODO: Gifs do not work with Glide/Picasso at the moment.
  */
 public class App extends Application {
     private static Context mContext;

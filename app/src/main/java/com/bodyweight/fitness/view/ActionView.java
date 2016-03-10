@@ -3,6 +3,8 @@ package com.bodyweight.fitness.view;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Parcelable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;

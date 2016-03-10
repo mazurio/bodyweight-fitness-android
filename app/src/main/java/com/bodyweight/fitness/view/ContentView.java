@@ -2,6 +2,7 @@ package com.bodyweight.fitness.view;
 
 import android.content.Context;
 import android.os.Parcelable;
+import android.support.design.widget.Snackbar;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -11,11 +12,8 @@ import butterknife.InjectView;
 
 import icepick.Icepick;
 import icepick.State;
-import rx.Observable;
 
 import com.bodyweight.fitness.R;
-import com.bodyweight.fitness.model.Routine;
-import com.bodyweight.fitness.presenter.ChangeRoutinePresenter;
 import com.bodyweight.fitness.presenter.ContentPresenter;
 
 public class ContentView extends RelativeLayout {
