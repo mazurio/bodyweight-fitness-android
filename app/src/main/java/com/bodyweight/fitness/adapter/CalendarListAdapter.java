@@ -1,6 +1,7 @@
 package com.bodyweight.fitness.adapter;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.stream.RepositoryStream;
 import com.bodyweight.fitness.ui.ProgressActivity;
+
+import java.io.File;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -85,6 +88,22 @@ public class CalendarListAdapter extends RecyclerView.Adapter<CalendarListAdapte
             intent.putExtra("primaryKeyRoutineId", mRepositoryRoutine.getId());
 
             view.getContext().startActivity(intent);
+        }
+
+        @OnClick(R.id.view_calendar_card_export_button)
+        @SuppressWarnings("unused")
+        public void onClickExportButton(View view) {
+            Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+            emailIntent.setType("*/*");
+            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
+                    "me@gmail.com"
+            });
+
+            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Test Subject");
+            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "go on read the emails");
+
+            itemView.getContext().startActivity(Intent.createChooser(emailIntent, "Send mail..."));
         }
 
         @OnClick(R.id.view_calendar_card_remove_button)

@@ -81,9 +81,7 @@ public class ToolbarPresenter extends IPresenter<ToolbarView> {
     private void setToolbarForChangeRoutine() {
         mView.invalidateOptionsMenu();
 
-        mView.setTitle("Title");
-        mView.setSubtitle("Subtitle");
-        mView.setDescription("Description");
+        mView.setSingleTitle("Change Routine");
     }
 
     private void setToolbarForCalendar(CalendarDayChanged calendarDayChanged) {
@@ -105,8 +103,7 @@ public class ToolbarPresenter extends IPresenter<ToolbarView> {
         }
 
         mView.inflateCalendarMenu();
-        mView.setTitle(dateTime.toString("MMMM", Locale.ENGLISH));
-        mView.setSubtitle(dateTime.toString("YYYY", Locale.ENGLISH));
-        mView.setDescription("");
+
+        mView.setSingleTitle(dateTime.toString("dd MMMM, YYYY", Locale.ENGLISH));
     }
 }

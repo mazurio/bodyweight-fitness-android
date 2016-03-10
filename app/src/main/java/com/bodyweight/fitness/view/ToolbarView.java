@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.TextView;
 
 import com.bodyweight.fitness.presenter.ToolbarPresenter;
@@ -22,7 +23,10 @@ public class ToolbarView extends AppBarLayout {
     ToolbarPresenter mPresenter;
 
     @InjectView(R.id.toolbar)
-    Toolbar mToolbar;
+    public Toolbar mToolbar;
+
+    @InjectView(R.id.toolbar_layout)
+    View mLayout;
 
     @InjectView(R.id.toolbar_exercise_title)
     TextView mTitle;
@@ -89,15 +93,27 @@ public class ToolbarView extends AppBarLayout {
         mToolbar.inflateMenu(R.menu.calendar);
     }
 
+    public void setSingleTitle(String text) {
+        mLayout.setVisibility(View.GONE);
+
+        mToolbar.setTitle(text);
+    }
+
     public void setTitle(String text) {
+        mLayout.setVisibility(View.VISIBLE);
+
         mTitle.setText(text);
     }
 
     public void setSubtitle(String text) {
+        mLayout.setVisibility(View.VISIBLE);
+
         mSubtitle.setText(text);
     }
 
     public void setDescription(String text) {
+        mLayout.setVisibility(View.VISIBLE);
+
         mDescription.setText(text);
     }
 }
