@@ -38,6 +38,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         setDrawer();
 
         keepScreenOnWhenAppIsRunning();
+
+        /**
+         * TODO: Do this only once (unless it changes).
+         */
+        Intent intent = new Intent(this, SplashActivity.class);
+        startActivity(intent);
 	}
 
     @Override
