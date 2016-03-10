@@ -2,6 +2,8 @@ package com.bodyweight.fitness.view;
 
 import android.content.Context;
 import android.os.Parcelable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -9,6 +11,8 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
 import com.bodyweight.fitness.R;
+import com.bodyweight.fitness.adapter.CalendarListAdapter;
+import com.bodyweight.fitness.adapter.ChangeRoutineListAdapter;
 import com.bodyweight.fitness.presenter.ChangeRoutinePresenter;
 
 import butterknife.ButterKnife;
@@ -21,6 +25,9 @@ import icepick.State;
 public class ChangeRoutineView extends RelativeLayout {
     @State
     ChangeRoutinePresenter mPresenter;
+
+    @InjectView(R.id.view_change_routine_list)
+    RecyclerView mList;
 
     @InjectView(R.id.routine1progress)
     public SeekBar mRoutine1ProgressBar;
@@ -48,6 +55,8 @@ public class ChangeRoutineView extends RelativeLayout {
         super.onFinishInflate();
 
         ButterKnife.inject(this);
+
+        mList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         onCreateView();
     }
@@ -77,6 +86,10 @@ public class ChangeRoutineView extends RelativeLayout {
         mPresenter.onCreateView(this);
 
         mRoutine1ProgressBar.setEnabled(false);
+    }
+
+    public void setListAdapter(ChangeRoutineListAdapter changeRoutineListAdapter) {
+        mList.setAdapter(changeRoutineListAdapter);
     }
 
     @OnClick(R.id.remove_cache)

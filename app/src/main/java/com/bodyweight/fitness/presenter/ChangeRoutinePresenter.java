@@ -1,6 +1,8 @@
 package com.bodyweight.fitness.presenter;
 
 import com.bodyweight.fitness.R;
+import com.bodyweight.fitness.adapter.CalendarListAdapter;
+import com.bodyweight.fitness.adapter.ChangeRoutineListAdapter;
 import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.Routine;
 import com.bodyweight.fitness.stream.RoutineStream;
@@ -18,6 +20,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class ChangeRoutinePresenter extends IPresenter<ChangeRoutineView> {
+    private transient ChangeRoutineListAdapter mChangeRoutineListAdapter;
+
     private int mCompleted = 0;
     private int mTotal = 0;
 
@@ -26,6 +30,10 @@ public class ChangeRoutinePresenter extends IPresenter<ChangeRoutineView> {
         super.onCreateView(view);
 
         checkMoldingMobility();
+
+        mChangeRoutineListAdapter = new ChangeRoutineListAdapter();
+
+        mView.setListAdapter(mChangeRoutineListAdapter);
     }
 
     private void checkMoldingMobility() {

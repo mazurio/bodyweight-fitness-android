@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         /**
          * TODO: Do this only once (unless it changes).
          */
-        Intent intent = new Intent(this, SplashActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, SplashActivity.class);
+//        startActivity(intent);
 	}
 
     @Override
