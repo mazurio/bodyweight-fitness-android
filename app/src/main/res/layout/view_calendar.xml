@@ -32,8 +32,9 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:textColor="@color/primaryDark"
-                    android:textSize="14sp"
-                    app:typeface="roboto_regular"
+                    android:textSize="11sp"
+                    android:textAllCaps="true"
+                    app:typeface="roboto_light"
                     android:text="Mon"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
@@ -42,8 +43,9 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:textColor="@color/primaryDark"
-                    android:textSize="14sp"
-                    app:typeface="roboto_regular"
+                    android:textSize="11sp"
+                    android:textAllCaps="true"
+                    app:typeface="roboto_light"
                     android:text="Tue"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
@@ -52,8 +54,9 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:textColor="@color/primaryDark"
-                    android:textSize="14sp"
-                    app:typeface="roboto_regular"
+                    android:textSize="11sp"
+                    android:textAllCaps="true"
+                    app:typeface="roboto_light"
                     android:text="Wed"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
@@ -62,8 +65,9 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:textColor="@color/primaryDark"
-                    android:textSize="14sp"
-                    app:typeface="roboto_regular"
+                    android:textSize="11sp"
+                    android:textAllCaps="true"
+                    app:typeface="roboto_light"
                     android:text="Thu"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
@@ -72,8 +76,9 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:textColor="@color/primaryDark"
-                    android:textSize="14sp"
-                    app:typeface="roboto_regular"
+                    android:textSize="11sp"
+                    android:textAllCaps="true"
+                    app:typeface="roboto_light"
                     android:text="Fri"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
@@ -82,8 +87,9 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:textColor="@color/primaryDark"
-                    android:textSize="14sp"
-                    app:typeface="roboto_regular"
+                    android:textSize="11sp"
+                    android:textAllCaps="true"
+                    app:typeface="roboto_light"
                     android:text="Sat"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
@@ -92,8 +98,9 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:textColor="@color/primaryDark"
-                    android:textSize="14sp"
-                    app:typeface="roboto_regular"
+                    android:textSize="11sp"
+                    android:textAllCaps="true"
+                    app:typeface="roboto_light"
                     android:text="Sun"/>
             </LinearLayout>
 

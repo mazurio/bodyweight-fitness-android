@@ -1,7 +1,5 @@
 package com.bodyweight.fitness.presenter;
 
-import android.net.Uri;
-
 import java.io.File;
 import java.io.Serializable;
 
