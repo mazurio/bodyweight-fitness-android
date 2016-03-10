@@ -9,7 +9,6 @@ import com.bodyweight.fitness.model.Routine;
 import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.utils.Logger;
 import com.bodyweight.fitness.view.PreviewView;
-import com.bumptech.glide.Glide;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.squareup.picasso.Picasso;
 

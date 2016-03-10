@@ -33,10 +33,15 @@
             android:layout_height="wrap_content"
             android:text="Molding Mobility"/>
 
+        <SeekBar
+            android:id="@+id/routine1progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <Button
             android:id="@+id/routine1download"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="(Download)"/>
+            android:text="(Download Molding Mobility)"/>
     </LinearLayout>
 </com.bodyweight.fitness.view.ChangeRoutineView>

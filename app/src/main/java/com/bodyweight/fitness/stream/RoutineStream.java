@@ -4,6 +4,7 @@ import com.bodyweight.fitness.App;
 import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.json.JSONRoutine;
 import com.bodyweight.fitness.utils.Logger;
+import com.bodyweight.fitness.utils.PreferenceUtils;
 import com.google.gson.Gson;
 
 import org.apache.commons.io.IOUtils;
@@ -32,8 +33,21 @@ public class RoutineStream {
     private final PublishSubject<Routine> mLevelChangedSubject = PublishSubject.create();
 
     private RoutineStream() {
-        // TODO: should load default routine instead.
-        changeRoutine(R.raw.beginner_routine);
+        String defaultRoutine = PreferenceUtils.getInstance().getDefaultRoutine();
+
+        switch (defaultRoutine) {
+            case "routine-1564cc76-24fc-4a02-bc57-0c99e632f6af": {
+                changeRoutine(R.raw.molding_mobility);
+
+                break;
+            }
+
+            default: {
+                changeRoutine(R.raw.beginner_routine);
+
+                break;
+            }
+        }
     }
 
     public static RoutineStream getInstance() {
@@ -106,6 +120,8 @@ public class RoutineStream {
 
     private void changeRoutine(int resource) {
         mRoutine = getRoutine(resource);
+
+        PreferenceUtils.getInstance().setDefaultRoutine(mRoutine.getRoutineId());
 
         mExercise = mRoutine.getLinkedExercises().get(0);
 

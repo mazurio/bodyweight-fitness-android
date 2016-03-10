@@ -4,13 +4,16 @@ import android.content.Context;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.presenter.ChangeRoutinePresenter;
 
 import butterknife.ButterKnife;
 
+import butterknife.InjectView;
 import butterknife.OnClick;
 import icepick.Icepick;
 import icepick.State;
@@ -18,6 +21,9 @@ import icepick.State;
 public class ChangeRoutineView extends RelativeLayout {
     @State
     ChangeRoutinePresenter mPresenter;
+
+    @InjectView(R.id.routine1progress)
+    public SeekBar mRoutine1ProgressBar;
 
     public ChangeRoutineView(Context context) {
         super(context);
@@ -69,6 +75,8 @@ public class ChangeRoutineView extends RelativeLayout {
 
     private void onCreateView() {
         mPresenter.onCreateView(this);
+
+        mRoutine1ProgressBar.setEnabled(false);
     }
 
     @OnClick(R.id.remove_cache)

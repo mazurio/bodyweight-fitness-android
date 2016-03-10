@@ -21,6 +21,18 @@ public class PreferenceUtils {
         PreferenceManager.setDefaultValues(App.getContext(), R.xml.settings, false);
     }
 
+    public void setDefaultRoutine(String defaultRoutine) {
+        PreferenceManager.getDefaultSharedPreferences(App.getContext())
+                .edit()
+                .putString(Constants.PREFERENCE_DEFAULT_ROUTINE, defaultRoutine)
+                .commit();
+    }
+
+    public String getDefaultRoutine() {
+        return PreferenceManager.getDefaultSharedPreferences(App.getContext())
+                .getString(Constants.PREFERENCE_DEFAULT_ROUTINE, "routine0");
+    }
+
     public WeightMeasurementUnit getWeightMeasurementUnit() {
         String value = PreferenceManager.getDefaultSharedPreferences(App.getContext())
                 .getString(Constants.PREFERENCE_WEIGHT_MEASUREMENT_UNITS, "kg");
@@ -39,8 +51,10 @@ public class PreferenceUtils {
     }
 
     public void setTimerValue(long value) {
-        PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit()
-                .putLong(Constants.PREFERENCE_TIMER_KEY, value).commit();
+        PreferenceManager.getDefaultSharedPreferences(App.getContext())
+                .edit()
+                .putLong(Constants.PREFERENCE_TIMER_KEY, value)
+                .commit();
     }
 
     public long getTimerValue(long defaultValue) {
