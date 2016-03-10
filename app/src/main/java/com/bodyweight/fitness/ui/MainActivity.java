@@ -129,14 +129,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 .getMenuObservable()
                 .subscribe(id -> {
                     switch (id) {
-                        case (R.id.action_menu_faq): {
-                            startActivity(
-                                    new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.reddit.com/r/bodyweightfitness/wiki/faq"))
-                            );
-
-                            break;
-                        }
-
                         case (R.id.action_menu_support_developer): {
                             String installerPackageName = getPackageManager()
                                     .getInstallerPackageName(getPackageName());

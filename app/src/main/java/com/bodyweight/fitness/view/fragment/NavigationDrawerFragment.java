@@ -193,8 +193,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void setMenu(View view, int id) {
-        if (id == R.id.action_menu_faq ||
-                id == R.id.action_menu_support_developer ||
+        if (id == R.id.action_menu_support_developer ||
                 id == R.id.action_menu_settings) {
             closeDrawer();
 
@@ -257,7 +256,6 @@ public class NavigationDrawerFragment extends Fragment {
             R.id.action_menu_home,
             R.id.action_menu_change_routine,
             R.id.action_menu_workout_log,
-            R.id.action_menu_faq,
             R.id.action_menu_support_developer,
             R.id.action_menu_settings
     })

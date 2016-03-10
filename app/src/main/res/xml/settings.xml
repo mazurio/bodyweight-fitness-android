@@ -21,6 +21,13 @@
             android:title="Keep screen always on"
             android:summary="Prevents screen from turning off when app is running"
             android:defaultValue="true" />
+
+        <Preference
+            android:title="Frequently Asked Questions"
+            android:summary="/r/bodyweightfitness">
+
+            <intent android:action="android.intent.action.VIEW" android:data="http://www.reddit.com/r/bodyweightfitness/wiki/faq" />
+        </Preference>
     </PreferenceCategory>
 
     <PreferenceCategory
