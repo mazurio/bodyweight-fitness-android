@@ -2,7 +2,6 @@ package com.bodyweight.fitness.view;
 
 import android.content.Context;
 import android.os.Parcelable;
-import android.support.design.widget.Snackbar;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;

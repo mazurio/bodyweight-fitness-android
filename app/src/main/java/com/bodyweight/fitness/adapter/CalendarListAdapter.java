@@ -9,9 +9,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bodyweight.fitness.R;
+import com.bodyweight.fitness.model.Exercise;
+import com.bodyweight.fitness.model.repository.RepositoryExercise;
 import com.bodyweight.fitness.model.repository.RepositoryRoutine;
+import com.bodyweight.fitness.model.repository.RepositorySet;
 import com.bodyweight.fitness.stream.RepositoryStream;
 import com.bodyweight.fitness.ui.ProgressActivity;
+import com.bodyweight.fitness.utils.Logger;
+import com.bodyweight.fitness.utils.PreferenceUtils;
+
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+import org.joda.time.format.PeriodFormatterBuilder;
+
+import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -113,17 +124,21 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @OnClick(R.id.view_calendar_card_export_button)
         @SuppressWarnings("unused")
         public void onClickExportButton(View view) {
-            Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
 
-            emailIntent.setType("*/*");
-            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
-                    "me@gmail.com"
-            });
+            exportHTML();
+            exportCSV();
 
-            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Test Subject");
-            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "go on read the emails");
-
-            itemView.getContext().startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+//            Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+//
+//            emailIntent.setType("*/*");
+//            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
+//                    "me@gmail.com"
+//            });
+//
+//            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Test Subject");
+//            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "go on read the emails");
+//
+//            itemView.getContext().startActivity(Intent.createChooser(emailIntent, "Send mail..."));
         }
 
         @OnClick(R.id.view_calendar_card_remove_button)
@@ -147,6 +162,92 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     .setNegativeButton("Cancel", (dialog, which) -> {});
 
             alertDialog.show();
+        }
+
+        private void exportHTML() {
+            Logger.d("Hello, The following is your workout in Text/HTML format (CSV attached).");
+            Logger.d(String.format("Workout on %s.", new DateTime(mRepositoryRoutine.getStartTime()).toString("EEEE, d MMMM YYYY, HH:mm")));
+            Logger.d(String.format("Finished at %s.", new DateTime(mRepositoryRoutine.getLastUpdatedTime()).toString("HH:mm")));
+            Logger.d(String.format("Workout length: %s.", getWorkoutLength()));
+            Logger.d(String.format("\n%s - %s\n", mRepositoryRoutine.getTitle(), mRepositoryRoutine.getSubtitle()));
+        }
+
+        private void exportCSV() {
+            String header = "Date, Start Time, End Time, Workout Length, Routine, Exercise, Set Order, Weight, Weight Unit, Reps, Minutes, Seconds";
+
+            Logger.d(header);
+
+            String routineTitle = mRepositoryRoutine.getTitle() + " - " + mRepositoryRoutine.getSubtitle();
+            int index = 1;
+            for (RepositoryExercise exercise : mRepositoryRoutine.getExercises()) {
+                String title = exercise.getTitle();
+                String weightUnit = PreferenceUtils.getInstance().getWeightMeasurementUnit().toString();
+
+                for (RepositorySet set : exercise.getSets()) {
+                    Logger.d(String.format(
+                            "%s,%s,%s,%s,%s,%s,%d,%.2f,%s,%d,%s,%s\n",
+                            new DateTime(mRepositoryRoutine.getStartTime()).toString("EEEE d MMMM", Locale.ENGLISH),
+                            new DateTime(mRepositoryRoutine.getStartTime()).toString("HH:mm", Locale.ENGLISH),
+                            new DateTime(mRepositoryRoutine.getLastUpdatedTime()).toString("HH:mm", Locale.ENGLISH),
+                            getWorkoutLength(),
+                            routineTitle,
+                            title,
+                            index,
+                            set.getWeight(),
+                            weightUnit,
+                            set.getReps(),
+                            formatMinutes(set.getSeconds()),
+                            formatSeconds(set.getSeconds())
+                    ));
+                }
+
+                index += 1;
+            }
+        }
+
+        public String getWorkoutLength() {
+            DateTime startTime = new DateTime(mRepositoryRoutine.getStartTime());
+            DateTime lastUpdatedTime = new DateTime(mRepositoryRoutine.getLastUpdatedTime());
+
+            Duration duration = new Duration(startTime, lastUpdatedTime);
+
+            if (duration.toStandardMinutes().getMinutes() < 10) {
+                return "--";
+            } else {
+                String formatted = new PeriodFormatterBuilder()
+                        .appendHours()
+                        .appendSuffix("h ")
+                        .appendMinutes()
+                        .appendSuffix("m")
+                        .toFormatter()
+                        .print(duration.toPeriod());
+
+                return formatted;
+            }
+        }
+
+        public String formatMinutes(int seconds) {
+            int minutes = seconds / 60;
+
+            if (minutes == 0) {
+                return "0";
+            } else if (minutes < 10) {
+                return "" + minutes;
+            }
+
+            return String.valueOf(minutes);
+        }
+
+        public String formatSeconds(int seconds) {
+            int s = seconds % 60;
+
+            if (s == 0) {
+                return "0";
+            } else if (s < 10) {
+                return "0" + s;
+            }
+
+            return String.valueOf(s);
         }
     }
 }
