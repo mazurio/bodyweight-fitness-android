@@ -10,11 +10,53 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bodyweight.fitness.R;
+import com.bodyweight.fitness.stream.RoutineStream;
+import com.bodyweight.fitness.utils.Logger;
+import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.FileDownloadListener;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutineListAdapter.AbstractPresenter> {
+    private transient FileDownloadListener mFileDownloadListener = new FileDownloadListener() {
+        @Override
+        protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+            Logger.d(task.getUrl() + " " + soFarBytes + " out of " + totalBytes);
+        }
+
+        @Override
+        protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+
+        }
+
+        @Override
+        protected void blockComplete(BaseDownloadTask task) {
+            Logger.d(task.getUrl() + " " + "Block complete");
+        }
+
+        @Override
+        protected void completed(BaseDownloadTask task) {
+            Logger.d(task.getUrl() + " " + "Completed");
+        }
+
+        @Override
+        protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+            Logger.d(task.getUrl() + " " + "Paused " + soFarBytes + " out of " + totalBytes);
+        }
+
+        @Override
+        protected void error(BaseDownloadTask task, Throwable e) {
+            Logger.d(task.getUrl() + " " + "Error");
+        }
+
+        @Override
+        protected void warn(BaseDownloadTask task) {
+            Logger.d(task.getUrl() + " " + "Warning");
+        }
+    };
+
     @Override
     public AbstractPresenter onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 1) {
@@ -93,20 +135,33 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
         @InjectView(R.id.view_change_routine_panel)
         View mPanel;
 
+        int mPosition;
+
         public ChangeRoutineItemPresenter(View itemView) {
             super(itemView);
 
             ButterKnife.inject(this, itemView);
         }
 
+        @OnClick(R.id.view_change_routine_set_button)
+        public void setRoutine(View view) {
+            if (mPosition == 1) {
+                RoutineStream.getInstance().setRoutine(0);
+            } else if (mPosition == 4) {
+                RoutineStream.getInstance().setRoutine(1);
+            }
+        }
+
         @Override
         public void onBindView(int position) {
+            mPosition = position;
+
             switch (position) {
                 case 3: {
                     int color = Color.parseColor("#EEA200");
 
-                    mCardView.setCardBackgroundColor(color);
-                    mToolbar.setBackgroundColor(color);
+//                    mCardView.setCardBackgroundColor(color);
+//                    mToolbar.setBackgroundColor(color);
 
                     mTitle.setText("Starting Stretching");
                     mSubtitle.setText("Flexibility Routine");
@@ -119,8 +174,8 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
                 case 4: {
                     int color = Color.parseColor("#CE331B");
 
-                    mCardView.setCardBackgroundColor(color);
-                    mToolbar.setBackgroundColor(color);
+//                    mCardView.setCardBackgroundColor(color);
+//                    mToolbar.setBackgroundColor(color);
 
                     mTitle.setText("Molding Mobility");
                     mSubtitle.setText("Flexibility Routine");
@@ -133,8 +188,8 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
                 default: {
                     int color = Color.parseColor("#363736");
 
-                    mCardView.setCardBackgroundColor(color);
-                    mToolbar.setBackgroundColor(color);
+//                    mCardView.setCardBackgroundColor(color);
+//                    mToolbar.setBackgroundColor(color);
 
                     mTitle.setText("Bodyweight Fitness");
                     mSubtitle.setText("Recommended Routine");
