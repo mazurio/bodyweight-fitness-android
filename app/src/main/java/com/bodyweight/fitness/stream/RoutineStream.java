@@ -42,6 +42,12 @@ public class RoutineStream {
                 break;
             }
 
+            case "routine-4afa306b-4026-44e4-90d9-913afead82ff": {
+                changeRoutine(R.raw.starting_stretching);
+
+                break;
+            }
+
             default: {
                 changeRoutine(R.raw.beginner_routine);
 
@@ -62,6 +68,12 @@ public class RoutineStream {
         switch (routineId) {
             case 1: {
                 changeRoutine(R.raw.molding_mobility);
+
+                break;
+            }
+
+            case 2: {
+                changeRoutine(R.raw.starting_stretching);
 
                 break;
             }
@@ -129,16 +141,13 @@ public class RoutineStream {
         mExerciseSubject.onNext(mExercise);
     }
 
-    /**
-     * @return Observable that allows to subscribe when the whole routine has changed.
-     */
     public Observable<Routine> getRoutineObservable() {
-        Observable<Routine> routineObservable = Observable.create(new Observable.OnSubscribe<Routine>() {
-            @Override
-            public void call(Subscriber<? super Routine> subscriber) {
-                subscriber.onNext(mRoutine);
-            }
-        }).observeOn(AndroidSchedulers.mainThread()).publish().refCount();
+
+        Observable<Routine> routineObservable = Observable
+                .just(mRoutine)
+                .observeOn(AndroidSchedulers.mainThread())
+                .publish()
+                .refCount();
 
         return Observable.merge(mRoutineSubject, routineObservable);
     }
@@ -151,16 +160,12 @@ public class RoutineStream {
         return mExerciseSubject;
     }
 
-    /**
-     * @return Observable that allows to subscribe when only exercise has changed.
-     */
     public Observable<Exercise> getExerciseObservable() {
-        Observable<Exercise> exerciseObservable = Observable.create(new Observable.OnSubscribe<Exercise>() {
-            @Override
-            public void call(Subscriber<? super Exercise> subscriber) {
-                subscriber.onNext(mExercise);
-            }
-        }).observeOn(AndroidSchedulers.mainThread()).publish().refCount();
+        Observable<Exercise> exerciseObservable = Observable
+                .just(mExercise)
+                .observeOn(AndroidSchedulers.mainThread())
+                .publish()
+                .refCount();
 
         return Observable.merge(mExerciseSubject, exerciseObservable);
     }

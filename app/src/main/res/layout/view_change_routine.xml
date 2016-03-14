@@ -9,45 +9,4 @@
         android:id="@+id/view_change_routine_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <Button
-            android:id="@+id/remove_cache"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Remove Cache"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Choose Routine"/>
-
-        <Button
-            android:id="@+id/routine0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Bodyweight Fitness - Recommended Routine"/>
-
-        <Button
-            android:id="@+id/routine1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Molding Mobility"/>
-
-        <SeekBar
-            android:id="@+id/routine1progress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/routine1download"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="(Download Molding Mobility)"/>
-    </LinearLayout>
 </com.bodyweight.fitness.view.ChangeRoutineView>

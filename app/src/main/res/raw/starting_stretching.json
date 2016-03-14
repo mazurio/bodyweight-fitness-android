@@ -1,0 +1,41 @@
+{
+  "routineId": "routine-4afa306b-4026-44e4-90d9-913afead82ff",
+  "title": "Starting Stretching",
+  "subtitle": "Flexibility Routine",
+  "routine" : [
+    {
+      "categoryId": "category-41e8b269-e45c-4847-95d0-6942c879a2fd",
+      "title": "General",
+      "type": "category"
+    },
+    {
+      "sectionId": "section-4edad031-d494-48e2-8683-d5342ba119ed",
+      "title": "Starting Warmup",
+      "description": "Do all, 1x(5-10)",
+      "type": "section",
+      "mode": "all"
+    },
+    {
+      "exerciseId": "exercise-e4967fee-0e46-466e-8869-0adce3e6fe81",
+      "id": "dupka",
+      "title": "Starting Exercise 1",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "d6V2Exzb324",
+      "gifId": "jxzZW6C",
+      "gifUrl": "http://i.imgur.com/jxzZW6C.gif",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "exercise-15abe14a-28aa-4503-9746-33b355d1a1ed",
+      "id": "dupka",
+      "title": "Starting Exercise 2",
+      "description": "3x(10-20)",
+      "type": "exercise",
+      "youTubeId": "d6V2Exzb324",
+      "gifId": "7zKAgAa",
+      "gifUrl": "http://i.imgur.com/7zKAgAa.gif",
+      "defaultSet": "timed"
+    }
+  ]
+}
