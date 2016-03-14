@@ -5,36 +5,47 @@
   "routine" : [
     {
       "categoryId": "category-41e8b269-e45c-4847-95d0-6942c879a2fd",
-      "title": "General",
+      "title": "Stretching",
       "type": "category"
     },
     {
       "sectionId": "section-4edad031-d494-48e2-8683-d5342ba119ed",
-      "title": "Starting Warmup",
-      "description": "Do all, 1x(5-10)",
+      "title": "Upper Body",
+      "description": "Do all, 1x(20-60s)",
       "type": "section",
       "mode": "all"
     },
     {
       "exerciseId": "exercise-e4967fee-0e46-466e-8869-0adce3e6fe81",
       "id": "dupka",
-      "title": "Starting Exercise 1",
-      "description": "1x(5-10)",
+      "title": "Shoulder Extension",
+      "description": "1x(20-60s)",
       "type": "exercise",
-      "youTubeId": "d6V2Exzb324",
-      "gifId": "jxzZW6C",
-      "gifUrl": "http://i.imgur.com/jxzZW6C.gif",
-      "defaultSet": "weighted"
+      "youTubeId": "",
+      "gifId": "6mHQkrJ",
+      "gifUrl": "http://i.imgur.com/6mHQkrJ.jpg",
+      "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise-15abe14a-28aa-4503-9746-33b355d1a1ed",
       "id": "dupka",
-      "title": "Starting Exercise 2",
-      "description": "3x(10-20)",
+      "title": "Underarm Shoulder Stretch",
+      "description": "1x(20-60s)",
       "type": "exercise",
-      "youTubeId": "d6V2Exzb324",
-      "gifId": "7zKAgAa",
-      "gifUrl": "http://i.imgur.com/7zKAgAa.gif",
+      "youTubeId": "",
+      "gifId": "PkoZSLp",
+      "gifUrl": "http://i.imgur.com/PkoZSLp.jpg",
+      "defaultSet": "timed"
+    },
+    {
+      "exerciseId": "exercise-15abe14a-28aa-4503-9746-33b355d1a1ed",
+      "id": "dupka",
+      "title": "Rear Hand Clasp",
+      "description": "1x(20-60s)",
+      "type": "exercise",
+      "youTubeId": "UJNEtK0Yv-U",
+      "gifId": "PkoZSLp",
+      "gifUrl": "http://i.imgur.com/PkoZSLp.jpg",
       "defaultSet": "timed"
     }
   ]

@@ -112,7 +112,7 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
         Button mDownloadButton;
 
         @InjectView(R.id.view_change_routine_set_button)
-        ImageButton mSetButton;
+        Button mSetButton;
 
         private Routine mRoutine;
 
