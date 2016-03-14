@@ -41,6 +41,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         /**
          * TODO: Do this only once (unless it changes).
+         *
+         * Slide:
+         * Slide: Log Workouts
+         * Slide: Track your progress
+         * Slide: Download more routines (Flexibility and Stretching)
          */
 //        Intent intent = new Intent(this, SplashActivity.class);
 //        startActivity(intent);

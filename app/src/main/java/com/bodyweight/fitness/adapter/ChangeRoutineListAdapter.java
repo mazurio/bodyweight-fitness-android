@@ -1,6 +1,5 @@
 package com.bodyweight.fitness.adapter;
 
-import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -110,12 +109,51 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
         View mPanel;
 
         @InjectView(R.id.view_change_routine_download_button)
-        Button mDowloadButton;
+        Button mDownloadButton;
 
         @InjectView(R.id.view_change_routine_set_button)
         ImageButton mSetButton;
 
-        int mPosition;
+        private Routine mRoutine;
+
+        private FileDownloadListener mFileDownloadListener = new FileDownloadListener() {
+            @Override
+            protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                Logger.d(task.getUrl() + " " + soFarBytes + " out of " + totalBytes);
+            }
+
+            @Override
+            protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+
+            }
+
+            @Override
+            protected void blockComplete(BaseDownloadTask task) {
+                Logger.d(task.getUrl() + " " + "Block complete");
+            }
+
+            @Override
+            protected void completed(BaseDownloadTask task) {
+                Logger.d(task.getUrl() + " " + "Completed");
+
+                mDownloadButton.setText(checkRoutine(mRoutine));
+            }
+
+            @Override
+            protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                Logger.d(task.getUrl() + " " + "Paused " + soFarBytes + " out of " + totalBytes);
+            }
+
+            @Override
+            protected void error(BaseDownloadTask task, Throwable e) {
+                Logger.d(task.getUrl() + " " + "Error");
+            }
+
+            @Override
+            protected void warn(BaseDownloadTask task) {
+                Logger.d(task.getUrl() + " " + "Warning");
+            }
+        };
 
         public ChangeRoutineItemPresenter(View itemView) {
             super(itemView);
@@ -126,161 +164,85 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
         @OnClick(R.id.view_change_routine_set_button)
         @SuppressWarnings("unused")
         public void onClickSetRoutine() {
-            if (mPosition == 1) {
-                RoutineStream.getInstance().setRoutine(0);
-            } else if (mPosition == 3) {
-                RoutineStream.getInstance().setRoutine(2);
-            } else if (mPosition == 4) {
-                RoutineStream.getInstance().setRoutine(1);
-            }
+            RoutineStream.getInstance().setRoutine(mRoutine);
         }
 
         @OnClick(R.id.view_change_routine_download_button)
         @SuppressWarnings("unused")
         public void onClickDownloadRoutine() {
-            if (mPosition == 3) {
-
-            } else if (mPosition == 4) {
-                if (isMoldingMobilityFullyDownloaded()) {
-                    new AlertDialog.Builder(itemView.getContext())
-                            .setTitle("Remove Downloaded Files?")
-                            .setPositiveButton("Ok", (dialog, which) -> {
-                                // TODO: Set routine0 as default and send observable.
-
-                                // delete files
-                                deleteMoldingMobility();
-
-                                mDowloadButton.setText(checkMoldingMobility());
-                            })
-                            .setNegativeButton("Cancel", (dialog, which) -> {})
-                            .show();
-
-                    return;
-                }
-
-                FileDownloadListener mFileDownloadListener = new FileDownloadListener() {
-                    @Override
-                    protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        Logger.d(task.getUrl() + " " + soFarBytes + " out of " + totalBytes);
-                    }
-
-                    @Override
-                    protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-
-                    }
-
-                    @Override
-                    protected void blockComplete(BaseDownloadTask task) {
-                        Logger.d(task.getUrl() + " " + "Block complete");
-                    }
-
-                    @Override
-                    protected void completed(BaseDownloadTask task) {
-                        Logger.d(task.getUrl() + " " + "Completed");
-
-                        mDowloadButton.setText(checkMoldingMobility());
-                    }
-
-                    @Override
-                    protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        Logger.d(task.getUrl() + " " + "Paused " + soFarBytes + " out of " + totalBytes);
-                    }
-
-                    @Override
-                    protected void error(BaseDownloadTask task, Throwable e) {
-                        Logger.d(task.getUrl() + " " + "Error");
-                    }
-
-                    @Override
-                    protected void warn(BaseDownloadTask task) {
-                        Logger.d(task.getUrl() + " " + "Warning");
-                    }
-                };
-
-                // Download Molding Mobility
-
-                Routine routine = RoutineStream.getInstance().getRoutine(R.raw.molding_mobility);
-
-                for (Exercise exercise : routine.getExercises()) {
-                    Logger.d("Downloading for exercise: " + exercise.getTitle());
-
-                    String filePath = String.format("%s%s%s%s%s.gif",
-                            FileDownloadUtils.getDefaultSaveRootPath(),
-                            File.separator,
-                            "molding_mobility",
-                            File.separator,
-                            exercise.getGifId());
-
-                    FileDownloader.getImpl()
-                            .create(exercise.getGifUrl())
-                            .setPath(filePath)
-                            .setCallbackProgressTimes(0)
-                            .setAutoRetryTimes(3)
-                            .setListener(mFileDownloadListener)
-                            .ready();
-                }
-
-                FileDownloader.getImpl().start(mFileDownloadListener, true);
+            if (mRoutine.getRoutineId().equalsIgnoreCase("routine0")) {
+                return;
             }
+
+            if (isRoutineFullyDownloaded(mRoutine)) {
+                new AlertDialog.Builder(itemView.getContext())
+                        .setTitle("Remove Downloaded Files?")
+                        .setPositiveButton("Ok", (dialog, which) -> {
+                            // TODO: Set routine0 as default and send observable.
+
+                            // delete files
+                            deleteRoutineFiles(mRoutine);
+
+                            mDownloadButton.setText(checkRoutine(mRoutine));
+                        })
+                        .setNegativeButton("Cancel", (dialog, which) -> {})
+                        .show();
+
+                return;
+            }
+
+            for (Exercise exercise : mRoutine.getExercises()) {
+                Logger.d("Downloading for exercise: " + exercise.getTitle());
+
+                String filePath = String.format("%s%s%s%s%s.gif",
+                        FileDownloadUtils.getDefaultSaveRootPath(),
+                        File.separator,
+                        mRoutine.getRoutineId(),
+                        File.separator,
+                        exercise.getGifId());
+
+                FileDownloader.getImpl()
+                        .create(exercise.getGifUrl())
+                        .setPath(filePath)
+                        .setCallbackProgressTimes(0)
+                        .setAutoRetryTimes(3)
+                        .setListener(mFileDownloadListener)
+                        .ready();
+            }
+
+            FileDownloader.getImpl().start(mFileDownloadListener, true);
         }
 
         @Override
         public void onBindView(int position) {
-            mPosition = position;
-
             switch (position) {
                 case 3: {
-                    int color = Color.parseColor("#EEA200");
-
-//                    mCardView.setCardBackgroundColor(color);
-//                    mToolbar.setBackgroundColor(color);
-
-                    mTitle.setText("Starting Stretching");
-                    mSubtitle.setText("Flexibility Routine");
-
-                    mPanel.setVisibility(View.VISIBLE);
-
-                    mDowloadButton.setText("Unavailable");
+                    mRoutine = RoutineStream.getInstance().getRoutine(R.raw.starting_stretching);
 
                     break;
                 }
 
                 case 4: {
-                    int color = Color.parseColor("#CE331B");
-
-//                    mCardView.setCardBackgroundColor(color);
-//                    mToolbar.setBackgroundColor(color);
-
-                    mTitle.setText("Molding Mobility");
-                    mSubtitle.setText("Flexibility Routine");
-
-                    mPanel.setVisibility(View.VISIBLE);
-
-                    mDowloadButton.setText(checkMoldingMobility());
+                    mRoutine = RoutineStream.getInstance().getRoutine(R.raw.molding_mobility);
 
                     break;
                 }
 
                 default: {
-                    int color = Color.parseColor("#363736");
-
-//                    mCardView.setCardBackgroundColor(color);
-//                    mToolbar.setBackgroundColor(color);
-
-                    mTitle.setText("Bodyweight Fitness");
-                    mSubtitle.setText("Recommended Routine");
-
-                    mPanel.setVisibility(View.GONE);
+                    mRoutine = RoutineStream.getInstance().getRoutine(R.raw.beginner_routine);
 
                     break;
                 }
             }
+
+            mTitle.setText(mRoutine.getTitle());
+            mSubtitle.setText(mRoutine.getSubtitle());
+
+            mDownloadButton.setText(checkRoutine(mRoutine));
         }
 
-        private boolean isMoldingMobilityFullyDownloaded() {
+        private boolean isRoutineFullyDownloaded(Routine routine) {
             HashSet<String> mNames = new HashSet<>();
-
-            Routine routine = RoutineStream.getInstance().getRoutine(R.raw.molding_mobility);
 
             int totalGifs = 0;
             int downloadedGifs = 0;
@@ -293,13 +255,15 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
                 mNames.add(fileName);
             }
 
-            File dir = new File(FileDownloadUtils.getDefaultSaveRootPath() + File.separator + "molding_mobility");
+            String path = String.format("%s%s%s", FileDownloadUtils.getDefaultSaveRootPath(), File.separator, routine.getRoutineId());
 
-            if (!dir.exists()) {
+            File directory = new File(path);
+
+            if (!(directory.exists())) {
                 return false;
             }
 
-            for (final File file : dir.listFiles()) {
+            for (final File file : directory.listFiles()) {
                 if (mNames.contains(file.getName())) {
                     downloadedGifs += 1;
                 } else {
@@ -310,14 +274,18 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
             return (downloadedGifs == totalGifs);
         }
 
-        private String checkMoldingMobility() {
+        private String checkRoutine(Routine routine) {
+            if (routine.getRoutineId().equalsIgnoreCase("routine0")) {
+                mSetButton.setVisibility(View.VISIBLE);
+
+                return "Downloaded";
+            }
+
             HashSet<String> mNames = new HashSet<>();
 
             // for every routine
             // for every exercise
             // delete files that are no longer used
-
-            Routine routine = RoutineStream.getInstance().getRoutine(R.raw.molding_mobility);
 
             int totalGifs = 0;
             int downloadedGifs = 0;
@@ -331,14 +299,16 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
                 mNames.add(fileName);
             }
 
-            File dir = new File(FileDownloadUtils.getDefaultSaveRootPath() + File.separator + "molding_mobility");
+            String path = String.format("%s%s%s", FileDownloadUtils.getDefaultSaveRootPath(), File.separator, routine.getRoutineId());
 
-            if (!dir.exists()) {
+            File directory = new File(path);
+
+            if (!directory.exists()) {
                 downloadedGifs = 0;
                 removedGifs = 0;
             } else {
                 // should change so it checks the routine directory
-                for (final File file : dir.listFiles()) {
+                for (final File file : directory.listFiles()) {
                     if (mNames.contains(file.getName())) {
                         downloadedGifs += 1;
                     } else {
@@ -368,68 +338,35 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
             }
         }
 
-        private void deleteStartingStretching() {
-            Logger.d("Deleting Starting Stretching");
+        private void deleteRoutineFiles(Routine routine) {
+            Logger.d("Deleting " + routine.getTitle());
 
-            int count = 0;
+            String path = String.format("%s%s%s", FileDownloadUtils.getDefaultSaveRootPath(), File.separator, routine.getRoutineId());
 
-            File file = new File(FileDownloadUtils.getDefaultSaveRootPath() + File.separator + "starting_stretching");
+            File directory = new File(path);
 
             do {
-                if (!file.exists()) {
+                if (!(directory.exists())) {
                     break;
                 }
 
-                if (!file.isDirectory()) {
+                if (!(directory.isDirectory())) {
                     break;
                 }
 
-                File[] files = file.listFiles();
+                File[] files = directory.listFiles();
 
                 if (files == null) {
                     break;
                 }
 
-                for (File file1 : files) {
-                    count++;
-                    file1.delete();
+                for (File file : files) {
+                    Logger.d("Deleted " + file.getName());
+
+                    file.delete();
                 }
 
             } while (false);
-
-            Logger.d("Deleted " + count + " files");
-        }
-
-        private void deleteMoldingMobility() {
-            Logger.d("Deleting Molding Mobility");
-
-            int count = 0;
-
-            File file = new File(FileDownloadUtils.getDefaultSaveRootPath() + File.separator + "molding_mobility");
-
-            do {
-                if (!file.exists()) {
-                    break;
-                }
-
-                if (!file.isDirectory()) {
-                    break;
-                }
-
-                File[] files = file.listFiles();
-
-                if (files == null) {
-                    break;
-                }
-
-                for (File file1 : files) {
-                    count++;
-                    file1.delete();
-                }
-
-            } while (false);
-
-            Logger.d("Deleted " + count + " files");
         }
     }
 }

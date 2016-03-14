@@ -17,7 +17,6 @@ import com.bodyweight.fitness.model.Routine;
 import io.mazur.glacier.Glacier;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.subjects.PublishSubject;
 
@@ -37,19 +36,19 @@ public class RoutineStream {
 
         switch (defaultRoutine) {
             case "routine-1564cc76-24fc-4a02-bc57-0c99e632f6af": {
-                changeRoutine(R.raw.molding_mobility);
+                setRoutine(R.raw.molding_mobility);
 
                 break;
             }
 
             case "routine-4afa306b-4026-44e4-90d9-913afead82ff": {
-                changeRoutine(R.raw.starting_stretching);
+                setRoutine(R.raw.starting_stretching);
 
                 break;
             }
 
             default: {
-                changeRoutine(R.raw.beginner_routine);
+                setRoutine(R.raw.beginner_routine);
 
                 break;
             }
@@ -64,28 +63,23 @@ public class RoutineStream {
         return sInstance;
     }
 
-    public void setRoutine(int routineId) {
-        switch (routineId) {
-            case 1: {
-                changeRoutine(R.raw.molding_mobility);
+    public void setRoutine(Routine routine) {
+        mRoutine = routine;
 
-                break;
-            }
+        PreferenceUtils.getInstance().setDefaultRoutine(mRoutine.getRoutineId());
 
-            case 2: {
-                changeRoutine(R.raw.starting_stretching);
+        mExercise = mRoutine.getLinkedExercises().get(0);
 
-                break;
-            }
-
-            default: {
-                changeRoutine(R.raw.beginner_routine);
-
-                break;
-            }
-        }
+        mRoutineSubject.onNext(mRoutine);
+        mExerciseSubject.onNext(mExercise);
 
         mRoutineChangedSubject.onNext(mRoutine);
+    }
+
+    private void setRoutine(int resource) {
+        mRoutine = getRoutine(resource);
+
+        setRoutine(mRoutine);
     }
 
     public Routine getRoutine() {
@@ -128,17 +122,6 @@ public class RoutineStream {
         );
 
         mLevelChangedSubject.onNext(mRoutine);
-    }
-
-    private void changeRoutine(int resource) {
-        mRoutine = getRoutine(resource);
-
-        PreferenceUtils.getInstance().setDefaultRoutine(mRoutine.getRoutineId());
-
-        mExercise = mRoutine.getLinkedExercises().get(0);
-
-        mRoutineSubject.onNext(mRoutine);
-        mExerciseSubject.onNext(mExercise);
     }
 
     public Observable<Routine> getRoutineObservable() {

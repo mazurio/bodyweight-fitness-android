@@ -27,9 +27,12 @@ public class PreviewPresenter extends IPresenter<PreviewView> implements Seriali
                                     .getIdentifier(exercise.getId(), "drawable", mView.getContext().getPackageName())
                         );
                     } else {
-                        String filePath = String.format("%s%s%s.gif",
+                        String filePath = String.format("%s%s%s%s%s.gif",
                                 FileDownloadUtils.getDefaultSaveRootPath(),
-                                File.separator, exercise.getGifId());
+                                File.separator,
+                                routine.getRoutineId(),
+                                File.separator,
+                                exercise.getGifId());
 
                         Logger.d(filePath);
 
