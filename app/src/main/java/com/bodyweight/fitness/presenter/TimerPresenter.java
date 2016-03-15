@@ -20,6 +20,7 @@ public class TimerPresenter extends IPresenter<TimerView> {
     private int mCurrentSeconds = mSeconds;
 
     private boolean mPlaying = false;
+    private boolean mRestored = false;
 
     private transient CountDownTimer mCountDownTimer;
 
@@ -27,22 +28,14 @@ public class TimerPresenter extends IPresenter<TimerView> {
     public void onCreateView(TimerView view) {
         super.onCreateView(view);
 
-        restartTimer(getSeconds());
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+        restartTimer(getSeconds(), false);
     }
 
     @Override
     public void onSaveInstanceState() {
-        super.onSaveInstanceState();
-    }
+        mRestored = true;
 
-    @Override
-    public void onRestoreInstanceState(TimerView view) {
-        super.onRestoreInstanceState(view);
+        super.onSaveInstanceState();
     }
 
     @Override
@@ -56,7 +49,16 @@ public class TimerPresenter extends IPresenter<TimerView> {
             mExercise = exercise;
 
             hideOrShowExerciseButtons();
-            restartTimer(getSeconds());
+
+            if (mRestored) {
+                mRestored = false;
+
+                restartTimer(mCurrentSeconds, mPlaying);
+
+                startTimer();
+            } else {
+                restartTimer(getSeconds(), false);
+            }
         }));
     }
 
@@ -114,12 +116,12 @@ public class TimerPresenter extends IPresenter<TimerView> {
         mCountDownTimer.start();
     }
 
-    public void restartTimer(int seconds) {
+    public void restartTimer(int seconds, boolean isPlaying) {
         if (mCountDownTimer != null) {
             mCountDownTimer.cancel();
         }
 
-        mPlaying = false;
+        mPlaying = isPlaying;
         mCurrentSeconds = seconds;
 
         mCountDownTimer = buildCountDownTimer(seconds);
@@ -160,7 +162,7 @@ public class TimerPresenter extends IPresenter<TimerView> {
                 mCurrentSeconds = 10;
             }
 
-            restartTimer(mCurrentSeconds);
+            restartTimer(mCurrentSeconds, false);
 
             mSeconds = mCurrentSeconds;
 
@@ -183,7 +185,7 @@ public class TimerPresenter extends IPresenter<TimerView> {
     }
 
     public void onClickRestartTimeButton() {
-        restartTimer(getSeconds());
+        restartTimer(getSeconds(), false);
     }
 
     public int getSeconds() {
@@ -207,7 +209,7 @@ public class TimerPresenter extends IPresenter<TimerView> {
 
             @Override
             public void onFinish() {
-                restartTimer(getSeconds());
+                restartTimer(getSeconds(), false);
 
                 playSound();
             }
