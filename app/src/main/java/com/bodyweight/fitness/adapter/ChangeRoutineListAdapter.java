@@ -248,9 +248,11 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
             int downloadedGifs = 0;
 
             for (Exercise exercise : routine.getExercises()) {
-                totalGifs += 1;
-
                 String fileName = exercise.getGifId() + ".gif";
+
+                if (!mNames.contains(fileName)) {
+                    totalGifs += 1;
+                }
 
                 mNames.add(fileName);
             }
@@ -292,9 +294,11 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
             int removedGifs = 0;
 
             for (Exercise exercise : routine.getExercises()) {
-                totalGifs += 1;
-
                 String fileName = exercise.getGifId() + ".gif";
+
+                if (!mNames.contains(fileName)) {
+                    totalGifs += 1;
+                }
 
                 mNames.add(fileName);
             }
@@ -332,7 +336,7 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
 
                 return "Update";
             } else {
-                mSetButton.setVisibility(View.INVISIBLE);
+                mSetButton.setVisibility(View.GONE);
 
                 return "Download";
             }
@@ -367,6 +371,8 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
                 }
 
             } while (false);
+
+            checkRoutine(routine);
         }
     }
 }
