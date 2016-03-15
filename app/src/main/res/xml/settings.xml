@@ -22,6 +22,12 @@
             android:summary="Prevents screen from turning off when app is running"
             android:defaultValue="true" />
 
+        <CheckBoxPreference
+            android:key="PREFERENCE_AUTOMATICALLY_LOG_WORKOUT_TIME"
+            android:title="Automatically log time"
+            android:summary="Logs workout time automatically for timed exercises"
+            android:defaultValue="true" />
+
         <Preference
             android:title="Frequently Asked Questions"
             android:summary="/r/bodyweightfitness">

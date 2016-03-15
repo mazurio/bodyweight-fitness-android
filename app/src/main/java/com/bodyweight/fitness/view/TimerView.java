@@ -133,32 +133,32 @@ public class TimerView extends LinearLayout {
     }
 
     @OnClick(R.id.prev_exercise_button)
-    public void onClickPreviousExerciseButton(View view) {
+    public void onClickPreviousExerciseButton() {
         mPresenter.onClickPreviousExerciseButton();
     }
 
     @OnClick(R.id.next_exercise_button)
-    public void onClickNextExerciseButton(View view) {
+    public void onClickNextExerciseButton() {
         mPresenter.onClickNextExerciseButton();
     }
 
     @OnClick(R.id.timer_layout)
-    public void onClickTimeLayout(View view) {
+    public void onClickTimeLayout() {
         mPresenter.onClickTimeLayout();
     }
 
     @OnClick(R.id.increase_timer_button)
-    public void onClickIncreaseTimeButton(View view) {
+    public void onClickIncreaseTimeButton() {
         mPresenter.onClickIncreaseTimeButton();
     }
 
     @OnClick(R.id.start_stop_timer_button)
-    public void onClickStartStopTimeButton(View view) {
+    public void onClickStartStopTimeButton() {
         mPresenter.onClickStartStopTimeButton();
     }
 
     @OnClick(R.id.restart_timer_button)
-    public void onClickRestartTimeButton(View view) {
+    public void onClickRestartTimeButton() {
         mPresenter.onClickRestartTimeButton();
     }
 }

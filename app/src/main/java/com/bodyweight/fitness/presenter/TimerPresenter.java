@@ -3,11 +3,13 @@ package com.bodyweight.fitness.presenter;
 import android.app.TimePickerDialog;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
+import android.support.design.widget.Snackbar;
 
 import com.bodyweight.fitness.model.Exercise;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.stream.RoutineStream;
+import com.bodyweight.fitness.utils.Logger;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 import com.bodyweight.fitness.view.TimerView;
 
@@ -18,18 +20,12 @@ public class TimerPresenter extends IPresenter<TimerView> {
 
     private int mSeconds = 60;
     private int mCurrentSeconds = mSeconds;
+    private int mLoggedSeconds = 0;
 
     private boolean mPlaying = false;
     private boolean mRestored = false;
 
     private transient CountDownTimer mCountDownTimer;
-
-    @Override
-    public void onCreateView(TimerView view) {
-        super.onCreateView(view);
-
-        restartTimer(getSeconds(), false);
-    }
 
     @Override
     public void onSaveInstanceState() {
@@ -83,7 +79,7 @@ public class TimerPresenter extends IPresenter<TimerView> {
             }
 
             mCurrentSeconds += extraSeconds;
-            mCountDownTimer = buildCountDownTimer(mCurrentSeconds);
+            mCountDownTimer = buildCountDownTimer(mCurrentSeconds, true);
 
             mView.setMinutes(formatMinutes(mCurrentSeconds));
             mView.setSeconds(formatSeconds(mCurrentSeconds));
@@ -91,7 +87,7 @@ public class TimerPresenter extends IPresenter<TimerView> {
             mCountDownTimer.start();
         } else {
             mCurrentSeconds += extraSeconds;
-            mCountDownTimer = buildCountDownTimer(mCurrentSeconds);
+            mCountDownTimer = buildCountDownTimer(mCurrentSeconds, true);
 
             mView.setMinutes(formatMinutes(mCurrentSeconds));
             mView.setSeconds(formatSeconds(mCurrentSeconds));
@@ -104,7 +100,7 @@ public class TimerPresenter extends IPresenter<TimerView> {
         }
 
         mPlaying = false;
-        mCountDownTimer = buildCountDownTimer(mCurrentSeconds);
+        mCountDownTimer = buildCountDownTimer(mCurrentSeconds, false);
 
         mView.setMinutes(formatMinutes(mCurrentSeconds));
         mView.setSeconds(formatSeconds(mCurrentSeconds));
@@ -124,7 +120,7 @@ public class TimerPresenter extends IPresenter<TimerView> {
         mPlaying = isPlaying;
         mCurrentSeconds = seconds;
 
-        mCountDownTimer = buildCountDownTimer(seconds);
+        mCountDownTimer = buildCountDownTimer(seconds, false);
 
         mView.setMinutes(formatMinutes(seconds));
         mView.setSeconds(formatSeconds(seconds));
@@ -166,7 +162,7 @@ public class TimerPresenter extends IPresenter<TimerView> {
 
             mSeconds = mCurrentSeconds;
 
-            PreferenceUtils.getInstance().setTimerValue(mSeconds * 1000);
+            PreferenceUtils.getInstance().setTimerValue(mExercise.getId(), mSeconds * 1000);
         }, formatMinutesAsNumber(mCurrentSeconds), formatSecondsAsNumber(mCurrentSeconds), true);
 
         timePickerDialog.show();
@@ -178,6 +174,8 @@ public class TimerPresenter extends IPresenter<TimerView> {
 
     public void onClickStartStopTimeButton() {
         if (mPlaying) {
+            logTime();
+
             pauseTimer();
         } else {
             startTimer();
@@ -185,14 +183,28 @@ public class TimerPresenter extends IPresenter<TimerView> {
     }
 
     public void onClickRestartTimeButton() {
+        logTime();
+
         restartTimer(getSeconds(), false);
     }
 
     public int getSeconds() {
-        return (int) PreferenceUtils.getInstance().getTimerValue(mSeconds * 1000) / 1000;
+        Logger.d(mExercise.getId());
+
+        int x =  (int) PreferenceUtils.getInstance().getTimerValueForExercise(mExercise.getId(), mSeconds * 1000) / 1000;
+
+        Logger.d("x:" + x);
+
+        return x;
     }
 
-    public CountDownTimer buildCountDownTimer(int seconds) {
+    public CountDownTimer buildCountDownTimer(int seconds, boolean increaseTimer) {
+        if (increaseTimer) {
+            mLoggedSeconds += 5;
+        } else {
+            mLoggedSeconds = seconds;
+        }
+
         return new CountDownTimer(seconds * 1000, 100) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -209,11 +221,31 @@ public class TimerPresenter extends IPresenter<TimerView> {
 
             @Override
             public void onFinish() {
+                logTime();
+
                 restartTimer(getSeconds(), false);
 
                 playSound();
             }
         };
+    }
+
+    public void logTime() {
+        if (PreferenceUtils.getInstance().automaticallyLogWorkoutTime()) {
+            int logSeconds = (mLoggedSeconds - mCurrentSeconds);
+
+            if (logSeconds <= 0) {
+                Logger.d("Nothing to log as <= 0");
+            } else {
+                Logger.d("Saving: " + logSeconds);
+
+                Snackbar.make(mView, String.format("Logged %d", logSeconds), Snackbar.LENGTH_SHORT)
+                        .setAction("Undo", (view) -> {
+                            Logger.d("Undo");
+                        })
+                        .show();
+            }
+        }
     }
 
     public String formatMinutes(int seconds) {
