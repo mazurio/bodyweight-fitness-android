@@ -76,6 +76,10 @@ public class Exercise extends LinkedRoutine implements Serializable {
         return mGifUrl;
     }
 
+    public boolean isTimedSet() {
+        return mDefaultSet.equalsIgnoreCase("timed");
+    }
+
     public String getDefaultSet() {
         return mDefaultSet;
     }

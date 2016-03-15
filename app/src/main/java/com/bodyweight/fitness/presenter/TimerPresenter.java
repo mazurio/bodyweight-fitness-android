@@ -1,6 +1,7 @@
 package com.bodyweight.fitness.presenter;
 
 import android.app.TimePickerDialog;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.design.widget.Snackbar;
@@ -8,11 +9,18 @@ import android.support.design.widget.Snackbar;
 import com.bodyweight.fitness.model.Exercise;
 
 import com.bodyweight.fitness.R;
+import com.bodyweight.fitness.model.repository.RepositoryExercise;
+import com.bodyweight.fitness.model.repository.RepositoryRoutine;
+import com.bodyweight.fitness.model.repository.RepositorySet;
+import com.bodyweight.fitness.stream.RepositoryStream;
 import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.utils.Logger;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 import com.bodyweight.fitness.view.TimerView;
 
+import java.util.UUID;
+
+import io.realm.Realm;
 import rx.Observable;
 
 public class TimerPresenter extends IPresenter<TimerView> {
@@ -189,13 +197,7 @@ public class TimerPresenter extends IPresenter<TimerView> {
     }
 
     public int getSeconds() {
-        Logger.d(mExercise.getId());
-
-        int x =  (int) PreferenceUtils.getInstance().getTimerValueForExercise(mExercise.getId(), mSeconds * 1000) / 1000;
-
-        Logger.d("x:" + x);
-
-        return x;
+        return (int) PreferenceUtils.getInstance().getTimerValueForExercise(mExercise.getId(), mSeconds * 1000) / 1000;
     }
 
     public CountDownTimer buildCountDownTimer(int seconds, boolean increaseTimer) {
@@ -231,18 +233,85 @@ public class TimerPresenter extends IPresenter<TimerView> {
     }
 
     public void logTime() {
-        if (PreferenceUtils.getInstance().automaticallyLogWorkoutTime()) {
+        if (PreferenceUtils.getInstance().automaticallyLogWorkoutTime() && mExercise.isTimedSet()) {
             int logSeconds = (mLoggedSeconds - mCurrentSeconds);
 
             if (logSeconds <= 0) {
                 Logger.d("Nothing to log as <= 0");
             } else {
-                Logger.d("Saving: " + logSeconds);
-
-                Snackbar.make(mView, String.format("Logged %d", logSeconds), Snackbar.LENGTH_SHORT)
-                        .setAction("Undo", (view) -> {
-                            Logger.d("Undo");
+                Snackbar.make(mView, String.format("Logging time %s:%s", formatMinutes(logSeconds), formatSeconds(logSeconds)), Snackbar.LENGTH_LONG)
+                        .setAction("CANCEL", (view) -> {
+                            Logger.d("CANCEL");
                         })
+                        .setCallback(new Snackbar.Callback() {
+                            @Override
+                            public void onDismissed(Snackbar snackbar, int event) {
+                                super.onDismissed(snackbar, event);
+
+                                // TODO: Log Workout Dialog crashes when shown and transaction is being made in the background.
+
+                                Logger.d("onDismissed");
+
+                                Realm realm = RepositoryStream.getInstance().getRealm();
+
+                                Exercise exercise = RoutineStream.getInstance().getExercise();
+
+                                realm.beginTransaction();
+
+                                RepositoryRoutine repositoryRoutine = RepositoryStream.getInstance().getRepositoryRoutineForToday();
+                                RepositoryExercise mRepositoryExercise = null;
+
+                                for (RepositoryExercise repositoryExercise : repositoryRoutine.getExercises()) {
+                                    if (repositoryExercise.getTitle().equals(exercise.getTitle())) {
+                                        mRepositoryExercise = repositoryExercise;
+
+                                        break;
+                                    }
+                                }
+
+                                if (mRepositoryExercise != null) {
+                                    // if there is already a set which is timed and has 0 seconds then overwrite the values.
+                                    // otherwise create new one.
+
+                                    if (mRepositoryExercise.getSets().size() == 1) {
+                                        Logger.d("Modify first set");
+
+                                        RepositorySet firstSet = mRepositoryExercise.getSets().get(0);
+
+                                        if (firstSet.isTimed() && firstSet.getSeconds() == 0) {
+                                            firstSet.setSeconds(logSeconds);
+                                        }
+                                    } else {
+                                        Logger.d("Add set");
+
+                                        RepositorySet repositorySet = realm.createObject(RepositorySet.class);
+
+                                        repositorySet.setId("Set-" + UUID.randomUUID().toString());
+                                        repositorySet.setIsTimed(true);
+                                        repositorySet.setSeconds(logSeconds);
+                                        repositorySet.setWeight(0);
+                                        repositorySet.setReps(0);
+
+                                        repositorySet.setExercise(mRepositoryExercise);
+
+                                        mRepositoryExercise.getSets().add(repositorySet);
+                                    }
+
+                                    realm.copyToRealmOrUpdate(mRepositoryExercise);
+                                    realm.commitTransaction();
+                                } else {
+                                    Logger.d("Cancel transaction");
+
+                                    realm.cancelTransaction();
+                                }
+                            }
+
+                            @Override
+                            public void onShown(Snackbar snackbar) {
+                                super.onShown(snackbar);
+                            }
+                        })
+                        .setActionTextColor(Color.WHITE)
                         .show();
             }
         }
