@@ -1,7 +1,6 @@
 package com.bodyweight.fitness.presenter;
 
 import android.app.TimePickerDialog;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.design.widget.Snackbar;
@@ -60,7 +59,9 @@ public class TimerPresenter extends IPresenter<TimerView> {
 
                 restartTimer(mCurrentSeconds, mPlaying);
 
-                startTimer();
+                if (mPlaying) {
+                    startTimer();
+                }
             } else {
                 restartTimer(getSeconds(), false);
             }
@@ -204,7 +205,7 @@ public class TimerPresenter extends IPresenter<TimerView> {
     public CountDownTimer buildCountDownTimer(int seconds, boolean increaseTimer) {
         if (increaseTimer) {
             mLoggedSeconds += 5;
-        } else {
+        } else if (mLoggedSeconds <= 0) {
             mLoggedSeconds = seconds;
         }
 
