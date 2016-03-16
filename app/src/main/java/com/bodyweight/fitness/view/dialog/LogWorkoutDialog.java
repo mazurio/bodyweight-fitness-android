@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.SectionMode;
 import com.bodyweight.fitness.model.WeightMeasurementUnit;
@@ -43,7 +44,6 @@ public class LogWorkoutDialog {
         void onDismissed();
     }
 
-    private static final int MAXIMUM_NUMBER_OF_SETS = 12;
     private static final int REPEAT_INITIAL_INTERVAL = 400;
     private static final int REPEAT_NORMAL_INTERVAL = 100;
 
@@ -257,7 +257,7 @@ public class LogWorkoutDialog {
     public boolean shouldAddSet() {
         int numberOfSets = mViewSets.size();
 
-        if(numberOfSets >= MAXIMUM_NUMBER_OF_SETS) {
+        if(numberOfSets >= Constants.MAXIMUM_NUMBER_OF_SETS) {
             return false;
         }
 
@@ -452,7 +452,7 @@ public class LogWorkoutDialog {
 
         Menu menu = mToolbar.getMenu();
 
-        if(numberOfSets >= MAXIMUM_NUMBER_OF_SETS) {
+        if(numberOfSets >= Constants.MAXIMUM_NUMBER_OF_SETS) {
             menu.findItem(R.id.action_add_set).setVisible(false);
             menu.findItem(R.id.action_add_timed_set).setVisible(false);
         } else if (numberOfSets == 1) {

@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.design.widget.Snackbar;
 
+import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.model.Exercise;
 
 import com.bodyweight.fitness.R;
@@ -239,81 +240,87 @@ public class TimerPresenter extends IPresenter<TimerView> {
             if (logSeconds <= 0) {
                 Logger.d("Nothing to log as <= 0");
             } else {
-                Snackbar.make(mView, String.format("Logging time %s:%s", formatMinutes(logSeconds), formatSeconds(logSeconds)), Snackbar.LENGTH_LONG)
-                        .setAction("CANCEL", (view) -> {
-                            Logger.d("CANCEL");
-                        })
-                        .setCallback(new Snackbar.Callback() {
-                            @Override
-                            public void onDismissed(Snackbar snackbar, int event) {
-                                super.onDismissed(snackbar, event);
-
-                                // TODO: Log Workout Dialog crashes when shown and transaction is being made in the background.
-
-                                Logger.d("onDismissed");
-
-                                Realm realm = RepositoryStream.getInstance().getRealm();
-
-                                Exercise exercise = RoutineStream.getInstance().getExercise();
-
-                                realm.beginTransaction();
-
-                                RepositoryRoutine repositoryRoutine = RepositoryStream.getInstance().getRepositoryRoutineForToday();
-                                RepositoryExercise mRepositoryExercise = null;
-
-                                for (RepositoryExercise repositoryExercise : repositoryRoutine.getExercises()) {
-                                    if (repositoryExercise.getTitle().equals(exercise.getTitle())) {
-                                        mRepositoryExercise = repositoryExercise;
-
-                                        break;
-                                    }
-                                }
-
-                                if (mRepositoryExercise != null) {
-                                    // if there is already a set which is timed and has 0 seconds then overwrite the values.
-                                    // otherwise create new one.
-
-                                    if (mRepositoryExercise.getSets().size() == 1) {
-                                        Logger.d("Modify first set");
-
-                                        RepositorySet firstSet = mRepositoryExercise.getSets().get(0);
-
-                                        if (firstSet.isTimed() && firstSet.getSeconds() == 0) {
-                                            firstSet.setSeconds(logSeconds);
-                                        }
-                                    } else {
-                                        Logger.d("Add set");
-
-                                        RepositorySet repositorySet = realm.createObject(RepositorySet.class);
-
-                                        repositorySet.setId("Set-" + UUID.randomUUID().toString());
-                                        repositorySet.setIsTimed(true);
-                                        repositorySet.setSeconds(logSeconds);
-                                        repositorySet.setWeight(0);
-                                        repositorySet.setReps(0);
-
-                                        repositorySet.setExercise(mRepositoryExercise);
-
-                                        mRepositoryExercise.getSets().add(repositorySet);
-                                    }
-
-                                    realm.copyToRealmOrUpdate(mRepositoryExercise);
-                                    realm.commitTransaction();
-                                } else {
-                                    Logger.d("Cancel transaction");
-
-                                    realm.cancelTransaction();
-                                }
-                            }
-
-                            @Override
-                            public void onShown(Snackbar snackbar) {
-                                super.onShown(snackbar);
-                            }
-                        })
-                        .setActionTextColor(Color.WHITE)
-                        .show();
+                if(logIntoRealm(logSeconds)) {
+                    Snackbar.make(mView, String.format("Logged time %s:%s",
+                            formatMinutes(logSeconds),
+                            formatSeconds(logSeconds)
+                    ), Snackbar.LENGTH_LONG).show();
+                }
             }
+        }
+    }
+
+    private boolean logIntoRealm(int logSeconds) {
+        // TODO: Log Workout Dialog crashes when shown and transaction is being made in the background.
+        // TODO: Sometimes values are not saved.
+        // TODO: Value on rotation is wrong.
+        Logger.d("onDismissed");
+
+        Realm realm = RepositoryStream.getInstance().getRealm();
+
+        Exercise exercise = RoutineStream.getInstance().getExercise();
+
+        /**
+         * This beginsTransaction.
+         */
+        RepositoryRoutine repositoryRoutine = RepositoryStream.getInstance().getRepositoryRoutineForToday();
+        RepositoryExercise mRepositoryExercise = null;
+
+        realm.beginTransaction();
+        for (RepositoryExercise repositoryExercise : repositoryRoutine.getExercises()) {
+            if (repositoryExercise.getTitle().equals(exercise.getTitle())) {
+                mRepositoryExercise = repositoryExercise;
+
+                break;
+            }
+        }
+
+        if (mRepositoryExercise != null) {
+            // if there is already a set which is timed and has 0 seconds then overwrite the values.
+            // otherwise create new one.
+
+            int numberOfSets = mRepositoryExercise.getSets().size();
+
+            if(numberOfSets >= Constants.MAXIMUM_NUMBER_OF_SETS) {
+                realm.cancelTransaction();
+
+                return false;
+            }
+
+            if (numberOfSets == 1 && mRepositoryExercise.getSets().get(0).isTimed() && mRepositoryExercise.getSets().get(0).getSeconds() == 0) {
+                Logger.d("Modify first set");
+
+                RepositorySet firstSet = mRepositoryExercise.getSets().get(0);
+
+                if (firstSet.isTimed() && firstSet.getSeconds() == 0) {
+                    firstSet.setSeconds(logSeconds);
+                }
+            } else {
+                Logger.d("Add set");
+
+                RepositorySet repositorySet = realm.createObject(RepositorySet.class);
+
+                repositorySet.setId("Set-" + UUID.randomUUID().toString());
+                repositorySet.setIsTimed(true);
+                repositorySet.setSeconds(logSeconds);
+                repositorySet.setWeight(0);
+                repositorySet.setReps(0);
+
+                repositorySet.setExercise(mRepositoryExercise);
+
+                mRepositoryExercise.getSets().add(repositorySet);
+            }
+
+            realm.copyToRealmOrUpdate(mRepositoryExercise);
+            realm.commitTransaction();
+
+            return true;
+        } else {
+            Logger.d("Cancel transaction");
+
+            realm.cancelTransaction();
+
+            return false;
         }
     }
 

@@ -21,11 +21,11 @@ public class PreviewPresenter extends IPresenter<PreviewView> implements Seriali
                     Routine routine = RoutineStream.getInstance().getRoutine();
 
                     if (routine.getRoutineId().equals("routine0")) {
-                        mView.getPreviewGifImageView().setImageResource(
-                            mView.getContext()
-                                    .getResources()
-                                    .getIdentifier(exercise.getId(), "drawable", mView.getContext().getPackageName())
-                        );
+//                        mView.getPreviewGifImageView().setImageResource(
+//                            mView.getContext()
+//                                    .getResources()
+//                                    .getIdentifier(exercise.getId(), "drawable", mView.getContext().getPackageName())
+//                        );
                     } else {
                         String filePath = String.format("%s%s%s%s%s.gif",
                                 FileDownloadUtils.getDefaultSaveRootPath(),
@@ -36,9 +36,9 @@ public class PreviewPresenter extends IPresenter<PreviewView> implements Seriali
 
                         Logger.d(filePath);
 
-                        Picasso.with(getContext())
-                                .load(new File(filePath))
-                                .into(mView.getPreviewGifImageView());
+//                        Picasso.with(getContext())
+//                                .load(new File(filePath))
+//                                .into(mView.getPreviewGifImageView());
 
                         // TODO: Picasso errors image.
                     }
