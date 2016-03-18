@@ -13,6 +13,7 @@ import com.bodyweight.fitness.adapter.CalendarAdapter;
 import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.stream.CalendarStream;
 import com.bodyweight.fitness.stream.ToolbarStream;
+import com.bodyweight.fitness.utils.Logger;
 import com.bodyweight.fitness.view.CalendarView;
 
 import io.realm.Realm;
@@ -88,6 +89,8 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
         RealmResults<RepositoryRoutine> results = realm.where(RepositoryRoutine.class)
                 .between("startTime", start, end)
                 .findAll();
+
+        Logger.d("Found results: " + results.size());
 
         if(!results.isEmpty()) {
             mCalendarListAdapter.setItems(results);
