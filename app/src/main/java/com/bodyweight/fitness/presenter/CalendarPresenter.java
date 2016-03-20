@@ -1,6 +1,7 @@
 package com.bodyweight.fitness.presenter;
 
 import com.bodyweight.fitness.adapter.CalendarListAdapter;
+import com.bodyweight.fitness.stream.DrawerStream;
 import com.bodyweight.fitness.stream.RepositoryStream;
 import com.bodyweight.fitness.utils.DateUtils;
 
@@ -41,9 +42,10 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
     public void onSubscribe() {
         super.onSubscribe();
 
-        subscribe(RepositoryStream.getInstance()
-                .getRepositoryRoutineObservable()
-                .subscribe(realmRoutine -> {
+        subscribe(DrawerStream.getInstance()
+                .getMenuObservable()
+                .filter(id -> id.equals(R.id.action_menu_workout_log))
+                .subscribe(menu -> {
                     mView.setAdapter(mCalendarAdapter);
                     mView.scrollToDefaultItem();
                 }));

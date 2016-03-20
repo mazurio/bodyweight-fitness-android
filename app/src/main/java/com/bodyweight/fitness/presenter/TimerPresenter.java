@@ -256,15 +256,15 @@ public class TimerPresenter extends IPresenter<TimerView> {
         // TODO: Sometimes values are not saved.
         // TODO: Value on rotation is wrong.
 
-        Realm realm = RepositoryStream.getInstance().getRealm();
-
-        Exercise exercise = RoutineStream.getInstance().getExercise();
 
         /**
          * This beginsTransaction.
          */
         RepositoryRoutine repositoryRoutine = RepositoryStream.getInstance().getRepositoryRoutineForToday();
         RepositoryExercise mRepositoryExercise = null;
+
+        Realm realm = RepositoryStream.getInstance().getRealm();
+        Exercise exercise = RoutineStream.getInstance().getExercise();
 
         realm.beginTransaction();
         for (RepositoryExercise repositoryExercise : repositoryRoutine.getExercises()) {

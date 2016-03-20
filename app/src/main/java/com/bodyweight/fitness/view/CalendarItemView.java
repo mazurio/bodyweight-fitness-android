@@ -55,10 +55,6 @@ public class CalendarItemView extends LinearLayout {
         mCalendarItemPresenter.onCreateView(this);
     }
 
-    public void onDestroyView() {
-        mCalendarItemPresenter.onDestroyView();
-    }
-
     public List<TextView> getDays() {
         return mDays;
     }

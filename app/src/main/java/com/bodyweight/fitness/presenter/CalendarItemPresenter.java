@@ -88,10 +88,6 @@ public class CalendarItemPresenter {
                 });
     }
 
-    public void onDestroyView() {
-        // remove subscriptions
-    }
-
     public int getViewPagerPosition() {
         return mViewPagerPosition;
     }
@@ -120,10 +116,6 @@ public class CalendarItemPresenter {
                 .between("startTime", start, end)
                 .findFirst();
 
-        if(routine != null) {
-            return true;
-        }
-
-        return false;
+        return (routine != null);
     }
 }
