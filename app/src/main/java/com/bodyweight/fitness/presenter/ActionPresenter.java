@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 
+import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.stream.DrawerStream;
 import com.bodyweight.fitness.stream.RepositoryStream;
 import com.bodyweight.fitness.view.ActionView;
@@ -107,7 +108,7 @@ public class ActionPresenter extends IPresenter<ActionView> {
 
         getContext().startActivity(
                 new Intent(getContext(), ProgressActivity.class)
-                        .putExtra("routineId", routineId)
+                        .putExtra(Constants.PRIMARY_KEY_ROUTINE_ID, routineId)
         );
     }
 }

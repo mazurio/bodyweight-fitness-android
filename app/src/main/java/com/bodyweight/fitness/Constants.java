@@ -2,6 +2,7 @@ package com.bodyweight.fitness;
 
 public class Constants {
     public static final int MAXIMUM_NUMBER_OF_SETS = 12;
+    public static final String PRIMARY_KEY_ROUTINE_ID = "primaryKeyRoutineId";
 
     public static final String PREFERENCE_DEFAULT_ROUTINE = "PREFERENCE_DEFAULT_ROUTINE";
     public static final String PREFERENCE_WEIGHT_MEASUREMENT_UNITS = "PREFERENCE_WEIGHT_MEASUREMENT_UNITS";

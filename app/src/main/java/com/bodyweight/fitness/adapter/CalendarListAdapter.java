@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.repository.RepositoryExercise;
@@ -119,7 +120,7 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @SuppressWarnings("unused")
         public void onClickViewButton(View view) {
             Intent intent = new Intent(view.getContext(), ProgressActivity.class);
-            intent.putExtra("primaryKeyRoutineId", mRepositoryRoutine.getId());
+            intent.putExtra(Constants.PRIMARY_KEY_ROUTINE_ID, mRepositoryRoutine.getId());
 
             view.getContext().startActivity(intent);
         }
