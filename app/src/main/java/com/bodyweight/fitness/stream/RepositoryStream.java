@@ -15,7 +15,6 @@ import com.bodyweight.fitness.model.repository.RepositoryExercise;
 import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.model.repository.RepositorySection;
 import com.bodyweight.fitness.model.repository.RepositorySet;
-import com.bodyweight.fitness.utils.Logger;
 
 import io.realm.DynamicRealm;
 import io.realm.DynamicRealmObject;
@@ -43,8 +42,6 @@ public class RepositoryStream {
                 .name("bodyweight.fitness.realm")
                 .schemaVersion(2)
                 .migration((DynamicRealm realm, long oldVersion, long newVersion) -> {
-                    Logger.d("old= " + oldVersion + " new=" + newVersion);
-
                     RealmSchema schema = realm.getSchema();
 
 //                    if (oldVersion == 0) {

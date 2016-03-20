@@ -3,7 +3,6 @@ package com.bodyweight.fitness.stream;
 import com.bodyweight.fitness.App;
 import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.json.JSONRoutine;
-import com.bodyweight.fitness.utils.Logger;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 import com.google.gson.Gson;
 
@@ -94,9 +93,7 @@ public class RoutineStream {
             ), JSONRoutine.class);
 
             return new Routine(jsonRoutine);
-        } catch(IOException e) {
-            Logger.e("Exception when loading routine from JSON file: " + e.getMessage());
-        }
+        } catch(IOException e) {}
 
         return null;
     }

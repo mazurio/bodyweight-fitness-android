@@ -8,7 +8,6 @@ import android.widget.ImageView;
 
 import com.amazon.device.associates.AssociatesAPI;
 import com.amazon.device.associates.OpenProductPageRequest;
-import com.bodyweight.fitness.utils.Logger;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
 import com.squareup.picasso.Picasso;
@@ -119,9 +118,7 @@ public class BuyEquipmentActivity extends AppCompatActivity {
             AssociatesAPI.getLinkService().openRetailPage(
                     new OpenProductPageRequest(productId)
             );
-        } catch (Exception e) {
-            Logger.e(e.getMessage());
-        }
+        } catch (Exception e) {}
 
         if (!BuildConfig.DEBUG) {
             Answers.getInstance().logCustom(
