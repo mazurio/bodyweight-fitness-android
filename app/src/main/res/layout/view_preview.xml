@@ -7,7 +7,7 @@
     android:layout_weight=".55"
     android:background="@color/black">
 
-    <pl.droidsonroids.gif.GifImageView
+    <ImageView
         android:id="@+id/preview_gif_image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

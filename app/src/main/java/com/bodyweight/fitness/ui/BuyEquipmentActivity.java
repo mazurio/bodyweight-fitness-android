@@ -8,9 +8,11 @@ import android.widget.ImageView;
 
 import com.amazon.device.associates.AssociatesAPI;
 import com.amazon.device.associates.OpenProductPageRequest;
+
+import com.bumptech.glide.Glide;
+
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -110,7 +112,7 @@ public class BuyEquipmentActivity extends AppCompatActivity {
     }
 
     public void loadDrawable(int drawable, ImageView imageView) {
-        Picasso.with(this).load(drawable).into(imageView);
+        Glide.with(this).load(drawable).into(imageView);
     }
 
     public void openProductPage(String productId) {

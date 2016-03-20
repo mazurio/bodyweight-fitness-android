@@ -3,6 +3,7 @@ package com.bodyweight.fitness.view;
 import android.content.Context;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.bodyweight.fitness.presenter.PreviewPresenter;
@@ -14,13 +15,12 @@ import icepick.Icepick;
 import icepick.State;
 import com.bodyweight.fitness.R;
 
-import pl.droidsonroids.gif.GifImageView;
-
 public class PreviewView extends RelativeLayout {
     @State
     PreviewPresenter mPresenter;
 
-    @InjectView(R.id.preview_gif_image_view) GifImageView mPreviewGifImageView;
+    @InjectView(R.id.preview_gif_image_view)
+    ImageView mPreviewGifImageView;
 
     public PreviewView(Context context) {
         super(context);
@@ -68,7 +68,7 @@ public class PreviewView extends RelativeLayout {
         mPresenter.onCreateView(this);
     }
 
-    public GifImageView getPreviewGifImageView() {
+    public ImageView getPreviewGifImageView() {
         return mPreviewGifImageView;
     }
 }
