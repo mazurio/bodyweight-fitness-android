@@ -7,14 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.bodyweight.fitness.adapter.CalendarListAdapter;
 import com.bodyweight.fitness.presenter.CalendarPresenter;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 
 import icepick.Icepick;
 import icepick.State;

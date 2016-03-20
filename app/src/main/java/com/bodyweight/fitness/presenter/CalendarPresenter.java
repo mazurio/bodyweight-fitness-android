@@ -25,7 +25,7 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
 
     @Override
     public void onCreateView(CalendarView view) {
-        super.onCreateView(view);
+        mView = view;
 
         mCalendarAdapter = new CalendarAdapter();
         mCalendarListAdapter = new CalendarListAdapter();
@@ -33,6 +33,8 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
         mView.setAdapter(mCalendarAdapter);
         mView.setListAdapter(mCalendarListAdapter);
         mView.scrollToDefaultItem();
+
+        onSubscribe();
     }
 
     @Override
@@ -61,11 +63,6 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
                             calendarDayChanged.daySelected
                     );
 
-                    // todo:
-//                    mView.setDate(
-//                            dateTime.toString("EEEE, d MMMM", Locale.ENGLISH)
-//                    );
-
                     if (isRoutineLogged(dateTime)) {
                         mView.showCardView();
                     } else {
@@ -90,9 +87,8 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
                 .between("startTime", start, end)
                 .findAll();
 
-        Logger.d("Found results: " + results.size());
-
         if(!results.isEmpty()) {
+            mView.setListAdapter(mCalendarListAdapter);
             mCalendarListAdapter.setItems(results);
 
             return true;

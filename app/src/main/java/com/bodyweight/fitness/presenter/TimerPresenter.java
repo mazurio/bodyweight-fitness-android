@@ -14,7 +14,6 @@ import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.model.repository.RepositorySet;
 import com.bodyweight.fitness.stream.RepositoryStream;
 import com.bodyweight.fitness.stream.RoutineStream;
-import com.bodyweight.fitness.utils.Logger;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 import com.bodyweight.fitness.view.TimerView;
 
@@ -50,13 +49,6 @@ public class TimerPresenter extends IPresenter<TimerView> {
             mExercise = exercise;
 
             hideOrShowExerciseButtons();
-            Logger.d("\n\n\n");
-            Logger.d("Restored " + mRestored);
-            Logger.d("isPlaying " + mPlaying);
-            Logger.d("seconds " + mSeconds);
-            Logger.d("currentSeconds " + mCurrentSeconds);
-            Logger.d("startedLoggingSeconds " + mStartedLoggingSeconds);
-            Logger.d("loggedSeconds " + mLoggedSeconds);
 
             if (mRestored) {
                 mRestored = false;
@@ -207,8 +199,6 @@ public class TimerPresenter extends IPresenter<TimerView> {
     }
 
     public CountDownTimer buildCountDownTimer(int seconds, boolean restored, boolean increaseTimer) {
-        Logger.d("Building CountDownTimer loggedSeconds " + mLoggedSeconds);
-
         if (increaseTimer) {
             mLoggedSeconds += 5;
         } else {
@@ -247,11 +237,9 @@ public class TimerPresenter extends IPresenter<TimerView> {
 
     public void logTime() {
         if (PreferenceUtils.getInstance().automaticallyLogWorkoutTime() && mExercise.isTimedSet()) {
-            Logger.d("Planning to log " + mLoggedSeconds);
             int logSeconds = (mLoggedSeconds - mCurrentSeconds);
 
             if (logSeconds <= 0) {
-                Logger.d("Nothing to log as <= 0");
             } else {
                 if(logIntoRealm(logSeconds)) {
                     Snackbar.make(mView, String.format("Logged time %s:%s",
@@ -267,7 +255,6 @@ public class TimerPresenter extends IPresenter<TimerView> {
         // TODO: Log Workout Dialog crashes when shown and transaction is being made in the background.
         // TODO: Sometimes values are not saved.
         // TODO: Value on rotation is wrong.
-        Logger.d("onDismissed");
 
         Realm realm = RepositoryStream.getInstance().getRealm();
 
@@ -301,16 +288,12 @@ public class TimerPresenter extends IPresenter<TimerView> {
             }
 
             if (numberOfSets == 1 && mRepositoryExercise.getSets().get(0).isTimed() && mRepositoryExercise.getSets().get(0).getSeconds() == 0) {
-                Logger.d("Modify first set");
-
                 RepositorySet firstSet = mRepositoryExercise.getSets().get(0);
 
                 if (firstSet.isTimed() && firstSet.getSeconds() == 0) {
                     firstSet.setSeconds(logSeconds);
                 }
             } else {
-                Logger.d("Add set");
-
                 RepositorySet repositorySet = realm.createObject(RepositorySet.class);
 
                 repositorySet.setId("Set-" + UUID.randomUUID().toString());
@@ -329,8 +312,6 @@ public class TimerPresenter extends IPresenter<TimerView> {
 
             return true;
         } else {
-            Logger.d("Cancel transaction");
-
             realm.cancelTransaction();
 
             return false;

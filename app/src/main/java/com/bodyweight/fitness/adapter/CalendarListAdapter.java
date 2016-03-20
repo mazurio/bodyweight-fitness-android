@@ -76,7 +76,6 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
         return 0;
-//        return mResults.size() + 1;
     }
 
     @Override
