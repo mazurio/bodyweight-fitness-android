@@ -15,26 +15,29 @@
         android:id="@+id/action_view_log_workout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:src="@drawable/ic_create"
-        android:layout_alignParentRight="true"
-        android:layout_above="@+id/action_view_action_button"
-        android:layout_marginRight="12dp"
+        android:layout_gravity="end|top"
+        android:layout_margin="16dp"
+        app:layout_anchor="@+id/action_view_action_margin"
+        app:layout_anchorGravity="top|right|end"
         app:backgroundTint="@color/white"
         app:borderWidth="0dp"
         app:elevation="@dimen/view_action_elevation"/>
+
+    <View
+        android:id="@+id/action_view_action_margin"
+        android:layout_width="1dp"
+        android:layout_height="16dp"
+        app:layout_anchor="@+id/action_view_action_button"
+        app:layout_anchorGravity="top|right|end" />
 
     <com.bodyweight.fitness.view.widget.ActionButton
         android:id="@+id/action_view_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:src="@drawable/ic_add_white_24dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
         app:backgroundTint="@color/primaryDark"
         app:borderWidth="0dp"
         app:elevation="@dimen/view_action_elevation"/>

@@ -13,8 +13,7 @@ import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.adapter.CalendarAdapter;
 import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.stream.CalendarStream;
-import com.bodyweight.fitness.stream.ToolbarStream;
-import com.bodyweight.fitness.utils.Logger;
+import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.view.CalendarView;
 
 import io.realm.Realm;
@@ -50,7 +49,7 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
                     mView.scrollToDefaultItem();
                 }));
 
-        subscribe(ToolbarStream.getInstance()
+        subscribe(Stream.getInstance()
                 .getMenuObservable()
                 .filter(id -> id.equals(R.id.action_today))
                 .subscribe(id -> {

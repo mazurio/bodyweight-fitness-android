@@ -17,7 +17,7 @@ import com.bodyweight.fitness.stream.RepositoryStream;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.stream.DrawerStream;
-import com.bodyweight.fitness.stream.ToolbarStream;
+import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.utils.ApplicationStoreUtils;
 import com.bodyweight.fitness.view.fragment.NavigationDrawerFragment;
 import com.bodyweight.fitness.utils.PreferenceUtils;
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             return true;
         }
 
-        ToolbarStream.getInstance().setMenu(item.getItemId());
+        Stream.getInstance().setMenu(item.getItemId());
 
 		return super.onOptionsItemSelected(item);
 	}

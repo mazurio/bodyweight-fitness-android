@@ -3,7 +3,6 @@ package com.bodyweight.fitness.presenter;
 import android.app.TimePickerDialog;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
-import android.support.design.widget.Snackbar;
 
 import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.model.Exercise;
@@ -14,6 +13,7 @@ import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.model.repository.RepositorySet;
 import com.bodyweight.fitness.stream.RepositoryStream;
 import com.bodyweight.fitness.stream.RoutineStream;
+import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 import com.bodyweight.fitness.view.TimerView;
 
@@ -237,29 +237,18 @@ public class TimerPresenter extends IPresenter<TimerView> {
 
     public void logTime() {
         if (PreferenceUtils.getInstance().automaticallyLogWorkoutTime() && mExercise.isTimedSet()) {
-            int logSeconds = (mLoggedSeconds - mCurrentSeconds);
+            int loggedSeconds = (mLoggedSeconds - mCurrentSeconds);
 
-            if (logSeconds <= 0) {
-            } else {
-                if(logIntoRealm(logSeconds)) {
-                    Snackbar.make(mView, String.format("Logged time %s:%s",
-                            formatMinutes(logSeconds),
-                            formatSeconds(logSeconds)
-                    ), Snackbar.LENGTH_LONG).show();
+            if (loggedSeconds > 0) {
+                if(logIntoRealm(loggedSeconds)) {
+                    Stream.getInstance().setLoggedSeconds(loggedSeconds);
                 }
             }
         }
     }
 
     private boolean logIntoRealm(int logSeconds) {
-        // TODO: Log Workout Dialog crashes when shown and transaction is being made in the background.
-        // TODO: Sometimes values are not saved.
-        // TODO: Value on rotation is wrong.
-
-
-        /**
-         * This beginsTransaction.
-         */
+        // getRepositoryRoutineForToday method - begins realm transaction.
         RepositoryRoutine repositoryRoutine = RepositoryStream.getInstance().getRepositoryRoutineForToday();
         RepositoryExercise mRepositoryExercise = null;
 

@@ -4,11 +4,9 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Parcelable;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
@@ -26,7 +24,7 @@ import com.bodyweight.fitness.presenter.ActionPresenter;
 import com.bodyweight.fitness.utils.ViewUtils;
 import com.bodyweight.fitness.view.widget.ActionButton;
 
-public class ActionView extends RelativeLayout {
+public class ActionView extends CoordinatorLayout {
     @State
     ActionPresenter mPresenter;
 
