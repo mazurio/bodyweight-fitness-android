@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.model.Exercise;
@@ -114,6 +114,8 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
         @InjectView(R.id.view_change_routine_set_button)
         Button mSetButton;
 
+        private boolean mShowingToast = false;
+
         private Routine mRoutine;
 
         private FileDownloadListener mFileDownloadListener = new FileDownloadListener() {
@@ -147,6 +149,8 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
             @Override
             protected void error(BaseDownloadTask task, Throwable e) {
                 Logger.d(task.getUrl() + " " + "Error");
+
+                showToast();
             }
 
             @Override
@@ -191,6 +195,8 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
                 return;
             }
 
+            mShowingToast = false;
+
             for (Exercise exercise : mRoutine.getExercises()) {
                 Logger.d("Downloading for exercise: " + exercise.getTitle());
 
@@ -201,16 +207,16 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
                         File.separator,
                         exercise.getGifId());
 
-                FileDownloader.getImpl()
+                BaseDownloadTask task = FileDownloader.getImpl()
                         .create(exercise.getGifUrl())
                         .setPath(filePath)
                         .setCallbackProgressTimes(0)
-                        .setAutoRetryTimes(3)
-                        .setListener(mFileDownloadListener)
-                        .ready();
-            }
+                        .setAutoRetryTimes(0)
+                        .setTag(mRoutine.getRoutineId())
+                        .setListener(mFileDownloadListener);
 
-            FileDownloader.getImpl().start(mFileDownloadListener, true);
+                task.start();
+            }
         }
 
         @Override
@@ -219,11 +225,17 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
                 case 3: {
                     mRoutine = RoutineStream.getInstance().getRoutine(R.raw.starting_stretching);
 
+                    mToolbar.inflateMenu(R.menu.change_routine);
+                    mDownloadButton.setVisibility(View.VISIBLE);
+
                     break;
                 }
 
                 case 4: {
                     mRoutine = RoutineStream.getInstance().getRoutine(R.raw.molding_mobility);
+
+                    mToolbar.inflateMenu(R.menu.change_routine);
+                    mDownloadButton.setVisibility(View.VISIBLE);
 
                     break;
                 }
@@ -231,14 +243,43 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
                 default: {
                     mRoutine = RoutineStream.getInstance().getRoutine(R.raw.beginner_routine);
 
+                    mToolbar.invalidate();
+                    mDownloadButton.setVisibility(View.GONE);
+
                     break;
                 }
             }
+
+            mToolbar.setOnMenuItemClickListener((item) -> {
+                if (item.getItemId() == R.id.action_remove_files) {
+                    new AlertDialog.Builder(itemView.getContext())
+                            .setTitle("Remove Downloaded Files?")
+                            .setPositiveButton("Ok", (dialog, which) -> {
+                                deleteRoutineFiles(mRoutine);
+
+                                mDownloadButton.setText(checkRoutine(mRoutine));
+                            })
+                            .setNegativeButton("Cancel", (dialog, which) -> {})
+                            .show();
+
+                    return true;
+                }
+
+                return false;
+            });
 
             mTitle.setText(mRoutine.getTitle());
             mSubtitle.setText(mRoutine.getSubtitle());
 
             mDownloadButton.setText(checkRoutine(mRoutine));
+        }
+
+        private void showToast() {
+            if (!mShowingToast) {
+                mShowingToast = true;
+
+                Toast.makeText(itemView.getContext(), "Error downloading one of the files. Please check your internet connection.", Toast.LENGTH_SHORT).show();
+            }
         }
 
         private boolean isRoutineFullyDownloaded(Routine routine) {

@@ -21,6 +21,7 @@ import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.utils.ApplicationStoreUtils;
 import com.bodyweight.fitness.view.fragment.NavigationDrawerFragment;
 import com.bodyweight.fitness.utils.PreferenceUtils;
+import com.liulishuo.filedownloader.FileDownloader;
 
 import rx.Subscription;
 
@@ -75,6 +76,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         keepScreenOnWhenAppIsRunning();
         subscribe();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        FileDownloader.getImpl().pauseAll();
     }
 
     @Override

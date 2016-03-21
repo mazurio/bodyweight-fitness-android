@@ -6,6 +6,7 @@
 	<string name="action_faq">FAQ</string>
 	<string name="action_settings">Settings</string>
 
+	<string name="action_remove_files">Remove files</string>
 	<string name="action_today">Today</string>
 	<string name="action_export_today">Export Today\'s Data</string>
 	<string name="action_export_last_week">Export Weekly Data</string>
