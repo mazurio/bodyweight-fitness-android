@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.adapter.ProgressPagerAdapter;
 import com.bodyweight.fitness.stream.RepositoryStream;
 
@@ -38,7 +39,7 @@ public class ProgressActivity extends AppCompatActivity {
 
         ButterKnife.inject(this);
 
-        String primaryKeyRoutineId = getIntent().getStringExtra("primaryKeyRoutineId");
+        String primaryKeyRoutineId = getIntent().getStringExtra(Constants.PRIMARY_KEY_ROUTINE_ID);
 
         buildRoutine(primaryKeyRoutineId);
 
