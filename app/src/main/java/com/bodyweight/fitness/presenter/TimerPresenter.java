@@ -22,9 +22,11 @@ import java.util.UUID;
 import io.realm.Realm;
 
 public class TimerPresenter extends IPresenter<TimerView> {
+    private static final int DEFAULT_SECONDS = 60;
+
     private transient Exercise mExercise;
 
-    private int mSeconds = 60;
+    private int mSeconds = DEFAULT_SECONDS;
     private int mCurrentSeconds = mSeconds;
     private int mStartedLoggingSeconds = mSeconds;
     private int mLoggedSeconds = 0;
@@ -195,7 +197,7 @@ public class TimerPresenter extends IPresenter<TimerView> {
     }
 
     public int getSeconds() {
-        return (int) PreferenceUtils.getInstance().getTimerValueForExercise(mExercise.getId(), mSeconds * 1000) / 1000;
+        return (int) PreferenceUtils.getInstance().getTimerValueForExercise(mExercise.getId(), DEFAULT_SECONDS * 1000) / 1000;
     }
 
     public CountDownTimer buildCountDownTimer(int seconds, boolean restored, boolean increaseTimer) {

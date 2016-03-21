@@ -85,20 +85,6 @@
                     app:typeface="roboto_medium"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
-                    android:id="@+id/action_menu_change_routine"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:gravity="center_vertical"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:textColor="#87000000"
-                    android:textSize="14sp"
-                    android:text="Change Routine"
-                    app:typeface="roboto_medium"/>
-
-                <com.devspark.robototextview.widget.RobotoTextView
                     android:id="@+id/action_menu_workout_log"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -110,6 +96,20 @@
                     android:textColor="#87000000"
                     android:textSize="14sp"
                     android:text="Workout Log"
+                    app:typeface="roboto_medium"/>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/action_menu_change_routine"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:gravity="center_vertical"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:textColor="#87000000"
+                    android:textSize="14sp"
+                    android:text="Change Routine"
                     app:typeface="roboto_medium"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
