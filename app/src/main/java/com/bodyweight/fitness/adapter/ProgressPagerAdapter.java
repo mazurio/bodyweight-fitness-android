@@ -250,19 +250,19 @@ public class ProgressPagerAdapter extends PagerAdapter {
 
         mDecoView.addEvent(new DecoEvent.Builder(mNumberOfExercises)
                 .setIndex(mBackIndex)
-                .setDuration(3000)
-                .setDelay(100)
+                .setDuration(0)
+                .setDelay(0)
                 .build());
 
         mDecoView.addEvent(new DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_OUT)
                 .setIndex(mSeries1Index)
-                .setDuration(2000)
-                .setDelay(1250)
+                .setDuration(0)
+                .setDelay(0)
                 .build());
 
         mDecoView.addEvent(new DecoEvent.Builder(mCurrentExercise)
                 .setIndex(mSeries1Index)
-                .setDelay(3250)
+                .setDelay(0)
                 .build());
 
         resetText(view);
