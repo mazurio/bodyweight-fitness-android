@@ -5,7 +5,7 @@
   "routine" : [
     {
       "categoryId": "category-41e8b269-e45c-4847-95d0-6942c879a2fd",
-      "title": "Stretching",
+      "title": "Upper Body",
       "type": "category"
     },
     {
@@ -47,6 +47,11 @@
       "gifId": "DKap722",
       "gifUrl": "http://i.imgur.com/DKap722.gif",
       "defaultSet": "timed"
+    },
+    {
+      "sectionId": "category-9fe88d5b-0b22-4947-b4f2-93f2696f9369",
+      "title": "Lower Body",
+      "type": "category"
     },
     {
       "sectionId": "section-b8a6bdf2-cbf5-48cf-85a9-ac7da8cf1166",
@@ -118,19 +123,19 @@
       "title": "Glute Bridge",
       "description": "1x(20-60s)",
       "type": "exercise",
-      "youTubeId": "",
-      "gifId": "",
-      "gifUrl": "",
+      "youTubeId": "8bbE64NuDTU",
+      "gifId": "zYzHoWk",
+      "gifUrl": "http://i.imgur.com/zYzHoWk.gif",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise-c9a9bb2e-5c8e-42dd-9702-6161c9d9f561",
       "id": "exercise-c9a9bb2e-5c8e-42dd-9702-6161c9d9f561",
       "level": "Intermediate",
-      "title": "Camel",
+      "title": "Camel Pose",
       "description": "1x(20-60s)",
       "type": "exercise",
-      "youTubeId": "",
+      "youTubeId": "SHi7k92QJlg",
       "gifId": "",
       "gifUrl": "",
       "defaultSet": "timed"
@@ -152,7 +157,7 @@
       "title": "Lying Twist",
       "description": "1x(20-60s)",
       "type": "section",
-      "mode": "levels"
+      "mode": "all"
     },
     {
       "exerciseId": "exercise-04a73d80-9705-40ab-8322-aa9ff2d5c126",
