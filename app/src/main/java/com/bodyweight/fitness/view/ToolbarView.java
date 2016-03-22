@@ -87,6 +87,12 @@ public class ToolbarView extends AppBarLayout {
         mToolbar.getMenu().clear();
     }
 
+    public void inflateHomeMenu() {
+        invalidateOptionsMenu();
+
+        mToolbar.inflateMenu(R.menu.home);
+    }
+
     public void inflateCalendarMenu() {
         invalidateOptionsMenu();
 

@@ -71,7 +71,7 @@ public class ToolbarPresenter extends IPresenter<ToolbarView> {
             exercise = RoutineStream.getInstance().getExercise();
         }
 
-        mView.invalidateOptionsMenu();
+        mView.inflateHomeMenu();
 
         mView.setTitle(exercise.getTitle());
         mView.setSubtitle(exercise.getSection().getTitle());

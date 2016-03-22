@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -144,6 +146,19 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     private void subscribe() {
+        Stream.getInstance().getMenuObservable()
+                .filter(id -> id.equals(R.id.action_dashboard))
+                .subscribe(id -> {
+                    ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            MainActivity.this,
+                            null
+                    );
+
+                    startActivity(new Intent(this, DashboardActivity.class));
+
+//                    ActivityCompat.startActivity(this, new Intent(this, DashboardActivity.class), activityOptionsCompat.toBundle());
+                });
+
         mSubscription = DrawerStream.getInstance()
                 .getMenuObservable()
                 .subscribe(id -> {

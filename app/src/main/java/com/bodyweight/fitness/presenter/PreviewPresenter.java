@@ -22,16 +22,15 @@ public class PreviewPresenter extends IPresenter<PreviewView> implements Seriali
 
                     GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mView.getPreviewGifImageView());
 
-
                     if (routine.getRoutineId().equals("routine0")) {
                         int identifier = mView.getContext()
                                 .getResources()
                                 .getIdentifier(exercise.getId(), "drawable", mView.getContext().getPackageName());
 
-                        Glide.with(getContext())
-                                .load(identifier)
-                                .crossFade()
-                                .into(imageViewTarget);
+//                        Glide.with(getContext())
+//                                .load(identifier)
+//                                .crossFade()
+//                                .into(imageViewTarget);
                     } else {
                         String filePath = String.format("%s%s%s%s%s.gif",
                                 FileDownloadUtils.getDefaultSaveRootPath(),
@@ -40,10 +39,10 @@ public class PreviewPresenter extends IPresenter<PreviewView> implements Seriali
                                 File.separator,
                                 exercise.getGifId());
 
-                        Glide.with(getContext())
-                                .load(new File(filePath))
-                                .crossFade()
-                                .into(imageViewTarget);
+//                        Glide.with(getContext())
+//                                .load(new File(filePath))
+//                                .crossFade()
+//                                .into(imageViewTarget);
                     }
                 }));
     }
