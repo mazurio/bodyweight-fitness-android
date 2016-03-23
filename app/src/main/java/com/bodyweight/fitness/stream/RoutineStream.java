@@ -3,6 +3,7 @@ package com.bodyweight.fitness.stream;
 import com.bodyweight.fitness.App;
 import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.json.JSONRoutine;
+import com.bodyweight.fitness.model.persistence.Glacier;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 import com.google.gson.Gson;
 
@@ -12,8 +13,6 @@ import java.io.IOException;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.model.Routine;
-
-import io.mazur.glacier.Glacier;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;

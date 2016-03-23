@@ -4,8 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-import icepick.State;
-
 public class JSONRoutine {
     @SerializedName("routineId")
     private String mRoutineId;

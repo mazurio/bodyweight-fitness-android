@@ -1,6 +1,7 @@
 package com.bodyweight.fitness.view;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
@@ -9,20 +10,18 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.presenter.TimerPresenter;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import butterknife.OnClick;
-import icepick.Icepick;
-import icepick.State;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.utils.ViewUtils;
 
 public class TimerView extends LinearLayout {
-    @State
     TimerPresenter mPresenter;
 
     @InjectView(R.id.prev_exercise_button)
@@ -75,7 +74,12 @@ public class TimerView extends LinearLayout {
     public Parcelable onSaveInstanceState() {
         mPresenter.onSaveInstanceState();
 
-        return Icepick.saveInstanceState(this, super.onSaveInstanceState());
+        Bundle state = new Bundle();
+
+        state.putParcelable(Constants.SUPER_STATE_KEY, super.onSaveInstanceState());
+        state.putSerializable(Constants.PRESENTER_KEY, mPresenter);
+
+        return state;
     }
 
     @Override
@@ -83,9 +87,13 @@ public class TimerView extends LinearLayout {
         mPresenter.onDestroyView();
         mPresenter = null;
 
-        super.onRestoreInstanceState(Icepick.restoreInstanceState(this, state));
+        if (state instanceof Bundle) {
+            mPresenter = (TimerPresenter) ((Bundle) state).getSerializable(Constants.PRESENTER_KEY);
 
-        mPresenter.onRestoreInstanceState(this);
+            super.onRestoreInstanceState(((Bundle) state).getParcelable(Constants.SUPER_STATE_KEY));
+
+            mPresenter.onRestoreInstanceState(this);
+        }
     }
 
     public void onCreate() {

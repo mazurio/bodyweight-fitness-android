@@ -1,22 +1,21 @@
 package com.bodyweight.fitness.view;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.presenter.PreviewPresenter;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import icepick.Icepick;
-import icepick.State;
 import com.bodyweight.fitness.R;
 
 public class PreviewView extends RelativeLayout {
-    @State
     PreviewPresenter mPresenter;
 
     @InjectView(R.id.preview_gif_image_view)
@@ -47,17 +46,26 @@ public class PreviewView extends RelativeLayout {
     public Parcelable onSaveInstanceState() {
         mPresenter.onSaveInstanceState();
 
-        return Icepick.saveInstanceState(this, super.onSaveInstanceState());
+        Bundle state = new Bundle();
+
+        state.putParcelable(Constants.SUPER_STATE_KEY, super.onSaveInstanceState());
+        state.putSerializable(Constants.PRESENTER_KEY, mPresenter);
+
+        return state;
     }
-    
+
     @Override
     public void onRestoreInstanceState(Parcelable state) {
         mPresenter.onDestroyView();
         mPresenter = null;
 
-        super.onRestoreInstanceState(Icepick.restoreInstanceState(this, state));
+        if (state instanceof Bundle) {
+            mPresenter = (PreviewPresenter) ((Bundle) state).getSerializable(Constants.PRESENTER_KEY);
 
-        mPresenter.onRestoreInstanceState(this);
+            super.onRestoreInstanceState(((Bundle) state).getParcelable(Constants.SUPER_STATE_KEY));
+
+            mPresenter.onRestoreInstanceState(this);
+        }
     }
 
     public void onCreate() {

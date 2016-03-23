@@ -10,4 +10,7 @@ public class Constants {
     public static final String PREFERENCE_AUTOMATICALLY_LOG_WORKOUT_TIME = "PREFERENCE_AUTOMATICALLY_LOG_WORKOUT_TIME";
     public static final String PREFERENCE_KEEP_SCREEN_ON = "PREFERENCE_KEEP_SCREEN_ON";
     public static final String PREFERENCE_TIMER_KEY = "PREFERENCE_TIMER_KEY_";
+
+    public static final String SUPER_STATE_KEY = "superState";
+    public static final String PRESENTER_KEY = "presenter";
 }

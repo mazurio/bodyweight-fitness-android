@@ -1,6 +1,7 @@
 package com.bodyweight.fitness.view;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -9,14 +10,11 @@ import android.widget.RelativeLayout;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import icepick.Icepick;
-import icepick.State;
-
+import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.presenter.ContentPresenter;
 
 public class ContentView extends RelativeLayout {
-    @State
     ContentPresenter mPresenter;
 
     @InjectView(R.id.view_home)
@@ -59,7 +57,12 @@ public class ContentView extends RelativeLayout {
     public Parcelable onSaveInstanceState() {
         mPresenter.onSaveInstanceState();
 
-        return Icepick.saveInstanceState(this, super.onSaveInstanceState());
+        Bundle state = new Bundle();
+
+        state.putParcelable(Constants.SUPER_STATE_KEY, super.onSaveInstanceState());
+        state.putSerializable(Constants.PRESENTER_KEY, mPresenter);
+
+        return state;
     }
 
     @Override
@@ -67,9 +70,13 @@ public class ContentView extends RelativeLayout {
         mPresenter.onDestroyView();
         mPresenter = null;
 
-        super.onRestoreInstanceState(Icepick.restoreInstanceState(this, state));
+        if (state instanceof Bundle) {
+            mPresenter = (ContentPresenter) ((Bundle) state).getSerializable(Constants.PRESENTER_KEY);
 
-        mPresenter.onRestoreInstanceState(this);
+            super.onRestoreInstanceState(((Bundle) state).getParcelable(Constants.SUPER_STATE_KEY));
+
+            mPresenter.onRestoreInstanceState(this);
+        }
     }
 
     private void onCreate() {

@@ -1,6 +1,7 @@
 package com.bodyweight.fitness.view;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,21 +9,18 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.adapter.CalendarListAdapter;
 import com.bodyweight.fitness.presenter.CalendarPresenter;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import icepick.Icepick;
-import icepick.State;
-
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.adapter.CalendarAdapter;
 import com.bodyweight.fitness.view.widget.ViewPager;
 
 public class CalendarView extends LinearLayout {
-    @State
     CalendarPresenter mPresenter;
 
     @InjectView(R.id.view_calendar_pager)
@@ -84,7 +82,12 @@ public class CalendarView extends LinearLayout {
     public Parcelable onSaveInstanceState() {
         mPresenter.onSaveInstanceState();
 
-        return Icepick.saveInstanceState(this, super.onSaveInstanceState());
+        Bundle state = new Bundle();
+
+        state.putParcelable(Constants.SUPER_STATE_KEY, super.onSaveInstanceState());
+        state.putSerializable(Constants.PRESENTER_KEY, mPresenter);
+
+        return state;
     }
 
     @Override
@@ -92,9 +95,13 @@ public class CalendarView extends LinearLayout {
         mPresenter.onDestroyView();
         mPresenter = null;
 
-        super.onRestoreInstanceState(Icepick.restoreInstanceState(this, state));
+        if (state instanceof Bundle) {
+            mPresenter = (CalendarPresenter) ((Bundle) state).getSerializable(Constants.PRESENTER_KEY);
 
-        mPresenter.onRestoreInstanceState(this);
+            super.onRestoreInstanceState(((Bundle) state).getParcelable(Constants.SUPER_STATE_KEY));
+
+            mPresenter.onRestoreInstanceState(this);
+        }
     }
 
     public void onCreate() {

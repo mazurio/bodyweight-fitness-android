@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,15 +18,12 @@ import com.bodyweight.fitness.stream.RepositoryStream;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.stream.DrawerStream;
-import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.utils.ApplicationStoreUtils;
 import com.bodyweight.fitness.view.fragment.NavigationDrawerFragment;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 import com.liulishuo.filedownloader.FileDownloader;
 
-import icepick.Icepick;
-import icepick.State;
 import rx.Subscription;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -36,14 +31,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Subscription mSubscription;
 
-    @State
     Integer mId = R.id.action_menu_home;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Icepick.restoreInstanceState(this, savedInstanceState);
+        if (savedInstanceState != null) {
+            mId = savedInstanceState.getInt("ID");
+        }
 
 		setContentView(R.layout.activity_main);
 
@@ -65,9 +61,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     @Override public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        outState.putInt("ID", mId);
 
-        Icepick.saveInstanceState(this, outState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

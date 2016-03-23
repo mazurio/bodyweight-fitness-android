@@ -1,6 +1,7 @@
 package com.bodyweight.fitness.view;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
+import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.adapter.ChangeRoutineListAdapter;
 import com.bodyweight.fitness.presenter.ChangeRoutinePresenter;
@@ -15,11 +17,8 @@ import com.bodyweight.fitness.presenter.ChangeRoutinePresenter;
 import butterknife.ButterKnife;
 
 import butterknife.InjectView;
-import icepick.Icepick;
-import icepick.State;
 
 public class ChangeRoutineView extends RelativeLayout {
-    @State
     ChangeRoutinePresenter mPresenter;
 
     @InjectView(R.id.view_change_routine_list)
@@ -58,7 +57,12 @@ public class ChangeRoutineView extends RelativeLayout {
     public Parcelable onSaveInstanceState() {
         mPresenter.onSaveInstanceState();
 
-        return Icepick.saveInstanceState(this, super.onSaveInstanceState());
+        Bundle state = new Bundle();
+
+        state.putParcelable(Constants.SUPER_STATE_KEY, super.onSaveInstanceState());
+        state.putSerializable(Constants.PRESENTER_KEY, mPresenter);
+
+        return state;
     }
 
     @Override
@@ -66,9 +70,13 @@ public class ChangeRoutineView extends RelativeLayout {
         mPresenter.onDestroyView();
         mPresenter = null;
 
-        super.onRestoreInstanceState(Icepick.restoreInstanceState(this, state));
+        if (state instanceof Bundle) {
+            mPresenter = (ChangeRoutinePresenter) ((Bundle) state).getSerializable(Constants.PRESENTER_KEY);
 
-        mPresenter.onRestoreInstanceState(this);
+            super.onRestoreInstanceState(((Bundle) state).getParcelable(Constants.SUPER_STATE_KEY));
+
+            mPresenter.onRestoreInstanceState(this);
+        }
     }
 
     private void onCreate() {

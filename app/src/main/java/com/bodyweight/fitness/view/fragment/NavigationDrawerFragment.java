@@ -22,9 +22,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-import icepick.Icepick;
-import icepick.State;
-
 import com.bodyweight.fitness.BuildConfig;
 import com.bodyweight.fitness.R;
 
@@ -52,10 +49,7 @@ public class NavigationDrawerFragment extends Fragment {
     @InjectView(R.id.action_menu_support_developer)
     TextView mActionMenuSupportDeveloper;
 
-    @State
     int mMenuId = -1;
-
-    @State
     boolean mShowRecyclerView = false;
 
     private ActionBarDrawerToggle mActionBarDrawerToggle;
@@ -123,7 +117,10 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Icepick.restoreInstanceState(this, savedInstanceState);
+        if (savedInstanceState != null) {
+            mMenuId = savedInstanceState.getInt("MENU_ID");
+            mShowRecyclerView = savedInstanceState.getBoolean("SHOW_RECYCLER_VIEW");
+        }
 
         final View view = inflater.inflate(R.layout.view_drawer, container, false);
 
@@ -146,9 +143,10 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        outState.putInt("MENU_ID", mMenuId);
+        outState.putBoolean("SHOW_RECYCLER_VIEW", mShowRecyclerView);
 
-        Icepick.saveInstanceState(this, outState);
+        super.onSaveInstanceState(outState);
     }
 
     public ActionBarDrawerToggle getActionBarDrawerToggle() {

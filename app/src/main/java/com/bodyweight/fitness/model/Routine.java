@@ -1,11 +1,10 @@
 package com.bodyweight.fitness.model;
 
 import com.bodyweight.fitness.model.json.JSONRoutine;
+import com.bodyweight.fitness.model.persistence.Glacier;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import io.mazur.glacier.Glacier;
 
 public class Routine implements Serializable {
     private String mRoutineId;

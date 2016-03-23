@@ -1,6 +1,7 @@
 package com.bodyweight.fitness.view;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
@@ -8,18 +9,15 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.presenter.ToolbarPresenter;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import icepick.Icepick;
-import icepick.State;
-
 import com.bodyweight.fitness.R;
 
 public class ToolbarView extends AppBarLayout {
-    @State
     ToolbarPresenter mPresenter;
 
     @InjectView(R.id.toolbar)
@@ -62,7 +60,12 @@ public class ToolbarView extends AppBarLayout {
     public Parcelable onSaveInstanceState() {
         mPresenter.onSaveInstanceState();
 
-        return Icepick.saveInstanceState(this, super.onSaveInstanceState());
+        Bundle state = new Bundle();
+
+        state.putParcelable(Constants.SUPER_STATE_KEY, super.onSaveInstanceState());
+        state.putSerializable(Constants.PRESENTER_KEY, mPresenter);
+
+        return state;
     }
 
     @Override
@@ -70,9 +73,13 @@ public class ToolbarView extends AppBarLayout {
         mPresenter.onDestroyView();
         mPresenter = null;
 
-        super.onRestoreInstanceState(Icepick.restoreInstanceState(this, state));
+        if (state instanceof Bundle) {
+            mPresenter = (ToolbarPresenter) ((Bundle) state).getSerializable(Constants.PRESENTER_KEY);
 
-        mPresenter.onRestoreInstanceState(this);
+            super.onRestoreInstanceState(((Bundle) state).getParcelable(Constants.SUPER_STATE_KEY));
+
+            mPresenter.onRestoreInstanceState(this);
+        }
     }
 
     public void onCreate() {

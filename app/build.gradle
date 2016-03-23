@@ -75,7 +75,6 @@ dependencies {
     compile 'com.android.support:design:23.2.1'
     compile 'com.google.code.gson:gson:2.4'
 
-    compile 'com.github.mazurio:glacier:0.0.3'
     compile 'net.danlew:android.joda:2.7.1'
 
     compile 'commons-io:commons-io:2.4'
@@ -87,11 +86,10 @@ dependencies {
     compile 'com.gordonwong:material-sheet-fab:1.2'
     compile 'com.github.bmarrdev:android-DecoView-charting:v0.9.4'
 
+    compile 'com.netflix.rxjava:rxjava-core:0.20.7'
+
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'io.reactivex:rxjava:1.1.0'
-
-    compile 'frankiesardo:icepick:3.1.0'
-    provided 'frankiesardo:icepick-processor:3.1.0'
 
     compile 'com.liulishuo.filedownloader:library:0.2.0'
     compile 'com.github.paolorotolo:appintro:3.4.0'

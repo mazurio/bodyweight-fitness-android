@@ -3,13 +3,13 @@ package com.bodyweight.fitness;
 import android.app.Application;
 import android.content.Context;
 
+import com.bodyweight.fitness.model.persistence.Glacier;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.liulishuo.filedownloader.FileDownloader;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
-import io.mazur.glacier.Glacier;
 import io.fabric.sdk.android.Fabric;
 
 /**
