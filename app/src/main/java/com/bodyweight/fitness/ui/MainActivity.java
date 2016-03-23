@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
@@ -19,21 +20,30 @@ import com.bodyweight.fitness.stream.RepositoryStream;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.stream.DrawerStream;
+import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.utils.ApplicationStoreUtils;
 import com.bodyweight.fitness.view.fragment.NavigationDrawerFragment;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 import com.liulishuo.filedownloader.FileDownloader;
 
+import icepick.Icepick;
+import icepick.State;
 import rx.Subscription;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+    private Toolbar mToolbar;
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Subscription mSubscription;
 
+    @State
+    Integer mId = R.id.action_menu_home;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
+
+        Icepick.restoreInstanceState(this, savedInstanceState);
 
 		setContentView(R.layout.activity_main);
 
@@ -52,7 +62,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
          */
 //        Intent intent = new Intent(this, SplashActivity.class);
 //        startActivity(intent);
-	}
+    }
+
+    @Override public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Icepick.saveInstanceState(this, outState);
+    }
 
     @Override
     protected void onStop() {
@@ -117,8 +133,20 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         keepScreenOnWhenAppIsRunning();
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        if (mId.equals(R.id.action_menu_home)) {
+            getMenuInflater().inflate(R.menu.home, menu);
+        } else if (mId.equals(R.id.action_menu_workout_log)) {
+            getMenuInflater().inflate(R.menu.calendar, menu);
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
     private void setToolbar() {
-		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         ActionBar actionBar = getSupportActionBar();
 
@@ -146,17 +174,29 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     private void subscribe() {
+        // TODO: REMOVE SUBSCRIPTIONS.
         Stream.getInstance().getMenuObservable()
                 .filter(id -> id.equals(R.id.action_dashboard))
                 .subscribe(id -> {
-                    ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            MainActivity.this,
-                            null
-                    );
+//                    ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+//                            MainActivity.this,
+//                            findViewById(R.id.start_stop_timer_button),
+//                            "profile"
+//                    );
 
                     startActivity(new Intent(this, DashboardActivity.class));
 
 //                    ActivityCompat.startActivity(this, new Intent(this, DashboardActivity.class), activityOptionsCompat.toBundle());
+                });
+
+
+        // TODO: REMOVE SUBSCRIPTIONS.
+        DrawerStream.getInstance()
+                .getMenuObservable()
+                .filter(id ->
+                        id.equals(R.id.action_menu_home) || id.equals(R.id.action_menu_workout_log))
+                .subscribe(id -> {
+                    mId = id;
                 });
 
         mSubscription = DrawerStream.getInstance()

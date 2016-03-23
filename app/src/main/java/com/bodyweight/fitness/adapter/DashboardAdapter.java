@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.bodyweight.fitness.R;
@@ -13,6 +14,10 @@ import com.bodyweight.fitness.model.Routine;
 import com.bodyweight.fitness.model.RoutineType;
 import com.bodyweight.fitness.model.Section;
 import com.bodyweight.fitness.model.SectionMode;
+import com.bodyweight.fitness.model.repository.RepositoryExercise;
+import com.bodyweight.fitness.model.repository.RepositoryRoutine;
+import com.bodyweight.fitness.model.repository.RepositorySet;
+import com.bodyweight.fitness.stream.RepositoryStream;
 import com.bodyweight.fitness.utils.Logger;
 
 import java.util.HashMap;
@@ -42,7 +47,8 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
     }
 
     private Routine mRoutine;
-    private HashSet<Section> mSet = new HashSet<>();
+
+    private HashSet<String> mCompletedExerciseSet = new HashSet<>();
     private HashMap<Integer, Tuple> mMap = new HashMap<>();
 
     private OnExerciseClickListener mOnExerciseClickListener;
@@ -57,37 +63,36 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         int index = 0;
         boolean skip = false;
 
+        HashSet<Section> set = new HashSet<>();
         for (Exercise exercise : mRoutine.getLinkedExercises()) {
             if (skip) {
                 skip = false;
             } else {
-                if (!mSet.contains(exercise.getSection())) {
-                    Logger.d("Adding section " + index + " " + exercise.getSection().getTitle());
-
-                    mSet.add(exercise.getSection());
+                if (!set.contains(exercise.getSection())) {
+                    set.add(exercise.getSection());
                     mMap.put(index, new Tuple(exercise.getSection()));
 
                     index++;
                 }
 
-                Logger.d("Adding exercise " + index + " " + exercise.getTitle());
+                if (exercise.getSection().getSectionMode().equals(SectionMode.ALL)
+                        && exercise.getNext() != null
+                        && exercise.getNext().getSection().equals(exercise.getSection())
+                        && index % 2 == 0) {
+                    mMap.put(index, new Tuple(exercise, exercise.getNext()));
 
-                if (exercise.getSection().getSectionMode().equals(SectionMode.ALL) && exercise.getNext() != null) {
-                    if (exercise.getNext().getSection().equals(exercise.getSection())) {
-                        if (index % 2 == 0) {
-                            mMap.put(index, new Tuple(exercise, exercise.getNext()));
-                            skip = true;
-                        } else {
-                            mMap.put(index, new Tuple(exercise));
-                        }
-                    } else {
-                        mMap.put(index, new Tuple(exercise));
-                    }
+                    skip = true;
                 } else {
                     mMap.put(index, new Tuple(exercise));
                 }
 
                 index++;
+            }
+        }
+
+        for(RepositoryExercise repositoryExercise : RepositoryStream.getInstance().getRepositoryRoutineForToday().getExercises()) {
+            if (isCompleted(repositoryExercise)) {
+                mCompletedExerciseSet.add(repositoryExercise.getExerciseId());
             }
         }
     }
@@ -143,6 +148,22 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         return 0;
     }
 
+    public boolean isCompleted(RepositoryExercise repositoryExercise) {
+        int size = repositoryExercise.getSets().size();
+
+        if (size == 0) {
+            return false;
+        }
+
+        RepositorySet firstSet = repositoryExercise.getSets().get(0);
+
+        if(size == 1 && firstSet.getSeconds() == 0 && firstSet.getReps() == 0) {
+            return false;
+        }
+
+        return true;
+    }
+
     public abstract class DashboardAbstractPresenter extends RecyclerView.ViewHolder {
         public DashboardAbstractPresenter(View itemView) {
             super(itemView);
@@ -170,10 +191,13 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
     }
 
     public class DashboardSingleItemPresenter extends DashboardAbstractPresenter {
+        @InjectView(R.id.exercise_button)
+        Button mExerciseButton;
+
         @InjectView(R.id.exercise_title)
         TextView mExerciseTitle;
 
-        Tuple mTuple;
+        private Exercise mExercise;
 
         public DashboardSingleItemPresenter(View itemView) {
             super(itemView);
@@ -183,27 +207,38 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
 
         @Override
         public void onBindView(Tuple tuple) {
-            mTuple = tuple;
+            mExercise = (Exercise) tuple.left;
 
-            Exercise exercise = (Exercise) tuple.left;
+            if (mCompletedExerciseSet.contains(mExercise.getExerciseId())) {
+                mExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.circle_done));
+            } else {
+                mExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.circle));
+            }
 
-            mExerciseTitle.setText(exercise.getTitle());
+            mExerciseTitle.setText(mExercise.getTitle());
         }
 
-        @OnClick(R.id.circle)
+        @OnClick(R.id.exercise_button)
         public void onCircleClick() {
-            Exercise exercise = (Exercise) mTuple.left;
-
-            mOnExerciseClickListener.onExerciseClicked(exercise);
+            mOnExerciseClickListener.onExerciseClicked(mExercise);
         }
     }
 
     public class DashboardDoubleItemPresenter extends DashboardAbstractPresenter {
+        @InjectView(R.id.left_exercise_button)
+        Button mLeftExerciseButton;
+
+        @InjectView(R.id.right_exercise_button)
+        Button mRightExerciseButton;
+
         @InjectView(R.id.left_exercise_title)
         TextView mLeftExerciseTitle;
 
         @InjectView(R.id.right_exercise_title)
         TextView mRightExerciseTitle;
+
+        private Exercise mLeftExercise;
+        private Exercise mRightExercise;
 
         public DashboardDoubleItemPresenter(View itemView) {
             super(itemView);
@@ -213,11 +248,36 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
 
         @Override
         public void onBindView(Tuple tuple) {
-            Exercise leftExercise = (Exercise) tuple.left;
-            Exercise rightExercise = (Exercise) tuple.right;
+            mLeftExercise = (Exercise) tuple.left;
+            mRightExercise = (Exercise) tuple.right;
 
-            mLeftExerciseTitle.setText(leftExercise.getTitle());
-            mRightExerciseTitle.setText(rightExercise.getTitle());
+            mLeftExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.circle));
+            mRightExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.circle));
+
+            if (mCompletedExerciseSet.contains(mLeftExercise.getExerciseId())) {
+                mLeftExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.circle_done));
+            } else {
+                mLeftExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.circle));
+            }
+
+            if (mCompletedExerciseSet.contains(mRightExercise.getExerciseId())) {
+                mRightExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.circle_done));
+            } else {
+                mRightExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.circle));
+            }
+
+            mLeftExerciseTitle.setText(mLeftExercise.getTitle());
+            mRightExerciseTitle.setText(mRightExercise.getTitle());
+        }
+
+        @OnClick(R.id.left_exercise_button)
+        public void onLeftExerciseClick() {
+            mOnExerciseClickListener.onExerciseClicked(mLeftExercise);
+        }
+
+        @OnClick(R.id.right_exercise_button)
+        public void onRightExerciseClick() {
+            mOnExerciseClickListener.onExerciseClicked(mRightExercise);
         }
     }
 }

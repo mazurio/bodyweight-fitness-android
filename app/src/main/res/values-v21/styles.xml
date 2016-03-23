@@ -8,6 +8,13 @@
 		<item name="android:windowDrawsSystemBarBackgrounds">false</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="android:windowTranslucentStatus">true</item>
+
+		<!-- enable window content transitions -->
+		<item name="android:windowContentTransitions">true</item>
+
+		<!-- enable overlapping of exiting and entering activities-->
+		<item name="android:windowAllowEnterTransitionOverlap">true</item>
+		<item name="android:windowAllowReturnTransitionOverlap">true</item>
 	</style>
 
 	<style name="AppTheme.Home.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -37,6 +44,13 @@
 		<item name="colorPrimaryDark">@color/primaryDark</item>
 
 		<item name="android:windowContentOverlay">@null</item>
+
+		<!-- enable window content transitions -->
+		<item name="android:windowContentTransitions">true</item>
+
+		<!-- enable overlapping of exiting and entering activities-->
+		<item name="android:windowAllowEnterTransitionOverlap">true</item>
+		<item name="android:windowAllowReturnTransitionOverlap">true</item>
 	</style>
 
 	<style name="AppTheme.Activity.Dashboard" parent="Theme.AppCompat.Light.NoActionBar">
@@ -45,6 +59,13 @@
 		<item name="colorPrimaryDark">@color/primaryDark</item>
 
 		<item name="android:windowContentOverlay">@null</item>
+
+		<!-- enable window content transitions -->
+		<item name="android:windowContentTransitions">true</item>
+
+		<!-- enable overlapping of exiting and entering activities-->
+		<item name="android:windowAllowEnterTransitionOverlap">true</item>
+		<item name="android:windowAllowReturnTransitionOverlap">true</item>
 	</style>
 
 	<style name="AppTheme.Activity.Progress" parent="Theme.AppCompat.Light.NoActionBar">
@@ -53,5 +74,6 @@
 		<item name="colorPrimaryDark">@color/primaryDark</item>
 
 		<item name="android:windowContentOverlay">@null</item>
+		<item name="android:windowContentTransitions">true</item>
 	</style>
 </resources>

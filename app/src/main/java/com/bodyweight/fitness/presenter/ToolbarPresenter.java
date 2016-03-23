@@ -18,13 +18,6 @@ public class ToolbarPresenter extends IPresenter<ToolbarView> {
     private Integer mId = R.id.action_menu_home;
 
     @Override
-    public void onRestoreInstanceState(ToolbarView view) {
-        super.onRestoreInstanceState(view);
-
-        setToolbarContent(mId);
-    }
-
-    @Override
     public void onSubscribe() {
         super.onSubscribe();
 
@@ -35,7 +28,7 @@ public class ToolbarPresenter extends IPresenter<ToolbarView> {
 
         subscribe(CalendarStream.getInstance()
                 .getCalendarDayChangedObservable()
-                .filter(exercise -> mId.equals(R.id.action_menu_workout_log))
+                .filter(calendarDayChanged -> mId.equals(R.id.action_menu_workout_log))
                 .subscribe(this::setToolbarForCalendar));
 
         subscribe(DrawerStream.getInstance()

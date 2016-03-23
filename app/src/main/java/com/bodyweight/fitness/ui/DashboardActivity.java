@@ -29,7 +29,7 @@ public class DashboardActivity extends AppCompatActivity {
         DashboardAdapter dashboardAdapter = new DashboardAdapter(routine);
         dashboardAdapter.setOnExerciseClickListener((exercise -> {
             RoutineStream.getInstance().setExercise(exercise);
-            finish();
+            supportFinishAfterTransition();
         }));
 
         mRecyclerView = (RecyclerView) findViewById(R.id.view_dashboard_list);
@@ -41,11 +41,7 @@ public class DashboardActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case android.R.id.home: {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    finishAfterTransition();
-                } else {
-                    onBackPressed();
-                }
+                supportFinishAfterTransition();
 
                 return true;
             }

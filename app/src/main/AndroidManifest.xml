@@ -39,7 +39,8 @@
         <activity
             android:name=".ui.DashboardActivity"
             android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme.Activity.Dashboard">
+            android:theme="@style/AppTheme.Activity.Dashboard"
+            android:launchMode="singleTask">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
