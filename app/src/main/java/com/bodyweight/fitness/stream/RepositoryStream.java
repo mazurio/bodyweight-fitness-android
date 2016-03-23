@@ -1,13 +1,13 @@
 package com.bodyweight.fitness.stream;
 
 import com.bodyweight.fitness.App;
-import com.bodyweight.fitness.model.Exercise;
 
 import org.joda.time.DateTime;
 
 import java.util.Date;
 import java.util.UUID;
 
+import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.Routine;
 import com.bodyweight.fitness.model.SectionMode;
 import com.bodyweight.fitness.model.repository.RepositoryCategory;

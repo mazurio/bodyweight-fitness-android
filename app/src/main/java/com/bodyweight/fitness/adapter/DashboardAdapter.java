@@ -15,7 +15,6 @@ import com.bodyweight.fitness.model.RoutineType;
 import com.bodyweight.fitness.model.Section;
 import com.bodyweight.fitness.model.SectionMode;
 import com.bodyweight.fitness.model.repository.RepositoryExercise;
-import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.model.repository.RepositorySet;
 import com.bodyweight.fitness.stream.RepositoryStream;
 import com.bodyweight.fitness.utils.Logger;

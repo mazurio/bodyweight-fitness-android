@@ -1,5 +1,6 @@
 package com.bodyweight.fitness.adapter;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +11,6 @@ import android.widget.TextView;
 
 import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.R;
-import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.repository.RepositoryExercise;
 import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.model.repository.RepositorySet;
@@ -150,20 +150,28 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public void onClickRemoveButton(View view) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext())
                     .setTitle("Remove Logged Workout?")
-                    .setPositiveButton("Ok", (dialog, which) -> {
-                        Realm realm = RepositoryStream.getInstance().getRealm();
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Realm realm = RepositoryStream.getInstance().getRealm();
 
-                        RepositoryRoutine repositoryRoutine = realm.where(RepositoryRoutine.class)
-                                .equalTo("id", mRepositoryRoutine.getId())
-                                .findFirst();
+                            RepositoryRoutine repositoryRoutine = realm.where(RepositoryRoutine.class)
+                                    .equalTo("id", mRepositoryRoutine.getId())
+                                    .findFirst();
 
-                        realm.beginTransaction();
-                        repositoryRoutine.removeFromRealm();
-                        realm.commitTransaction();
+                            realm.beginTransaction();
+                            repositoryRoutine.removeFromRealm();
+                            realm.commitTransaction();
 
-                        notifyDataSetChanged();
+                            notifyDataSetChanged();
+                        }
                     })
-                    .setNegativeButton("Cancel", (dialog, which) -> {});
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
 
             alertDialog.show();
         }

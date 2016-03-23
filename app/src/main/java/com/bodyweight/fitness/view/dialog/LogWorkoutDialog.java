@@ -28,7 +28,6 @@ import java.util.UUID;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.model.repository.RepositoryRoutine;
@@ -36,7 +35,6 @@ import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 import com.bodyweight.fitness.view.listener.RepeatListener;
 
-import butterknife.OnTouch;
 import io.realm.Realm;
 
 public class LogWorkoutDialog {

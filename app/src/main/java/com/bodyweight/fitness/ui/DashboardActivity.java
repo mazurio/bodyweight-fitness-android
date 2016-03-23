@@ -1,6 +1,5 @@
 package com.bodyweight.fitness.ui;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import android.view.MenuItem;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.adapter.DashboardAdapter;
-import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.Routine;
 import com.bodyweight.fitness.stream.RoutineStream;
 

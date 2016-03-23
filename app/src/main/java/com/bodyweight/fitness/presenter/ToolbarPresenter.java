@@ -1,13 +1,12 @@
 package com.bodyweight.fitness.presenter;
 
-import com.bodyweight.fitness.model.Exercise;
-
 import org.joda.time.DateTime;
 
 import java.util.Locale;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.model.CalendarDayChanged;
+import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.stream.CalendarStream;
 import com.bodyweight.fitness.stream.DrawerStream;
 import com.bodyweight.fitness.stream.RoutineStream;

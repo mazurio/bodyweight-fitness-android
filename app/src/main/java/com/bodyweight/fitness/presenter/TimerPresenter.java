@@ -5,9 +5,9 @@ import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 
 import com.bodyweight.fitness.Constants;
-import com.bodyweight.fitness.model.Exercise;
 
 import com.bodyweight.fitness.R;
+import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.repository.RepositoryExercise;
 import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.model.repository.RepositorySet;

@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
 apply plugin: 'realm-android'
 apply plugin: 'io.fabric'
 
@@ -13,7 +17,7 @@ def getApiKey(){
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    buildToolsVersion '24.0.0 rc2'
     defaultConfig {
         applicationId 'com.bodyweight.fitness'
         minSdkVersion 14
@@ -54,10 +58,24 @@ android {
             variant.buildConfigField "String", "AMAZON_API_KEY", "\"" + getApiKey() + "\""
         }
 
+        release {
+            minifyEnabled false
+        }
+
         debug {
+            minifyEnabled false
             ext.enableCrashlytics = false
         }
     }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/java'
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+kapt {
+    generateStubs = true
 }
 
 configurations {
@@ -65,9 +83,11 @@ configurations {
 }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:1.9.5'
     compile fileTree(include: ['*.jar'], dir: 'libs')
+
+    testCompile 'org.jetbrains.spek:spek:0.1.199'
+    testCompile "com.nhaarman:mockito-kotlin:0.3.0"
+
     compile 'com.android.support:support-v4:23.2.1'
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:recyclerview-v7:23.2.1'
@@ -80,6 +100,8 @@ dependencies {
     compile 'commons-io:commons-io:2.4'
 
     compile 'com.jakewharton:butterknife:6.1.0'
+    kapt 'com.jakewharton:butterknife:6.1.0'
+
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
     compile 'com.github.johnkil.android-robototextview:robototextview:2.3.0'
@@ -101,4 +123,27 @@ dependencies {
         transitive = true;
     }
     compile files('libs/amazon-mobile-associates-1.0.73.0.jar')
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+
+buildscript {
+    ext.kotlin_version = '1.0.1'
+    repositories {
+        mavenCentral()
+        maven {
+            url "http://repository.jetbrains.com/all"
+        }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "http://repository.jetbrains.com/all"
+    }
 }
