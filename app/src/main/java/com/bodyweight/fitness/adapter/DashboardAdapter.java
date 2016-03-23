@@ -90,11 +90,23 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
             }
         }
 
+        int mTotalExercises = 0;
+        int mCompletedExercises = 0;
         for(RepositoryExercise repositoryExercise : RepositoryStream.getInstance().getRepositoryRoutineForToday().getExercises()) {
-            if (isCompleted(repositoryExercise)) {
-                mCompletedExerciseSet.add(repositoryExercise.getExerciseId());
+            if (repositoryExercise.isVisible()) {
+                if (isCompleted(repositoryExercise)) {
+                    mCompletedExerciseSet.add(repositoryExercise.getExerciseId());
+
+                    mCompletedExercises++;
+                }
+
+                mTotalExercises++;
             }
         }
+
+        int percent = ((mCompletedExercises / mTotalExercises) * 100);
+
+        Logger.d(String.format("%d out of %d = %d", mCompletedExercises, mTotalExercises, percent));
     }
 
     @Override
