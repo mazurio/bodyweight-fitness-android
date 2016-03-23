@@ -104,7 +104,11 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
             }
         }
 
-        int percent = ((mCompletedExercises / mTotalExercises) * 100);
+        int percent = 0;
+
+        if (mCompletedExercises > 0) {
+            percent = ((mCompletedExercises / mTotalExercises) * 100);
+        }
 
         Logger.d(String.format("%d out of %d = %d", mCompletedExercises, mTotalExercises, percent));
     }
