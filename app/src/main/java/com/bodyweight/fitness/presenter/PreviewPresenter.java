@@ -6,7 +6,6 @@ import java.io.Serializable;
 import com.bodyweight.fitness.model.Routine;
 import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.view.PreviewView;
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 

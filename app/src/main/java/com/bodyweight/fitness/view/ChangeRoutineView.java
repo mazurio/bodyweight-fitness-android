@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 
 import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.R;
