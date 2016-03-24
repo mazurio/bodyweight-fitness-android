@@ -140,9 +140,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
+        if (navigationView != null) {
+            navigationView.setNavigationItemSelectedListener((item) -> {
                 drawerLayout.closeDrawers();
 
                 DrawerStream.getInstance().setMenu(item.getItemId());
@@ -152,8 +151,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 } else {
                     return true;
                 }
-            }
-        });
+            });
+        }
 	}
 
     private void keepScreenOnWhenAppIsRunning() {
