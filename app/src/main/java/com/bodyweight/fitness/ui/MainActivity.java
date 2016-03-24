@@ -20,6 +20,7 @@ import com.bodyweight.fitness.stream.RepositoryStream;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.stream.DrawerStream;
+import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.utils.ApplicationStoreUtils;
 import com.bodyweight.fitness.utils.PreferenceUtils;
@@ -136,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
         actionBarDrawerToggle.syncState();
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

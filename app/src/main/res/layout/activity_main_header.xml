@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<com.bodyweight.fitness.view.HeaderView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -7,12 +7,9 @@
     android:background="@color/primary">
 
     <LinearLayout
-        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
         android:gravity="bottom"
         android:padding="16dp">
 
@@ -38,4 +35,4 @@
                 app:typeface="roboto_regular"/>
         </RelativeLayout>
     </LinearLayout>
-</RelativeLayout>
+</com.bodyweight.fitness.view.HeaderView>
