@@ -20,7 +20,8 @@
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:layout_margin="16dp"
-                android:background="@drawable/circle_done"/>
+                android:background="@drawable/circle_done"
+                android:elevation="4dp"/>
 
             <TextView
                 android:id="@+id/exercise_title"
