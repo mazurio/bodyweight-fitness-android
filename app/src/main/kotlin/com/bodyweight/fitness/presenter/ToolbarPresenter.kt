@@ -4,8 +4,8 @@ import com.bodyweight.fitness.R
 import com.bodyweight.fitness.model.CalendarDayChanged
 import com.bodyweight.fitness.model.Exercise
 import com.bodyweight.fitness.stream.CalendarStream
-import com.bodyweight.fitness.stream.DrawerStream
 import com.bodyweight.fitness.stream.RoutineStream
+import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.utils.DateUtils
 import com.bodyweight.fitness.view.AbstractView
 import com.bodyweight.fitness.view.ToolbarView
@@ -32,7 +32,7 @@ class ToolbarPresenter : AbstractPresenter() {
             setToolbarForWorkoutLog(it)
         })
 
-        subscribe(DrawerStream.getInstance().menuObservable.filter {
+        subscribe(Stream.drawerObservable.filter {
             it.equals(R.id.action_menu_home) or
                     it.equals(R.id.action_menu_change_routine) or
                     it.equals(R.id.action_menu_workout_log)

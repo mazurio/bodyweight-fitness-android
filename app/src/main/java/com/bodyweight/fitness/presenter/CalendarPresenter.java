@@ -1,8 +1,8 @@
 package com.bodyweight.fitness.presenter;
 
 import com.bodyweight.fitness.adapter.CalendarListAdapter;
-import com.bodyweight.fitness.stream.DrawerStream;
 import com.bodyweight.fitness.stream.RepositoryStream;
+import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.utils.DateUtils;
 
 import org.joda.time.DateTime;
@@ -13,7 +13,6 @@ import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.adapter.CalendarAdapter;
 import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.stream.CalendarStream;
-import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.view.CalendarView;
 
 import io.realm.Realm;
@@ -41,15 +40,15 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
     public void onSubscribe() {
         super.onSubscribe();
 
-        subscribe(DrawerStream.getInstance()
-                .getMenuObservable()
+        subscribe(Stream.INSTANCE
+                .getDrawerObservable()
                 .filter(id -> id.equals(R.id.action_menu_workout_log))
                 .subscribe(menu -> {
                     mView.setAdapter(mCalendarAdapter);
                     mView.scrollToDefaultItem();
                 }));
 
-        subscribe(Stream.getInstance()
+        subscribe(Stream.INSTANCE
                 .getMenuObservable()
                 .filter(id -> id.equals(R.id.action_today))
                 .subscribe(id -> {

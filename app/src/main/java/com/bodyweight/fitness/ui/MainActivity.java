@@ -19,8 +19,6 @@ import android.view.WindowManager;
 import com.bodyweight.fitness.stream.RepositoryStream;
 
 import com.bodyweight.fitness.R;
-import com.bodyweight.fitness.stream.DrawerStream;
-import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.utils.ApplicationStoreUtils;
 import com.bodyweight.fitness.utils.PreferenceUtils;
@@ -89,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-        Stream.getInstance().setMenu(item.getItemId());
+        Stream.INSTANCE.setMenu(item.getItemId());
 
 		return super.onOptionsItemSelected(item);
 	}
@@ -144,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             navigationView.setNavigationItemSelectedListener((item) -> {
                 drawerLayout.closeDrawers();
 
-                DrawerStream.getInstance().setMenu(item.getItemId());
+                Stream.INSTANCE.setDrawer(item.getItemId());
 
                 if (item.getItemId() == R.id.action_menu_support_developer || item.getItemId() == R.id.action_menu_settings) {
                     return false;
@@ -165,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     private void subscribe() {
         // TODO: REMOVE SUBSCRIPTIONS.
-        Stream.getInstance().getMenuObservable()
+        Stream.INSTANCE.getMenuObservable()
                 .filter(id -> id.equals(R.id.action_dashboard))
                 .subscribe(id -> {
 //                    ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
@@ -181,16 +179,16 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
 
         // TODO: REMOVE SUBSCRIPTIONS.
-        DrawerStream.getInstance()
-                .getMenuObservable()
+        Stream.INSTANCE
+                .getDrawerObservable()
                 .filter(id ->
                         id.equals(R.id.action_menu_home) || id.equals(R.id.action_menu_workout_log))
                 .subscribe(id -> {
                     mId = id;
                 });
 
-        mSubscription = DrawerStream.getInstance()
-                .getMenuObservable()
+        mSubscription = Stream.INSTANCE
+                .getDrawerObservable()
                 .subscribe(id -> {
                     switch (id) {
                         case (R.id.action_menu_support_developer): {

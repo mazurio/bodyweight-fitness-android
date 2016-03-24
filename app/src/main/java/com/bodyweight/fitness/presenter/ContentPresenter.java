@@ -1,7 +1,7 @@
 package com.bodyweight.fitness.presenter;
 
-import com.bodyweight.fitness.stream.DrawerStream;
 import com.bodyweight.fitness.stream.RoutineStream;
+import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.view.ContentView;
 
 import com.bodyweight.fitness.R;
@@ -20,8 +20,8 @@ public class ContentPresenter extends IPresenter<ContentView> {
     public void onSubscribe() {
         super.onSubscribe();
 
-        subscribe(DrawerStream.getInstance()
-                .getMenuObservable()
+        subscribe(Stream.INSTANCE
+                .getDrawerObservable()
                 .filter(id ->
                         id.equals(R.id.action_menu_home) ||
                         id.equals(R.id.action_menu_change_routine) ||

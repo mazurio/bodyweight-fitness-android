@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.support.design.widget.Snackbar;
 
 import com.bodyweight.fitness.Constants;
-import com.bodyweight.fitness.stream.DrawerStream;
 import com.bodyweight.fitness.stream.RepositoryStream;
 import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.view.ActionView;
@@ -57,8 +56,8 @@ public class ActionPresenter extends IPresenter<ActionView> {
                    }
                }));
 
-        subscribe(DrawerStream.getInstance()
-                .getMenuObservable()
+        subscribe(Stream.INSTANCE
+                .getDrawerObservable()
                 .filter(id -> id.equals(R.id.action_menu_home) || id.equals(R.id.action_menu_change_routine) || id.equals(R.id.action_menu_workout_log))
                 .subscribe(id -> {
                     if (id.equals(R.id.action_menu_home)) {
@@ -68,7 +67,7 @@ public class ActionPresenter extends IPresenter<ActionView> {
                     }
                 }));
 
-        subscribe(Stream.getInstance()
+        subscribe(Stream.INSTANCE
                 .getLoggedSecondsObservable()
                 .subscribe(loggedSeconds -> {
                     Snackbar.make(mView, String.format("Logged time %s:%s",
