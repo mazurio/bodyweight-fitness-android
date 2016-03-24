@@ -10,10 +10,13 @@ import android.view.MenuItem;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.adapter.DashboardAdapter;
+import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.Routine;
 import com.bodyweight.fitness.stream.RoutineStream;
 
 public class DashboardActivity extends AppCompatActivity {
+    private DashboardAdapter mDashboardAdapter;
+    private LinearLayoutManager mLinearLayoutManager;
     private RecyclerView mRecyclerView;
 
     @Override
@@ -23,16 +26,28 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
         setToolbar();
 
-        Routine routine = RoutineStream.getInstance().getRoutine();
-        DashboardAdapter dashboardAdapter = new DashboardAdapter(routine);
-        dashboardAdapter.setOnExerciseClickListener((exercise -> {
+        Routine currentRoutine = RoutineStream.getInstance().getRoutine();
+        Exercise currentExercise = RoutineStream.getInstance().getExercise();
+
+        mDashboardAdapter = new DashboardAdapter(currentRoutine, currentExercise);
+        mDashboardAdapter.setOnExerciseClickListener((exercise -> {
             RoutineStream.getInstance().setExercise(exercise);
+
             supportFinishAfterTransition();
         }));
 
+        mLinearLayoutManager = new LinearLayoutManager(this);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.view_dashboard_list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(dashboardAdapter);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mRecyclerView.setAdapter(mDashboardAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mRecyclerView.scrollToPosition(mDashboardAdapter.getScrollPosition());
     }
 
     @Override

@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_gravity="center"
-        android:layout_margin="16dp">
+        android:layout_margin="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/section">
 
-        <TextView
+        <com.devspark.robototextview.widget.RobotoTextView
             android:id="@+id/section_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="Section Name"
+            android:textColor="#3C3C3C"
+            android:textSize="15dp"
+            app:typeface="roboto_regular"/>
     </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

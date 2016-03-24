@@ -1,11 +1,11 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
     <item>
         <shape android:shape="oval">
-            <solid android:color="#00453E" />
+            <solid android:color="#F0F0F0" />
         </shape>
     </item>
 
-    <item android:drawable="@drawable/ic_done"
+    <item android:drawable="@drawable/ic_level"
         android:gravity="center"
         android:width="36dp"
         android:height="36dp"/>

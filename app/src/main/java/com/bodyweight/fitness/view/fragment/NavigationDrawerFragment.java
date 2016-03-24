@@ -198,13 +198,13 @@ public class NavigationDrawerFragment extends Fragment {
             return;
         }
 
-        if (id == R.id.action_menu_home) {
-            mImageViewArrow.setVisibility(View.VISIBLE);
-        } else if (id == R.id.action_menu_change_routine) {
-            mImageViewArrow.setVisibility(View.INVISIBLE);
-        } else if (id == R.id.action_menu_workout_log) {
-            mImageViewArrow.setVisibility(View.INVISIBLE);
-        }
+//        if (id == R.id.action_menu_home) {
+//            mImageViewArrow.setVisibility(View.VISIBLE);
+//        } else if (id == R.id.action_menu_change_routine) {
+//            mImageViewArrow.setVisibility(View.INVISIBLE);
+//        } else if (id == R.id.action_menu_workout_log) {
+//            mImageViewArrow.setVisibility(View.INVISIBLE);
+//        }
 
         ((TextView) view.findViewById(mMenuId)).setTextColor(Color.parseColor("#87000000"));
         ((TextView) view.findViewById(id)).setTextColor(Color.parseColor("#009688"));
@@ -213,27 +213,31 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void showRecyclerView() {
-        mShowRecyclerView = true;
+        return;
 
-        mImageViewArrow.setImageDrawable(App
-                .getContext()
-                .getResources()
-                .getDrawable(R.drawable.ic_arrow_drop_up));
-
-        mRecyclerView.setVisibility(View.VISIBLE);
-        mMenu.setVisibility(View.GONE);
+//        mShowRecyclerView = true;
+//
+//        mImageViewArrow.setImageDrawable(App
+//                .getContext()
+//                .getResources()
+//                .getDrawable(R.drawable.ic_arrow_drop_up));
+//
+//        mRecyclerView.setVisibility(View.VISIBLE);
+//        mMenu.setVisibility(View.GONE);
     }
 
     private void hideRecyclerView() {
-        mShowRecyclerView = false;
+        return;
 
-        mImageViewArrow.setImageDrawable(App
-                .getContext()
-                .getResources()
-                .getDrawable(R.drawable.ic_arrow_drop_down));
-
-        mRecyclerView.setVisibility(View.GONE);
-        mMenu.setVisibility(View.VISIBLE);
+//        mShowRecyclerView = false;
+//
+//        mImageViewArrow.setImageDrawable(App
+//                .getContext()
+//                .getResources()
+//                .getDrawable(R.drawable.ic_arrow_drop_down));
+//
+//        mRecyclerView.setVisibility(View.GONE);
+//        mMenu.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.header)

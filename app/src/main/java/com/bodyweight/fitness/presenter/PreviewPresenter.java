@@ -6,7 +6,10 @@ import java.io.Serializable;
 import com.bodyweight.fitness.model.Routine;
 import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.view.PreviewView;
+
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 
 public class PreviewPresenter extends IPresenter<PreviewView> implements Serializable {
@@ -26,10 +29,10 @@ public class PreviewPresenter extends IPresenter<PreviewView> implements Seriali
                                 .getResources()
                                 .getIdentifier(exercise.getId(), "drawable", mView.getContext().getPackageName());
 
-//                        Glide.with(getContext())
-//                                .load(identifier)
-//                                .crossFade()
-//                                .into(imageViewTarget);
+                        Glide.with(getContext())
+                                .load(identifier)
+                                .crossFade()
+                                .into(imageViewTarget);
                     } else {
                         String filePath = String.format("%s%s%s%s%s.gif",
                                 FileDownloadUtils.getDefaultSaveRootPath(),
@@ -38,10 +41,10 @@ public class PreviewPresenter extends IPresenter<PreviewView> implements Seriali
                                 File.separator,
                                 exercise.getGifId());
 
-//                        Glide.with(getContext())
-//                                .load(new File(filePath))
-//                                .crossFade()
-//                                .into(imageViewTarget);
+                        Glide.with(getContext())
+                                .load(new File(filePath))
+                                .crossFade()
+                                .into(imageViewTarget);
                     }
                 }));
     }

@@ -5,36 +5,11 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.widget.RelativeLayout
-import rx.Subscription
-import java.io.Serializable
-import java.util.*
 
-abstract class Presenter : Serializable {
-    @Transient
-    private val mSubscriptions: ArrayList<Subscription> = ArrayList()
-
-    @Transient
-    var mView: AbstractView? = null
-
-    open fun bindView(view: AbstractView) {
-        mView = view
-    }
-
-    open fun removeView() {
-        for (s in mSubscriptions) {
-            s.unsubscribe()
-        }
-
-        mSubscriptions.clear()
-    }
-
-    fun subscribe(subscription: Subscription) {
-        mSubscriptions.add(subscription)
-    }
-}
+import com.bodyweight.fitness.presenter.AbstractPresenter
 
 abstract class AbstractView : RelativeLayout {
-    abstract var mPresenter: Presenter
+    abstract var mAbstractPresenter: AbstractPresenter
 
     val superStateKey = "superState"
     val presenterKey = "presenter"
@@ -46,27 +21,27 @@ abstract class AbstractView : RelativeLayout {
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        mPresenter.bindView(this)
+        mAbstractPresenter.bindView(this)
     }
 
     override fun onSaveInstanceState(): Parcelable? {
         val state = Bundle()
 
         state.putParcelable(superStateKey, super.onSaveInstanceState());
-        state.putSerializable(presenterKey, mPresenter);
+        state.putSerializable(presenterKey, mAbstractPresenter);
 
         return state;
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {
-        mPresenter.removeView()
+        mAbstractPresenter.removeView()
 
         if (state is Bundle) {
-            mPresenter = state.getSerializable(presenterKey) as Presenter
+            mAbstractPresenter = state.getSerializable(presenterKey) as AbstractPresenter
 
             super.onRestoreInstanceState(state.getParcelable(superStateKey))
         }
 
-        mPresenter.bindView(this)
+        mAbstractPresenter.bindView(this)
     }
 }

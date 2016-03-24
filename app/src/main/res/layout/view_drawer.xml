@@ -53,7 +53,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/ic_arrow_drop_down"/>
+                        android:src="@drawable/ic_arrow_drop_down"
+                        android:visibility="gone"/>
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
