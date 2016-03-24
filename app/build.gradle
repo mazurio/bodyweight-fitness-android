@@ -107,7 +107,6 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.0'
 
     compile 'com.liulishuo.filedownloader:library:0.2.0'
-    compile 'com.github.paolorotolo:appintro:3.4.0'
     compile 'com.github.johnkil.android-robototextview:robototextview:2.3.0'
     compile 'com.gordonwong:material-sheet-fab:1.2'
     compile 'com.github.bmarrdev:android-DecoView-charting:v0.9.4'
