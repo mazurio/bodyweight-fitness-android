@@ -39,7 +39,7 @@ public class ProgressActivity extends AppCompatActivity {
 
         ButterKnife.inject(this);
 
-        String primaryKeyRoutineId = getIntent().getStringExtra(Constants.PRIMARY_KEY_ROUTINE_ID);
+        String primaryKeyRoutineId = getIntent().getStringExtra(Constants.INSTANCE.getPRIMARY_KEY_ROUTINE_ID());
 
         buildRoutine(primaryKeyRoutineId);
 

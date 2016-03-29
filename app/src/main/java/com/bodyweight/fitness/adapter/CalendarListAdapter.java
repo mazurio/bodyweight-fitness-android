@@ -120,7 +120,7 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @SuppressWarnings("unused")
         public void onClickViewButton(View view) {
             Intent intent = new Intent(view.getContext(), ProgressActivity.class);
-            intent.putExtra(Constants.PRIMARY_KEY_ROUTINE_ID, mRepositoryRoutine.getId());
+            intent.putExtra(Constants.INSTANCE.getPRIMARY_KEY_ROUTINE_ID(), mRepositoryRoutine.getId());
 
             view.getContext().startActivity(intent);
         }

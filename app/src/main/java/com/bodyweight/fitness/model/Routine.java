@@ -138,8 +138,16 @@ public class Routine implements Serializable {
         return mRoutineId;
     }
 
+    public void setTitle(String title) {
+        mTitle = title;
+    }
+
     public String getTitle() {
         return mTitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        mSubtitle = subtitle;
     }
 
     public String getSubtitle() {

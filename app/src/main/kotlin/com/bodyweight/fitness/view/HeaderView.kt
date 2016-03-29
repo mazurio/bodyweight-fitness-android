@@ -8,7 +8,7 @@ import com.bodyweight.fitness.presenter.HeaderPresenter
 
 import kotlinx.android.synthetic.main.activity_main_header.view.*
 
-class HeaderView : AbstractView {
+open class HeaderView : AbstractView {
     override var mAbstractPresenter: AbstractPresenter = HeaderPresenter()
 
     constructor(context: Context) : super(context)

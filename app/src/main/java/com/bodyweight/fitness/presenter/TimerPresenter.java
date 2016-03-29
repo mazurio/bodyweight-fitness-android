@@ -272,7 +272,7 @@ public class TimerPresenter extends IPresenter<TimerView> {
 
             int numberOfSets = mRepositoryExercise.getSets().size();
 
-            if(numberOfSets >= Constants.MAXIMUM_NUMBER_OF_SETS) {
+            if(numberOfSets >= Constants.INSTANCE.getMAXIMUM_NUMBER_OF_SETS()) {
                 realm.cancelTransaction();
 
                 return false;

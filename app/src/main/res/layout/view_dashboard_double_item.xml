@@ -13,7 +13,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginRight="16dp">
 
             <Button
                 android:id="@+id/left_exercise_button"
@@ -33,7 +34,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginLeft="16dp">
 
             <Button
                 android:id="@+id/right_exercise_button"

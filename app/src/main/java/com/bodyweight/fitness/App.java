@@ -19,7 +19,6 @@ import io.fabric.sdk.android.Fabric;
  * TODO BUG: ProgressActivity missing items sometimes.
  * TODO: Move to Dagger 2 injection rather than using getInstance singletons.
  * TODO: If your default routine does not exist - revert back.
- * TODO: With new Realm we can now migrate current POJOs to use RealmObjects only.
  * TODO: Move to BottomSheets instead of dialogs for Logging Workouts.
  */
 public class App extends Application {

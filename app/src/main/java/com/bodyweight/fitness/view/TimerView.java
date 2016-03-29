@@ -76,8 +76,8 @@ public class TimerView extends LinearLayout {
 
         Bundle state = new Bundle();
 
-        state.putParcelable(Constants.SUPER_STATE_KEY, super.onSaveInstanceState());
-        state.putSerializable(Constants.PRESENTER_KEY, mPresenter);
+        state.putParcelable(Constants.INSTANCE.getSUPER_STATE_KEY(), super.onSaveInstanceState());
+        state.putSerializable(Constants.INSTANCE.getPRESENTER_KEY(), mPresenter);
 
         return state;
     }
@@ -88,9 +88,9 @@ public class TimerView extends LinearLayout {
         mPresenter = null;
 
         if (state instanceof Bundle) {
-            mPresenter = (TimerPresenter) ((Bundle) state).getSerializable(Constants.PRESENTER_KEY);
+            mPresenter = (TimerPresenter) ((Bundle) state).getSerializable(Constants.INSTANCE.getPRESENTER_KEY());
 
-            super.onRestoreInstanceState(((Bundle) state).getParcelable(Constants.SUPER_STATE_KEY));
+            super.onRestoreInstanceState(((Bundle) state).getParcelable(Constants.INSTANCE.getSUPER_STATE_KEY()));
 
             mPresenter.onRestoreInstanceState(this);
         }

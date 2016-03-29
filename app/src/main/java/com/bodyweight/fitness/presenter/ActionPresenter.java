@@ -114,7 +114,7 @@ public class ActionPresenter extends IPresenter<ActionView> {
 
         getContext().startActivity(
                 new Intent(getContext(), ProgressActivity.class)
-                        .putExtra(Constants.PRIMARY_KEY_ROUTINE_ID, routineId)
+                        .putExtra(Constants.INSTANCE.getPRIMARY_KEY_ROUTINE_ID(), routineId)
         );
     }
 

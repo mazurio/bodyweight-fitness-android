@@ -247,7 +247,7 @@ public class LogWorkoutDialog {
     public boolean shouldAddSet() {
         int numberOfSets = mViewSets.size();
 
-        if(numberOfSets >= Constants.MAXIMUM_NUMBER_OF_SETS) {
+        if(numberOfSets >= Constants.INSTANCE.getMAXIMUM_NUMBER_OF_SETS()) {
             return false;
         }
 
@@ -458,7 +458,7 @@ public class LogWorkoutDialog {
 
         Menu menu = mToolbar.getMenu();
 
-        if(numberOfSets >= Constants.MAXIMUM_NUMBER_OF_SETS) {
+        if(numberOfSets >= Constants.INSTANCE.getMAXIMUM_NUMBER_OF_SETS()) {
             menu.findItem(R.id.action_add_set).setVisible(false);
             menu.findItem(R.id.action_add_timed_set).setVisible(false);
         } else if (numberOfSets == 1) {
