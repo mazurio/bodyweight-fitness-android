@@ -47,7 +47,7 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        mRecyclerView.scrollToPosition(mDashboardAdapter.getScrollPosition());
+//        mRecyclerView.scrollToPosition(mDashboardAdapter.getScrollPosition());
     }
 
     @Override

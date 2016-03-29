@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.bodyweight.fitness.R;
+import com.bodyweight.fitness.model.Category;
 import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.LinkedRoutine;
 import com.bodyweight.fitness.model.Routine;
@@ -68,22 +69,36 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         int index = 0;
         boolean skip = false;
 
+        HashSet<Category> categorySet = new HashSet<>();
         HashSet<Section> set = new HashSet<>();
+
+        boolean firstInSection;
+
         for (Exercise exercise : mRoutine.getLinkedExercises()) {
             if (skip) {
                 skip = false;
             } else {
+                if (!categorySet.contains(exercise.getCategory())) {
+                    categorySet.add(exercise.getCategory());
+                    mMap.put(index, new Tuple(exercise.getCategory()));
+
+                    index++;
+                }
+
                 if (!set.contains(exercise.getSection())) {
                     set.add(exercise.getSection());
                     mMap.put(index, new Tuple(exercise.getSection()));
 
+                    firstInSection = true;
                     index++;
+                } else {
+                    firstInSection = false;
                 }
 
                 if (exercise.getSection().getSectionMode().equals(SectionMode.ALL)
                         && exercise.getNext() != null
                         && exercise.getNext().getSection().equals(exercise.getSection())
-                        && index % 2 == 0) {
+                        && !firstInSection) {
                     mMap.put(index, new Tuple(exercise, exercise.getNext()));
 
                     if (exercise.equals(currentExercise) || exercise.getNext().equals(currentExercise)) {
@@ -135,6 +150,13 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
             );
         }
 
+        if (viewType == 3) {
+            return new DashboardCategoryPresenter(
+                    LayoutInflater.from(parent.getContext()).inflate(
+                            R.layout.view_dashboard_category, parent, false)
+            );
+        }
+
         if (viewType == 2) {
             return new DashboardDoubleItemPresenter(
                     LayoutInflater.from(parent.getContext()).inflate(
@@ -170,6 +192,10 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
             return 1;
         }
 
+        if (tuple.left.getType().equals(RoutineType.CATEGORY)) {
+            return 3;
+        }
+
         if (tuple.right != null) {
             return 2;
         }
@@ -199,6 +225,24 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         }
 
         public abstract void onBindView(Tuple tuple);
+    }
+
+    public class DashboardCategoryPresenter extends DashboardAbstractPresenter {
+        @InjectView(R.id.category_title)
+        TextView mCategoryTitle;
+
+        public DashboardCategoryPresenter(View itemView) {
+            super(itemView);
+
+            ButterKnife.inject(this, itemView);
+        }
+
+        @Override
+        public void onBindView(Tuple tuple) {
+            Category category = (Category) tuple.left;
+
+            mCategoryTitle.setText(category.getTitle());
+        }
     }
 
     public class DashboardSectionPresenter extends DashboardAbstractPresenter {

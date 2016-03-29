@@ -6,21 +6,30 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:layout_centerInParent="true"
-        android:background="@drawable/section">
+        android:layout_centerInParent="true">
 
         <com.devspark.robototextview.widget.RobotoTextView
             android:id="@+id/section_title"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text="Section Name"
+            android:textColor="#3C3C3C"
+            android:textSize="15dp"
+            app:typeface="roboto_regular"/>
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/section_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/section_title"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Section Description"
             android:textColor="#3C3C3C"
             android:textSize="15dp"
             app:typeface="roboto_regular"/>
