@@ -17,6 +17,7 @@ import com.bodyweight.fitness.model.repository.RepositoryExercise;
 import com.bodyweight.fitness.model.repository.RepositorySet;
 import com.bodyweight.fitness.stream.RepositoryStream;
 import com.bodyweight.fitness.stream.RoutineStream;
+import com.bodyweight.fitness.utils.Logger;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -67,7 +68,7 @@ public class DashboardActivity extends AppCompatActivity {
             }
         }
 
-        mBottomText.setText(String.format("Completed %s out of %s exercises - keep going!", mCompletedExercises, mTotalExercises));
+        mBottomText.setText(String.format("Completed %s out of %s exercises", mCompletedExercises, mTotalExercises));
     }
 
     public boolean isCompleted(RepositoryExercise repositoryExercise) {
