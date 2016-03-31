@@ -190,12 +190,18 @@ public class Routine implements Serializable {
             currentSectionExercise.setPrevious(null);
             currentSectionExercise.setNext(null);
 
+            /**
+             * TODO: When moving models to Kotlin: UNIT TEST IT.
+             */
             int indexOfCurrentExercise = mLinkedRoutine.indexOf(currentSectionExercise);
-            if(indexOfCurrentExercise == -1) {
-                return;
+            if(indexOfCurrentExercise > -1) {
+                mLinkedRoutine.set(indexOfCurrentExercise, exercise);
             }
 
-            mLinkedRoutine.set(indexOfCurrentExercise, exercise);
+            int indexOfLinkedExercise = mLinkedExercises.indexOf(currentSectionExercise);
+            if (indexOfLinkedExercise > -1) {
+                mLinkedExercises.set(indexOfLinkedExercise, exercise);
+            }
         }
     }
 

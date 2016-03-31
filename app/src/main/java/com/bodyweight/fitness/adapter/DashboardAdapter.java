@@ -78,12 +78,12 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
             if (skip) {
                 skip = false;
             } else {
-                if (!categorySet.contains(exercise.getCategory())) {
-                    categorySet.add(exercise.getCategory());
-                    mMap.put(index, new Tuple(exercise.getCategory()));
-
-                    index++;
-                }
+//                if (!categorySet.contains(exercise.getCategory())) {
+//                    categorySet.add(exercise.getCategory());
+//                    mMap.put(index, new Tuple(exercise.getCategory()));
+//
+//                    index++;
+//                }
 
                 if (!set.contains(exercise.getSection())) {
                     set.add(exercise.getSection());
@@ -259,7 +259,11 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         public void onBindView(Tuple tuple) {
             Section section = (Section) tuple.left;
 
-            mSectionTitle.setText(String.format("%s 0/8", section.getTitle()));
+            if (section.getSectionMode().equals(SectionMode.ALL)) {
+                mSectionTitle.setText(String.format("%s 0/8", section.getTitle()));
+            } else {
+                mSectionTitle.setText(section.getTitle());
+            }
         }
     }
 
@@ -269,6 +273,9 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
 
         @InjectView(R.id.exercise_title)
         TextView mExerciseTitle;
+
+        @InjectView(R.id.exercise_level)
+        TextView mExerciseLevel;
 
         private Exercise mExercise;
 
@@ -287,18 +294,30 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
                         .getResources()
                         .getDrawable(R.drawable.circle_done));
             } else {
-                if (mExercise.getSection().getSectionMode().equals(SectionMode.ALL)) {
-                    mExerciseButton.setBackgroundDrawable(itemView.getContext()
-                            .getResources()
-                            .getDrawable(R.drawable.circle));
-                } else {
-                    mExerciseButton.setBackgroundDrawable(itemView.getContext()
-                            .getResources()
-                            .getDrawable(R.drawable.circle_level));
-                }
+                mExerciseButton.setBackgroundDrawable(itemView.getContext()
+                        .getResources()
+                        .getDrawable(R.drawable.circle));
+
+//                if (mExercise.getSection().getSectionMode().equals(SectionMode.ALL)) {
+//                    mExerciseButton.setBackgroundDrawable(itemView.getContext()
+//                            .getResources()
+//                            .getDrawable(R.drawable.circle));
+//                } else {
+//                    mExerciseButton.setBackgroundDrawable(itemView.getContext()
+//                            .getResources()
+//                            .getDrawable(R.drawable.circle_level));
+//                }
             }
 
-            mExerciseTitle.setText(mExercise.getTitle());
+            if (mExercise.getSection().getSectionMode().equals(SectionMode.LEVELS)) {
+                mExerciseTitle.setText(mExercise.getTitle());
+
+                mExerciseLevel.setText(String.format("%s/%s", mExercise.getLevel(), mExercise.getSection().getExercises().size()));
+                mExerciseLevel.setVisibility(View.VISIBLE);
+            } else {
+                mExerciseTitle.setText(mExercise.getTitle());
+                mExerciseLevel.setVisibility(View.GONE);
+            }
         }
 
         @OnClick(R.id.exercise_button)

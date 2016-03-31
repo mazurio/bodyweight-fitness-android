@@ -17,9 +17,8 @@ import io.fabric.sdk.android.Fabric;
  * TODO: Update all gif videos to match 16:9 format.
  * TODO: Update videos for Antranik new video.
  * TODO BUG: ProgressActivity missing items sometimes.
- * TODO: Move to Dagger 2 injection rather than using getInstance singletons.
  * TODO: If your default routine does not exist - revert back.
- * TODO: Move to BottomSheets instead of dialogs for Logging Workouts.
+ * TODO: Move to BottomSheets instead of dialogs for Logging Workouts and Choosing Levels.
  */
 public class App extends Application {
     private static Context mContext;
