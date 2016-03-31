@@ -20,7 +20,7 @@ android {
     buildToolsVersion '24.0.0 rc2'
     defaultConfig {
         applicationId 'com.bodyweight.fitness'
-        minSdkVersion 14
+        minSdkVersion 19
         targetSdkVersion 23
     }
     compileOptions {

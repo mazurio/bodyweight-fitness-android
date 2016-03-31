@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -12,8 +14,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import android.transition.Fade;
+import android.transition.TransitionManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.bodyweight.fitness.stream.RepositoryStream;
@@ -169,12 +175,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 //                    ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
 //                            MainActivity.this,
 //                            findViewById(R.id.start_stop_timer_button),
-//                            "profile"
+//                            "dashboard"
 //                    );
 
                     startActivity(new Intent(this, DashboardActivity.class));
+//                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
-//                    ActivityCompat.startActivity(this, new Intent(this, DashboardActivity.class), activityOptionsCompat.toBundle());
+//                    ActivityCompat.startActivity(this,
+//                            new Intent(this, DashboardActivity.class), activityOptionsCompat.toBundle());
                 });
 
 
