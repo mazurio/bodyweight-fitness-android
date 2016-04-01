@@ -79,8 +79,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp">
+                    android:layout_height="wrap_content">
 
                     <com.devspark.robototextview.widget.RobotoTextView
                         android:id="@+id/workout_length_label"
@@ -103,19 +102,41 @@
                         app:typeface="roboto_regular"/>
                 </RelativeLayout>
 
-                <com.devspark.robototextview.widget.RobotoTextView
-                    android:id="@+id/bottom_text"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:textSize="14dp"
-                    android:textColor="#3C3C3C"
-                    android:text="Completed 1 out of 20 exercises - keep going!"
-                    app:typeface="roboto_regular"/>
+                    android:layout_marginBottom="8dp">
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/completed_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:textSize="14dp"
+                        android:textColor="#3C3C3C"
+                        android:text="Completed: "
+                        app:typeface="roboto_bold"/>
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/completed_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/completed_label"
+                        android:textSize="14dp"
+                        android:textColor="#3C3C3C"
+                        android:text="1h 10m"
+                        app:typeface="roboto_regular"/>
+                </RelativeLayout>
             </LinearLayout>
         </android.support.v7.widget.Toolbar>
 
+        <com.bodyweight.fitness.view.graph.LineView
+            android:id="@+id/line_view"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"/>
     </android.support.design.widget.AppBarLayout>
 </android.support.design.widget.CoordinatorLayout>

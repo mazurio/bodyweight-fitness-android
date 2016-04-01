@@ -27,6 +27,10 @@
             android:title="Automatically log time"
             android:summary="Logs workout time automatically for timed exercises"
             android:defaultValue="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="FAQ">
 
         <Preference
             android:title="Frequently Asked Questions"

@@ -17,6 +17,7 @@
             android:id="@+id/action_menu_change_routine"
             android:checked="false"
             android:icon="@drawable/ic_download"
+            android:visible="false"
             android:title="Download Routines" />
     </group>
 

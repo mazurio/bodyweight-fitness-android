@@ -18,6 +18,9 @@ import com.bodyweight.fitness.model.repository.RepositorySet;
 import com.bodyweight.fitness.stream.RepositoryStream;
 import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.utils.Logger;
+import com.bodyweight.fitness.view.graph.LineView;
+
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -27,14 +30,32 @@ public class DashboardActivity extends AppCompatActivity {
     private LinearLayoutManager mLinearLayoutManager;
     private RecyclerView mRecyclerView;
 
-    @InjectView(R.id.bottom_text)
-    TextView mBottomText;
+    @InjectView(R.id.completed_text)
+    TextView mCompletedText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_dashboard);
+
+
+        final LineView lineView = (LineView) findViewById(R.id.line_view);
+
+        ArrayList<String> test = new ArrayList<String>();
+
+        test.add("Mon");
+        test.add("Tue");
+        test.add("Wed");
+        test.add("Thu");
+        test.add("Fri");
+        test.add("Sat");
+        test.add("Sun");
+
+        lineView.setBottomTextList(test);
+        lineView.setDrawDotLine(true);
+
+        randomSet(lineView);
 
         ButterKnife.inject(this);
 
@@ -68,7 +89,28 @@ public class DashboardActivity extends AppCompatActivity {
             }
         }
 
-        mBottomText.setText(String.format("Completed %s out of %s exercises", mCompletedExercises, mTotalExercises));
+        mCompletedText.setText(String.format("%s out of %s exercises", mCompletedExercises, mTotalExercises));
+    }
+
+    private void randomSet(LineView lineView){
+        ArrayList<Integer> dataList = new ArrayList<Integer>();
+
+        dataList.add(0);
+        dataList.add(0);
+        dataList.add(1);
+        dataList.add(0);
+        dataList.add(1);
+        dataList.add(0);
+        dataList.add(0);
+
+        ArrayList<Integer> dataList2 = new ArrayList<Integer>();
+
+        ArrayList<ArrayList<Integer>> dataLists = new ArrayList<ArrayList<Integer>>();
+
+        dataLists.add(dataList);
+//        dataLists.add(dataList2);
+
+        lineView.setDataList(dataLists);
     }
 
     public boolean isCompleted(RepositoryExercise repositoryExercise) {
@@ -91,13 +133,7 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        int position = mDashboardAdapter.getScrollPosition();
-
-        if (position > 0) {
-            position -= 1;
-        }
-
-        mRecyclerView.scrollToPosition(position);
+        mRecyclerView.scrollToPosition(mDashboardAdapter.getScrollPosition());
     }
 
     @Override
