@@ -48,10 +48,10 @@ public class ActionPresenter extends IPresenter<ActionView> {
                .getExerciseObservable()
                .subscribe(exercise -> {
                    if (exercise.hasProgressions()) {
-                       mView.setActionButtonImageDrawable(R.drawable.ic_assessment_white_24dp);
+                       mView.setActionButtonImageDrawable(R.drawable.action_progression_white);
                        mView.showActionSheetChooseProgression();
                    } else {
-                       mView.setActionButtonImageDrawable(R.drawable.ic_add_white_24dp);
+                       mView.setActionButtonImageDrawable(R.drawable.action_add);
                        mView.hideActionSheetChooseProgression();
                    }
                }));

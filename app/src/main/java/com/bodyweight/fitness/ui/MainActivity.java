@@ -124,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             actionBar.setElevation(0);
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

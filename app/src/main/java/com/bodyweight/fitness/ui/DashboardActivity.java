@@ -5,14 +5,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.bodyweight.fitness.R;
-import com.bodyweight.fitness.adapter.DashboardAdapter;
 import com.bodyweight.fitness.adapter.DashboardPagerAdapter;
 import com.bodyweight.fitness.model.Category;
 import com.bodyweight.fitness.model.Exercise;
@@ -21,10 +18,6 @@ import com.bodyweight.fitness.model.repository.RepositoryExercise;
 import com.bodyweight.fitness.model.repository.RepositorySet;
 import com.bodyweight.fitness.stream.RepositoryStream;
 import com.bodyweight.fitness.stream.RoutineStream;
-import com.bodyweight.fitness.utils.Logger;
-import com.bodyweight.fitness.view.graph.LineView;
-
-import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;

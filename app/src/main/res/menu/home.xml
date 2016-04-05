@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/action_dashboard"
         android:title="@string/action_dashboard"
-        android:icon="@drawable/ic_dashboard"
+        android:icon="@drawable/action_dashboard"
         android:orderInCategory="10"
         app:showAsAction="always" />
 </menu>

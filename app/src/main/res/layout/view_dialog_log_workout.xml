@@ -84,7 +84,7 @@
                         android:layout_alignParentTop="true"
                         android:paddingBottom="16dp"
                         android:background="@null"
-                        android:src="@drawable/ic_keyboard_arrow_up_grey_600_36dp"/>
+                        app:srcCompat="@drawable/action_arrow_up"/>
 
                     <com.devspark.robototextview.widget.RobotoTextView
                         android:id="@+id/repsValue"
@@ -122,7 +122,7 @@
                         android:layout_alignParentBottom="true"
                         android:paddingTop="16dp"
                         android:background="@null"
-                        android:src="@drawable/ic_keyboard_arrow_down_grey_600_36dp"/>
+                        app:srcCompat="@drawable/action_arrow_down"/>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -137,7 +137,7 @@
                         android:layout_alignParentTop="true"
                         android:paddingBottom="16dp"
                         android:background="@null"
-                        android:src="@drawable/ic_keyboard_arrow_up_grey_600_36dp"/>
+                        app:srcCompat="@drawable/action_arrow_up"/>
 
                     <com.devspark.robototextview.widget.RobotoTextView
                         android:id="@+id/weightValue"
@@ -175,7 +175,7 @@
                         android:layout_alignParentBottom="true"
                         android:paddingTop="16dp"
                         android:background="@null"
-                        android:src="@drawable/ic_keyboard_arrow_down_grey_600_36dp"/>
+                        app:srcCompat="@drawable/action_arrow_down"/>
                 </RelativeLayout>
             </LinearLayout>
 

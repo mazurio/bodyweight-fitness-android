@@ -17,7 +17,7 @@
         android:layout_weight=".20"
         android:background="@drawable/view_action_exercise_drawable"
         android:scaleType="center"
-        android:src="@drawable/ic_prev"/>
+        app:srcCompat="@drawable/action_arrow_left"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -70,7 +70,7 @@
                 android:layout_centerInParent="true"
                 android:layout_toLeftOf="@+id/start_stop_timer_button"
                 android:layout_marginRight="12dp"
-                android:src="@drawable/ic_add"
+                app:srcCompat="@drawable/action_add"
                 app:borderWidth="0dp"
                 app:elevation="0dp"
                 app:fabSize="mini"/>
@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_play"
+                app:srcCompat="@drawable/action_play"
                 android:layout_centerInParent="true"
                 app:borderWidth="0dp"
                 app:elevation="@dimen/view_action_elevation"/>
@@ -90,10 +90,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_refresh"
                 android:layout_centerInParent="true"
                 android:layout_toRightOf="@+id/start_stop_timer_button"
                 android:layout_marginLeft="12dp"
+                app:srcCompat="@drawable/action_refresh"
                 app:borderWidth="0dp"
                 app:elevation="0dp"
                 app:fabSize="mini"/>
@@ -107,5 +107,5 @@
         android:layout_weight=".20"
         android:background="@drawable/view_action_exercise_drawable"
         android:scaleType="center"
-        android:src="@drawable/ic_next"/>
+        app:srcCompat="@drawable/action_arrow_right"/>
 </com.bodyweight.fitness.view.TimerView>

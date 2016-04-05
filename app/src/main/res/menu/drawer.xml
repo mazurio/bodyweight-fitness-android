@@ -4,19 +4,19 @@
         <item
             android:id="@+id/action_menu_home"
             android:checked="true"
-            android:icon="@drawable/ic_home"
+            android:icon="@drawable/action_home"
             android:title="Home" />
 
         <item
             android:id="@+id/action_menu_workout_log"
             android:checked="false"
-            android:icon="@drawable/ic_event"
+            android:icon="@drawable/action_calendar"
             android:title="Workout Log" />
 
         <item
             android:id="@+id/action_menu_change_routine"
             android:checked="false"
-            android:icon="@drawable/ic_download"
+            android:icon="@drawable/action_download"
             android:visible="false"
             android:title="Download Routines" />
     </group>

@@ -130,13 +130,13 @@ public class TimerView extends LinearLayout {
 
     public void showPlaying() {
         mStartStopTimerButton.setImageDrawable(
-                getResources().getDrawable(R.drawable.ic_pause)
+                getResources().getDrawable(R.drawable.action_pause)
         );
     }
 
     public void showPaused() {
         mStartStopTimerButton.setImageDrawable(
-                getResources().getDrawable(R.drawable.ic_play)
+                getResources().getDrawable(R.drawable.action_play)
         );
     }
 
