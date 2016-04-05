@@ -21,11 +21,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:orientation="vertical">
 
                 <com.devspark.robototextview.widget.RobotoTextView
-                    android:id="@+id/title"
+                    android:id="@+id/routine_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"
@@ -36,7 +35,7 @@
                     app:typeface="roboto_bold"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
-                    android:id="@+id/subtitle"
+                    android:id="@+id/routine_subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left"

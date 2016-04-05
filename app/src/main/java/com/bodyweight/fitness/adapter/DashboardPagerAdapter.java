@@ -13,16 +13,18 @@ import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.Routine;
 import com.bodyweight.fitness.stream.RoutineStream;
+import com.bodyweight.fitness.ui.DashboardActivity;
 
 public class DashboardPagerAdapter extends PagerAdapter {
+    private DashboardActivity mDashboardActivity;
+
     private Routine mRoutine;
     private Exercise mExercise;
 
-    public DashboardPagerAdapter() {
-        super();
-
-        mRoutine = RoutineStream.getInstance().getRoutine();
-        mExercise = RoutineStream.getInstance().getExercise();
+    public DashboardPagerAdapter(DashboardActivity dashboardActivity, Routine routine, Exercise exercise) {
+        mDashboardActivity = dashboardActivity;
+        mRoutine = routine;
+        mExercise = exercise;
     }
 
     @Override
@@ -41,7 +43,7 @@ public class DashboardPagerAdapter extends PagerAdapter {
         mDashboardAdapter = new DashboardAdapter(mRoutine, mExercise, position);
         mDashboardAdapter.setOnExerciseClickListener((exercise -> {
             RoutineStream.getInstance().setExercise(exercise);
-
+            mDashboardActivity.supportFinishAfterTransition();
 //            supportFinishAfterTransition();
         }));
 

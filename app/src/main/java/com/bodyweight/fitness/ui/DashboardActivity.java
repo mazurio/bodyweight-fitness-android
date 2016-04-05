@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.adapter.DashboardAdapter;
 import com.bodyweight.fitness.adapter.DashboardPagerAdapter;
+import com.bodyweight.fitness.model.Category;
 import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.Routine;
 import com.bodyweight.fitness.model.repository.RepositoryExercise;
@@ -29,9 +30,14 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class DashboardActivity extends AppCompatActivity {
-    private DashboardAdapter mDashboardAdapter;
-    private LinearLayoutManager mLinearLayoutManager;
-    private RecyclerView mRecyclerView;
+    @InjectView(R.id.routine_title)
+    TextView mRoutineTitle;
+
+    @InjectView(R.id.routine_subtitle)
+    TextView mRoutineSubtitle;
+
+    @InjectView(R.id.completed_text)
+    TextView mCompletedText;
 
     @InjectView(R.id.view_dashboard_pager)
     ViewPager mViewPager;
@@ -48,7 +54,13 @@ public class DashboardActivity extends AppCompatActivity {
 
         setToolbar();
 
-        mDashboardPagerAdapter = new DashboardPagerAdapter();
+        Routine routine = RoutineStream.getInstance().getRoutine();
+        Exercise exercise = RoutineStream.getInstance().getExercise();
+
+        mRoutineTitle.setText(routine.getTitle());
+        mRoutineSubtitle.setText(routine.getSubtitle());
+
+        mDashboardPagerAdapter = new DashboardPagerAdapter(this, routine, exercise);
 
         mViewPager.setOffscreenPageLimit(4);
         mViewPager.setAdapter(mDashboardPagerAdapter);
@@ -74,19 +86,27 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-//        int mTotalExercises = 0;
-//        int mCompletedExercises = 0;
-//        for(RepositoryExercise repositoryExercise : RepositoryStream.getInstance().getRepositoryRoutineForToday().getExercises()) {
-//            if (repositoryExercise.isVisible()) {
-//                if (isCompleted(repositoryExercise)) {
-//                    mCompletedExercises++;
-//                }
-//
-//                mTotalExercises++;
-//            }
-//        }
-//
-//        mCompletedText.setText(String.format("%s out of %s exercises", mCompletedExercises, mTotalExercises));
+        routine.getCategories();
+
+        Category category = exercise.getCategory();
+
+        int index = routine.getCategories().indexOf(category);
+
+        mViewPager.setCurrentItem(index);
+
+        int mTotalExercises = 0;
+        int mCompletedExercises = 0;
+        for(RepositoryExercise repositoryExercise : RepositoryStream.getInstance().getRepositoryRoutineForToday().getExercises()) {
+            if (repositoryExercise.isVisible()) {
+                if (isCompleted(repositoryExercise)) {
+                    mCompletedExercises++;
+                }
+
+                mTotalExercises++;
+            }
+        }
+
+        mCompletedText.setText(String.format("%s out of %s exercises", mCompletedExercises, mTotalExercises));
     }
 
     public boolean isCompleted(RepositoryExercise repositoryExercise) {
