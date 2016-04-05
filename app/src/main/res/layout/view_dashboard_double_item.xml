@@ -9,13 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:paddingBottom="16dp">
 
         <LinearLayout
             android:layout_width="125dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_gravity="center"
+            android:layout_marginRight="8dp"
             android:orientation="vertical">
 
             <Button
@@ -30,6 +32,7 @@
                 android:id="@+id/left_exercise_title"
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
+                android:lines="2"
                 android:paddingRight="8dp"
                 android:gravity="center"
                 android:layout_gravity="center"
@@ -43,6 +46,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
             android:orientation="vertical">
 
             <Button
@@ -57,6 +61,7 @@
                 android:id="@+id/right_exercise_title"
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
+                android:lines="2"
                 android:paddingLeft="8dp"
                 android:gravity="center"
                 android:layout_gravity="center"

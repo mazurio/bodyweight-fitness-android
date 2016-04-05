@@ -72,7 +72,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         HashSet<Category> categorySet = new HashSet<>();
         HashSet<Section> set = new HashSet<>();
 
-        boolean firstInSection;
+        boolean firstInSection = false;
 
         Category category = mRoutine.getCategories().get(position);
 
