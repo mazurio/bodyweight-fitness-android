@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -22,14 +23,16 @@
             android:background="@drawable/section"
             android:elevation="4dp">
 
-            <TextView
+            <com.devspark.robototextview.widget.RobotoTextView
                 android:id="@+id/section_title"
                 android:text="Dynamic Stretches"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:textSize="16dp"
                 android:textColor="#3C3C3C"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                app:typeface="roboto_regular"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

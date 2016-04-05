@@ -63,7 +63,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         return mScrollPosition;
     }
 
-    public DashboardAdapter(Routine currentRoutine, Exercise currentExercise) {
+    public DashboardAdapter(Routine currentRoutine, Exercise currentExercise, int position) {
         mRoutine = currentRoutine;
 
         int index = 0;
@@ -74,47 +74,44 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
 
         boolean firstInSection;
 
+        Category category = mRoutine.getCategories().get(position);
+
         for (Exercise exercise : mRoutine.getLinkedExercises()) {
             if (skip) {
                 skip = false;
             } else {
-//                if (!categorySet.contains(exercise.getCategory())) {
-//                    categorySet.add(exercise.getCategory());
-//                    mMap.put(index, new Tuple(exercise.getCategory()));
-//
-//                    index++;
-//                }
+                if (exercise.getCategory().equals(category)) {
+                    if (!set.contains(exercise.getSection())) {
+                        set.add(exercise.getSection());
+                        mMap.put(index, new Tuple(exercise.getSection()));
 
-                if (!set.contains(exercise.getSection())) {
-                    set.add(exercise.getSection());
-                    mMap.put(index, new Tuple(exercise.getSection()));
+                        firstInSection = true;
+                        index++;
+                    } else {
+                        firstInSection = false;
+                    }
 
-                    firstInSection = true;
+                    if (exercise.getSection().getSectionMode().equals(SectionMode.ALL)
+                            && exercise.getNext() != null
+                            && exercise.getNext().getSection().equals(exercise.getSection())
+                            && !firstInSection) {
+                        mMap.put(index, new Tuple(exercise, exercise.getNext()));
+
+                        if (exercise.equals(currentExercise) || exercise.getNext().equals(currentExercise)) {
+                            mScrollPosition = index;
+                        }
+
+                        skip = true;
+                    } else {
+                        mMap.put(index, new Tuple(exercise));
+
+                        if (exercise.equals(currentExercise)) {
+                            mScrollPosition = index;
+                        }
+                    }
+
                     index++;
-                } else {
-                    firstInSection = false;
                 }
-
-                if (exercise.getSection().getSectionMode().equals(SectionMode.ALL)
-                        && exercise.getNext() != null
-                        && exercise.getNext().getSection().equals(exercise.getSection())
-                        && !firstInSection) {
-                    mMap.put(index, new Tuple(exercise, exercise.getNext()));
-
-                    if (exercise.equals(currentExercise) || exercise.getNext().equals(currentExercise)) {
-                        mScrollPosition = index;
-                    }
-
-                    skip = true;
-                } else {
-                    mMap.put(index, new Tuple(exercise));
-
-                    if (exercise.equals(currentExercise)) {
-                        mScrollPosition = index;
-                    }
-                }
-
-                index++;
             }
         }
 
@@ -137,8 +134,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         if (mCompletedExercises > 0) {
             percent = ((mCompletedExercises / mTotalExercises) * 100);
         }
-
-        Logger.d(String.format("%d out of %d = %d", mCompletedExercises, mTotalExercises, percent));
     }
 
     @Override
@@ -260,7 +255,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
             Section section = (Section) tuple.left;
 
             if (section.getSectionMode().equals(SectionMode.ALL)) {
-                mSectionTitle.setText(String.format("%s 0/8", section.getTitle()));
+                mSectionTitle.setText(section.getTitle());
             } else {
                 mSectionTitle.setText(section.getTitle());
             }
@@ -269,7 +264,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
 
     public class DashboardSingleItemPresenter extends DashboardAbstractPresenter {
         @InjectView(R.id.exercise_button)
-        Button mExerciseButton;
+        View mExerciseButton;
 
         @InjectView(R.id.exercise_title)
         TextView mExerciseTitle;

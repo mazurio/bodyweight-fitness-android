@@ -1,6 +1,8 @@
 package com.bodyweight.fitness.ui;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.adapter.DashboardAdapter;
+import com.bodyweight.fitness.adapter.DashboardPagerAdapter;
 import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.Routine;
 import com.bodyweight.fitness.model.repository.RepositoryExercise;
@@ -30,8 +33,10 @@ public class DashboardActivity extends AppCompatActivity {
     private LinearLayoutManager mLinearLayoutManager;
     private RecyclerView mRecyclerView;
 
-    @InjectView(R.id.completed_text)
-    TextView mCompletedText;
+    @InjectView(R.id.view_dashboard_pager)
+    ViewPager mViewPager;
+
+    private DashboardPagerAdapter mDashboardPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,78 +44,49 @@ public class DashboardActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_dashboard);
 
-
-        final LineView lineView = (LineView) findViewById(R.id.line_view);
-
-        ArrayList<String> test = new ArrayList<String>();
-
-        test.add("Mon");
-        test.add("Tue");
-        test.add("Wed");
-        test.add("Thu");
-        test.add("Fri");
-        test.add("Sat");
-        test.add("Sun");
-
-        lineView.setBottomTextList(test);
-        lineView.setDrawDotLine(true);
-
-        randomSet(lineView);
-
         ButterKnife.inject(this);
 
         setToolbar();
 
-        Routine currentRoutine = RoutineStream.getInstance().getRoutine();
-        Exercise currentExercise = RoutineStream.getInstance().getExercise();
+        mDashboardPagerAdapter = new DashboardPagerAdapter();
 
-        mDashboardAdapter = new DashboardAdapter(currentRoutine, currentExercise);
-        mDashboardAdapter.setOnExerciseClickListener((exercise -> {
-            RoutineStream.getInstance().setExercise(exercise);
+        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.setAdapter(mDashboardPagerAdapter);
 
-            supportFinishAfterTransition();
-        }));
-
-        mLinearLayoutManager = new LinearLayoutManager(this);
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.view_dashboard_list);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mRecyclerView.setAdapter(mDashboardAdapter);
-
-        int mTotalExercises = 0;
-        int mCompletedExercises = 0;
-        for(RepositoryExercise repositoryExercise : RepositoryStream.getInstance().getRepositoryRoutineForToday().getExercises()) {
-            if (repositoryExercise.isVisible()) {
-                if (isCompleted(repositoryExercise)) {
-                    mCompletedExercises++;
-                }
-
-                mTotalExercises++;
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition(), true);
             }
-        }
 
-        mCompletedText.setText(String.format("%s out of %s exercises", mCompletedExercises, mTotalExercises));
-    }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-    private void randomSet(LineView lineView){
-        ArrayList<Integer> dataList = new ArrayList<Integer>();
+            }
 
-        dataList.add(0);
-        dataList.add(0);
-        dataList.add(1);
-        dataList.add(0);
-        dataList.add(1);
-        dataList.add(0);
-        dataList.add(0);
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                if (tab.getPosition() != 0) {
+//                    mDashboardPagerAdapter.onTabReselected(tab.getPosition());
+                }
+            }
+        });
 
-        ArrayList<Integer> dataList2 = new ArrayList<Integer>();
-
-        ArrayList<ArrayList<Integer>> dataLists = new ArrayList<ArrayList<Integer>>();
-
-        dataLists.add(dataList);
-//        dataLists.add(dataList2);
-
-        lineView.setDataList(dataLists);
+//        int mTotalExercises = 0;
+//        int mCompletedExercises = 0;
+//        for(RepositoryExercise repositoryExercise : RepositoryStream.getInstance().getRepositoryRoutineForToday().getExercises()) {
+//            if (repositoryExercise.isVisible()) {
+//                if (isCompleted(repositoryExercise)) {
+//                    mCompletedExercises++;
+//                }
+//
+//                mTotalExercises++;
+//            }
+//        }
+//
+//        mCompletedText.setText(String.format("%s out of %s exercises", mCompletedExercises, mTotalExercises));
     }
 
     public boolean isCompleted(RepositoryExercise repositoryExercise) {
@@ -133,7 +109,7 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        mRecyclerView.scrollToPosition(mDashboardAdapter.getScrollPosition());
+//        mRecyclerView.scrollToPosition(mDashboardAdapter.getScrollPosition());
     }
 
     @Override
@@ -155,8 +131,8 @@ public class DashboardActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
-            actionBar.setTitle("Bodyweight Fitness");
-            actionBar.setSubtitle("Recommended Routine");
+            actionBar.setTitle("");
+            actionBar.setSubtitle("");
             actionBar.setElevation(0);
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
             actionBar.setHomeButtonEnabled(true);

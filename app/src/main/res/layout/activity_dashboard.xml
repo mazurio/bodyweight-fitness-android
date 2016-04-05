@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/view_dashboard_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -22,13 +16,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/ic_close"
-            app:theme="@style/AppTheme.Dashboard.Toolbar"
-            app:layout_scrollFlags="scroll|enterAlways">
+            app:theme="@style/AppTheme.Dashboard.Toolbar">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <com.devspark.robototextview.widget.RobotoTextView
                     android:id="@+id/title"
@@ -54,57 +48,6 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
-
-                    <com.devspark.robototextview.widget.RobotoTextView
-                        android:id="@+id/start_time_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:textSize="14dp"
-                        android:textColor="#3C3C3C"
-                        android:text="Start Time: "
-                        app:typeface="roboto_bold"/>
-
-                    <com.devspark.robototextview.widget.RobotoTextView
-                        android:id="@+id/start_time_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/start_time_label"
-                        android:textSize="14dp"
-                        android:textColor="#3C3C3C"
-                        android:text="10:34"
-                        app:typeface="roboto_regular"/>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.devspark.robototextview.widget.RobotoTextView
-                        android:id="@+id/workout_length_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:textSize="14dp"
-                        android:textColor="#3C3C3C"
-                        android:text="Workout Length: "
-                        app:typeface="roboto_bold"/>
-
-                    <com.devspark.robototextview.widget.RobotoTextView
-                        android:id="@+id/workout_length_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/workout_length_label"
-                        android:textSize="14dp"
-                        android:textColor="#3C3C3C"
-                        android:text="1h 10m"
-                        app:typeface="roboto_regular"/>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp">
 
                     <com.devspark.robototextview.widget.RobotoTextView
@@ -124,19 +67,22 @@
                         android:layout_toRightOf="@+id/completed_label"
                         android:textSize="14dp"
                         android:textColor="#3C3C3C"
-                        android:text="1h 10m"
                         app:typeface="roboto_regular"/>
                 </RelativeLayout>
             </LinearLayout>
         </android.support.v7.widget.Toolbar>
 
-        <com.bodyweight.fitness.view.graph.LineView
-            android:id="@+id/line_view"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:visibility="gone"/>
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="#3c3c3c"
+            app:tabMode="fixed"/>
+
     </android.support.design.widget.AppBarLayout>
-</android.support.design.widget.CoordinatorLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_dashboard_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
