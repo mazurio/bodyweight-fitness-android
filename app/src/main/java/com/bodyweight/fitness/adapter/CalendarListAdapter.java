@@ -1,6 +1,5 @@
 package com.bodyweight.fitness.adapter;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -128,21 +127,17 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @OnClick(R.id.view_calendar_card_export_button)
         @SuppressWarnings("unused")
         public void onClickExportButton(View view) {
+            String title = exportTitle();
+            String content = exportHTML();
 
-            exportHTML();
-            exportCSV();
+            Intent sendIntent = new Intent();
 
-//            Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-//
-//            emailIntent.setType("*/*");
-//            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
-//                    "me@gmail.com"
-//            });
-//
-//            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Test Subject");
-//            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "go on read the emails");
-//
-//            itemView.getContext().startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TITLE, title);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, content);
+            sendIntent.setType("text/plain");
+
+            view.getContext().startActivity(sendIntent);
         }
 
         @OnClick(R.id.view_calendar_card_remove_button)
@@ -150,72 +145,106 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public void onClickRemoveButton(View view) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext())
                     .setTitle("Remove Logged Workout?")
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Realm realm = RepositoryStream.getInstance().getRealm();
+                    .setPositiveButton("Ok", (dialog, which) -> {
+                        Realm realm = RepositoryStream.getInstance().getRealm();
 
-                            RepositoryRoutine repositoryRoutine = realm.where(RepositoryRoutine.class)
-                                    .equalTo("id", mRepositoryRoutine.getId())
-                                    .findFirst();
+                        RepositoryRoutine repositoryRoutine = realm.where(RepositoryRoutine.class)
+                                .equalTo("id", mRepositoryRoutine.getId())
+                                .findFirst();
 
-                            realm.beginTransaction();
-                            repositoryRoutine.removeFromRealm();
-                            realm.commitTransaction();
+                        realm.beginTransaction();
+                        repositoryRoutine.removeFromRealm();
+                        realm.commitTransaction();
 
-                            notifyDataSetChanged();
-                        }
+                        notifyDataSetChanged();
                     })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    });
+                    .setNegativeButton("Cancel", (dialog, which) -> {});
 
             alertDialog.show();
         }
 
-        private void exportHTML() {
-            Logger.d("Hello, The following is your workout in Text/HTML format (CSV attached).");
-            Logger.d(String.format("Workout on %s.", new DateTime(mRepositoryRoutine.getStartTime()).toString("EEEE, d MMMM YYYY, HH:mm")));
-            Logger.d(String.format("Finished at %s.", new DateTime(mRepositoryRoutine.getLastUpdatedTime()).toString("HH:mm")));
-            Logger.d(String.format("Workout length: %s.", getWorkoutLength()));
-            Logger.d(String.format("\n%s - %s\n", mRepositoryRoutine.getTitle(), mRepositoryRoutine.getSubtitle()));
+        private String exportTitle() {
+            String title = "";
+
+            title += String.format("%s - %s - %s.",
+                    mRepositoryRoutine.getTitle(),
+                    mRepositoryRoutine.getSubtitle(),
+                    new DateTime(mRepositoryRoutine.getStartTime()).toString("EEEE, d MMMM YYYY - HH:mm")
+            );
+
+            return title;
         }
 
-        private void exportCSV() {
-            String header = "Date, Start Time, End Time, Workout Length, Routine, Exercise, Set Order, Weight, Weight Unit, Reps, Minutes, Seconds";
+        private String exportHTML() {
+            String content = "";
 
-            Logger.d(header);
+            content += "Hello, The following is your workout in Text/HTML format.";
 
-            String routineTitle = mRepositoryRoutine.getTitle() + " - " + mRepositoryRoutine.getSubtitle();
-            int index = 1;
+            content += String.format("\n\nWorkout on %s.", new DateTime(mRepositoryRoutine.getStartTime()).toString("EEEE, d MMMM YYYY - HH:mm"));
+            content += String.format("\nFinished at %s.", new DateTime(mRepositoryRoutine.getLastUpdatedTime()).toString("HH:mm"));
+            content += String.format("\nWorkout length: %s.", getWorkoutLength());
+            content += String.format("\n\n%s - %s", mRepositoryRoutine.getTitle(), mRepositoryRoutine.getSubtitle());
+
             for (RepositoryExercise exercise : mRepositoryRoutine.getExercises()) {
-                String title = exercise.getTitle();
-                String weightUnit = PreferenceUtils.getInstance().getWeightMeasurementUnit().toString();
+                if (exercise.isVisible()) {
+                    content += String.format("\n\n%s", exercise.getTitle());
 
-                for (RepositorySet set : exercise.getSets()) {
-                    Logger.d(String.format(
-                            "%s,%s,%s,%s,%s,%s,%d,%.2f,%s,%d,%s,%s\n",
-                            new DateTime(mRepositoryRoutine.getStartTime()).toString("EEEE d MMMM", Locale.ENGLISH),
-                            new DateTime(mRepositoryRoutine.getStartTime()).toString("HH:mm", Locale.ENGLISH),
-                            new DateTime(mRepositoryRoutine.getLastUpdatedTime()).toString("HH:mm", Locale.ENGLISH),
-                            getWorkoutLength(),
-                            routineTitle,
-                            title,
-                            index,
-                            set.getWeight(),
-                            weightUnit,
-                            set.getReps(),
-                            formatMinutes(set.getSeconds()),
-                            formatSeconds(set.getSeconds())
-                    ));
+                    String weightUnit = PreferenceUtils.getInstance().getWeightMeasurementUnit().toString();
+
+                    int index = 0;
+                    for (RepositorySet set : exercise.getSets()) {
+                        index++;
+
+                        content += String.format("\nSet %s", index);
+
+                        if (set.isTimed()) {
+                            content += String.format("\nMinutes: %s", formatMinutes(set.getSeconds()));
+                            content += String.format("\nSeconds: %s", formatSeconds(set.getSeconds()));
+                        } else {
+                            content += String.format("\nReps: %s", set.getReps());
+                            content += String.format("\nWeight: %s %s", set.getWeight(), weightUnit);
+                        }
+                    }
                 }
-
-                index += 1;
             }
+
+            return content;
         }
+
+//        private void exportCSV() {
+//            String header = "Date, Start Time, End Time, Workout Length, Routine, Exercise, Set Order, Weight, Weight Unit, Reps, Minutes, Seconds";
+//
+//            Logger.d(header);
+//
+//            String routineTitle = mRepositoryRoutine.getTitle() + " - " + mRepositoryRoutine.getSubtitle();
+//            int index = 1;
+//            for (RepositoryExercise exercise : mRepositoryRoutine.getExercises()) {
+//                if (exercise.isVisible()) {
+//                    String title = exercise.getTitle();
+//                    String weightUnit = PreferenceUtils.getInstance().getWeightMeasurementUnit().toString();
+//
+//                    for (RepositorySet set : exercise.getSets()) {
+//                        Logger.d(String.format(
+//                                "%s,%s,%s,%s,%s,%s,%d,%.2f,%s,%d,%s,%s\n",
+//                                new DateTime(mRepositoryRoutine.getStartTime()).toString("EEEE d MMMM", Locale.ENGLISH),
+//                                new DateTime(mRepositoryRoutine.getStartTime()).toString("HH:mm", Locale.ENGLISH),
+//                                new DateTime(mRepositoryRoutine.getLastUpdatedTime()).toString("HH:mm", Locale.ENGLISH),
+//                                getWorkoutLength(),
+//                                routineTitle,
+//                                title,
+//                                index,
+//                                set.getWeight(),
+//                                weightUnit,
+//                                set.getReps(),
+//                                formatMinutes(set.getSeconds()),
+//                                formatSeconds(set.getSeconds())
+//                        ));
+//                    }
+//
+//                    index += 1;
+//                }
+//            }
+//        }
 
         public String getWorkoutLength() {
             DateTime startTime = new DateTime(mRepositoryRoutine.getStartTime());
