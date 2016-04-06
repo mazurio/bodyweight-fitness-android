@@ -68,7 +68,8 @@
                     android:textSize="16sp"
                     android:textColor="#de000000"
                     android:drawablePadding="24dp"
-                    app:srcCompat="@drawable/action_shopping"
+                    android:drawableLeft="@drawable/state_shopping"
+                    android:drawableStart="@drawable/state_shopping"
                     android:text="Buy Equipment" />
 
                 <TextView
@@ -81,7 +82,8 @@
                     android:textSize="16sp"
                     android:textColor="#de000000"
                     android:drawablePadding="24dp"
-                    app:srcCompat="@drawable/action_movie"
+                    android:drawableLeft="@drawable/state_movie"
+                    android:drawableStart="@drawable/state_movie"
                     android:text="Watch on YouTube" />
 
                 <TextView
@@ -94,7 +96,8 @@
                     android:textSize="16sp"
                     android:textColor="#de000000"
                     android:drawablePadding="24dp"
-                    app:srcCompat="@drawable/action_progression"
+                    android:drawableLeft="@drawable/state_progression"
+                    android:drawableStart="@drawable/state_progression"
                     android:text="Choose Progression" />
 
                 <RelativeLayout
@@ -112,7 +115,8 @@
                         android:textSize="16sp"
                         android:textColor="#fff"
                         android:drawablePadding="24dp"
-                        app:srcCompat="@drawable/action_log_workout_white"
+                        android:drawableLeft="@drawable/state_log_workout"
+                        android:drawableStart="@drawable/state_log_workout"
                         android:text="Today's Workout" />
                 </RelativeLayout>
             </LinearLayout>

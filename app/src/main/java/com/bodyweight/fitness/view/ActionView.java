@@ -68,7 +68,13 @@ public class ActionView extends CoordinatorLayout {
         ButterKnife.inject(this);
 
         ViewUtils.resetFloatingActionButtonMargin(mActionViewLogWorkoutButton);
-        ViewUtils.resetFloatingActionButtonMargin(mActionViewActionButton);
+        ViewUtils.resetFloatingActionButtonMargin(
+                mActionViewActionButton,
+                0,
+                0,
+                12,
+                12
+        );
 
         mMaterialSheet = new MaterialSheetFab<>(
                 mActionViewActionButton,

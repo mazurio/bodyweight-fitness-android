@@ -27,4 +27,20 @@ public class ViewUtils {
             floatingActionButton.setLayoutParams(p);
         }
     }
+
+    public static void resetFloatingActionButtonMargin(
+            FloatingActionButton floatingActionButton,
+            int left,
+            int top,
+            int right,
+            int bottom
+    ) {
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) floatingActionButton.getLayoutParams();
+
+            p.setMargins(left, top, right, bottom);
+
+            floatingActionButton.setLayoutParams(p);
+        }
+    }
 }
