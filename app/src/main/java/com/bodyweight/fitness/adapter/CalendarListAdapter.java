@@ -181,7 +181,7 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             content += "Hello, The following is your workout in Text/HTML format.";
 
             content += String.format("\n\nWorkout on %s.", new DateTime(mRepositoryRoutine.getStartTime()).toString("EEEE, d MMMM YYYY - HH:mm"));
-            content += String.format("\nFinished at %s.", new DateTime(mRepositoryRoutine.getLastUpdatedTime()).toString("HH:mm"));
+            content += String.format("\nLast Updated at %s.", new DateTime(mRepositoryRoutine.getLastUpdatedTime()).toString("HH:mm"));
             content += String.format("\nWorkout length: %s.", getWorkoutLength());
             content += String.format("\n\n%s - %s", mRepositoryRoutine.getTitle(), mRepositoryRoutine.getSubtitle());
 
