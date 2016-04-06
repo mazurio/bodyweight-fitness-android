@@ -11,19 +11,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center">
-g
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:orientation="vertical"
-            android:background="@drawable/section"
-            android:elevation="5dp">
+            android:orientation="vertical">
 
             <com.devspark.robototextview.widget.RobotoTextView
                 android:id="@+id/section_title"
@@ -31,10 +27,22 @@ g
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:textSize="15dp"
-                android:textColor="#3C3C3C"
+                android:textSize="18dp"
+                android:textColor="#999999"
                 android:layout_gravity="center"
                 app:typeface="roboto_regular"/>
+
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:id="@+id/section_description"
+                android:text="Do all, 5-10 reps each"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingTop="4dp"
+                android:textSize="14dp"
+                android:textColor="#999999"
+                android:layout_gravity="center"
+                app:typeface="roboto_light"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

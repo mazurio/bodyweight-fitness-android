@@ -22,23 +22,24 @@
 
             <View
                 android:id="@+id/left_exercise_button"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_margin="16dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_margin="0dp"
                 android:gravity="center"
-                android:background="@drawable/dashboard_circle"
-                android:elevation="2dp"/>
+                android:background="@drawable/dashboard_circle_weighted"
+                android:elevation="4dp"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
                 android:id="@+id/left_exercise_title"
-                android:layout_width="125dp"
+                android:text="Exercise Title with super long title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:lines="2"
-                android:paddingRight="8dp"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:textSize="16dp"
-                android:textColor="#3C3C3C"
+                android:textColor="#4D4D4D"
                 app:typeface="roboto_regular"/>
         </LinearLayout>
 
@@ -50,24 +51,26 @@
             android:layout_marginLeft="8dp"
             android:orientation="vertical">
 
-            <Button
+            <View
                 android:id="@+id/right_exercise_button"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_margin="16dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_margin="0dp"
                 android:gravity="center"
-                android:background="@drawable/dashboard_circle"/>
+                android:background="@drawable/dashboard_circle_weighted"
+                android:elevation="4dp"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
                 android:id="@+id/right_exercise_title"
-                android:layout_width="125dp"
+                android:text="Exercise Title with super long title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:lines="2"
-                android:paddingLeft="8dp"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:textSize="16dp"
-                android:textColor="#3C3C3C"
+                android:textColor="#4D4D4D"
                 app:typeface="roboto_regular"/>
         </LinearLayout>
     </LinearLayout>

@@ -11,7 +11,7 @@
     {
       "sectionId": "section0",
       "title": "Dynamic Stretches",
-      "description": "Do all, 1x(5-10)",
+      "description": "Do all, 5-10 reps each",
       "type": "section",
       "mode": "all"
     },
@@ -36,7 +36,7 @@
     {
       "exerciseId": "exercise2",
       "id": "cat_camel",
-      "title": "Cat\/Camel Bends",
+      "title": "Camel Bends",
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "K9bK0BwKFjs",
@@ -81,7 +81,7 @@
     {
       "sectionId": "section1",
       "title": "Bodyline Drills",
-      "description": "Do all, 1x(10-60s) hold each",
+      "description": "Do all, 10-60s hold each",
       "type": "section",
       "mode": "all"
     },
@@ -97,7 +97,7 @@
     {
       "exerciseId": "exercise8",
       "id": "side_plank",
-      "title": "Side Plank (Both sides)",
+      "title": "Side Plank (Both Sides)",
       "description": "1x(10-60s) hold",
       "type": "exercise",
       "youTubeId": "xIFWxQgFMiE",
@@ -133,7 +133,7 @@
     {
       "sectionId": "section2",
       "title": "Activity",
-      "description": "Pick one, 1x(10-20)",
+      "description": "Pick one, 10-20 reps",
       "type": "section",
       "mode": "pick"
     },
