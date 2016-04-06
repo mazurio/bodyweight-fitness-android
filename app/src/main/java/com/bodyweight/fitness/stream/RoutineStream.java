@@ -30,27 +30,29 @@ public class RoutineStream {
     private final PublishSubject<Routine> mLevelChangedSubject = PublishSubject.create();
 
     private RoutineStream() {
-        String defaultRoutine = PreferenceUtils.getInstance().getDefaultRoutine();
+        setRoutine(R.raw.bodyweight_fitness_recommended_routine);
 
-        switch (defaultRoutine) {
-            case "routine-1564cc76-24fc-4a02-bc57-0c99e632f6af": {
-                setRoutine(R.raw.molding_mobility);
-
-                break;
-            }
-
-            case "routine-4afa306b-4026-44e4-90d9-913afead82ff": {
-                setRoutine(R.raw.starting_stretching);
-
-                break;
-            }
-
-            default: {
-                setRoutine(R.raw.beginner_routine);
-
-                break;
-            }
-        }
+//        String defaultRoutine = PreferenceUtils.getInstance().getDefaultRoutine();
+//
+//        switch (defaultRoutine) {
+//            case "routine-1564cc76-24fc-4a02-bc57-0c99e632f6af": {
+//                setRoutine(R.raw.flexibility_molding_mobility);
+//
+//                break;
+//            }
+//
+//            case "routine-4afa306b-4026-44e4-90d9-913afead82ff": {
+//                setRoutine(R.raw.flexibility_starting_stretching);
+//
+//                break;
+//            }
+//
+//            default: {
+//                setRoutine(R.raw.bodyweight_fitness_recommended_routine);
+//
+//                break;
+//            }
+//        }
     }
 
     public static RoutineStream getInstance() {

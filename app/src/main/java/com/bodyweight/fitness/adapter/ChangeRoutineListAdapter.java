@@ -223,7 +223,7 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
         public void onBindView(int position) {
             switch (position) {
                 case 3: {
-                    mRoutine = RoutineStream.getInstance().getRoutine(R.raw.starting_stretching);
+                    mRoutine = RoutineStream.getInstance().getRoutine(R.raw.flexibility_starting_stretching);
 
                     mToolbar.inflateMenu(R.menu.change_routine);
                     mDownloadButton.setVisibility(View.VISIBLE);
@@ -232,7 +232,7 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
                 }
 
                 case 4: {
-                    mRoutine = RoutineStream.getInstance().getRoutine(R.raw.molding_mobility);
+                    mRoutine = RoutineStream.getInstance().getRoutine(R.raw.flexibility_molding_mobility);
 
                     mToolbar.inflateMenu(R.menu.change_routine);
                     mDownloadButton.setVisibility(View.VISIBLE);
@@ -241,7 +241,7 @@ public class ChangeRoutineListAdapter extends RecyclerView.Adapter<ChangeRoutine
                 }
 
                 default: {
-                    mRoutine = RoutineStream.getInstance().getRoutine(R.raw.beginner_routine);
+                    mRoutine = RoutineStream.getInstance().getRoutine(R.raw.bodyweight_fitness_recommended_routine);
 
                     mToolbar.invalidate();
                     mDownloadButton.setVisibility(View.GONE);
