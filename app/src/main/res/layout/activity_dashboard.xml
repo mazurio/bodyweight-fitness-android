@@ -15,73 +15,79 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/primary"
             app:navigationIcon="@drawable/action_close"
-            app:theme="@style/AppTheme.Dashboard.Toolbar">
+            app:theme="@style/AppTheme.Dashboard.Toolbar" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:orientation="vertical">-->
 
-                <com.devspark.robototextview.widget.RobotoTextView
-                    android:id="@+id/routine_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:textSize="20dp"
-                    android:layout_marginTop="8dp"
-                    android:textColor="#3C3C3C"
-                    android:text="Bodyweight Fitness"
-                    app:typeface="roboto_bold"/>
+                <!--<com.devspark.robototextview.widget.RobotoTextView-->
+                    <!--android:id="@+id/routine_title"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="left"-->
+                    <!--android:textSize="20dp"-->
+                    <!--android:layout_marginTop="8dp"-->
+                    <!--android:textColor="#3C3C3C"-->
+                    <!--android:text="Bodyweight Fitness"-->
+                    <!--app:typeface="roboto_bold"/>-->
 
-                <com.devspark.robototextview.widget.RobotoTextView
-                    android:id="@+id/routine_subtitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:textSize="17dp"
-                    android:textColor="#3C3C3C"
-                    android:text="Recommended Routine"
-                    app:typeface="roboto_regular"/>
+                <!--<com.devspark.robototextview.widget.RobotoTextView-->
+                    <!--android:id="@+id/routine_subtitle"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="left"-->
+                    <!--android:textSize="17dp"-->
+                    <!--android:textColor="#3C3C3C"-->
+                    <!--android:text="Recommended Routine"-->
+                    <!--app:typeface="roboto_regular"/>-->
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp">
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="8dp">-->
 
-                    <com.devspark.robototextview.widget.RobotoTextView
-                        android:id="@+id/completed_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:textSize="14dp"
-                        android:textColor="#3C3C3C"
-                        android:text="Completed: "
-                        app:typeface="roboto_bold"/>
+                    <!--<com.devspark.robototextview.widget.RobotoTextView-->
+                        <!--android:id="@+id/completed_label"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentLeft="true"-->
+                        <!--android:textSize="14dp"-->
+                        <!--android:textColor="#3C3C3C"-->
+                        <!--android:text="Completed: "-->
+                        <!--app:typeface="roboto_bold"/>-->
 
-                    <com.devspark.robototextview.widget.RobotoTextView
-                        android:id="@+id/completed_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/completed_label"
-                        android:textSize="14dp"
-                        android:textColor="#3C3C3C"
-                        app:typeface="roboto_regular"/>
-                </RelativeLayout>
-            </LinearLayout>
-        </android.support.v7.widget.Toolbar>
+                    <!--<com.devspark.robototextview.widget.RobotoTextView-->
+                        <!--android:id="@+id/completed_text"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_toRightOf="@+id/completed_label"-->
+                        <!--android:textSize="14dp"-->
+                        <!--android:textColor="#3C3C3C"-->
+                        <!--app:typeface="roboto_regular"/>-->
+                <!--</RelativeLayout>-->
+            <!--</LinearLayout>-->
+        <!--</android.support.v7.widget.Toolbar>-->
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabIndicatorColor="#3c3c3c"
-            app:tabMode="fixed"/>
+        <!--<android.support.design.widget.TabLayout-->
+            <!--android:id="@+id/tab_layout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:tabIndicatorColor="#3c3c3c"-->
+            <!--app:tabMode="fixed"/>-->
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_dashboard_pager"
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/view_dashboard_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"/>
+
+    <!--<android.support.v4.view.ViewPager-->
+        <!--android:id="@+id/view_dashboard_pager"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
 </LinearLayout>

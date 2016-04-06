@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#eeeeee">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,23 +18,25 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
+            <View
                 android:id="@+id/exercise_button"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:layout_margin="16dp"
                 android:layout_gravity="center"
-                android:background="@drawable/dashboard_circle"/>
+                android:background="@drawable/dashboard_circle_weighted"
+                android:elevation="5dp"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
                 android:id="@+id/exercise_title"
                 android:text="Exercise Title with super long title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:lines="2"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:textSize="16dp"
-                android:textColor="#3C3C3C"
+                android:textColor="@color/primaryDark"
                 app:typeface="roboto_regular"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
@@ -44,7 +47,7 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:textSize="15dp"
-                android:textColor="#3C3C3C"
+                android:textColor="@color/primaryDark"
                 app:typeface="roboto_bold"/>
         </LinearLayout>
     </LinearLayout>

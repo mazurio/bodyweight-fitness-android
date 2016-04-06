@@ -5,7 +5,7 @@
         </shape>
     </item>
 
-    <item android:drawable="@drawable/action_done"
+    <item android:drawable="@drawable/exercise_icon_activity"
         android:gravity="center"
         android:width="36dp"
         android:height="36dp"/>

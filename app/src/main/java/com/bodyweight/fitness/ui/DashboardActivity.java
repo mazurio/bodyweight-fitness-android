@@ -5,11 +5,14 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.bodyweight.fitness.R;
+import com.bodyweight.fitness.adapter.DashboardAdapter;
 import com.bodyweight.fitness.adapter.DashboardPagerAdapter;
 import com.bodyweight.fitness.model.Category;
 import com.bodyweight.fitness.model.Exercise;
@@ -23,19 +26,16 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class DashboardActivity extends AppCompatActivity {
-    @InjectView(R.id.routine_title)
-    TextView mRoutineTitle;
+//    @InjectView(R.id.routine_title) TextView mRoutineTitle;
+//    @InjectView(R.id.routine_subtitle) TextView mRoutineSubtitle;
+//    @InjectView(R.id.completed_text) TextView mCompletedText;
 
-    @InjectView(R.id.routine_subtitle)
-    TextView mRoutineSubtitle;
+//    @InjectView(R.id.view_dashboard_pager) ViewPager mViewPager;
 
-    @InjectView(R.id.completed_text)
-    TextView mCompletedText;
+    @InjectView(R.id.view_dashboard_list)
+    RecyclerView mRecyclerView;
 
-    @InjectView(R.id.view_dashboard_pager)
-    ViewPager mViewPager;
-
-    private DashboardPagerAdapter mDashboardPagerAdapter;
+//    private DashboardPagerAdapter mDashboardPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,34 +50,50 @@ public class DashboardActivity extends AppCompatActivity {
         Routine routine = RoutineStream.getInstance().getRoutine();
         Exercise exercise = RoutineStream.getInstance().getExercise();
 
-        mRoutineTitle.setText(routine.getTitle());
-        mRoutineSubtitle.setText(routine.getSubtitle());
+//        mRoutineTitle.setText(routine.getTitle());
+//        mRoutineSubtitle.setText(routine.getSubtitle());
 
-        mDashboardPagerAdapter = new DashboardPagerAdapter(this, routine, exercise);
 
-        mViewPager.setOffscreenPageLimit(4);
-        mViewPager.setAdapter(mDashboardPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.setupWithViewPager(mViewPager);
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                mViewPager.setCurrentItem(tab.getPosition(), true);
-            }
+        DashboardAdapter mDashboardAdapter;
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+        mDashboardAdapter = new DashboardAdapter(routine, exercise);
+        mDashboardAdapter.setOnExerciseClickListener((e -> {
+            RoutineStream.getInstance().setExercise(e);
+//            mDashboardActivity.supportFinishAfterTransition();
+            supportFinishAfterTransition();
+        }));
 
-            }
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                if (tab.getPosition() != 0) {
-//                    mDashboardPagerAdapter.onTabReselected(tab.getPosition());
-                }
-            }
-        });
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mRecyclerView.setAdapter(mDashboardAdapter);
+
+//        mDashboardPagerAdapter = new DashboardPagerAdapter(this, routine, exercise);
+//
+//        mViewPager.setOffscreenPageLimit(4);
+//        mViewPager.setAdapter(mDashboardPagerAdapter);
+
+//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+//        tabLayout.setupWithViewPager(mViewPager);
+//        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                mViewPager.setCurrentItem(tab.getPosition(), true);
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//                if (tab.getPosition() != 0) {
+////                    mDashboardPagerAdapter.onTabReselected(tab.getPosition());
+//                }
+//            }
+//        });
 
         routine.getCategories();
 
@@ -85,7 +101,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         int index = routine.getCategories().indexOf(category);
 
-        mViewPager.setCurrentItem(index);
+//        mViewPager.setCurrentItem(index);
 
         int mTotalExercises = 0;
         int mCompletedExercises = 0;
@@ -99,7 +115,7 @@ public class DashboardActivity extends AppCompatActivity {
             }
         }
 
-        mCompletedText.setText(String.format("%s out of %s exercises", mCompletedExercises, mTotalExercises));
+//        mCompletedText.setText(String.format("%s out of %s exercises", mCompletedExercises, mTotalExercises));
     }
 
     public boolean isCompleted(RepositoryExercise repositoryExercise) {

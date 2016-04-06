@@ -4,4 +4,9 @@
             <solid android:color="@color/white" />
         </shape>
     </item>
+
+    <item android:drawable="@drawable/dashboard_timed"
+        android:gravity="center"
+        android:width="36dp"
+        android:height="36dp"/>
 </layer-list>

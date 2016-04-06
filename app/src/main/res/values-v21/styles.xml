@@ -26,8 +26,10 @@
 
 	<!-- Transparent Toolbar -->
 	<style name="AppTheme.Dashboard.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="android:windowActionBarOverlay">true</item>
-		<item name="windowActionBarOverlay">true</item>
+		<item name="android:textColorPrimary">@color/primaryDark</item>
+		<item name="android:textColorSecondary">@color/primaryDark</item>
+
+		<item name="actionMenuTextColor">@color/white</item>
 	</style>
 
 	<style name="AppTheme.Progress.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -60,15 +62,11 @@
 	</style>
 
 	<style name="AppTheme.Activity.Dashboard" parent="Theme.AppCompat.Light.NoActionBar">
-		<!--<item name="colorAccent">@color/white</item>-->
-		<!--<item name="colorPrimary">@color/white</item>-->
-		<!--<item name="colorPrimaryDark">@color/white</item>-->
+		<item name="colorAccent">@color/primaryDark</item>
+		<item name="colorPrimary">@color/primary</item>
+		<item name="colorPrimaryDark">@color/primaryDark</item>
 
 		<item name="android:windowContentOverlay">@null</item>
-
-		<item name="windowActionBar">false</item>
-		<item name="windowActionBarOverlay">true</item>
-		<item name="android:windowActionBarOverlay">true</item>
 
 		<!-- enable window content transitions -->
 		<item name="android:windowContentTransitions">true</item>
