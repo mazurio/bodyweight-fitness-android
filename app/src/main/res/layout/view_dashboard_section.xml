@@ -4,15 +4,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:background="#eeeeee">
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center">
-
+g
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +23,7 @@
             android:paddingRight="20dp"
             android:orientation="vertical"
             android:background="@drawable/section"
-            android:elevation="0dp">
+            android:elevation="5dp">
 
             <com.devspark.robototextview.widget.RobotoTextView
                 android:id="@+id/section_title"
@@ -32,11 +31,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:textSize="14dp"
-                android:textColor="@color/primaryDark"
+                android:textSize="15dp"
+                android:textColor="#3C3C3C"
                 android:layout_gravity="center"
-                android:textAllCaps="true"
-                app:typeface="roboto_black"/>
+                app:typeface="roboto_regular"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
