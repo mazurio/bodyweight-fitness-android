@@ -23,7 +23,7 @@
                 android:layout_height="75dp"
                 android:layout_margin="16dp"
                 android:layout_gravity="center"
-                android:background="@drawable/circle"/>
+                android:background="@drawable/dashboard_circle"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
                 android:id="@+id/exercise_title"

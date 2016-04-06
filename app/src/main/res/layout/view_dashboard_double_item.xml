@@ -26,7 +26,7 @@
                 android:layout_height="75dp"
                 android:layout_margin="16dp"
                 android:gravity="center"
-                android:background="@drawable/circle"/>
+                android:background="@drawable/dashboard_circle"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
                 android:id="@+id/left_exercise_title"
@@ -55,7 +55,7 @@
                 android:layout_height="75dp"
                 android:layout_margin="16dp"
                 android:gravity="center"
-                android:background="@drawable/circle"/>
+                android:background="@drawable/dashboard_circle"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
                 android:id="@+id/right_exercise_title"

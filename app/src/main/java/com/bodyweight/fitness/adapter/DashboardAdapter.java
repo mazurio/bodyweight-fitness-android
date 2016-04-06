@@ -18,7 +18,6 @@ import com.bodyweight.fitness.model.SectionMode;
 import com.bodyweight.fitness.model.repository.RepositoryExercise;
 import com.bodyweight.fitness.model.repository.RepositorySet;
 import com.bodyweight.fitness.stream.RepositoryStream;
-import com.bodyweight.fitness.utils.Logger;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -287,16 +286,16 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
             if (mCompletedExerciseSet.contains(mExercise.getExerciseId())) {
                 mExerciseButton.setBackgroundDrawable(itemView.getContext()
                         .getResources()
-                        .getDrawable(R.drawable.circle_done));
+                        .getDrawable(R.drawable.dashboard_circle_done));
             } else {
                 mExerciseButton.setBackgroundDrawable(itemView.getContext()
                         .getResources()
-                        .getDrawable(R.drawable.circle));
+                        .getDrawable(R.drawable.dashboard_circle));
 
 //                if (mExercise.getSection().getSectionMode().equals(SectionMode.ALL)) {
 //                    mExerciseButton.setBackgroundDrawable(itemView.getContext()
 //                            .getResources()
-//                            .getDrawable(R.drawable.circle));
+//                            .getDrawable(R.drawable.dashboard_circle));
 //                } else {
 //                    mExerciseButton.setBackgroundDrawable(itemView.getContext()
 //                            .getResources()
@@ -348,19 +347,19 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
             mLeftExercise = (Exercise) tuple.left;
             mRightExercise = (Exercise) tuple.right;
 
-            mLeftExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.circle));
-            mRightExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.circle));
+            mLeftExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.dashboard_circle));
+            mRightExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.dashboard_circle));
 
             if (mCompletedExerciseSet.contains(mLeftExercise.getExerciseId())) {
-                mLeftExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.circle_done));
+                mLeftExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.dashboard_circle_done));
             } else {
-                mLeftExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.circle));
+                mLeftExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.dashboard_circle));
             }
 
             if (mCompletedExerciseSet.contains(mRightExercise.getExerciseId())) {
-                mRightExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.circle_done));
+                mRightExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.dashboard_circle_done));
             } else {
-                mRightExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.circle));
+                mRightExerciseButton.setBackgroundDrawable(itemView.getContext().getResources().getDrawable(R.drawable.dashboard_circle));
             }
 
             mLeftExerciseTitle.setText(mLeftExercise.getTitle());

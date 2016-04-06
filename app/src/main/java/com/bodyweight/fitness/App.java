@@ -16,9 +16,7 @@ import io.fabric.sdk.android.Fabric;
  * TODO: Rename drawables to use the uniqueId's.
  * TODO: Update all gif videos to match 16:9 format.
  * TODO: Update videos for Antranik new video.
- * TODO BUG: ProgressActivity missing items sometimes.
  * TODO: If your default routine does not exist - revert back.
- * TODO: Move to BottomSheets instead of dialogs for Logging Workouts and Choosing Levels.
  */
 public class App extends Application {
     private static Context mContext;
