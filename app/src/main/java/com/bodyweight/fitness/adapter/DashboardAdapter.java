@@ -273,15 +273,15 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         public void onBindView(Tuple tuple) {
             mExercise = (Exercise) tuple.left;
 
-//            if (mExercise.isTimedSet()) {
-//                mExerciseButton.setBackgroundDrawable(itemView.getContext()
-//                        .getResources()
-//                        .getDrawable(R.drawable.dashboard_circle_timed));
-//            } else {
-//                mExerciseButton.setBackgroundDrawable(itemView.getContext()
-//                        .getResources()
-//                        .getDrawable(R.drawable.dashboard_circle_weighted));
-//            }
+            if (mExercise.isTimedSet()) {
+                mExerciseButton.setBackgroundDrawable(itemView.getContext()
+                        .getResources()
+                        .getDrawable(R.drawable.dashboard_circle_timed));
+            } else {
+                mExerciseButton.setBackgroundDrawable(itemView.getContext()
+                        .getResources()
+                        .getDrawable(R.drawable.dashboard_circle_weighted));
+            }
 
             if (mExercise.getSection().getSectionMode().equals(SectionMode.LEVELS)) {
                 mExerciseTitle.setText(mExercise.getTitle());
@@ -327,25 +327,25 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
             mLeftExercise = (Exercise) tuple.left;
             mRightExercise = (Exercise) tuple.right;
 
-//            if (mLeftExercise.isTimedSet()) {
-//                mLeftExerciseButton.setBackgroundDrawable(itemView.getContext()
-//                        .getResources()
-//                        .getDrawable(R.drawable.dashboard_circle_timed));
-//            } else {
-//                mLeftExerciseButton.setBackgroundDrawable(itemView.getContext()
-//                        .getResources()
-//                        .getDrawable(R.drawable.dashboard_circle_weighted));
-//            }
-//
-//            if (mRightExercise.isTimedSet()) {
-//                mRightExerciseButton.setBackgroundDrawable(itemView.getContext()
-//                        .getResources()
-//                        .getDrawable(R.drawable.dashboard_circle_timed));
-//            } else {
-//                mRightExerciseButton.setBackgroundDrawable(itemView.getContext()
-//                        .getResources()
-//                        .getDrawable(R.drawable.dashboard_circle_weighted));
-//            }
+            if (mLeftExercise.isTimedSet()) {
+                mLeftExerciseButton.setBackgroundDrawable(itemView.getContext()
+                        .getResources()
+                        .getDrawable(R.drawable.dashboard_circle_timed));
+            } else {
+                mLeftExerciseButton.setBackgroundDrawable(itemView.getContext()
+                        .getResources()
+                        .getDrawable(R.drawable.dashboard_circle_weighted));
+            }
+
+            if (mRightExercise.isTimedSet()) {
+                mRightExerciseButton.setBackgroundDrawable(itemView.getContext()
+                        .getResources()
+                        .getDrawable(R.drawable.dashboard_circle_timed));
+            } else {
+                mRightExerciseButton.setBackgroundDrawable(itemView.getContext()
+                        .getResources()
+                        .getDrawable(R.drawable.dashboard_circle_weighted));
+            }
 
             mLeftExerciseTitle.setText(mLeftExercise.getTitle());
             mRightExerciseTitle.setText(mRightExercise.getTitle());

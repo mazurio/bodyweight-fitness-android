@@ -7,6 +7,6 @@
 
     <item android:drawable="@drawable/dashboard_timed"
         android:gravity="center"
-        android:width="36dp"
-        android:height="36dp"/>
+        android:width="26dp"
+        android:height="26dp"/>
 </layer-list>

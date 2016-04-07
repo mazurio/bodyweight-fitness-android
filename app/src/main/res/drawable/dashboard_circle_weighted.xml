@@ -5,8 +5,8 @@
         </shape>
     </item>
 
-    <!--<item android:drawable="@drawable/exercise_icon_activity"-->
-        <!--android:gravity="center"-->
-        <!--android:width="36dp"-->
-        <!--android:height="36dp"/>-->
+    <item android:drawable="@drawable/dashboard_weighted"
+        android:gravity="center"
+        android:width="26dp"
+        android:height="26dp"/>
 </layer-list>
