@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import com.bodyweight.fitness.model.Routine;
 import com.bodyweight.fitness.stream.RoutineStream;
+import com.bodyweight.fitness.utils.Logger;
 import com.bodyweight.fitness.view.PreviewView;
 
 import com.bumptech.glide.Glide;
@@ -29,10 +30,14 @@ public class PreviewPresenter extends IPresenter<PreviewView> implements Seriali
                                 .getResources()
                                 .getIdentifier(exercise.getId(), "drawable", mView.getContext().getPackageName());
 
-                        Glide.with(getContext())
-                                .load(identifier)
-                                .crossFade()
-                                .into(imageViewTarget);
+                        try {
+                            Glide.with(getContext())
+                                    .load(identifier)
+                                    .crossFade()
+                                    .into(imageViewTarget);
+                        } catch (Exception e) {
+                            Logger.e("Glide exception " + e.getMessage());
+                        }
                     } else {
                         String filePath = String.format("%s%s%s%s%s.gif",
                                 FileDownloadUtils.getDefaultSaveRootPath(),

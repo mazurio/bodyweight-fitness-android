@@ -9,7 +9,7 @@ import java.util.*
 
 abstract class AbstractPresenter : Serializable {
     @Transient
-    private val mSubscriptions: ArrayList<Subscription> = ArrayList()
+    private var mSubscriptions: ArrayList<Subscription> = ArrayList()
 
     @Transient
     var mView: AbstractView? = null
@@ -19,6 +19,10 @@ abstract class AbstractPresenter : Serializable {
     }
 
     open fun removeView() {
+        if (mSubscriptions == null) {
+            mSubscriptions = ArrayList()
+        }
+
         for (s in mSubscriptions) {
             s.unsubscribe()
         }
@@ -27,6 +31,10 @@ abstract class AbstractPresenter : Serializable {
     }
 
     fun subscribe(subscription: Subscription) {
+        if (mSubscriptions == null) {
+            mSubscriptions = ArrayList()
+        }
+
         mSubscriptions.add(subscription)
     }
 }

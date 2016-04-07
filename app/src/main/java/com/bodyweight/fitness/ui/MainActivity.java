@@ -22,6 +22,7 @@ import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.utils.ApplicationStoreUtils;
 import com.bodyweight.fitness.utils.PreferenceUtils;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -71,13 +72,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         RepositoryStream.getInstance()
                 .getRealm()
                 .close();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-//        FileDownloader.getImpl().pauseAll();
     }
 
     @Override

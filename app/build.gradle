@@ -44,14 +44,14 @@ android {
     productFlavors {
         pro {
             applicationId 'com.bodyweight.fitness.pro'
-            versionCode 118
-            versionName "1.1.8"
+            versionCode 119
+            versionName "1.1.9"
         }
 
         free {
             applicationId 'com.bodyweight.fitness.free'
-            versionCode 118
-            versionName "1.1.8"
+            versionCode 119
+            versionName "1.1.9"
         }
     }
     buildTypes {
@@ -134,9 +134,11 @@ buildscript {
         maven {
             url "http://repository.jetbrains.com/all"
         }
+        maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'io.fabric.tools:gradle:1.+'
     }
 }
 
@@ -145,4 +147,5 @@ repositories {
     maven {
         url "http://repository.jetbrains.com/all"
     }
+    maven { url 'https://maven.fabric.io/public' }
 }
