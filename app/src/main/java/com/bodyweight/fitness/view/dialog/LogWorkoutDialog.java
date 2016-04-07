@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.SectionMode;
 import com.bodyweight.fitness.model.WeightMeasurementUnit;
@@ -27,7 +28,6 @@ import java.util.UUID;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.model.repository.RepositoryRoutine;
@@ -35,7 +35,6 @@ import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 import com.bodyweight.fitness.view.listener.RepeatListener;
 
-import butterknife.OnTouch;
 import io.realm.Realm;
 
 public class LogWorkoutDialog {
@@ -43,7 +42,6 @@ public class LogWorkoutDialog {
         void onDismissed();
     }
 
-    private static final int MAXIMUM_NUMBER_OF_SETS = 12;
     private static final int REPEAT_INITIAL_INTERVAL = 400;
     private static final int REPEAT_NORMAL_INTERVAL = 100;
 
@@ -97,13 +95,9 @@ public class LogWorkoutDialog {
     private RepositoryExercise mRepositoryExercise;
     private RepositorySet mSet;
 
-    private Realm mRealm;
-
     private WeightMeasurementUnit mWeightMeasurementUnit;
 
     public LogWorkoutDialog(Context context) {
-        mRealm = RepositoryStream.getInstance().getRealm();
-
         Exercise exercise = RoutineStream.getInstance().getExercise();
 
         mRepositoryRoutine = RepositoryStream.getInstance().getRepositoryRoutineForToday();
@@ -120,8 +114,6 @@ public class LogWorkoutDialog {
     }
 
     public LogWorkoutDialog(Context context, RepositoryExercise repositoryExercise) {
-        mRealm = RepositoryStream.getInstance().getRealm();
-
         mRepositoryRoutine = null;
         mRepositoryExercise = repositoryExercise;
 
@@ -160,8 +152,6 @@ public class LogWorkoutDialog {
     }
 
     public void show() {
-        mRealm.beginTransaction();
-
         mToolbar.setTitle(mRepositoryExercise.getTitle());
         mToolbar.setSubtitle(mRepositoryExercise.getDescription());
 
@@ -173,18 +163,18 @@ public class LogWorkoutDialog {
         mDialog.setOnDismissListener(l -> {
             String mode = mRepositoryExercise.getSection().getMode();
 
-            if (mode.equals(SectionMode.LEVELS.toString()) ||
-                    mode.equals(SectionMode.PICK.toString())) {
+            if (mode.equals(SectionMode.LEVELS.toString()) || mode.equals(SectionMode.PICK.toString())) {
+                Realm realm = RepositoryStream.getInstance().getRealm();
+                realm.beginTransaction();
 
                 if (isCompleted(mRepositoryExercise)) {
                     mRepositoryExercise.setVisible(true);
                 } else {
                     mRepositoryExercise.setVisible(false);
                 }
-            }
 
-            mRealm.copyToRealmOrUpdate(mRepositoryExercise);
-            mRealm.commitTransaction();
+                realm.commitTransaction();
+            }
 
             if (mOnDismissLogWorkoutDialogListener != null) {
                 mOnDismissLogWorkoutDialogListener.onDismissed();
@@ -257,7 +247,7 @@ public class LogWorkoutDialog {
     public boolean shouldAddSet() {
         int numberOfSets = mViewSets.size();
 
-        if(numberOfSets >= MAXIMUM_NUMBER_OF_SETS) {
+        if(numberOfSets >= Constants.INSTANCE.getMAXIMUM_NUMBER_OF_SETS()) {
             return false;
         }
 
@@ -305,9 +295,14 @@ public class LogWorkoutDialog {
 
         mRowLayout.addView(view);
 
+        Realm realm = RepositoryStream.getInstance().getRealm();
+        realm.beginTransaction();
+
         if(!mRepositoryExercise.getSets().contains(set)) {
             mRepositoryExercise.getSets().add(set);
         }
+
+        realm.commitTransaction();
 
         mViewSets.add(view);
 
@@ -335,9 +330,14 @@ public class LogWorkoutDialog {
 
         mRowLayout.addView(view);
 
+        Realm realm = RepositoryStream.getInstance().getRealm();
+        realm.beginTransaction();
+
         if(!mRepositoryExercise.getSets().contains(set)) {
             mRepositoryExercise.getSets().add(set);
         }
+
+        realm.commitTransaction();
 
         setLastUpdatedTime();
 
@@ -347,7 +347,13 @@ public class LogWorkoutDialog {
     }
 
     public boolean removeLastSet() {
+        Realm realm = RepositoryStream.getInstance().getRealm();
+        realm.beginTransaction();
+
         mRepositoryExercise.getSets().remove(mRepositoryExercise.getSets().size() - 1);
+
+        realm.commitTransaction();
+
         mViewSets.remove(mViewSets.size() - 1);
 
         mRowLayout.removeViewAt(mRowLayout.getChildCount() - 1);
@@ -452,7 +458,7 @@ public class LogWorkoutDialog {
 
         Menu menu = mToolbar.getMenu();
 
-        if(numberOfSets >= MAXIMUM_NUMBER_OF_SETS) {
+        if(numberOfSets >= Constants.INSTANCE.getMAXIMUM_NUMBER_OF_SETS()) {
             menu.findItem(R.id.action_add_set).setVisible(false);
             menu.findItem(R.id.action_add_timed_set).setVisible(false);
         } else if (numberOfSets == 1) {
@@ -488,6 +494,9 @@ public class LogWorkoutDialog {
                         double weight = 0;
                         int reps = 0;
 
+                        Realm realm = RepositoryStream.getInstance().getRealm();
+                        realm.beginTransaction();
+
                         if (!mRepositoryExercise.getSets().isEmpty()) {
                             RepositorySet repositorySet = mRepositoryExercise.getSets().last();
                             seconds = repositorySet.getSeconds();
@@ -495,7 +504,7 @@ public class LogWorkoutDialog {
                             reps = repositorySet.getReps();
                         }
 
-                        RepositorySet repositorySet = mRealm.createObject(RepositorySet.class);
+                        RepositorySet repositorySet = realm.createObject(RepositorySet.class);
 
                         repositorySet.setId("Set-" + UUID.randomUUID().toString());
                         repositorySet.setIsTimed(false);
@@ -504,6 +513,8 @@ public class LogWorkoutDialog {
                         repositorySet.setReps(reps);
 
                         repositorySet.setExercise(mRepositoryExercise);
+
+                        realm.commitTransaction();
 
                         addSet(repositorySet);
                         updateToolbarMenu();
@@ -518,6 +529,9 @@ public class LogWorkoutDialog {
                         double weight = 0;
                         int reps = 0;
 
+                        Realm realm = RepositoryStream.getInstance().getRealm();
+                        realm.beginTransaction();
+
                         if (!mRepositoryExercise.getSets().isEmpty()) {
                             RepositorySet repositorySet = mRepositoryExercise.getSets().last();
                             seconds = repositorySet.getSeconds();
@@ -525,7 +539,7 @@ public class LogWorkoutDialog {
                             reps = repositorySet.getReps();
                         }
 
-                        RepositorySet repositorySet = mRealm.createObject(RepositorySet.class);
+                        RepositorySet repositorySet = realm.createObject(RepositorySet.class);
 
                         repositorySet.setId("Set-" + UUID.randomUUID().toString());
                         repositorySet.setIsTimed(true);
@@ -534,6 +548,8 @@ public class LogWorkoutDialog {
                         repositorySet.setReps(reps);
 
                         repositorySet.setExercise(mRepositoryExercise);
+
+                        realm.commitTransaction();
 
                         addTimedSet(repositorySet);
                         updateToolbarMenu();
@@ -564,11 +580,16 @@ public class LogWorkoutDialog {
 
     public void onClickIncreaseWeight() {
         if(mSet.isTimed()) {
+            Realm realm = RepositoryStream.getInstance().getRealm();
+            realm.beginTransaction();
+
             if(mSet.getSeconds() % 60 == 59) {
                 mSet.setSeconds(mSet.getSeconds() - 59);
             } else {
                 mSet.setSeconds(mSet.getSeconds() + 1);
             }
+
+            realm.commitTransaction();
 
             mActionViewRepsValue.setText(formatMinutes(mSet.getSeconds()));
             mActionViewWeightValue.setText(formatSeconds(mSet.getSeconds()));
@@ -579,11 +600,16 @@ public class LogWorkoutDialog {
                 return;
             }
 
+            Realm realm = RepositoryStream.getInstance().getRealm();
+            realm.beginTransaction();
+
             if (mWeightMeasurementUnit.equals(WeightMeasurementUnit.kg)) {
                 mSet.setWeight(mSet.getWeight() + 0.5);
             } else {
                 mSet.setWeight(mSet.getWeight() + 1.0);
             }
+
+            realm.commitTransaction();
 
             mActionViewWeightValue.setText(String.valueOf(mSet.getWeight()));
 
@@ -593,11 +619,16 @@ public class LogWorkoutDialog {
 
     public void onClickDecreaseWeight() {
         if(mSet.isTimed()) {
+            Realm realm = RepositoryStream.getInstance().getRealm();
+            realm.beginTransaction();
+
             if(mSet.getSeconds() % 60 == 0) {
                 mSet.setSeconds(mSet.getSeconds() + 59);
             } else {
                 mSet.setSeconds(mSet.getSeconds() - 1);
             }
+
+            realm.commitTransaction();
 
             mActionViewRepsValue.setText(formatMinutes(mSet.getSeconds()));
             mActionViewWeightValue.setText(formatSeconds(mSet.getSeconds()));
@@ -608,11 +639,16 @@ public class LogWorkoutDialog {
                 return;
             }
 
+            Realm realm = RepositoryStream.getInstance().getRealm();
+            realm.beginTransaction();
+
             if (mWeightMeasurementUnit.equals(WeightMeasurementUnit.kg)) {
                 mSet.setWeight(mSet.getWeight() - 0.5);
             } else {
                 mSet.setWeight(mSet.getWeight() - 1.0);
             }
+
+            realm.commitTransaction();
 
             mActionViewWeightValue.setText(String.valueOf(mSet.getWeight()));
 
@@ -626,7 +662,12 @@ public class LogWorkoutDialog {
                 return;
             }
 
+            Realm realm = RepositoryStream.getInstance().getRealm();
+            realm.beginTransaction();
+
             mSet.setSeconds(mSet.getSeconds() + 60);
+
+            realm.commitTransaction();
 
             mActionViewRepsValue.setText(formatMinutes(mSet.getSeconds()));
             mActionViewWeightValue.setText(formatSeconds(mSet.getSeconds()));
@@ -637,7 +678,12 @@ public class LogWorkoutDialog {
                 return;
             }
 
+            Realm realm = RepositoryStream.getInstance().getRealm();
+            realm.beginTransaction();
+
             mSet.setReps(mSet.getReps() + 1);
+
+            realm.commitTransaction();
 
             mActionViewRepsValue.setText(String.valueOf(mSet.getReps()));
 
@@ -648,7 +694,12 @@ public class LogWorkoutDialog {
     public void onClickDecreaseReps() {
         if(mSet.isTimed()) {
             if(mSet.getSeconds() >= 60) {
+                Realm realm = RepositoryStream.getInstance().getRealm();
+                realm.beginTransaction();
+
                 mSet.setSeconds(mSet.getSeconds() - 60);
+
+                realm.commitTransaction();
             }
 
             mActionViewRepsValue.setText(formatMinutes(mSet.getSeconds()));
@@ -660,7 +711,12 @@ public class LogWorkoutDialog {
                 return;
             }
 
+            Realm realm = RepositoryStream.getInstance().getRealm();
+            realm.beginTransaction();
+
             mSet.setReps(mSet.getReps() - 1);
+
+            realm.commitTransaction();
 
             mActionViewRepsValue.setText(String.valueOf(mSet.getReps()));
 
@@ -740,7 +796,12 @@ public class LogWorkoutDialog {
             Duration duration = new Duration(startTime, lastUpdatedTime);
 
             if (duration.toStandardMinutes().getMinutes() < 120) {
+                Realm realm = RepositoryStream.getInstance().getRealm();
+                realm.beginTransaction();
+
                 mRepositoryRoutine.setLastUpdatedTime(new DateTime().toDate());
+
+                realm.commitTransaction();
             }
         }
     }

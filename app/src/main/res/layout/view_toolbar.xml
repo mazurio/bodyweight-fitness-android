@@ -4,9 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:elevation="0dp">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -16,6 +14,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <LinearLayout
+            android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -29,8 +28,7 @@
                 android:layout_gravity="bottom"
                 app:typeface="roboto_regular"
                 android:textColor="@color/primaryDark"
-                android:textSize="16sp"
-                android:text="Wall Extensions"/>
+                android:textSize="16sp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,8 +43,7 @@
                     android:gravity="top"
                     app:typeface="roboto_regular"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:text="Dynamic Stretches"/>
+                    android:textSize="16sp"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
                     android:id="@+id/toolbar_exercise_description"
@@ -56,8 +53,7 @@
                     android:paddingLeft="4dp"
                     app:typeface="roboto_regular"
                     android:textColor="@color/primaryDark"
-                    android:textSize="16sp"
-                    android:text="1x(5-10)"/>
+                    android:textSize="16sp"/>
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.Toolbar>

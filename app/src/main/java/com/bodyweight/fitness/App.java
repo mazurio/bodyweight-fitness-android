@@ -3,23 +3,20 @@ package com.bodyweight.fitness;
 import android.app.Application;
 import android.content.Context;
 
+import com.bodyweight.fitness.model.persistence.Glacier;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
+import com.liulishuo.filedownloader.FileDownloader;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
-import io.mazur.glacier.Glacier;
 import io.fabric.sdk.android.Fabric;
 
 /**
  * TODO: Rename drawables to use the uniqueId's.
- *
  * TODO: Update all gif videos to match 16:9 format.
  * TODO: Update videos for Antranik new video.
- *
- * TODO BUG: ProgressActivity missing items sometimes.
- *
- * TODO: Move to Dagger 2 injection rather than using getInstance singletons.
+ * TODO: If your default routine does not exist - revert back.
  */
 public class App extends Application {
     private static Context mContext;
@@ -38,6 +35,8 @@ public class App extends Application {
                     new Answers()
             );
         }
+
+//        FileDownloader.init(this);
 
         mContext = getApplicationContext();
     }

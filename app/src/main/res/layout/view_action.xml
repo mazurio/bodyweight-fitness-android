@@ -15,29 +15,32 @@
         android:id="@+id/action_view_log_workout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_create"
-        android:layout_alignParentRight="true"
-        android:layout_above="@+id/action_view_action_button"
-        android:layout_marginRight="12dp"
+        android:layout_gravity="end|top"
+        android:layout_margin="16dp"
+        app:layout_anchor="@+id/action_view_action_margin"
+        app:layout_anchorGravity="top|right|end"
         app:backgroundTint="@color/white"
         app:borderWidth="0dp"
+        app:srcCompat="@drawable/action_log_workout"
         app:elevation="@dimen/view_action_elevation"/>
+
+    <View
+        android:id="@+id/action_view_action_margin"
+        android:layout_width="1dp"
+        android:layout_height="16dp"
+        app:layout_anchor="@+id/action_view_action_button"
+        app:layout_anchorGravity="top|right|end" />
 
     <com.bodyweight.fitness.view.widget.ActionButton
         android:id="@+id/action_view_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_add_white_24dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
         app:backgroundTint="@color/primaryDark"
         app:borderWidth="0dp"
-        app:elevation="@dimen/view_action_elevation"/>
+        app:elevation="@dimen/view_action_elevation"
+        app:srcCompat="@drawable/action_add"/>
 
     <io.codetail.widget.RevealLinearLayout
         android:layout_width="match_parent"
@@ -65,8 +68,8 @@
                     android:textSize="16sp"
                     android:textColor="#de000000"
                     android:drawablePadding="24dp"
-                    android:drawableLeft="@drawable/ic_shopping_cart_grey_600_24dp"
-                    android:drawableStart="@drawable/ic_shopping_cart_grey_600_24dp"
+                    android:drawableLeft="@drawable/state_shopping"
+                    android:drawableStart="@drawable/state_shopping"
                     android:text="Buy Equipment" />
 
                 <TextView
@@ -79,8 +82,8 @@
                     android:textSize="16sp"
                     android:textColor="#de000000"
                     android:drawablePadding="24dp"
-                    android:drawableLeft="@drawable/ic_movie_grey_600_24dp"
-                    android:drawableStart="@drawable/ic_movie_grey_600_24dp"
+                    android:drawableLeft="@drawable/state_movie"
+                    android:drawableStart="@drawable/state_movie"
                     android:text="Watch on YouTube" />
 
                 <TextView
@@ -93,8 +96,8 @@
                     android:textSize="16sp"
                     android:textColor="#de000000"
                     android:drawablePadding="24dp"
-                    android:drawableLeft="@drawable/ic_assessment_grey_600_24dp"
-                    android:drawableStart="@drawable/ic_assessment_grey_600_24dp"
+                    android:drawableLeft="@drawable/state_progression"
+                    android:drawableStart="@drawable/state_progression"
                     android:text="Choose Progression" />
 
                 <RelativeLayout
@@ -112,8 +115,8 @@
                         android:textSize="16sp"
                         android:textColor="#fff"
                         android:drawablePadding="24dp"
-                        android:drawableLeft="@drawable/ic_create_white_24dp"
-                        android:drawableStart="@drawable/ic_create_white_24dp"
+                        android:drawableLeft="@drawable/state_log_workout"
+                        android:drawableStart="@drawable/state_log_workout"
                         android:text="Today's Workout" />
                 </RelativeLayout>
             </LinearLayout>

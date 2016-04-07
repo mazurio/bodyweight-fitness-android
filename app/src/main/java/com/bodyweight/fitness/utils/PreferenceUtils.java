@@ -21,30 +21,49 @@ public class PreferenceUtils {
         PreferenceManager.setDefaultValues(App.getContext(), R.xml.settings, false);
     }
 
+    public void setDefaultRoutine(String defaultRoutine) {
+        PreferenceManager.getDefaultSharedPreferences(App.getContext())
+                .edit()
+                .putString(Constants.INSTANCE.getPREFERENCE_DEFAULT_ROUTINE(), defaultRoutine)
+                .commit();
+    }
+
+    public String getDefaultRoutine() {
+        return PreferenceManager.getDefaultSharedPreferences(App.getContext())
+                .getString(Constants.INSTANCE.getPREFERENCE_DEFAULT_ROUTINE(), "routine0");
+    }
+
     public WeightMeasurementUnit getWeightMeasurementUnit() {
         String value = PreferenceManager.getDefaultSharedPreferences(App.getContext())
-                .getString(Constants.PREFERENCE_WEIGHT_MEASUREMENT_UNITS, "kg");
+                .getString(Constants.INSTANCE.getPREFERENCE_WEIGHT_MEASUREMENT_UNITS(), "kg");
 
         return WeightMeasurementUnit.get(value);
     }
 
     public boolean playSoundWhenTimerStops() {
         return PreferenceManager.getDefaultSharedPreferences(App.getContext())
-                .getBoolean(Constants.PREFERENCE_PLAY_SOUND_WHEN_TIMER_STOPS, true);
+                .getBoolean(Constants.INSTANCE.getPREFERENCE_PLAY_SOUND_WHEN_TIMER_STOPS(), true);
+    }
+
+    public boolean automaticallyLogWorkoutTime() {
+        return PreferenceManager.getDefaultSharedPreferences(App.getContext())
+                .getBoolean(Constants.INSTANCE.getPREFERENCE_AUTOMATICALLY_LOG_WORKOUT_TIME(), true);
     }
 
     public boolean keepScreenOnWhenAppIsRunning() {
         return PreferenceManager.getDefaultSharedPreferences(App.getContext())
-                .getBoolean(Constants.PREFERENCE_KEEP_SCREEN_ON, true);
+                .getBoolean(Constants.INSTANCE.getPREFERENCE_KEEP_SCREEN_ON(), true);
     }
 
-    public void setTimerValue(long value) {
-        PreferenceManager.getDefaultSharedPreferences(App.getContext()).edit()
-                .putLong(Constants.PREFERENCE_TIMER_KEY, value).commit();
+    public void setTimerValue(String exerciseId, long value) {
+        PreferenceManager.getDefaultSharedPreferences(App.getContext())
+                .edit()
+                .putLong(String.format("%s%s", Constants.INSTANCE.getPREFERENCE_TIMER_KEY(), exerciseId), value)
+                .commit();
     }
 
-    public long getTimerValue(long defaultValue) {
+    public long getTimerValueForExercise(String exerciseId, long defaultValue) {
         return PreferenceManager.getDefaultSharedPreferences(App.getContext())
-                .getLong(Constants.PREFERENCE_TIMER_KEY, defaultValue);
+                .getLong(String.format("%s%s", Constants.INSTANCE.getPREFERENCE_TIMER_KEY(), exerciseId), defaultValue);
     }
 }

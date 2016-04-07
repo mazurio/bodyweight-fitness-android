@@ -54,7 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             addPreferencesFromResource(R.xml.settings);
 
-            updatePreferenceSummaryForKey(Constants.PREFERENCE_WEIGHT_MEASUREMENT_UNITS);
+            updatePreferenceSummaryForKey(Constants.INSTANCE.getPREFERENCE_WEIGHT_MEASUREMENT_UNITS());
         }
 
         @Override
@@ -75,7 +75,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         public void updatePreferenceSummaryForKey(String key) {
-            if (key.matches(Constants.PREFERENCE_WEIGHT_MEASUREMENT_UNITS)) {
+            if (key.matches(Constants.INSTANCE.getPREFERENCE_WEIGHT_MEASUREMENT_UNITS())) {
                 ListPreference listPreference = (ListPreference) findPreference(key);
                 listPreference.setSummary(listPreference.getEntry());
             }

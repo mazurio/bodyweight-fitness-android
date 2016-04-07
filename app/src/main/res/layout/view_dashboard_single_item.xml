@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingBottom="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/exercise_button"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_margin="0dp"
+                android:layout_gravity="center"
+                android:background="@drawable/dashboard_circle_weighted"
+                android:elevation="4dp"/>
+
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:id="@+id/exercise_title"
+                android:text="Exercise Title with super long title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:lines="2"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textSize="16dp"
+                android:textColor="#4D4D4D"
+                app:typeface="roboto_regular"/>
+
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:id="@+id/exercise_level"
+                android:text="Exercise Level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textSize="15dp"
+                android:textColor="#3C3C3C"
+                app:typeface="roboto_bold"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,13 +1,16 @@
 package com.bodyweight.fitness.model;
 
 import com.bodyweight.fitness.model.json.JSONRoutine;
+import com.bodyweight.fitness.model.persistence.Glacier;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import io.mazur.glacier.Glacier;
-
 public class Routine implements Serializable {
+    private String mRoutineId;
+    private String mTitle;
+    private String mSubtitle;
+
     private ArrayList<Category> mCategories = new ArrayList<>();
     private ArrayList<Section> mSections = new ArrayList<>();
     private ArrayList<Exercise> mExercises = new ArrayList<>();
@@ -15,6 +18,10 @@ public class Routine implements Serializable {
     private ArrayList<LinkedRoutine> mLinkedRoutine = new ArrayList<>();
 
     public Routine(JSONRoutine JSONRoutine) {
+        mRoutineId = JSONRoutine.getRoutineId();
+        mTitle = JSONRoutine.getTitle();
+        mSubtitle = JSONRoutine.getSubtitle();
+
         Category currentCategory = null;
         Section currentSection = null;
         Exercise currentExercise = null;
@@ -62,6 +69,8 @@ public class Routine implements Serializable {
                         JSONLinkedRoutine.getTitle(),
                         JSONLinkedRoutine.getDescription(),
                         JSONLinkedRoutine.getYouTubeId(),
+                        JSONLinkedRoutine.getGifId(),
+                        JSONLinkedRoutine.getGifUrl(),
                         JSONLinkedRoutine.getDefaultSet()
                 );
 
@@ -125,6 +134,26 @@ public class Routine implements Serializable {
         }
     }
 
+    public String getRoutineId() {
+        return mRoutineId;
+    }
+
+    public void setTitle(String title) {
+        mTitle = title;
+    }
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        mSubtitle = subtitle;
+    }
+
+    public String getSubtitle() {
+        return mSubtitle;
+    }
+
     public ArrayList<Category> getCategories() {
         return mCategories;
     }
@@ -161,12 +190,18 @@ public class Routine implements Serializable {
             currentSectionExercise.setPrevious(null);
             currentSectionExercise.setNext(null);
 
+            /**
+             * TODO: When moving models to Kotlin: UNIT TEST IT.
+             */
             int indexOfCurrentExercise = mLinkedRoutine.indexOf(currentSectionExercise);
-            if(indexOfCurrentExercise == -1) {
-                return;
+            if(indexOfCurrentExercise > -1) {
+                mLinkedRoutine.set(indexOfCurrentExercise, exercise);
             }
 
-            mLinkedRoutine.set(indexOfCurrentExercise, exercise);
+            int indexOfLinkedExercise = mLinkedExercises.indexOf(currentSectionExercise);
+            if (indexOfLinkedExercise > -1) {
+                mLinkedExercises.set(indexOfLinkedExercise, exercise);
+            }
         }
     }
 

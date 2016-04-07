@@ -104,7 +104,7 @@ public class CircularProgressBar extends View {
         {
             canvas.drawArc(mCircleBounds, 270, -(360 - progressRotation), false,mBackgroundColorPaint);
         }
-        // draw the progress or a full circle if overdraw is true
+        // draw the progress or a full dashboard_circle if overdraw is true
         canvas.drawArc(mCircleBounds, 270, mOverrdraw ? 360 : progressRotation, false,mProgressColorPaint);
         // draw the marker at the correct rotated position
     }
@@ -137,7 +137,7 @@ public class CircularProgressBar extends View {
         setMeasuredDimension(diameter, diameter);
 
         final float halfWidth = diameter * 0.5f;
-        // width of the drawed circle (+ the drawedThumb)
+        // width of the drawed dashboard_circle (+ the drawedThumb)
         final float drawedWith;
         if (isThumbEnabled())
         {

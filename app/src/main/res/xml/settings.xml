@@ -21,6 +21,23 @@
             android:title="Keep screen always on"
             android:summary="Prevents screen from turning off when app is running"
             android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="PREFERENCE_AUTOMATICALLY_LOG_WORKOUT_TIME"
+            android:title="Automatically log time"
+            android:summary="Logs workout time automatically for timed exercises"
+            android:defaultValue="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="FAQ">
+
+        <Preference
+            android:title="Frequently Asked Questions"
+            android:summary="/r/bodyweightfitness">
+
+            <intent android:action="android.intent.action.VIEW" android:data="http://www.reddit.com/r/bodyweightfitness/wiki/faq" />
+        </Preference>
     </PreferenceCategory>
 
     <PreferenceCategory

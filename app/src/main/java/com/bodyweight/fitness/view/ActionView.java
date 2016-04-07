@@ -2,13 +2,15 @@ package com.bodyweight.fitness.view;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bodyweight.fitness.Constants;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
 
@@ -16,16 +18,12 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-import icepick.Icepick;
-import icepick.State;
-
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.presenter.ActionPresenter;
 import com.bodyweight.fitness.utils.ViewUtils;
 import com.bodyweight.fitness.view.widget.ActionButton;
 
-public class ActionView extends RelativeLayout {
-    @State
+public class ActionView extends CoordinatorLayout {
     ActionPresenter mPresenter;
 
     MaterialSheetFab mMaterialSheet;
@@ -70,7 +68,13 @@ public class ActionView extends RelativeLayout {
         ButterKnife.inject(this);
 
         ViewUtils.resetFloatingActionButtonMargin(mActionViewLogWorkoutButton);
-        ViewUtils.resetFloatingActionButtonMargin(mActionViewActionButton);
+        ViewUtils.resetFloatingActionButtonMargin(
+                mActionViewActionButton,
+                0,
+                0,
+                12,
+                12
+        );
 
         mMaterialSheet = new MaterialSheetFab<>(
                 mActionViewActionButton,
@@ -113,7 +117,12 @@ public class ActionView extends RelativeLayout {
     public Parcelable onSaveInstanceState() {
         mPresenter.onSaveInstanceState();
 
-        return Icepick.saveInstanceState(this, super.onSaveInstanceState());
+        Bundle state = new Bundle();
+
+        state.putParcelable(Constants.INSTANCE.getSUPER_STATE_KEY(), super.onSaveInstanceState());
+        state.putSerializable(Constants.INSTANCE.getPRESENTER_KEY(), mPresenter);
+
+        return state;
     }
 
     @Override
@@ -121,9 +130,13 @@ public class ActionView extends RelativeLayout {
         mPresenter.onDestroyView();
         mPresenter = null;
 
-        super.onRestoreInstanceState(Icepick.restoreInstanceState(this, state));
+        if (state instanceof Bundle) {
+            mPresenter = (ActionPresenter) ((Bundle) state).getSerializable(Constants.INSTANCE.getPRESENTER_KEY());
 
-        mPresenter.onRestoreInstanceState(this);
+            super.onRestoreInstanceState(((Bundle) state).getParcelable(Constants.INSTANCE.getSUPER_STATE_KEY()));
+
+            mPresenter.onRestoreInstanceState(this);
+        }
     }
 
     public void onCreate() {

@@ -14,6 +14,11 @@
 		<item name="actionMenuTextColor">@color/white</item>
 	</style>
 
+	<!-- Transparent Toolbar -->
+	<style name="AppTheme.Dashboard.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
+		<item name="android:windowActionBarOverlay">true</item>
+	</style>
+
 	<style name="AppTheme.Progress.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
 		<item name="android:textColorPrimary">@color/primaryDark</item>
 		<item name="android:textColorSecondary">@color/primaryDark</item>
@@ -34,6 +39,14 @@
 		<item name="colorPrimaryDark">@color/primaryDark</item>
 
 		<item name="android:windowContentOverlay">@null</item>
+	</style>
+
+	<style name="AppTheme.Activity.Dashboard" parent="Theme.AppCompat.Light.NoActionBar">
+		<item name="android:windowContentOverlay">@null</item>
+
+		<item name="windowActionBar">false</item>
+		<item name="windowActionBarOverlay">true</item>
+		<item name="android:windowActionBarOverlay">true</item>
 	</style>
 
     <style name="AppTheme.Activity.Progress" parent="Theme.AppCompat.Light.NoActionBar">

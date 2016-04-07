@@ -37,8 +37,6 @@ public class CalendarAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         CalendarItemView calendarItemView = (CalendarItemView) object;
 
-        calendarItemView.onDestroyView();
-
         ViewPager viewPager = (ViewPager) container;
         viewPager.removeView(calendarItemView);
     }

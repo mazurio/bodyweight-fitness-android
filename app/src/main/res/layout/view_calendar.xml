@@ -32,8 +32,9 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:textColor="@color/primaryDark"
-                    android:textSize="14sp"
-                    app:typeface="roboto_regular"
+                    android:textSize="11sp"
+                    android:textAllCaps="true"
+                    app:typeface="roboto_light"
                     android:text="Mon"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
@@ -42,8 +43,9 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:textColor="@color/primaryDark"
-                    android:textSize="14sp"
-                    app:typeface="roboto_regular"
+                    android:textSize="11sp"
+                    android:textAllCaps="true"
+                    app:typeface="roboto_light"
                     android:text="Tue"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
@@ -52,8 +54,9 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:textColor="@color/primaryDark"
-                    android:textSize="14sp"
-                    app:typeface="roboto_regular"
+                    android:textSize="11sp"
+                    android:textAllCaps="true"
+                    app:typeface="roboto_light"
                     android:text="Wed"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
@@ -62,8 +65,9 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:textColor="@color/primaryDark"
-                    android:textSize="14sp"
-                    app:typeface="roboto_regular"
+                    android:textSize="11sp"
+                    android:textAllCaps="true"
+                    app:typeface="roboto_light"
                     android:text="Thu"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
@@ -72,8 +76,9 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:textColor="@color/primaryDark"
-                    android:textSize="14sp"
-                    app:typeface="roboto_regular"
+                    android:textSize="11sp"
+                    android:textAllCaps="true"
+                    app:typeface="roboto_light"
                     android:text="Fri"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
@@ -82,8 +87,9 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:textColor="@color/primaryDark"
-                    android:textSize="14sp"
-                    app:typeface="roboto_regular"
+                    android:textSize="11sp"
+                    android:textAllCaps="true"
+                    app:typeface="roboto_light"
                     android:text="Sat"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
@@ -92,8 +98,9 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:textColor="@color/primaryDark"
-                    android:textSize="14sp"
-                    app:typeface="roboto_regular"
+                    android:textSize="11sp"
+                    android:textAllCaps="true"
+                    app:typeface="roboto_light"
                     android:text="Sun"/>
             </LinearLayout>
 
@@ -104,124 +111,10 @@
         </LinearLayout>
     </com.bodyweight.fitness.view.widget.DrawShadowFrameLayout>
 
-    <ScrollView
-        android:id="@+id/view_calendar_scrollview"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/view_calendar_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.devspark.robototextview.widget.RobotoTextView
-                android:id="@+id/view_calendar_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:textSize="14sp"
-                android:textColor="#80000000"
-                app:typeface="roboto_regular" />
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/view_calendar_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="#fff">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <android.support.v7.widget.Toolbar
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        android:background="@color/white">
-
-                        <com.devspark.robototextview.widget.RobotoTextView
-                            android:id="@+id/view_calendar_routine_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="24sp"
-                            android:textColor="#000"
-                            android:text="Bodyweight Fitness"
-                            app:typeface="roboto_regular" />
-                    </android.support.v7.widget.Toolbar>
-
-                    <com.devspark.robototextview.widget.RobotoTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:paddingBottom="16dp"
-                        android:textSize="16sp"
-                        android:textColor="#80000000"
-                        android:text="Beginner Routine"
-                        app:typeface="roboto_regular" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#E4E4E4"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <com.devspark.robototextview.widget.RobotoButton
-                            android:id="@+id/view_calendar_card_view_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingTop="16dp"
-                            android:paddingLeft="16dp"
-                            android:paddingRight="16dp"
-                            android:paddingBottom="16dp"
-                            android:background="@android:color/transparent"
-                            android:textAllCaps="true"
-                            android:textColor="#000000"
-                            android:textSize="14sp"
-                            android:text="View"
-                            app:typeface="roboto_medium" />
-
-                        <com.devspark.robototextview.widget.RobotoButton
-                            android:id="@+id/view_calendar_card_export_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingTop="16dp"
-                            android:paddingLeft="16dp"
-                            android:paddingRight="16dp"
-                            android:paddingBottom="16dp"
-                            android:background="@android:color/transparent"
-                            android:textAllCaps="true"
-                            android:textColor="@color/primaryDark"
-                            android:textSize="14sp"
-                            android:text="Export"
-                            android:visibility="gone"
-                            app:typeface="roboto_medium" />
-
-                        <com.devspark.robototextview.widget.RobotoButton
-                            android:id="@+id/view_calendar_card_remove_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingTop="16dp"
-                            android:paddingLeft="16dp"
-                            android:paddingRight="16dp"
-                            android:paddingBottom="16dp"
-                            android:background="@android:color/transparent"
-                            android:textAllCaps="true"
-                            android:textColor="#80000000"
-                            android:textSize="14sp"
-                            android:text="Remove"
-                            app:typeface="roboto_medium" />
-                    </LinearLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="match_parent"/>
 
     <RelativeLayout
         android:id="@+id/view_calendar_message"

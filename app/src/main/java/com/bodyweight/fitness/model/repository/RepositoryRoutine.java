@@ -14,6 +14,9 @@ public class RepositoryRoutine extends RealmObject {
     @Index
     private String routineId;
 
+    private String title;
+    private String subtitle;
+
     @Index
     private Date startTime;
 
@@ -38,6 +41,22 @@ public class RepositoryRoutine extends RealmObject {
 
     public String getRoutineId() {
         return routineId;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
     }
 
     public void setStartTime(Date startTime) {

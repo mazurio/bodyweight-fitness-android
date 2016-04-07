@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.adapter.ProgressPagerAdapter;
 import com.bodyweight.fitness.stream.RepositoryStream;
 
@@ -38,9 +39,9 @@ public class ProgressActivity extends AppCompatActivity {
 
         ButterKnife.inject(this);
 
-        String routineId = getIntent().getStringExtra("routineId");
+        String primaryKeyRoutineId = getIntent().getStringExtra(Constants.INSTANCE.getPRIMARY_KEY_ROUTINE_ID());
 
-        buildRoutine(routineId);
+        buildRoutine(primaryKeyRoutineId);
 
         setPager(mRepositoryRoutine);
 
@@ -61,11 +62,11 @@ public class ProgressActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void buildRoutine(String routineId) {
+    private void buildRoutine(String primaryKeyRoutineId) {
         Realm realm = RepositoryStream.getInstance().getRealm();
 
         mRepositoryRoutine = realm.where(RepositoryRoutine.class)
-                .equalTo("id", routineId)
+                .equalTo("id", primaryKeyRoutineId)
                 .findFirst();
     }
 

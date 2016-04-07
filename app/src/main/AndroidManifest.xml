@@ -2,9 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.bodyweight.fitness"
     android:installLocation="auto">
 
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="23" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
-	<uses-permission android:name="android.permission.INTERNET" />
+    <supports-screens
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true"
+        android:anyDensity="true"/>
 
     <application
         android:allowBackup="true"
@@ -22,6 +27,17 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.DashboardActivity"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/AppTheme.Activity.Dashboard"
+            android:launchMode="singleTask">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainActivity" />
         </activity>
 
         <activity
@@ -56,6 +72,6 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="${fabric_api_key}" />
+            android:value="REPLACE_HERE" />
     </application>
 </manifest>

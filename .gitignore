@@ -2,6 +2,7 @@
 api.xml
 api.properties
 fabric.properties
+gradle.properties
 
 # Built application files
 *.apk

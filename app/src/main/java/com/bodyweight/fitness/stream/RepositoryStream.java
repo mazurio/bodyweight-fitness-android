@@ -1,13 +1,13 @@
 package com.bodyweight.fitness.stream;
 
 import com.bodyweight.fitness.App;
-import com.bodyweight.fitness.model.Exercise;
 
 import org.joda.time.DateTime;
 
 import java.util.Date;
 import java.util.UUID;
 
+import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.Routine;
 import com.bodyweight.fitness.model.SectionMode;
 import com.bodyweight.fitness.model.repository.RepositoryCategory;
@@ -16,15 +16,15 @@ import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.model.repository.RepositorySection;
 import com.bodyweight.fitness.model.repository.RepositorySet;
 
+import io.realm.DynamicRealm;
+import io.realm.DynamicRealmObject;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-import rx.Observable;
-import rx.subjects.PublishSubject;
+import io.realm.RealmObjectSchema;
+import io.realm.RealmSchema;
 
 public class RepositoryStream {
-    private final PublishSubject<RepositoryRoutine> mSubject = PublishSubject.create();
-
     private static RepositoryStream sRepositoryStream = null;
 
     public static RepositoryStream getInstance() {
@@ -40,17 +40,35 @@ public class RepositoryStream {
     public Realm getRealm() {
         return Realm.getInstance(new RealmConfiguration.Builder(App.getContext())
                 .name("bodyweight.fitness.realm")
-                .schemaVersion(1)
+                .schemaVersion(2)
+                .migration((DynamicRealm realm, long oldVersion, long newVersion) -> {
+                    RealmSchema schema = realm.getSchema();
+
+//                    if (oldVersion == 0) {
+                        RealmObjectSchema routineSchema = schema.get("RepositoryRoutine");
+
+                        routineSchema
+                                .addField("title", String.class)
+                                .addField("subtitle", String.class)
+                                .transform((DynamicRealmObject obj) -> {
+                                    obj.set("title", "Bodyweight Fitness");
+                                    obj.set("subtitle", "Recommended Routine");
+                                });
+//                    }
+                })
                 .build());
     }
 
     public RepositoryRoutine buildRealmRoutine(Routine routine) {
-        getRealm().beginTransaction();
+        Realm realm = getRealm();
 
-        RepositoryRoutine repositoryRoutine = getRealm().createObject(RepositoryRoutine.class);
+        realm.beginTransaction();
+
+        RepositoryRoutine repositoryRoutine = realm.createObject(RepositoryRoutine.class);
         repositoryRoutine.setId("Routine-" + UUID.randomUUID().toString());
-        // TODO: This will change when more routines are added.
-        repositoryRoutine.setRoutineId("routine0");
+        repositoryRoutine.setRoutineId(routine.getRoutineId());
+        repositoryRoutine.setTitle(routine.getTitle());
+        repositoryRoutine.setSubtitle(routine.getSubtitle());
         repositoryRoutine.setStartTime(new DateTime().toDate());
         repositoryRoutine.setLastUpdatedTime(new DateTime().toDate());
 
@@ -58,14 +76,14 @@ public class RepositoryStream {
         RepositorySection repositorySection = null;
 
         for(Exercise exercise : routine.getExercises()) {
-            RepositoryExercise repositoryExercise = getRealm().createObject(RepositoryExercise.class);
+            RepositoryExercise repositoryExercise = realm.createObject(RepositoryExercise.class);
             repositoryExercise.setId("Exercise-" + UUID.randomUUID().toString());
             repositoryExercise.setExerciseId(exercise.getExerciseId());
             repositoryExercise.setTitle(exercise.getTitle());
             repositoryExercise.setDescription(exercise.getDescription());
             repositoryExercise.setDefaultSet(exercise.getDefaultSet());
 
-            RepositorySet repositorySet = getRealm().createObject(RepositorySet.class);
+            RepositorySet repositorySet = realm.createObject(RepositorySet.class);
             repositorySet.setId("Set-" + UUID.randomUUID().toString());
 
             if (exercise.getDefaultSet().equals("weighted")) {
@@ -82,7 +100,7 @@ public class RepositoryStream {
             repositoryExercise.getSets().add(repositorySet);
 
             if(repositoryCategory == null || !repositoryCategory.getTitle().equalsIgnoreCase(exercise.getCategory().getTitle())) {
-                repositoryCategory = getRealm().createObject(RepositoryCategory.class);
+                repositoryCategory = realm.createObject(RepositoryCategory.class);
                 repositoryCategory.setId("Category-" + UUID.randomUUID().toString());
                 repositoryCategory.setCategoryId(exercise.getCategory().getCategoryId());
                 repositoryCategory.setTitle(exercise.getCategory().getTitle());
@@ -92,7 +110,7 @@ public class RepositoryStream {
             }
 
             if(repositorySection == null || !repositorySection.getTitle().equalsIgnoreCase(exercise.getSection().getTitle())) {
-                repositorySection = getRealm().createObject(RepositorySection.class);
+                repositorySection = realm.createObject(RepositorySection.class);
                 repositorySection.setId("Section-" + UUID.randomUUID().toString());
                 repositorySection.setSectionId(exercise.getSection().getSectionId());
                 repositorySection.setTitle(exercise.getSection().getTitle());
@@ -127,7 +145,7 @@ public class RepositoryStream {
             repositorySection.getExercises().add(repositoryExercise);
         }
 
-        getRealm().commitTransaction();
+        realm.commitTransaction();
 
         return repositoryRoutine;
     }
@@ -143,23 +161,20 @@ public class RepositoryStream {
                 .minusSeconds(1)
                 .toDate();
 
+        String routineId = RoutineStream.getInstance().getRoutine().getRoutineId();
+
         RepositoryRoutine repositoryRoutine = getRealm()
                 .where(RepositoryRoutine.class)
                 .between("startTime", start, end)
+                .equalTo("routineId", routineId)
                 .findFirst();
 
-        if(repositoryRoutine == null) {
+        if (repositoryRoutine == null) {
             repositoryRoutine = buildRealmRoutine(
                     RoutineStream.getInstance().getRoutine()
             );
-
-            mSubject.onNext(repositoryRoutine);
         }
 
         return repositoryRoutine;
-    }
-
-    public Observable<RepositoryRoutine> getRepositoryRoutineObservable() {
-        return mSubject;
     }
 }

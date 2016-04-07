@@ -34,18 +34,6 @@
                 android:layout_marginBottom="16dp"
                 android:theme="@style/AppTheme.Progress.Card.Toolbar"/>
 
-            <RelativeLayout
-                android:id="@+id/chartLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/chart1"
-                    android:layout_width="match_parent"
-                    android:layout_margin="12dp"
-                    android:layout_height="220dp"/>
-            </RelativeLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

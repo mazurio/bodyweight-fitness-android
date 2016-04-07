@@ -9,6 +9,8 @@ public class Exercise extends LinkedRoutine implements Serializable {
     private String mTitle;
     private String mDescription;
     private String mYouTubeId;
+    private String mGifId;
+    private String mGifUrl;
     private String mDefaultSet;
 
     private Category mCategory;
@@ -24,6 +26,8 @@ public class Exercise extends LinkedRoutine implements Serializable {
             String title,
             String description,
             String youTubeId,
+            String gifId,
+            String gifUrl,
             String defaultSet) {
         mExerciseId = exerciseId;
         mId = id;
@@ -31,6 +35,8 @@ public class Exercise extends LinkedRoutine implements Serializable {
         mTitle = title;
         mDescription = description;
         mYouTubeId = youTubeId;
+        mGifId = gifId;
+        mGifUrl = gifUrl;
         mDefaultSet = defaultSet;
     }
 
@@ -60,6 +66,18 @@ public class Exercise extends LinkedRoutine implements Serializable {
 
     public String getYouTubeId() {
         return mYouTubeId;
+    }
+
+    public String getGifId() {
+        return mGifId;
+    }
+
+    public String getGifUrl() {
+        return mGifUrl;
+    }
+
+    public boolean isTimedSet() {
+        return mDefaultSet.equalsIgnoreCase("timed");
     }
 
     public String getDefaultSet() {

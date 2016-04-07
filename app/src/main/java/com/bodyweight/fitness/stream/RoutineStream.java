@@ -3,7 +3,8 @@ package com.bodyweight.fitness.stream;
 import com.bodyweight.fitness.App;
 import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.model.json.JSONRoutine;
-import com.bodyweight.fitness.utils.Logger;
+import com.bodyweight.fitness.model.persistence.Glacier;
+import com.bodyweight.fitness.utils.PreferenceUtils;
 import com.google.gson.Gson;
 
 import org.apache.commons.io.IOUtils;
@@ -13,10 +14,7 @@ import java.io.IOException;
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.model.Routine;
 
-import io.mazur.glacier.Glacier;
-
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.subjects.PublishSubject;
 
@@ -27,25 +25,34 @@ public class RoutineStream {
     private Exercise mExercise;
 
     private final PublishSubject<Routine> mRoutineSubject = PublishSubject.create();
+    private final PublishSubject<Routine> mRoutineChangedSubject = PublishSubject.create();
     private final PublishSubject<Exercise> mExerciseSubject = PublishSubject.create();
     private final PublishSubject<Routine> mLevelChangedSubject = PublishSubject.create();
 
     private RoutineStream() {
-        try {
-            JSONRoutine jsonRoutine = new Gson().fromJson(IOUtils.toString(App.getContext()
-                            .getResources()
-                            .openRawResource(R.raw.beginner_routine)
-            ), JSONRoutine.class);
+        setRoutine(R.raw.bodyweight_fitness_recommended_routine);
 
-            mRoutine = new Routine(jsonRoutine);
-        } catch(IOException e) {
-            Logger.e("Exception when loading Beginner Routine from JSON file: " + e.getMessage());
-        }
-
-        mExercise = mRoutine.getLinkedExercises().get(0);
-
-        mRoutineSubject.onNext(mRoutine);
-        mExerciseSubject.onNext(mExercise);
+//        String defaultRoutine = PreferenceUtils.getInstance().getDefaultRoutine();
+//
+//        switch (defaultRoutine) {
+//            case "routine-1564cc76-24fc-4a02-bc57-0c99e632f6af": {
+//                setRoutine(R.raw.flexibility_molding_mobility);
+//
+//                break;
+//            }
+//
+//            case "routine-4afa306b-4026-44e4-90d9-913afead82ff": {
+//                setRoutine(R.raw.flexibility_starting_stretching);
+//
+//                break;
+//            }
+//
+//            default: {
+//                setRoutine(R.raw.bodyweight_fitness_recommended_routine);
+//
+//                break;
+//            }
+//        }
     }
 
     public static RoutineStream getInstance() {
@@ -56,8 +63,40 @@ public class RoutineStream {
         return sInstance;
     }
 
+    public void setRoutine(Routine routine) {
+        mRoutine = routine;
+
+        PreferenceUtils.getInstance().setDefaultRoutine(mRoutine.getRoutineId());
+
+        mExercise = mRoutine.getLinkedExercises().get(0);
+
+        mRoutineSubject.onNext(mRoutine);
+        mExerciseSubject.onNext(mExercise);
+
+        mRoutineChangedSubject.onNext(mRoutine);
+    }
+
+    private void setRoutine(int resource) {
+        mRoutine = getRoutine(resource);
+
+        setRoutine(mRoutine);
+    }
+
     public Routine getRoutine() {
         return mRoutine;
+    }
+
+    public Routine getRoutine(int resource) {
+        try {
+            JSONRoutine jsonRoutine = new Gson().fromJson(IOUtils.toString(App.getContext()
+                            .getResources()
+                            .openRawResource(resource)
+            ), JSONRoutine.class);
+
+            return new Routine(jsonRoutine);
+        } catch(IOException e) {}
+
+        return null;
     }
 
     public void setExercise(Exercise exercise) {
@@ -83,34 +122,31 @@ public class RoutineStream {
         mLevelChangedSubject.onNext(mRoutine);
     }
 
-    /**
-     * @return Observable that allows to subscribe when the whole routine has changed.
-     */
     public Observable<Routine> getRoutineObservable() {
-        Observable<Routine> routineObservable = Observable.create(new Observable.OnSubscribe<Routine>() {
-            @Override
-            public void call(Subscriber<? super Routine> subscriber) {
-                subscriber.onNext(mRoutine);
-            }
-        }).observeOn(AndroidSchedulers.mainThread()).publish().refCount();
+
+        Observable<Routine> routineObservable = Observable
+                .just(mRoutine)
+                .observeOn(AndroidSchedulers.mainThread())
+                .publish()
+                .refCount();
 
         return Observable.merge(mRoutineSubject, routineObservable);
+    }
+
+    public Observable<Routine> getRoutineChangedObservable() {
+        return mRoutineChangedSubject;
     }
 
     public Observable<Exercise> getExerciseChangedObservable() {
         return mExerciseSubject;
     }
 
-    /**
-     * @return Observable that allows to subscribe when only exercise has changed.
-     */
     public Observable<Exercise> getExerciseObservable() {
-        Observable<Exercise> exerciseObservable = Observable.create(new Observable.OnSubscribe<Exercise>() {
-            @Override
-            public void call(Subscriber<? super Exercise> subscriber) {
-                subscriber.onNext(mExercise);
-            }
-        }).observeOn(AndroidSchedulers.mainThread()).publish().refCount();
+        Observable<Exercise> exerciseObservable = Observable
+                .just(mExercise)
+                .observeOn(AndroidSchedulers.mainThread())
+                .publish()
+                .refCount();
 
         return Observable.merge(mExerciseSubject, exerciseObservable);
     }
