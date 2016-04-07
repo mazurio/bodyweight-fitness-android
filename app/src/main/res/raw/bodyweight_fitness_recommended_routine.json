@@ -362,26 +362,6 @@
       "defaultSet": "weighted"
     },
     {
-      "exerciseId": "exercise-96cb8a47-1061-4737-8036-859d8b9413d7",
-      "id": "weighted_squat",
-      "level": "Level 4a",
-      "title": "Weighted Squat",
-      "description": "3x(5-8)",
-      "type": "exercise",
-      "youTubeId": "",
-      "defaultSet": "weighted"
-    },
-    {
-      "exerciseId": "exercise-c4acc88e-0390-4ddd-a645-a136b4dc3fcf",
-      "id": "deadlift",
-      "level": "Level 4b",
-      "title": "Deadlift",
-      "description": "3x(5-8)",
-      "type": "exercise",
-      "youTubeId": "",
-      "defaultSet": "weighted"
-    },
-    {
       "sectionId": "section8",
       "title": "L-sit Progression",
       "description": "3x(10-30s)",
