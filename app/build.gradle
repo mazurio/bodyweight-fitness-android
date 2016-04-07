@@ -112,7 +112,6 @@ dependencies {
     compile 'com.github.johnkil.android-robototextview:robototextview:2.3.0'
     compile 'com.gordonwong:material-sheet-fab:1.2'
     compile 'com.github.bmarrdev:android-DecoView-charting:v0.9.4'
-    compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
