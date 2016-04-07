@@ -22,7 +22,7 @@ public class PreviewPresenter extends IPresenter<PreviewView> implements Seriali
                 .subscribe(exercise -> {
                     Routine routine = RoutineStream.getInstance().getRoutine();
 
-                    GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mView.getPreviewGifImageView());
+                    GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mView.getImageView());
 
                     if (routine.getRoutineId().equals("routine0")) {
                         int identifier = mView.getContext()

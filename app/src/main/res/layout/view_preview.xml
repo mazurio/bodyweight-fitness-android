@@ -8,7 +8,7 @@
     android:background="@color/black">
 
     <ImageView
-        android:id="@+id/preview_gif_image_view"
+        android:id="@+id/image_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </com.bodyweight.fitness.view.PreviewView>

@@ -18,8 +18,8 @@ import com.bodyweight.fitness.R;
 public class PreviewView extends RelativeLayout {
     PreviewPresenter mPresenter;
 
-    @InjectView(R.id.preview_gif_image_view)
-    ImageView mPreviewGifImageView;
+    @InjectView(R.id.image_view)
+    ImageView mImageView;
 
     public PreviewView(Context context) {
         super(context);
@@ -76,7 +76,7 @@ public class PreviewView extends RelativeLayout {
         mPresenter.onCreateView(this);
     }
 
-    public ImageView getPreviewGifImageView() {
-        return mPreviewGifImageView;
+    public ImageView getImageView() {
+        return mImageView;
     }
 }
