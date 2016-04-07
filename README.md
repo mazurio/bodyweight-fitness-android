@@ -9,7 +9,7 @@ An android application focused on Bodyweight Fitness.
 Simple interface for accessing multiple exercise videos and up-to-date beginner routine with a handy timer helpful to finish the exercise.
 
 <p align="center">
-  <img src="/screenshots/GitHub.png?raw=true" alt="Nexus 5 Screenshot" width="325"/>
+  <img src="/screenshots/GitHub.png?raw=true" alt="Nexus 5 Screenshot" width="280"/>
 </p>
 
 ### LICENSE
