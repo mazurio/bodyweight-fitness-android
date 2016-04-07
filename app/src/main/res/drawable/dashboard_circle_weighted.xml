@@ -1,12 +1,18 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item>
+    <item android:width="65dp" android:height="65dp">
         <shape android:shape="oval">
             <solid android:color="@color/white" />
+
+            <size
+                android:width="65dp"
+                android:height="65dp"/>
         </shape>
     </item>
 
     <item android:drawable="@drawable/dashboard_weighted"
         android:gravity="center"
-        android:width="26dp"
-        android:height="26dp"/>
+        android:top="16dp"
+        android:left="16dp"
+        android:right="16dp"
+        android:bottom="16dp"/>
 </layer-list>
