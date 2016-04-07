@@ -36,7 +36,7 @@ public class App extends Application {
             );
         }
 
-        FileDownloader.init(this);
+//        FileDownloader.init(this);
 
         mContext = getApplicationContext();
     }
