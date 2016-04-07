@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -14,12 +12,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import android.transition.Fade;
-import android.transition.TransitionManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.bodyweight.fitness.stream.RepositoryStream;
@@ -28,13 +22,15 @@ import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.utils.ApplicationStoreUtils;
 import com.bodyweight.fitness.utils.PreferenceUtils;
-import com.liulishuo.filedownloader.FileDownloader;
+
+import java.util.ArrayList;
 
 import rx.Subscription;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
-    private Subscription mSubscription;
     private Integer mId = R.id.action_menu_home;
+
+    private transient ArrayList<Subscription> mSubscriptions = new ArrayList<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     protected void onPause() {
         super.onPause();
 
-        unsubscribe();
+        unsubscribeAll();
     }
 
     @Override
@@ -81,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     protected void onDestroy() {
         super.onDestroy();
 
-        FileDownloader.getImpl().pauseAll();
+//        FileDownloader.getImpl().pauseAll();
     }
 
     @Override
@@ -112,6 +108,27 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void subscribe(Subscription subscription) {
+        if (mSubscriptions == null) {
+            mSubscriptions = new ArrayList<>();
+        }
+
+        mSubscriptions.add(subscription);
+    }
+
+    private void unsubscribeAll() {
+        if (mSubscriptions == null) {
+            mSubscriptions = new ArrayList<>();
+        }
+
+        for(Subscription s : mSubscriptions) {
+            s.unsubscribe();
+            s = null;
+        }
+
+        mSubscriptions.clear();
     }
 
     private void setToolbar() {
@@ -167,34 +184,22 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     private void subscribe() {
-        // TODO: REMOVE SUBSCRIPTIONS.
-        Stream.INSTANCE.getMenuObservable()
+        subscribe(Stream.INSTANCE.getMenuObservable()
                 .filter(id -> id.equals(R.id.action_dashboard))
                 .subscribe(id -> {
-//                    ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-//                            MainActivity.this,
-//                            findViewById(R.id.start_stop_timer_button),
-//                            "dashboard"
-//                    );
-
                     startActivity(new Intent(this, DashboardActivity.class));
-//                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
-//                    ActivityCompat.startActivity(this,
-//                            new Intent(this, DashboardActivity.class), activityOptionsCompat.toBundle());
-                });
+                }));
 
 
-        // TODO: REMOVE SUBSCRIPTIONS.
-        Stream.INSTANCE
+        subscribe(Stream.INSTANCE
                 .getDrawerObservable()
                 .filter(id ->
                         id.equals(R.id.action_menu_home) || id.equals(R.id.action_menu_workout_log))
                 .subscribe(id -> {
                     mId = id;
-                });
+                }));
 
-        mSubscription = Stream.INSTANCE
+        subscribe(Stream.INSTANCE
                 .getDrawerObservable()
                 .subscribe(id -> {
                     switch (id) {
@@ -221,11 +226,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             break;
                         }
                     }
-                });
-    }
-
-    private void unsubscribe() {
-        mSubscription.unsubscribe();
+                }));
     }
 
     private void clearFlagKeepScreenOn() {
