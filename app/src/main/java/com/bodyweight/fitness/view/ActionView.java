@@ -175,13 +175,6 @@ public class ActionView extends CoordinatorLayout {
         mPresenter.onClickLogWorkoutButton();
     }
 
-    @OnClick(R.id.action_view_action_sheet_buy_equipment)
-    @SuppressWarnings("unused")
-    public void onClickBuyEquipment(View view) {
-        mMaterialSheet.hideSheet();
-        mPresenter.onClickBuyEquipment();
-    }
-
     @OnClick(R.id.action_view_action_sheet_watch_on_youtube)
     @SuppressWarnings("unused")
     public void onClickWatchOnYouTube(View view) {

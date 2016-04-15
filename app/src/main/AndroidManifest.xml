@@ -41,16 +41,6 @@
         </activity>
 
         <activity
-            android:name=".ui.BuyEquipmentActivity"
-            android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme.Activity">
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" />
-        </activity>
-
-        <activity
             android:name=".ui.ProgressActivity"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.Activity.Progress">
@@ -72,6 +62,6 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="REPLACE_HERE" />
+            android:value="5dcec45142f2b7beb83af419bcb06344e8598390" />
     </application>
 </manifest>

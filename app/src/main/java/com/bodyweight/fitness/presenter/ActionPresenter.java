@@ -13,7 +13,6 @@ import com.bodyweight.fitness.view.dialog.LogWorkoutDialog;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.stream.RoutineStream;
-import com.bodyweight.fitness.ui.BuyEquipmentActivity;
 import com.bodyweight.fitness.ui.ProgressActivity;
 import com.bodyweight.fitness.view.dialog.ProgressDialog;
 
@@ -80,12 +79,6 @@ public class ActionPresenter extends IPresenter<ActionView> {
     public void onClickLogWorkoutButton() {
         mLogWorkoutDialog = new LogWorkoutDialog(getContext());
         mLogWorkoutDialog.show();
-    }
-
-    public void onClickBuyEquipment() {
-        getContext().startActivity(
-                new Intent(getContext(), BuyEquipmentActivity.class)
-        );
     }
 
     public void onClickWatchOnYouTube() {

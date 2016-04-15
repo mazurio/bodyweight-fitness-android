@@ -7,14 +7,6 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'realm-android'
 apply plugin: 'io.fabric'
 
-def getApiKey() {
-    def Properties properties = new Properties()
-
-    properties.load(new FileInputStream(new File('api.properties')))
-
-    return properties['AMAZON_API_KEY']
-}
-
 android {
     compileSdkVersion 23
     buildToolsVersion '24.0.0 rc2'
@@ -44,21 +36,17 @@ android {
     productFlavors {
         pro {
             applicationId 'com.bodyweight.fitness.pro'
-            versionCode 119
-            versionName "1.1.9"
+            versionCode 120
+            versionName "1.2.0"
         }
 
         free {
             applicationId 'com.bodyweight.fitness.free'
-            versionCode 119
-            versionName "1.1.9"
+            versionCode 120
+            versionName "1.2.0"
         }
     }
     buildTypes {
-        applicationVariants.all { variant ->
-            variant.buildConfigField "String", "AMAZON_API_KEY", "\"" + getApiKey() + "\""
-        }
-
         release {
             minifyEnabled false
         }
@@ -120,8 +108,6 @@ dependencies {
     compile('com.crashlytics.sdk.android:answers:1.3.6@aar') {
         transitive = true;
     }
-
-    compile files('libs/amazon-mobile-associates-1.0.73.0.jar')
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
