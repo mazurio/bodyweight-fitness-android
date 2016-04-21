@@ -43,18 +43,15 @@ public class RepositoryStream {
                 .schemaVersion(2)
                 .migration((DynamicRealm realm, long oldVersion, long newVersion) -> {
                     RealmSchema schema = realm.getSchema();
+                    RealmObjectSchema routineSchema = schema.get("RepositoryRoutine");
 
-//                    if (oldVersion == 0) {
-                        RealmObjectSchema routineSchema = schema.get("RepositoryRoutine");
-
-                        routineSchema
-                                .addField("title", String.class)
-                                .addField("subtitle", String.class)
-                                .transform((DynamicRealmObject obj) -> {
-                                    obj.set("title", "Bodyweight Fitness");
-                                    obj.set("subtitle", "Recommended Routine");
-                                });
-//                    }
+                    routineSchema
+                            .addField("title", String.class)
+                            .addField("subtitle", String.class)
+                            .transform((DynamicRealmObject obj) -> {
+                                obj.set("title", "Bodyweight Fitness");
+                                obj.set("subtitle", "Recommended Routine");
+                            });
                 })
                 .build());
     }
@@ -129,8 +126,7 @@ public class RepositoryStream {
             /**
              * Hide exercises not relevant to user level.
              */
-            if(exercise.getSection().getSectionMode().equals(SectionMode.LEVELS) ||
-                    exercise.getSection().getSectionMode().equals(SectionMode.PICK)) {
+            if(exercise.getSection().getSectionMode().equals(SectionMode.LEVELS) || exercise.getSection().getSectionMode().equals(SectionMode.PICK)) {
                 if(exercise.equals(exercise.getSection().getCurrentExercise())) {
                     repositoryExercise.setVisible(true);
                 } else {
@@ -176,5 +172,31 @@ public class RepositoryStream {
         }
 
         return repositoryRoutine;
+    }
+
+    public boolean repositoryRoutineForTodayExists() {
+        final Date start = new DateTime()
+                .withTimeAtStartOfDay()
+                .toDate();
+
+        final Date end = new DateTime()
+                .withTimeAtStartOfDay()
+                .plusDays(1)
+                .minusSeconds(1)
+                .toDate();
+
+        String routineId = RoutineStream.getInstance().getRoutine().getRoutineId();
+
+        RepositoryRoutine repositoryRoutine = getRealm()
+                .where(RepositoryRoutine.class)
+                .between("startTime", start, end)
+                .equalTo("routineId", routineId)
+                .findFirst();
+
+        if (repositoryRoutine == null) {
+            return false;
+        }
+
+        return true;
     }
 }

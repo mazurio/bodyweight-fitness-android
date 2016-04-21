@@ -87,7 +87,7 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
                 .between("startTime", start, end)
                 .findAll();
 
-        if(!results.isEmpty()) {
+        if (!results.isEmpty()) {
             mView.setListAdapter(mCalendarListAdapter);
             mCalendarListAdapter.setItems(results);
 
