@@ -62,8 +62,20 @@ public class PreferenceUtils {
                 .commit();
     }
 
+    public void setNumberOfReps(String exerciseId, int value) {
+        PreferenceManager.getDefaultSharedPreferences(App.getContext())
+                .edit()
+                .putInt(String.format("%s%s", Constants.INSTANCE.getPREFERENCE_NUMBER_OF_REPS_KEY(), exerciseId), value)
+                .commit();
+    }
+
     public long getTimerValueForExercise(String exerciseId, long defaultValue) {
         return PreferenceManager.getDefaultSharedPreferences(App.getContext())
                 .getLong(String.format("%s%s", Constants.INSTANCE.getPREFERENCE_TIMER_KEY(), exerciseId), defaultValue);
+    }
+
+    public int getNumberOfRepsForExercise(String exerciseId, int defaultValue) {
+        return PreferenceManager.getDefaultSharedPreferences(App.getContext())
+                .getInt(String.format("%s%s", Constants.INSTANCE.getPREFERENCE_NUMBER_OF_REPS_KEY(), exerciseId), defaultValue);
     }
 }

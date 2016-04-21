@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -14,11 +15,13 @@ import android.support.v7.widget.Toolbar;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 
 import com.bodyweight.fitness.stream.RepositoryStream;
 
 import com.bodyweight.fitness.R;
+import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.utils.ApplicationStoreUtils;
 import com.bodyweight.fitness.utils.PreferenceUtils;
@@ -33,6 +36,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     private transient ArrayList<Subscription> mSubscriptions = new ArrayList<>();
 
+    private TabLayout mTabLayout;
+
+    private View mTimerView;
+    private View mRepsLoggerView;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 		setContentView(R.layout.activity_main);
 
         setToolbar();
-
+        setTabLayout();
         keepScreenOnWhenAppIsRunning();
     }
 
@@ -169,8 +177,33 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
 	}
 
+    private void setTabLayout() {
+        mTimerView = findViewById(R.id.timer_view);
+        mRepsLoggerView = findViewById(R.id.reps_logger_view);
+
+        mTabLayout = (TabLayout) findViewById(R.id.view_tabs);
+        mTabLayout.addTab(mTabLayout.newTab().setText("Timer"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("Reps Logger"));
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+
+                if (position == 0) {
+                    mTimerView.setVisibility(View.VISIBLE);
+                    mRepsLoggerView.setVisibility(View.GONE);
+                } else {
+                    mTimerView.setVisibility(View.GONE);
+                    mRepsLoggerView.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override public void onTabUnselected(TabLayout.Tab tab) {}
+            @Override public void onTabReselected(TabLayout.Tab tab) {}
+        });
+    }
+
     private void keepScreenOnWhenAppIsRunning() {
-        if(PreferenceUtils.getInstance().keepScreenOnWhenAppIsRunning()) {
+        if (PreferenceUtils.getInstance().keepScreenOnWhenAppIsRunning()) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         } else {
             clearFlagKeepScreenOn();
@@ -178,6 +211,30 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     private void subscribe() {
+        subscribe(RoutineStream.getInstance()
+                .getExerciseObservable()
+                .subscribe(exercise -> {
+                    if (exercise.isTimedSet()) {
+                        if (mTabLayout.getTabCount() == 2) {
+                            mTabLayout.removeTabAt(1);
+                        }
+
+                        mTabLayout.getTabAt(0).select();
+
+                        mTimerView.setVisibility(View.VISIBLE);
+                        mRepsLoggerView.setVisibility(View.GONE);
+                    } else {
+                        if (mTabLayout.getTabCount() == 1) {
+                            mTabLayout.addTab(mTabLayout.newTab().setText("Reps Logger"));
+                        }
+
+                        mTabLayout.getTabAt(1).select();
+
+                        mTimerView.setVisibility(View.GONE);
+                        mRepsLoggerView.setVisibility(View.VISIBLE);
+                    }
+        }));
+
         subscribe(Stream.INSTANCE.getMenuObservable()
                 .filter(id -> id.equals(R.id.action_dashboard))
                 .subscribe(id -> {
