@@ -2,13 +2,19 @@ package com.bodyweight.fitness.view
 
 import android.content.Context
 import android.util.AttributeSet
+import com.bodyweight.fitness.Constants
 import com.bodyweight.fitness.model.Exercise
+import com.bodyweight.fitness.model.repository.RepositorySet
 
 import com.bodyweight.fitness.presenter.AbstractPresenter
+import com.bodyweight.fitness.stream.RepositoryStream
 import com.bodyweight.fitness.stream.RoutineStream
+import com.bodyweight.fitness.stream.SetReps
+import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.utils.PreferenceUtils
 
 import kotlinx.android.synthetic.main.view_reps_logger.view.*
+import java.util.*
 
 class RepsLoggerPresenter : AbstractPresenter() {
     var mExercise: Exercise? = null
@@ -37,6 +43,46 @@ class RepsLoggerPresenter : AbstractPresenter() {
 
         PreferenceUtils.getInstance()
                 .setNumberOfReps(mExercise!!.exerciseId, mNumberOfReps)
+    }
+
+    fun logReps() {
+        val realm = RepositoryStream.getInstance().realm
+
+        realm.executeTransaction {
+            val repositoryRoutine = RepositoryStream.getInstance().repositoryRoutineForToday
+
+            val currentExercise = repositoryRoutine.exercises.filter {
+                it.exerciseId == mExercise!!.exerciseId
+            }.firstOrNull()
+
+            if (currentExercise != null) {
+                val numberOfSets = currentExercise.sets.size
+
+                if (numberOfSets < Constants.MAXIMUM_NUMBER_OF_SETS) {
+                    val firstSet = currentExercise.sets.first()
+
+                    if (numberOfSets == 1 && firstSet.reps == 0) {
+                        firstSet.reps = mNumberOfReps
+                    } else {
+                        val repositorySet = realm.createObject(RepositorySet::class.java)
+
+                        repositorySet.id = "Set-" + UUID.randomUUID().toString()
+                        repositorySet.setIsTimed(false)
+                        repositorySet.seconds = 0
+                        repositorySet.weight = 0.0
+                        repositorySet.reps = mNumberOfReps
+
+                        repositorySet.exercise = currentExercise
+
+                        currentExercise.sets.add(repositorySet)
+                    }
+
+                    realm.copyToRealmOrUpdate(repositoryRoutine)
+
+                    Stream.setLoggedSetReps(SetReps(numberOfSets + 1, mNumberOfReps))
+                }
+            }
+        }
     }
 
     fun increaseReps() {
@@ -85,6 +131,10 @@ open class RepsLoggerView : AbstractView {
         super.onFinishInflate()
 
         val repsLoggerPresenter: RepsLoggerPresenter = (mAbstractPresenter as RepsLoggerPresenter)
+
+        log_reps_button.setOnClickListener {
+            repsLoggerPresenter.logReps()
+        }
 
         increase_reps_button.setOnClickListener {
             repsLoggerPresenter.increaseReps()

@@ -242,7 +242,7 @@ public class TimerPresenter extends IPresenter<TimerView> {
             int loggedSeconds = (mLoggedSeconds - mCurrentSeconds);
 
             if (loggedSeconds > 0) {
-                if(logIntoRealm(loggedSeconds)) {
+                if (logIntoRealm(loggedSeconds)) {
                     Stream.INSTANCE.setLoggedSeconds(loggedSeconds);
                 }
             }

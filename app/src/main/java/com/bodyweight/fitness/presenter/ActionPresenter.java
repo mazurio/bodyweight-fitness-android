@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 
 import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.stream.RepositoryStream;
+import com.bodyweight.fitness.stream.SetReps;
 import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.view.ActionView;
 import com.bodyweight.fitness.view.dialog.LogWorkoutDialog;
@@ -15,6 +16,8 @@ import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.ui.ProgressActivity;
 import com.bodyweight.fitness.view.dialog.ProgressDialog;
+
+import rx.functions.Action1;
 
 public class ActionPresenter extends IPresenter<ActionView> {
     private transient LogWorkoutDialog mLogWorkoutDialog;
@@ -74,6 +77,13 @@ public class ActionPresenter extends IPresenter<ActionView> {
                             formatSeconds(loggedSeconds)
                     ), Snackbar.LENGTH_LONG).show();
                 }));
+
+        subscribe(Stream.INSTANCE.getLoggedSetRepsObservable().subscribe(new Action1<SetReps>() {
+            @Override
+            public void call(SetReps setReps) {
+                Snackbar.make(mView, String.format("Logged Set %d with %d Reps", setReps.getSet(), setReps.getReps()), Snackbar.LENGTH_LONG).show();
+            }
+        }));
     }
 
     public void onClickLogWorkoutButton() {
