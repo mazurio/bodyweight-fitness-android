@@ -88,6 +88,10 @@ public class CalendarPresenter extends IPresenter<CalendarView> {
                 .findAll();
 
         if (!results.isEmpty()) {
+            if (mCalendarListAdapter == null) {
+                mCalendarListAdapter = new CalendarListAdapter();
+            }
+
             mView.setListAdapter(mCalendarListAdapter);
             mCalendarListAdapter.setItems(results);
 

@@ -16,12 +16,14 @@ import com.bodyweight.fitness.utils.PreferenceUtils
 import kotlinx.android.synthetic.main.view_reps_logger.view.*
 import java.util.*
 
-fun AbstractPresenter.currentExercise(): Exercise {
-    return RoutineStream.getInstance().exercise
-}
+//fun AbstractPresenter.currentExercise(): Exercise {
+//    return RoutineStream.getInstance().exercise
+//}
 
 class RepsLoggerPresenter : AbstractPresenter() {
-    var mExercise: Exercise = currentExercise()
+    @Transient
+    var mExercise: Exercise = RoutineStream.getInstance().exercise
+
     var mNumberOfReps: Int = 5
 
     override fun bindView(view: AbstractView) {
@@ -29,7 +31,6 @@ class RepsLoggerPresenter : AbstractPresenter() {
 
         subscribe(RoutineStream.getInstance().exerciseObservable.subscribe {
             mExercise = it
-
             mNumberOfReps = PreferenceUtils.getInstance()
                     .getNumberOfRepsForExercise(it.exerciseId, 5)
 
@@ -61,7 +62,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
             val repositoryRoutine = RepositoryStream.getInstance().repositoryRoutineForToday
 
             val currentExercise = repositoryRoutine.exercises.filter {
-                it.exerciseId == mExercise!!.exerciseId
+                it.exerciseId == mExercise.exerciseId
             }.firstOrNull()
 
             if (currentExercise != null) {
