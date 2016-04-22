@@ -29,11 +29,8 @@ class RepsLoggerPresenter : AbstractPresenter() {
 
         RoutineStream.getInstance()
                 .exerciseObservable
-                .doOnUnsubscribe { debug("unsubscribe") }
                 .bindToLifecycle(view).subscribe {
             mExercise = it
-
-            debug("onNext")
 
             mNumberOfReps = PreferenceUtils.getInstance()
                     .getNumberOfRepsForExercise(it.exerciseId, 5)
@@ -42,6 +39,17 @@ class RepsLoggerPresenter : AbstractPresenter() {
 
             showOrHidePreviousAndNextExerciseButtons(it.isPrevious, it.isNext)
         }
+    }
+
+    override fun restoreView(view: AbstractView) {
+        super.restoreView(view)
+
+        mNumberOfReps = PreferenceUtils.getInstance()
+                .getNumberOfRepsForExercise(mExercise.exerciseId, 5)
+
+        updateLabels()
+
+        showOrHidePreviousAndNextExerciseButtons(mExercise.isPrevious, mExercise.isNext)
     }
 
     fun showOrHidePreviousAndNextExerciseButtons(isPrevious: Boolean, isNext: Boolean) {
@@ -77,6 +85,8 @@ class RepsLoggerPresenter : AbstractPresenter() {
 
                     if (numberOfSets == 1 && firstSet.reps == 0) {
                         firstSet.reps = mNumberOfReps
+
+                        Stream.setLoggedSetReps(SetReps(numberOfSets, mNumberOfReps))
                     } else {
                         val repositorySet = realm.createObject(RepositorySet::class.java)
 
@@ -89,11 +99,11 @@ class RepsLoggerPresenter : AbstractPresenter() {
                         repositorySet.exercise = currentExercise
 
                         currentExercise.sets.add(repositorySet)
+
+                        Stream.setLoggedSetReps(SetReps(numberOfSets + 1, mNumberOfReps))
                     }
 
                     realm.copyToRealmOrUpdate(repositoryRoutine)
-
-                    Stream.setLoggedSetReps(SetReps(numberOfSets + 1, mNumberOfReps))
                 }
             }
         }

@@ -14,4 +14,8 @@ abstract class AbstractPresenter : Serializable {
     open fun bindView(view: AbstractView) {
         mView = view
     }
+
+    open fun restoreView(view: AbstractView) {
+        mView = view
+    }
 }

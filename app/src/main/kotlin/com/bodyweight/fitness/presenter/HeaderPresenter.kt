@@ -1,10 +1,10 @@
 package com.bodyweight.fitness.presenter
 
-import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.Routine
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.view.AbstractView
 import com.bodyweight.fitness.view.HeaderView
+
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
 class HeaderPresenter : AbstractPresenter() {
@@ -14,8 +14,15 @@ class HeaderPresenter : AbstractPresenter() {
         RoutineStream.getInstance()
                 .routineObservable
                 .bindToLifecycle(view)
-                .doOnUnsubscribe { debug("HeaderPresenter.doOnUnsubscribe") }
                 .subscribe { setText(it) }
+    }
+
+    override fun restoreView(view: AbstractView) {
+        super.restoreView(view)
+
+        val routine = RoutineStream.getInstance().routine
+
+        setText(routine)
     }
 
     fun setText(routine: Routine) {

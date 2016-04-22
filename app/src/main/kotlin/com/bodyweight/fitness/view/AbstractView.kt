@@ -40,6 +40,6 @@ abstract class AbstractView : RelativeLayout {
             super.onRestoreInstanceState(state.getParcelable(superStateKey))
         }
 
-        mAbstractPresenter.bindView(this)
+        mAbstractPresenter.restoreView(this)
     }
 }

@@ -16,43 +16,47 @@ import org.joda.time.DateTime
 
 import java.util.*
 
-class ToolbarPresenter : AbstractPresenter() {
-    var mId: Int = R.id.action_menu_home
+object Shared {
+    var id: Int = R.id.action_menu_home
+}
 
+class ToolbarPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
         RoutineStream.getInstance()
                 .exerciseObservable
                 .bindToLifecycle(view)
-                .filter { mId.equals(R.id.action_menu_home) }
-                .doOnUnsubscribe { debug("ToolbarPresenter.RoutineStream.doOnUnsubscribe") }
-                .subscribe { setToolbarForHome(it) }
+                .filter { Shared.id.equals(R.id.action_menu_home) }
+                .subscribe {
+                    setToolbarForHome(it)
+                }
 
         CalendarStream.getInstance()
                 .calendarDayChangedObservable
                 .bindToLifecycle(view)
-                .doOnUnsubscribe { debug("ToolbarPresenter.CalendarStream.doOnUnsubscribe") }
-                .filter { mId.equals(R.id.action_menu_workout_log) }
-                .subscribe { setToolbarForWorkoutLog(it) }
+                .filter { Shared.id.equals(R.id.action_menu_workout_log) }
+                .subscribe {
+                    setToolbarForWorkoutLog(it)
+                }
 
         Stream.drawerObservable
                 .bindToLifecycle(view)
-                .doOnUnsubscribe { debug("ToolbarPresenter.Stream.doOnUnsubscribe") }
-                .filter { shouldSetToolbar(it) }
-                .subscribe { setToolbarForContent(it) }
+                .subscribe {
+                    Shared.id = it
+
+                    setToolbar()
+                }
     }
 
-    fun shouldSetToolbar(id: Int): Boolean {
-        return id.equals(R.id.action_menu_home) or
-                id.equals(R.id.action_menu_change_routine) or
-                id.equals(R.id.action_menu_workout_log)
+    override fun restoreView(view: AbstractView) {
+        super.restoreView(view)
+
+        setToolbar()
     }
 
-    fun setToolbarForContent(id: Int) {
-        mId = id
-
-        when (mId) {
+    fun setToolbar() {
+        when (Shared.id) {
             R.id.action_menu_home ->
                 setToolbarForHome(RoutineStream.getInstance().exercise)
             R.id.action_menu_workout_log ->
