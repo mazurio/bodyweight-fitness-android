@@ -34,8 +34,6 @@ abstract class AbstractView : RelativeLayout {
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {
-        mAbstractPresenter.removeView()
-
         if (state is Bundle) {
             mAbstractPresenter = state.getSerializable(presenterKey) as AbstractPresenter
 

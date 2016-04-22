@@ -3,6 +3,7 @@ package com.bodyweight.fitness.view
 import android.content.Context
 import android.util.AttributeSet
 import com.bodyweight.fitness.Constants
+import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.Exercise
 import com.bodyweight.fitness.model.repository.RepositorySet
 
@@ -12,13 +13,10 @@ import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.SetReps
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.utils.PreferenceUtils
+import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
 import kotlinx.android.synthetic.main.view_reps_logger.view.*
 import java.util.*
-
-//fun AbstractPresenter.currentExercise(): Exercise {
-//    return RoutineStream.getInstance().exercise
-//}
 
 class RepsLoggerPresenter : AbstractPresenter() {
     @Transient
@@ -29,15 +27,21 @@ class RepsLoggerPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        subscribe(RoutineStream.getInstance().exerciseObservable.subscribe {
+        RoutineStream.getInstance()
+                .exerciseObservable
+                .doOnUnsubscribe { debug("unsubscribe") }
+                .bindToLifecycle(view).subscribe {
             mExercise = it
+
+            debug("onNext")
+
             mNumberOfReps = PreferenceUtils.getInstance()
                     .getNumberOfRepsForExercise(it.exerciseId, 5)
 
             updateLabels()
 
             showOrHidePreviousAndNextExerciseButtons(it.isPrevious, it.isNext)
-        })
+        }
     }
 
     fun showOrHidePreviousAndNextExerciseButtons(isPrevious: Boolean, isNext: Boolean) {

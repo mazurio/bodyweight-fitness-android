@@ -1,6 +1,7 @@
 package com.bodyweight.fitness.presenter
 
 import com.bodyweight.fitness.R
+import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.CalendarDayChanged
 import com.bodyweight.fitness.model.Exercise
 import com.bodyweight.fitness.stream.CalendarStream
@@ -9,6 +10,7 @@ import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.utils.DateUtils
 import com.bodyweight.fitness.view.AbstractView
 import com.bodyweight.fitness.view.ToolbarView
+import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
 import org.joda.time.DateTime
 
@@ -20,33 +22,36 @@ class ToolbarPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        subscribe(RoutineStream.getInstance().exerciseObservable.filter {
-            mId.equals(R.id.action_menu_home)
-        }.subscribe {
-            setToolbarForHome(it)
-        })
+        RoutineStream.getInstance()
+                .exerciseObservable
+                .bindToLifecycle(view)
+                .filter { mId.equals(R.id.action_menu_home) }
+                .doOnUnsubscribe { debug("ToolbarPresenter.RoutineStream.doOnUnsubscribe") }
+                .subscribe { setToolbarForHome(it) }
 
-        subscribe(CalendarStream.getInstance().calendarDayChangedObservable.filter {
-            mId.equals(R.id.action_menu_workout_log)
-        }.subscribe {
-            setToolbarForWorkoutLog(it)
-        })
+        CalendarStream.getInstance()
+                .calendarDayChangedObservable
+                .bindToLifecycle(view)
+                .doOnUnsubscribe { debug("ToolbarPresenter.CalendarStream.doOnUnsubscribe") }
+                .filter { mId.equals(R.id.action_menu_workout_log) }
+                .subscribe { setToolbarForWorkoutLog(it) }
 
-        subscribe(Stream.drawerObservable.filter {
-            it.equals(R.id.action_menu_home) or
-                    it.equals(R.id.action_menu_change_routine) or
-                    it.equals(R.id.action_menu_workout_log)
-        }.subscribe {
-            setToolbarForContent(it)
-        })
+        Stream.drawerObservable
+                .bindToLifecycle(view)
+                .doOnUnsubscribe { debug("ToolbarPresenter.Stream.doOnUnsubscribe") }
+                .filter { shouldSetToolbar(it) }
+                .subscribe { setToolbarForContent(it) }
     }
 
-    override fun removeView() {
-        super.removeView()
+    fun shouldSetToolbar(id: Int): Boolean {
+        return id.equals(R.id.action_menu_home) or
+                id.equals(R.id.action_menu_change_routine) or
+                id.equals(R.id.action_menu_workout_log)
     }
 
     fun setToolbarForContent(id: Int) {
         mId = id
+
         when (mId) {
             R.id.action_menu_home ->
                 setToolbarForHome(RoutineStream.getInstance().exercise)
