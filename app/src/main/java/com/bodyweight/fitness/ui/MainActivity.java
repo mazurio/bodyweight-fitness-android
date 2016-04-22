@@ -215,20 +215,22 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 .getExerciseObservable()
                 .subscribe(exercise -> {
                     if (exercise.isTimedSet()) {
-                        if (mTabLayout.getTabCount() == 2) {
-                            mTabLayout.removeTabAt(1);
-                        }
-
-                        mTabLayout.getTabAt(0).select();
+                        mTabLayout.setVisibility(View.GONE);
+//                        if (mTabLayout.getTabCount() == 2) {
+//                            mTabLayout.removeTabAt(1);
+//                        }
+//
+//                        mTabLayout.getTabAt(0).select();
 
                         mTimerView.setVisibility(View.VISIBLE);
                         mRepsLoggerView.setVisibility(View.GONE);
                     } else {
-                        if (mTabLayout.getTabCount() == 1) {
-                            mTabLayout.addTab(mTabLayout.newTab().setText("Reps Logger"));
-                        }
-
-                        mTabLayout.getTabAt(1).select();
+                        mTabLayout.setVisibility(View.VISIBLE);
+//                        if (mTabLayout.getTabCount() == 1) {
+//                            mTabLayout.addTab(mTabLayout.newTab().setText("Reps Logger"));
+//                        }
+//
+//                        mTabLayout.getTabAt(1).select();
 
                         mTimerView.setVisibility(View.GONE);
                         mRepsLoggerView.setVisibility(View.VISIBLE);

@@ -21,6 +21,7 @@ import rx.functions.Action1;
 
 public class ActionPresenter extends IPresenter<ActionView> {
     private transient LogWorkoutDialog mLogWorkoutDialog;
+    private Integer mId = R.id.action_menu_home;
 
     @Override
     public void onDestroyView() {
@@ -46,6 +47,12 @@ public class ActionPresenter extends IPresenter<ActionView> {
     public void onSubscribe() {
         super.onSubscribe();
 
+        if (mId.equals(R.id.action_menu_home)) {
+            mView.showActionButtons();
+        } else {
+            mView.hideActionButtons();
+        }
+
        subscribe(RoutineStream.getInstance()
                .getExerciseObservable()
                .subscribe(exercise -> {
@@ -60,8 +67,9 @@ public class ActionPresenter extends IPresenter<ActionView> {
 
         subscribe(Stream.INSTANCE
                 .getDrawerObservable()
-                .filter(id -> id.equals(R.id.action_menu_home) || id.equals(R.id.action_menu_change_routine) || id.equals(R.id.action_menu_workout_log))
                 .subscribe(id -> {
+                    mId = id;
+
                     if (id.equals(R.id.action_menu_home)) {
                         mView.showActionButtons();
                     } else {

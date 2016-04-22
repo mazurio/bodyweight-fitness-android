@@ -16,14 +16,16 @@ import com.bodyweight.fitness.utils.PreferenceUtils
 import kotlinx.android.synthetic.main.view_reps_logger.view.*
 import java.util.*
 
+fun AbstractPresenter.currentExercise(): Exercise {
+    return RoutineStream.getInstance().exercise
+}
+
 class RepsLoggerPresenter : AbstractPresenter() {
-    var mExercise: Exercise? = null
+    var mExercise: Exercise = currentExercise()
     var mNumberOfReps: Int = 5
 
     override fun bindView(view: AbstractView) {
         super.bindView(view)
-
-        val repsLoggerView: RepsLoggerView = (mView as RepsLoggerView)
 
         subscribe(RoutineStream.getInstance().exerciseObservable.subscribe {
             mExercise = it
@@ -32,8 +34,15 @@ class RepsLoggerPresenter : AbstractPresenter() {
                     .getNumberOfRepsForExercise(it.exerciseId, 5)
 
             updateLabels()
-            repsLoggerView.showOrHidePreviousAndNextExerciseButtons(it.isPrevious, it.isNext)
+
+            showOrHidePreviousAndNextExerciseButtons(it.isPrevious, it.isNext)
         })
+    }
+
+    fun showOrHidePreviousAndNextExerciseButtons(isPrevious: Boolean, isNext: Boolean) {
+        val repsLoggerView: RepsLoggerView = (mView as RepsLoggerView)
+
+        repsLoggerView.showOrHidePreviousAndNextExerciseButtons(isPrevious, isNext)
     }
 
     fun updateLabels() {
@@ -42,7 +51,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
         repsLoggerView.setNumberOfReps(formatNumberOfReps(mNumberOfReps))
 
         PreferenceUtils.getInstance()
-                .setNumberOfReps(mExercise!!.exerciseId, mNumberOfReps)
+                .setNumberOfReps(mExercise.exerciseId, mNumberOfReps)
     }
 
     fun logReps() {
@@ -102,11 +111,11 @@ class RepsLoggerPresenter : AbstractPresenter() {
     }
 
     fun previousExercise() {
-        RoutineStream.getInstance().setExercise(mExercise!!.previous)
+        RoutineStream.getInstance().setExercise(mExercise.previous)
     }
 
     fun nextExercise() {
-        RoutineStream.getInstance().setExercise(mExercise!!.next)
+        RoutineStream.getInstance().setExercise(mExercise.next)
     }
 
     fun formatNumberOfReps(numberOfReps: Int): String {
