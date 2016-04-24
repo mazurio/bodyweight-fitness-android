@@ -139,12 +139,7 @@ open class ActionView : AbstractView {
         val presenter = (mPresenter as ActionPresenter)
 
         ViewUtils.resetFloatingActionButtonMargin(action_view_log_workout_button)
-        ViewUtils.resetFloatingActionButtonMargin(
-                action_view_action_button,
-                0,
-                0,
-                12,
-                12)
+        ViewUtils.resetFloatingActionButtonMargin(action_view_action_button, 0, 0, 12, 12)
 
         mMaterialSheet = MaterialSheetFab<ActionButton>(
                 action_view_action_button,
@@ -176,7 +171,6 @@ open class ActionView : AbstractView {
         })
 
         action_view_log_workout_button.setOnClickListener {
-            mMaterialSheet?.hideSheet()
             presenter.logWorkout()
         }
 
