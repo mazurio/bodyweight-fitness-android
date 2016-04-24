@@ -15,14 +15,11 @@ import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.model.repository.RepositorySet;
 import com.bodyweight.fitness.stream.RepositoryStream;
 import com.bodyweight.fitness.ui.ProgressActivity;
-import com.bodyweight.fitness.utils.Logger;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.format.PeriodFormatterBuilder;
-
-import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -46,13 +43,6 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        if (viewType == 1) {
-//            return new CalendarSummaryPresenter(
-//                    LayoutInflater.from(parent.getContext()).inflate(
-//                            R.layout.view_calendar_summary, parent, false)
-//            );
-//        }
-
         return new CalendarRoutinePresenter(
                 LayoutInflater.from(parent.getContext()).inflate(
                         R.layout.view_calendar_card, parent, false)
@@ -61,11 +51,6 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-//        if (position == 0) {
-//            return;
-//        }
-
-//        ((CalendarRoutinePresenter) holder).onBindView(mResults.get(position - 1));
         ((CalendarRoutinePresenter) holder).onBindView(mResults.get(position));
     }
 
@@ -80,17 +65,7 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-//        if (position == 0) {
-//            return 1;
-//        }
-
         return 0;
-    }
-
-    public class CalendarSummaryPresenter extends RecyclerView.ViewHolder {
-        public CalendarSummaryPresenter(View itemView) {
-            super(itemView);
-        }
     }
 
     public class CalendarRoutinePresenter extends RecyclerView.ViewHolder {
