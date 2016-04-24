@@ -1,7 +1,6 @@
 package com.bodyweight.fitness
 
 import com.bodyweight.fitness.model.Routine
-import com.bodyweight.fitness.presenter.HeaderPresenter
 import com.bodyweight.fitness.view.HeaderView
 
 import com.nhaarman.mockito_kotlin.mock

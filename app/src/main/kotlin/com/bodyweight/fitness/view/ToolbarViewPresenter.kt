@@ -1,22 +1,25 @@
-package com.bodyweight.fitness.presenter
+package com.bodyweight.fitness.view
+
+import android.content.Context
+import android.util.AttributeSet
 
 import com.bodyweight.fitness.R
-import com.bodyweight.fitness.extension.debug
+
 import com.bodyweight.fitness.model.CalendarDayChanged
 import com.bodyweight.fitness.model.Exercise
 import com.bodyweight.fitness.stream.CalendarStream
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.utils.DateUtils
-import com.bodyweight.fitness.view.AbstractView
-import com.bodyweight.fitness.view.ToolbarView
+
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
+import kotlinx.android.synthetic.main.view_toolbar.view.*
 
 import org.joda.time.DateTime
 
 import java.util.*
 
-object Shared {
+object ToolbarShared {
     var id: Int = R.id.action_menu_home
 }
 
@@ -27,7 +30,7 @@ class ToolbarPresenter : AbstractPresenter() {
         RoutineStream.getInstance()
                 .exerciseObservable
                 .bindToLifecycle(view)
-                .filter { Shared.id.equals(R.id.action_menu_home) }
+                .filter { ToolbarShared.id.equals(R.id.action_menu_home) }
                 .subscribe {
                     setToolbarForHome(it)
                 }
@@ -35,7 +38,7 @@ class ToolbarPresenter : AbstractPresenter() {
         CalendarStream.getInstance()
                 .calendarDayChangedObservable
                 .bindToLifecycle(view)
-                .filter { Shared.id.equals(R.id.action_menu_workout_log) }
+                .filter { ToolbarShared.id.equals(R.id.action_menu_workout_log) }
                 .subscribe {
                     setToolbarForWorkoutLog(it)
                 }
@@ -43,7 +46,7 @@ class ToolbarPresenter : AbstractPresenter() {
         Stream.drawerObservable
                 .bindToLifecycle(view)
                 .subscribe {
-                    Shared.id = it
+                    ToolbarShared.id = it
 
                     setToolbar()
                 }
@@ -56,7 +59,7 @@ class ToolbarPresenter : AbstractPresenter() {
     }
 
     fun setToolbar() {
-        when (Shared.id) {
+        when (ToolbarShared.id) {
             R.id.action_menu_home ->
                 setToolbarForHome(RoutineStream.getInstance().exercise)
             R.id.action_menu_workout_log ->
@@ -101,5 +104,49 @@ class ToolbarPresenter : AbstractPresenter() {
         view.setSingleTitle(
                 dateTime.toString("dd MMMM, YYYY", Locale.ENGLISH)
         )
+    }
+}
+
+class ToolbarView : AbstractView {
+    override var mPresenter: AbstractPresenter = ToolbarPresenter()
+
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
+    override fun onCreateView() {}
+
+    fun inflateHomeMenu() {
+        toolbar.menu.clear()
+        toolbar.inflateMenu(R.menu.home)
+    }
+
+    fun inflateWorkoutLogMenu() {
+        toolbar.menu.clear()
+        toolbar.inflateMenu(R.menu.calendar)
+    }
+
+    fun inflateChangeRoutineMenu() {
+        toolbar.menu.clear()
+    }
+
+    fun setSingleTitle(text: String) {
+        toolbar_layout.visibility = GONE
+        toolbar.title = text
+    }
+
+    fun setTitle(text: String) {
+        toolbar_layout.visibility = VISIBLE
+        toolbar_exercise_title.text = text
+    }
+
+    fun setSubtitle(text: String) {
+        toolbar_layout.visibility = VISIBLE
+        toolbar_section_title.text = text
+    }
+
+    fun setDescription(text: String) {
+        toolbar_layout.visibility = VISIBLE
+        toolbar_exercise_description.text = text
     }
 }

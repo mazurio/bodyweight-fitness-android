@@ -1,11 +1,13 @@
-package com.bodyweight.fitness.presenter
+package com.bodyweight.fitness.view
+
+import android.content.Context
+import android.util.AttributeSet
 
 import com.bodyweight.fitness.model.Routine
 import com.bodyweight.fitness.stream.RoutineStream
-import com.bodyweight.fitness.view.AbstractView
-import com.bodyweight.fitness.view.HeaderView
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
+import kotlinx.android.synthetic.main.activity_main_header.view.*
 
 class HeaderPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
@@ -29,5 +31,20 @@ class HeaderPresenter : AbstractPresenter() {
         val headerView: HeaderView = (mView as HeaderView)
 
         headerView.setText(routine.title, routine.subtitle)
+    }
+}
+
+open class HeaderView : AbstractView {
+    override var mPresenter: AbstractPresenter = HeaderPresenter()
+
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
+    override fun onCreateView() {}
+
+    fun setText(title: String, subtitle: String) {
+        routine_title.text = title
+        routine_subtitle.text = subtitle
     }
 }

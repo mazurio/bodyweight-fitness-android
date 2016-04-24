@@ -6,10 +6,23 @@ import android.os.Parcelable
 import android.util.AttributeSet
 import android.widget.RelativeLayout
 
-import com.bodyweight.fitness.presenter.AbstractPresenter
+import java.io.Serializable
+
+abstract class AbstractPresenter : Serializable {
+    @Transient
+    var mView: AbstractView? = null
+
+    open fun bindView(view: AbstractView) {
+        mView = view
+    }
+
+    open fun restoreView(view: AbstractView) {
+        mView = view
+    }
+}
 
 abstract class AbstractView : RelativeLayout {
-    abstract var mAbstractPresenter: AbstractPresenter
+    abstract var mPresenter: AbstractPresenter
 
     val superStateKey = "superState"
     val presenterKey = "presenter"
@@ -21,25 +34,29 @@ abstract class AbstractView : RelativeLayout {
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        mAbstractPresenter.bindView(this)
+        this.onCreateView()
+
+        mPresenter.bindView(this)
     }
+
+    abstract fun onCreateView();
 
     override fun onSaveInstanceState(): Parcelable? {
         val state = Bundle()
 
         state.putParcelable(superStateKey, super.onSaveInstanceState());
-        state.putSerializable(presenterKey, mAbstractPresenter);
+        state.putSerializable(presenterKey, mPresenter);
 
         return state;
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {
         if (state is Bundle) {
-            mAbstractPresenter = state.getSerializable(presenterKey) as AbstractPresenter
+            mPresenter = state.getSerializable(presenterKey) as AbstractPresenter
 
             super.onRestoreInstanceState(state.getParcelable(superStateKey))
         }
 
-        mAbstractPresenter.restoreView(this)
+        mPresenter.restoreView(this)
     }
 }

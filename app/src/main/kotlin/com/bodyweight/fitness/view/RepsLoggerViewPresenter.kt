@@ -6,7 +6,6 @@ import com.bodyweight.fitness.Constants
 import com.bodyweight.fitness.model.Exercise
 import com.bodyweight.fitness.model.repository.RepositorySet
 
-import com.bodyweight.fitness.presenter.AbstractPresenter
 import com.bodyweight.fitness.stream.RepositoryStream
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.SetReps
@@ -144,7 +143,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
 }
 
 open class RepsLoggerView : AbstractView {
-    override var mAbstractPresenter: AbstractPresenter = RepsLoggerPresenter()
+    override var mPresenter: AbstractPresenter = RepsLoggerPresenter()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -153,7 +152,7 @@ open class RepsLoggerView : AbstractView {
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        val repsLoggerPresenter: RepsLoggerPresenter = (mAbstractPresenter as RepsLoggerPresenter)
+        val repsLoggerPresenter: RepsLoggerPresenter = (mPresenter as RepsLoggerPresenter)
 
         log_reps_button.setOnClickListener {
             repsLoggerPresenter.logReps()
@@ -175,6 +174,8 @@ open class RepsLoggerView : AbstractView {
             repsLoggerPresenter.nextExercise()
         }
     }
+
+    override fun onCreateView() {}
 
     fun setNumberOfReps(numberOfReps: String) {
         reps_logger_reps.text = numberOfReps
