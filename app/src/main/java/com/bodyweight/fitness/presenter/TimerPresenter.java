@@ -50,8 +50,6 @@ public class TimerPresenter extends IPresenter<TimerView> {
         subscribe(RoutineStream.getInstance().getExerciseObservable().subscribe(exercise -> {
             mExercise = exercise;
 
-            hideOrShowExerciseButtons();
-
             if (mRestored) {
                 mRestored = false;
 
@@ -64,20 +62,6 @@ public class TimerPresenter extends IPresenter<TimerView> {
                 restartTimer(getSeconds(), false, false);
             }
         }));
-    }
-
-    private void hideOrShowExerciseButtons() {
-        if (mExercise.isPrevious()) {
-            mView.showPreviousExerciseButton();
-        } else {
-            mView.hidePreviousExerciseButton();
-        }
-
-        if (mExercise.isNext()) {
-            mView.showNextExerciseButton();
-        } else {
-            mView.hideNextExerciseButton();
-        }
     }
 
     public void increaseTimer(int extraSeconds) {
@@ -141,18 +125,6 @@ public class TimerPresenter extends IPresenter<TimerView> {
             MediaPlayer mediaPlayer = MediaPlayer.create(getContext(), R.raw.finished);
             mediaPlayer.setLooping(false);
             mediaPlayer.start();
-        }
-    }
-
-    public void onClickPreviousExerciseButton() {
-        if (mExercise.isPrevious()) {
-            RoutineStream.getInstance().setExercise(mExercise.getPrevious());
-        }
-    }
-
-    public void onClickNextExerciseButton() {
-        if (mExercise.isNext()) {
-            RoutineStream.getInstance().setExercise(mExercise.getNext());
         }
     }
 

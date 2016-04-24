@@ -146,22 +146,22 @@ public class MainActivity extends RxAppCompatActivity implements SharedPreferenc
 
     private void setTabLayout() {
         mTimerView = findViewById(R.id.timer_view);
-        mRepsLoggerView = findViewById(R.id.reps_logger_view);
+//        mRepsLoggerView = findViewById(R.id.reps_logger_view);
 
         mTabLayout = (TabLayout) findViewById(R.id.view_tabs);
         mTabLayout.addTab(mTabLayout.newTab().setText("Timer"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("Reps Logger"));
+//        mTabLayout.addTab(mTabLayout.newTab().setText("Reps Logger"));
         mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-
-                if (position == 0) {
-                    mTimerView.setVisibility(View.VISIBLE);
-                    mRepsLoggerView.setVisibility(View.GONE);
-                } else {
-                    mTimerView.setVisibility(View.GONE);
-                    mRepsLoggerView.setVisibility(View.VISIBLE);
-                }
+//                int position = tab.getPosition();
+//
+//                if (position == 0) {
+//                    mTimerView.setVisibility(View.VISIBLE);
+//                    mRepsLoggerView.setVisibility(View.GONE);
+//                } else {
+//                    mTimerView.setVisibility(View.GONE);
+//                    mRepsLoggerView.setVisibility(View.VISIBLE);
+//                }
             }
 
             @Override public void onTabUnselected(TabLayout.Tab tab) {}
@@ -188,18 +188,18 @@ public class MainActivity extends RxAppCompatActivity implements SharedPreferenc
                 })
                 .compose(bindToLifecycle())
                 .subscribe(exercise -> {
-                    if (exercise.isTimedSet()) {
-                        mTabLayout.getTabAt(0).select();
-
-                        mTimerView.setVisibility(View.VISIBLE);
-                        mRepsLoggerView.setVisibility(View.GONE);
-                    } else {
-                        mTabLayout.getTabAt(1).select();
-
-                        mTimerView.setVisibility(View.GONE);
-                        mRepsLoggerView.setVisibility(View.VISIBLE);
-                    }
-        });
+//                    if (exercise.isTimedSet()) {
+//                        mTabLayout.getTabAt(0).select();
+//
+//                        mTimerView.setVisibility(View.VISIBLE);
+//                        mRepsLoggerView.setVisibility(View.GONE);
+//                    } else {
+//                        mTabLayout.getTabAt(1).select();
+//
+//                        mTimerView.setVisibility(View.GONE);
+//                        mRepsLoggerView.setVisibility(View.VISIBLE);
+//                    }
+                });
 
         Stream.INSTANCE
                 .getMenuObservable()

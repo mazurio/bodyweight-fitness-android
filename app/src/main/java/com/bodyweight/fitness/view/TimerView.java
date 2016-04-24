@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,12 +21,6 @@ import com.bodyweight.fitness.utils.ViewUtils;
 
 public class TimerView extends LinearLayout {
     TimerPresenter mPresenter;
-
-    @InjectView(R.id.prev_exercise_button)
-    ImageButton mPrevExerciseButton;
-
-    @InjectView(R.id.next_exercise_button)
-    ImageButton mNextExerciseButton;
 
     @InjectView(R.id.timer_minutes)
     TextView mTimerMinutesTextView;
@@ -104,22 +96,6 @@ public class TimerView extends LinearLayout {
         mPresenter.onCreateView(this);
     }
 
-    public void showPreviousExerciseButton() {
-        mPrevExerciseButton.setVisibility(View.VISIBLE);
-    }
-
-    public void hidePreviousExerciseButton() {
-        mPrevExerciseButton.setVisibility(View.INVISIBLE);
-    }
-
-    public void showNextExerciseButton() {
-        mNextExerciseButton.setVisibility(View.VISIBLE);
-    }
-
-    public void hideNextExerciseButton() {
-        mNextExerciseButton.setVisibility(View.INVISIBLE);
-    }
-
     public void setMinutes(String text) {
         mTimerMinutesTextView.setText(text);
     }
@@ -138,16 +114,6 @@ public class TimerView extends LinearLayout {
         mStartStopTimerButton.setImageDrawable(
                 getResources().getDrawable(R.drawable.action_play)
         );
-    }
-
-    @OnClick(R.id.prev_exercise_button)
-    public void onClickPreviousExerciseButton() {
-        mPresenter.onClickPreviousExerciseButton();
-    }
-
-    @OnClick(R.id.next_exercise_button)
-    public void onClickNextExerciseButton() {
-        mPresenter.onClickNextExerciseButton();
     }
 
     @OnClick(R.id.timer_layout)
