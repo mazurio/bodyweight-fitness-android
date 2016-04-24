@@ -3,7 +3,6 @@ package com.bodyweight.fitness.view
 import android.content.Context
 import android.util.AttributeSet
 import com.bodyweight.fitness.Constants
-import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.Exercise
 import com.bodyweight.fitness.model.repository.RepositorySet
 

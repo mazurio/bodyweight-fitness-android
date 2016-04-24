@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/reps_logger_view"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight=".25"
+    android:layout_height="150dp"
     android:fitsSystemWindows="true"
     android:background="@color/primary">
 

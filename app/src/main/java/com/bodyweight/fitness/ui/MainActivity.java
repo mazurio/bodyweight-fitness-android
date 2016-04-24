@@ -10,7 +10,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import android.view.Menu;
@@ -24,17 +23,13 @@ import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.utils.ApplicationStoreUtils;
+import com.bodyweight.fitness.utils.Logger;
 import com.bodyweight.fitness.utils.PreferenceUtils;
-import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
-import rx.Subscription;
-
-public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class MainActivity extends RxAppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private Integer mId = R.id.action_menu_home;
-
-    private transient ArrayList<Subscription> mSubscriptions = new ArrayList<>();
 
     private TabLayout mTabLayout;
 
@@ -62,13 +57,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         keepScreenOnWhenAppIsRunning();
         subscribe();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        unsubscribeAll();
     }
 
     @Override
@@ -110,27 +98,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
 
         return super.onCreateOptionsMenu(menu);
-    }
-
-    private void subscribe(Subscription subscription) {
-        if (mSubscriptions == null) {
-            mSubscriptions = new ArrayList<>();
-        }
-
-        mSubscriptions.add(subscription);
-    }
-
-    private void unsubscribeAll() {
-        if (mSubscriptions == null) {
-            mSubscriptions = new ArrayList<>();
-        }
-
-        for(Subscription s : mSubscriptions) {
-            s.unsubscribe();
-            s = null;
-        }
-
-        mSubscriptions.clear();
     }
 
     private void setToolbar() {
@@ -211,8 +178,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     private void subscribe() {
-        subscribe(RoutineStream.getInstance()
+        RoutineStream.getInstance()
                 .getExerciseObservable()
+                .doOnSubscribe(() -> {
+                    Logger.d("doOnSubscribe");
+                })
+                .doOnUnsubscribe(() -> {
+                    Logger.d("doOnUnsubscribe");
+                })
+                .compose(bindToLifecycle())
                 .subscribe(exercise -> {
                     if (exercise.isTimedSet()) {
                         mTabLayout.getTabAt(0).select();
@@ -225,25 +199,47 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         mTimerView.setVisibility(View.GONE);
                         mRepsLoggerView.setVisibility(View.VISIBLE);
                     }
-        }));
+        });
 
-        subscribe(Stream.INSTANCE.getMenuObservable()
+        Stream.INSTANCE
+                .getMenuObservable()
+                .doOnSubscribe(() -> {
+                    Logger.d("doOnSubscribe");
+                })
+                .doOnUnsubscribe(() -> {
+                    Logger.d("doOnUnsubscribe");
+                })
+                .compose(bindToLifecycle())
                 .filter(id -> id.equals(R.id.action_dashboard))
                 .subscribe(id -> {
                     startActivity(new Intent(this, DashboardActivity.class));
-                }));
+                });
 
 
-        subscribe(Stream.INSTANCE
+        Stream.INSTANCE
                 .getDrawerObservable()
+                .doOnSubscribe(() -> {
+                    Logger.d("doOnSubscribe");
+                })
+                .doOnUnsubscribe(() -> {
+                    Logger.d("doOnUnsubscribe");
+                })
+                .compose(bindToLifecycle())
                 .filter(id ->
                         id.equals(R.id.action_menu_home) || id.equals(R.id.action_menu_workout_log))
                 .subscribe(id -> {
                     mId = id;
-                }));
+                });
 
-        subscribe(Stream.INSTANCE
+        Stream.INSTANCE
                 .getDrawerObservable()
+                .doOnSubscribe(() -> {
+                    Logger.d("doOnSubscribe");
+                })
+                .doOnUnsubscribe(() -> {
+                    Logger.d("doOnUnsubscribe");
+                })
+                .compose(bindToLifecycle())
                 .subscribe(id -> {
                     switch (id) {
                         case (R.id.action_menu_support_developer): {
@@ -269,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             break;
                         }
                     }
-                }));
+                });
     }
 
     private void clearFlagKeepScreenOn() {
