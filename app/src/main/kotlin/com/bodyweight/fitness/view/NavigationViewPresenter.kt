@@ -19,7 +19,10 @@ class NavigationPresenter : AbstractPresenter() {
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
-                    (view as NavigationView).showOrHideButtons(it.isPrevious, it.isNext)
+                    val view = (view as NavigationView)
+
+                    view.showOrHideButtons(it.isPrevious, it.isNext)
+                    view.showTimerOrRepsLogger(it.isTimedSet)
                 }
     }
 
@@ -66,6 +69,16 @@ open class NavigationView : AbstractView {
             next_exercise_button.visibility = View.VISIBLE
         } else {
             next_exercise_button.visibility = View.INVISIBLE
+        }
+    }
+
+    fun showTimerOrRepsLogger(isTimed: Boolean) {
+        if (isTimed) {
+            timer_view.visibility = View.VISIBLE
+            reps_logger_view.visibility = View.GONE
+        } else {
+            timer_view.visibility = View.GONE
+            reps_logger_view.visibility = View.VISIBLE
         }
     }
 }

@@ -3,7 +3,6 @@ package com.bodyweight.fitness.view
 import android.content.Context
 import android.util.AttributeSet
 import com.bodyweight.fitness.Constants
-import com.bodyweight.fitness.model.Exercise
 import com.bodyweight.fitness.model.repository.RepositorySet
 
 import com.bodyweight.fitness.stream.RepositoryStream
@@ -13,7 +12,7 @@ import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.utils.PreferenceUtils
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
-import kotlinx.android.synthetic.main.view_reps_logger.view.*
+import kotlinx.android.synthetic.main.view_timer.view.*
 import java.util.*
 
 class RepsLoggerPresenter : AbstractPresenter() {
@@ -28,8 +27,6 @@ class RepsLoggerPresenter : AbstractPresenter() {
                     .getNumberOfRepsForExercise(it.exerciseId, 5)
 
             updateLabels()
-
-            showOrHidePreviousAndNextExerciseButtons(it.isPrevious, it.isNext)
         }
     }
 
@@ -40,14 +37,6 @@ class RepsLoggerPresenter : AbstractPresenter() {
                 .getNumberOfRepsForExercise(getCurrentExercise().exerciseId, 5)
 
         updateLabels()
-
-        showOrHidePreviousAndNextExerciseButtons(getCurrentExercise().isPrevious, getCurrentExercise().isNext)
-    }
-
-    fun showOrHidePreviousAndNextExerciseButtons(isPrevious: Boolean, isNext: Boolean) {
-        val repsLoggerView: RepsLoggerView = (mView as RepsLoggerView)
-
-        repsLoggerView.showOrHidePreviousAndNextExerciseButtons(isPrevious, isNext)
     }
 
     fun updateLabels() {
@@ -61,10 +50,9 @@ class RepsLoggerPresenter : AbstractPresenter() {
 
     fun logReps() {
         val realm = RepositoryStream.getInstance().realm
+        val repositoryRoutine = RepositoryStream.getInstance().repositoryRoutineForToday
 
         realm.executeTransaction {
-            val repositoryRoutine = RepositoryStream.getInstance().repositoryRoutineForToday
-
             val currentExercise = repositoryRoutine.exercises.filter {
                 it.exerciseId == getCurrentExercise().exerciseId
             }.firstOrNull()
@@ -117,14 +105,6 @@ class RepsLoggerPresenter : AbstractPresenter() {
         }
     }
 
-    fun previousExercise() {
-        RoutineStream.getInstance().setExercise(getCurrentExercise().previous)
-    }
-
-    fun nextExercise() {
-        RoutineStream.getInstance().setExercise(getCurrentExercise().next)
-    }
-
     fun formatNumberOfReps(numberOfReps: Int): String {
         if (numberOfReps == 0) {
             return "00"
@@ -159,33 +139,11 @@ open class RepsLoggerView : AbstractView {
         decrease_reps_button.setOnClickListener {
             repsLoggerPresenter.decreaseReps()
         }
-
-        prev_exercise_button.setOnClickListener {
-            repsLoggerPresenter.previousExercise()
-        }
-
-        next_exercise_button.setOnClickListener {
-            repsLoggerPresenter.nextExercise()
-        }
     }
 
     override fun onCreateView() {}
 
     fun setNumberOfReps(numberOfReps: String) {
         reps_logger_reps.text = numberOfReps
-    }
-
-    fun showOrHidePreviousAndNextExerciseButtons(hasPrevious: Boolean, hasNext: Boolean) {
-        if (hasPrevious) {
-            prev_exercise_button.visibility = VISIBLE
-        } else {
-            prev_exercise_button.visibility = INVISIBLE
-        }
-
-        if (hasNext) {
-            next_exercise_button.visibility = VISIBLE
-        } else {
-            next_exercise_button.visibility = INVISIBLE
-        }
     }
 }

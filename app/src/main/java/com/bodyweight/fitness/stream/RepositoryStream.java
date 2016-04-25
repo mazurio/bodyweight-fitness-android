@@ -58,6 +58,7 @@ public class RepositoryStream {
     public RepositoryRoutine buildRealmRoutine(Routine routine) {
         Realm realm = getRealm();
 
+        // TODO: Use Kotlin Realm Transaction
         realm.beginTransaction();
 
         RepositoryRoutine repositoryRoutine = realm.createObject(RepositoryRoutine.class);

@@ -22,6 +22,76 @@
             android:scaleType="center"
             app:srcCompat="@drawable/action_arrow_left"/>
 
+        <com.bodyweight.fitness.view.RepsLoggerView
+            android:id="@+id/reps_logger_view"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".60">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight=".50"
+                    android:clickable="true">
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/reps_logger_reps"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="60sp"
+                        app:typeface="roboto_light" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight=".50">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/decrease_reps_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_centerInParent="true"
+                        android:layout_toLeftOf="@+id/log_reps_button"
+                        android:layout_marginRight="12dp"
+                        app:srcCompat="@drawable/action_minus"
+                        app:borderWidth="0dp"
+                        app:elevation="0dp"
+                        app:fabSize="mini"/>
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/log_reps_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/action_log"
+                        android:layout_centerInParent="true"
+                        app:borderWidth="0dp"
+                        app:elevation="@dimen/view_action_elevation"/>
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/increase_reps_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@+id/log_reps_button"
+                        android:layout_marginLeft="12dp"
+                        app:srcCompat="@drawable/action_add"
+                        app:borderWidth="0dp"
+                        app:elevation="0dp"
+                        app:fabSize="mini"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </com.bodyweight.fitness.view.RepsLoggerView>
+
         <com.bodyweight.fitness.view.TimerView
             android:id="@+id/timer_view"
             android:layout_width="0dp"
