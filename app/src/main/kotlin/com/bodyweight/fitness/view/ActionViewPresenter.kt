@@ -74,7 +74,7 @@ class ActionPresenter : AbstractPresenter() {
                 .subscribe {
                     val loggedTime = String.format("Logged time %s:%s", it.formatMinutes(), it.formatSeconds())
 
-                    Snackbar.make(view, loggedTime, Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(view.action_view_coordinator_layout, loggedTime, Snackbar.LENGTH_LONG).show()
         }
     }
 

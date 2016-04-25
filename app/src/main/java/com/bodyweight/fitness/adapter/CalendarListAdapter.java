@@ -186,41 +186,6 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return content;
         }
 
-//        private void exportCSV() {
-//            String header = "Date, Start Time, End Time, Workout Length, Routine, Exercise, Set Order, Weight, Weight Unit, Reps, Minutes, Seconds";
-//
-//            Logger.d(header);
-//
-//            String routineTitle = mRepositoryRoutine.getTitle() + " - " + mRepositoryRoutine.getSubtitle();
-//            int index = 1;
-//            for (RepositoryExercise exercise : mRepositoryRoutine.getExercises()) {
-//                if (exercise.isVisible()) {
-//                    String title = exercise.getTitle();
-//                    String weightUnit = PreferenceUtils.getInstance().getWeightMeasurementUnit().toString();
-//
-//                    for (RepositorySet set : exercise.getSets()) {
-//                        Logger.d(String.format(
-//                                "%s,%s,%s,%s,%s,%s,%d,%.2f,%s,%d,%s,%s\n",
-//                                new DateTime(mRepositoryRoutine.getStartTime()).toString("EEEE d MMMM", Locale.ENGLISH),
-//                                new DateTime(mRepositoryRoutine.getStartTime()).toString("HH:mm", Locale.ENGLISH),
-//                                new DateTime(mRepositoryRoutine.getLastUpdatedTime()).toString("HH:mm", Locale.ENGLISH),
-//                                getWorkoutLength(),
-//                                routineTitle,
-//                                title,
-//                                index,
-//                                set.getWeight(),
-//                                weightUnit,
-//                                set.getReps(),
-//                                formatMinutes(set.getSeconds()),
-//                                formatSeconds(set.getSeconds())
-//                        ));
-//                    }
-//
-//                    index += 1;
-//                }
-//            }
-//        }
-
         public String getWorkoutLength() {
             DateTime startTime = new DateTime(mRepositoryRoutine.getStartTime());
             DateTime lastUpdatedTime = new DateTime(mRepositoryRoutine.getLastUpdatedTime());

@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import com.bodyweight.fitness.extension.debug
 
 import com.bodyweight.fitness.stream.RoutineStream
-import com.bodyweight.fitness.utils.Logger
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget
 import com.liulishuo.filedownloader.util.FileDownloadUtils
@@ -35,7 +34,7 @@ class PreviewPresenter : AbstractPresenter() {
                                     .crossFade()
 //                                    .into(imageViewTarget)
                         } catch (e: Exception) {
-                            Logger.e("Glide exception " + e.message)
+
                         }
                     } else {
                         val filePath = String.format("%s%s%s%s%s.gif",

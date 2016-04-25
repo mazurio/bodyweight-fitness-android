@@ -14,7 +14,6 @@ import com.bodyweight.fitness.model.repository.RepositoryRoutine
 import com.bodyweight.fitness.stream.CalendarStream
 import com.bodyweight.fitness.stream.RepositoryStream
 import com.bodyweight.fitness.stream.Stream
-import com.bodyweight.fitness.utils.DateUtils
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_calendar.view.*
@@ -61,7 +60,7 @@ class CalendarPresenter : AbstractPresenter() {
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
-                    val dateTime = DateUtils.getDate(it.presenterSelected, it.daySelected)
+                    val dateTime = it.date
 
                     if (isRoutineLogged(dateTime)) {
                         view.showCardView()

@@ -11,7 +11,6 @@ import com.bodyweight.fitness.isRoutineLogged
 import com.bodyweight.fitness.isToday
 import com.bodyweight.fitness.model.CalendarDayChanged
 import com.bodyweight.fitness.stream.CalendarStream
-import com.bodyweight.fitness.utils.DateUtils
 import com.bodyweight.fitness.utils.ViewUtils
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
@@ -27,7 +26,7 @@ class CalendarPagePresenter : AbstractPresenter() {
 
         val view = (mView as CalendarPageView)
 
-        val firstDayOfTheWeek = DateUtils.getDate(mViewPagerPosition)
+        val firstDayOfTheWeek = CalendarDayChanged(0, mViewPagerPosition).date
 
         for (index in 0..6) {
             val currentDayOfTheWeek = firstDayOfTheWeek.plusDays(index)

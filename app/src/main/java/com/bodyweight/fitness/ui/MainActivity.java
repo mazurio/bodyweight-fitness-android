@@ -23,7 +23,6 @@ import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.utils.ApplicationStoreUtils;
-import com.bodyweight.fitness.utils.Logger;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
@@ -180,12 +179,6 @@ public class MainActivity extends RxAppCompatActivity implements SharedPreferenc
     private void subscribe() {
         RoutineStream.getInstance()
                 .getExerciseObservable()
-                .doOnSubscribe(() -> {
-                    Logger.d("doOnSubscribe");
-                })
-                .doOnUnsubscribe(() -> {
-                    Logger.d("doOnUnsubscribe");
-                })
                 .compose(bindToLifecycle())
                 .subscribe(exercise -> {
 //                    if (exercise.isTimedSet()) {
@@ -203,12 +196,6 @@ public class MainActivity extends RxAppCompatActivity implements SharedPreferenc
 
         Stream.INSTANCE
                 .getMenuObservable()
-                .doOnSubscribe(() -> {
-                    Logger.d("doOnSubscribe");
-                })
-                .doOnUnsubscribe(() -> {
-                    Logger.d("doOnUnsubscribe");
-                })
                 .compose(bindToLifecycle())
                 .filter(id -> id.equals(R.id.action_dashboard))
                 .subscribe(id -> {
@@ -218,12 +205,6 @@ public class MainActivity extends RxAppCompatActivity implements SharedPreferenc
 
         Stream.INSTANCE
                 .getDrawerObservable()
-                .doOnSubscribe(() -> {
-                    Logger.d("doOnSubscribe");
-                })
-                .doOnUnsubscribe(() -> {
-                    Logger.d("doOnUnsubscribe");
-                })
                 .compose(bindToLifecycle())
                 .filter(id ->
                         id.equals(R.id.action_menu_home) || id.equals(R.id.action_menu_workout_log))
@@ -233,12 +214,6 @@ public class MainActivity extends RxAppCompatActivity implements SharedPreferenc
 
         Stream.INSTANCE
                 .getDrawerObservable()
-                .doOnSubscribe(() -> {
-                    Logger.d("doOnSubscribe");
-                })
-                .doOnUnsubscribe(() -> {
-                    Logger.d("doOnUnsubscribe");
-                })
                 .compose(bindToLifecycle())
                 .subscribe(id -> {
                     switch (id) {

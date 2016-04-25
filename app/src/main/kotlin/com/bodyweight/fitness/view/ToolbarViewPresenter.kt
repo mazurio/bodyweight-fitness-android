@@ -10,7 +10,6 @@ import com.bodyweight.fitness.model.Exercise
 import com.bodyweight.fitness.stream.CalendarStream
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
-import com.bodyweight.fitness.utils.DateUtils
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_toolbar.view.*
@@ -89,10 +88,7 @@ class ToolbarPresenter : AbstractPresenter() {
         if (calendarDayChanged == null) {
             setDateTimeSingleTitle(DateTime())
         } else {
-            setDateTimeSingleTitle(DateUtils.getDate(
-                    calendarDayChanged.presenterSelected,
-                    calendarDayChanged.daySelected
-            ))
+            setDateTimeSingleTitle(calendarDayChanged.date)
         }
     }
 
