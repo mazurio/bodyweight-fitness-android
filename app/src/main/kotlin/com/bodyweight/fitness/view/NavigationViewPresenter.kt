@@ -3,9 +3,9 @@ package com.bodyweight.fitness.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+
 import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.Exercise
-
 import com.bodyweight.fitness.stream.RoutineStream
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle

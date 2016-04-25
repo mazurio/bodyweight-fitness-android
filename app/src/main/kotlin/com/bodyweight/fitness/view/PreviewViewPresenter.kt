@@ -34,7 +34,7 @@ class PreviewPresenter : AbstractPresenter() {
                             Glide.with(view.context)
                                     .load(identifier)
                                     .crossFade()
-                                    .into(imageViewTarget)
+//                                    .into(imageViewTarget)
                         } catch (e: Exception) {
                             Logger.e("Glide exception " + e.message)
                         }
@@ -49,7 +49,7 @@ class PreviewPresenter : AbstractPresenter() {
                         Glide.with(view.context)
                                 .load(File(filePath))
                                 .crossFade()
-                                .into(imageViewTarget)
+//                                .into(imageViewTarget)
                     }
                 }
     }

@@ -71,7 +71,6 @@ class CalendarPresenter : AbstractPresenter() {
                 }
     }
 
-
     fun isRoutineLogged(dateTime: DateTime): Boolean {
         val start = dateTime.withTimeAtStartOfDay().toDate()
         val end = dateTime.withTimeAtStartOfDay().plusDays(1).minusSeconds(1).toDate()
@@ -103,8 +102,6 @@ open class CalendarView : AbstractView {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     override fun onCreateView() {
-        debug("onCreateView")
-
         view_calendar_list.layoutManager = LinearLayoutManager(context)
 
         view_calendar_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -114,8 +111,6 @@ open class CalendarView : AbstractView {
                 val presenter = (mPresenter as CalendarPresenter)
 
                 presenter.onPageSelected(position)
-
-                debug("onPageSelected")
             }
         })
     }

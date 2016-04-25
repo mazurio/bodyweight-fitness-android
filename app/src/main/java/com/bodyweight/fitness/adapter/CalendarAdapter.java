@@ -6,7 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bodyweight.fitness.view.CalendarItemView;
+import com.bodyweight.fitness.view.CalendarPagePresenter;
+import com.bodyweight.fitness.view.CalendarPageView;
 import com.bodyweight.fitness.view.widget.ViewPager;
 
 import com.bodyweight.fitness.R;
@@ -18,27 +19,24 @@ public class CalendarAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup viewGroup, int position) {
         final ViewPager viewPager = (ViewPager) viewGroup;
 
-        CalendarItemView calendarItemView = (CalendarItemView) LayoutInflater
+        CalendarPageView calendarItemView = (CalendarPageView) LayoutInflater
                 .from(viewGroup.getContext())
-                .inflate(R.layout.view_calendar_item, viewGroup, false);
+                .inflate(R.layout.view_calendar_page, viewGroup, false);
 
-        calendarItemView.onCreate(position);
-        calendarItemView.onCreateView();
+        CalendarPagePresenter calendarItemPresenter = (CalendarPagePresenter) calendarItemView.getMPresenter();
+        calendarItemPresenter.setMViewPagerPosition(position);
+
+        calendarItemView.updateView();
 
         viewPager.addView(calendarItemView);
 
         return calendarItemView;
     }
 
-    /**
-     * Remove subscriptions made by item views to the day/page selected observables.
-     */
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        CalendarItemView calendarItemView = (CalendarItemView) object;
-
         ViewPager viewPager = (ViewPager) container;
-        viewPager.removeView(calendarItemView);
+        viewPager.removeView((View) object);
     }
 
     @Override

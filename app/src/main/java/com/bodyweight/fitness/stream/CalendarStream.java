@@ -12,7 +12,7 @@ public class CalendarStream {
     private final PublishSubject<CalendarDayChanged> mCalendarDayChangedSubject = PublishSubject.create();
 
     private int mCalendarPage;
-    private CalendarDayChanged mCalendarDayChanged;
+    private CalendarDayChanged mCalendarDayChanged = new CalendarDayChanged();
 
     private CalendarStream() {}
 
