@@ -182,8 +182,20 @@ public class MainActivity extends RxAppCompatActivity implements SharedPreferenc
                 .compose(bindToLifecycle())
                 .subscribe(exercise -> {
                     if (exercise.isTimedSet()) {
+                        if (mTabLayout.getTabCount() == 2) {
+                            mTabLayout.removeAllTabs();
+                            mTabLayout.addTab(mTabLayout.newTab().setText("Timer"));
+                        }
+
                         mTabLayout.getTabAt(0).select();
                     } else {
+                        if (mTabLayout.getTabCount() == 1) {
+                            mTabLayout.removeAllTabs();
+
+                            mTabLayout.addTab(mTabLayout.newTab().setText("Timer"));
+                            mTabLayout.addTab(mTabLayout.newTab().setText("Reps Logger"));
+                        }
+
                         mTabLayout.getTabAt(1).select();
                     }
                 });
