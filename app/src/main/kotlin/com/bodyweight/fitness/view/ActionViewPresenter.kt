@@ -72,10 +72,20 @@ class ActionPresenter : AbstractPresenter() {
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
-                    val loggedTime = String.format("Logged time %s:%s", it.formatMinutes(), it.formatSeconds())
+                    val format = String.format("Logged time %s:%s", it.formatMinutes(), it.formatSeconds())
 
-                    Snackbar.make(view.action_view_coordinator_layout, loggedTime, Snackbar.LENGTH_LONG).show()
-        }
+                    Snackbar.make(view.action_view_coordinator_layout, format, Snackbar.LENGTH_LONG).show()
+                }
+
+        Stream.loggedSetRepsObservable
+                .bindToLifecycle(view)
+                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
+                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
+                .subscribe {
+                    val format = String.format("Logged Set %d with %d Reps", it.set, it.reps)
+
+                    Snackbar.make(view.action_view_coordinator_layout, format, Snackbar.LENGTH_LONG).show()
+                }
     }
 
     override fun restoreView(view: AbstractView) {
