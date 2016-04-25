@@ -19,18 +19,18 @@ public class CalendarAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup viewGroup, int position) {
         final ViewPager viewPager = (ViewPager) viewGroup;
 
-        CalendarPageView calendarItemView = (CalendarPageView) LayoutInflater
+        CalendarPageView calendarPageView = (CalendarPageView) LayoutInflater
                 .from(viewGroup.getContext())
                 .inflate(R.layout.view_calendar_page, viewGroup, false);
 
-        CalendarPagePresenter calendarItemPresenter = (CalendarPagePresenter) calendarItemView.getMPresenter();
-        calendarItemPresenter.setMViewPagerPosition(position);
+        CalendarPagePresenter calendarPagePresenter = (CalendarPagePresenter) calendarPageView.getMPresenter();
+        calendarPagePresenter.setMViewPagerPosition(position);
 
-        calendarItemView.updateView();
+        calendarPageView.updateView();
 
-        viewPager.addView(calendarItemView);
+        viewPager.addView(calendarPageView);
 
-        return calendarItemView;
+        return calendarPageView;
     }
 
     @Override
