@@ -17,19 +17,13 @@ import kotlinx.android.synthetic.main.view_reps_logger.view.*
 import java.util.*
 
 class RepsLoggerPresenter : AbstractPresenter() {
-    @Transient
-    var mExercise: Exercise = RoutineStream.getInstance().exercise
-
     var mNumberOfReps: Int = 5
 
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        RoutineStream.getInstance()
-                .exerciseObservable
+        getExerciseObservable()
                 .bindToLifecycle(view).subscribe {
-            mExercise = it
-
             mNumberOfReps = PreferenceUtils.getInstance()
                     .getNumberOfRepsForExercise(it.exerciseId, 5)
 
@@ -43,11 +37,11 @@ class RepsLoggerPresenter : AbstractPresenter() {
         super.restoreView(view)
 
         mNumberOfReps = PreferenceUtils.getInstance()
-                .getNumberOfRepsForExercise(mExercise.exerciseId, 5)
+                .getNumberOfRepsForExercise(getCurrentExercise().exerciseId, 5)
 
         updateLabels()
 
-        showOrHidePreviousAndNextExerciseButtons(mExercise.isPrevious, mExercise.isNext)
+        showOrHidePreviousAndNextExerciseButtons(getCurrentExercise().isPrevious, getCurrentExercise().isNext)
     }
 
     fun showOrHidePreviousAndNextExerciseButtons(isPrevious: Boolean, isNext: Boolean) {
@@ -62,7 +56,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
         repsLoggerView.setNumberOfReps(formatNumberOfReps(mNumberOfReps))
 
         PreferenceUtils.getInstance()
-                .setNumberOfReps(mExercise.exerciseId, mNumberOfReps)
+                .setNumberOfReps(getCurrentExercise().exerciseId, mNumberOfReps)
     }
 
     fun logReps() {
@@ -72,7 +66,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
             val repositoryRoutine = RepositoryStream.getInstance().repositoryRoutineForToday
 
             val currentExercise = repositoryRoutine.exercises.filter {
-                it.exerciseId == mExercise.exerciseId
+                it.exerciseId == getCurrentExercise().exerciseId
             }.firstOrNull()
 
             if (currentExercise != null) {
@@ -124,11 +118,11 @@ class RepsLoggerPresenter : AbstractPresenter() {
     }
 
     fun previousExercise() {
-        RoutineStream.getInstance().setExercise(mExercise.previous)
+        RoutineStream.getInstance().setExercise(getCurrentExercise().previous)
     }
 
     fun nextExercise() {
-        RoutineStream.getInstance().setExercise(mExercise.next)
+        RoutineStream.getInstance().setExercise(getCurrentExercise().next)
     }
 
     fun formatNumberOfReps(numberOfReps: Int): String {

@@ -16,6 +16,8 @@ abstract class AbstractPresenter : Serializable {
         mView = view
     }
 
+    open fun saveView() {}
+
     open fun restoreView(view: AbstractView) {
         mView = view
     }
@@ -48,6 +50,8 @@ abstract class AbstractView : RelativeLayout {
     }
 
     override fun onSaveInstanceState(): Parcelable? {
+        mPresenter.saveView()
+
         val state = Bundle()
 
         state.putParcelable(superStateKey, super.onSaveInstanceState());

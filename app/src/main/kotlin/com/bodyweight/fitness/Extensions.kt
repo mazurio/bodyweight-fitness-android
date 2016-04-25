@@ -41,6 +41,10 @@ fun Int.formatMinutes(): String {
     return minutes.toString()
 }
 
+fun Int.formatMinutesAsNumber(): Int {
+    return this / 60
+}
+
 fun Int.formatSeconds(): String {
     val seconds = this % 60
 
@@ -51,4 +55,8 @@ fun Int.formatSeconds(): String {
     }
 
     return seconds.toString()
+}
+
+fun Int.formatSecondsAsNumber(): Int {
+    return this % 60
 }

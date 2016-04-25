@@ -5,27 +5,20 @@ import android.util.AttributeSet
 import android.view.View
 
 import com.bodyweight.fitness.extension.debug
-import com.bodyweight.fitness.model.Exercise
 import com.bodyweight.fitness.stream.RoutineStream
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_timer.view.*
 
 class NavigationPresenter : AbstractPresenter() {
-    @Transient
-    var mExercise: Exercise = RoutineStream.getInstance().exercise
-
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        RoutineStream.getInstance()
-                .exerciseObservable
+        getExerciseObservable()
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
-                    mExercise = it
-
                     (view as NavigationView).showOrHideButtons(it.isPrevious, it.isNext)
                 }
     }
@@ -33,15 +26,15 @@ class NavigationPresenter : AbstractPresenter() {
     override fun restoreView(view: AbstractView) {
         super.restoreView(view)
 
-        (view as NavigationView).showOrHideButtons(mExercise.isPrevious, mExercise.isNext)
+        (view as NavigationView).showOrHideButtons(getCurrentExercise().isPrevious, getCurrentExercise().isNext)
     }
 
     fun previousExercise() {
-        RoutineStream.getInstance().setExercise(mExercise.previous)
+        RoutineStream.getInstance().setExercise(getCurrentExercise().previous)
     }
 
     fun nextExercise() {
-        RoutineStream.getInstance().setExercise(mExercise.next)
+        RoutineStream.getInstance().setExercise(getCurrentExercise().next)
     }
 }
 

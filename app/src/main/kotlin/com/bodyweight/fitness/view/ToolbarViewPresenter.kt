@@ -27,8 +27,7 @@ class ToolbarPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        RoutineStream.getInstance()
-                .exerciseObservable
+        getExerciseObservable()
                 .bindToLifecycle(view)
                 .filter { ToolbarShared.id.equals(R.id.action_menu_home) }
                 .subscribe {

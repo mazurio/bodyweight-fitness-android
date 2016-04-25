@@ -39,8 +39,7 @@ class ActionPresenter : AbstractPresenter() {
 
         val view = (mView as ActionView)
 
-        RoutineStream.getInstance()
-                .exerciseObservable
+        getExerciseObservable()
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }

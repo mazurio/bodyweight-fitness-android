@@ -1,6 +1,5 @@
 package com.bodyweight.fitness
 
-import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.Routine
 import com.bodyweight.fitness.model.repository.RepositoryRoutine
 import com.bodyweight.fitness.stream.RepositoryStream
