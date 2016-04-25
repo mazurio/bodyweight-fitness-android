@@ -4,14 +4,11 @@ import android.content.Context
 import android.util.AttributeSet
 import com.bodyweight.fitness.extension.debug
 
-import com.bodyweight.fitness.stream.RoutineStream
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget
-import com.liulishuo.filedownloader.util.FileDownloadUtils
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_preview.view.*
-import java.io.File
 
 class PreviewPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
@@ -22,33 +19,15 @@ class PreviewPresenter : AbstractPresenter() {
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
-                    val routine = RoutineStream.getInstance().routine
                     val imageViewTarget = GlideDrawableImageViewTarget(view.image_view)
+                    val identifier = view.context.resources.getIdentifier(it.id, "drawable", view.context.packageName)
 
-                    if (routine.routineId == "routine0") run {
-                        val identifier = view.context.resources.getIdentifier(it.id, "drawable", view.context.packageName)
-
-                        try {
-                            Glide.with(view.context)
-                                    .load(identifier)
-                                    .crossFade()
-//                                    .into(imageViewTarget)
-                        } catch (e: Exception) {
-
-                        }
-                    } else {
-                        val filePath = String.format("%s%s%s%s%s.gif",
-                                FileDownloadUtils.getDefaultSaveRootPath(),
-                                File.separator,
-                                routine.routineId,
-                                File.separator,
-                                it.gifId)
-
+                    try {
                         Glide.with(view.context)
-                                .load(File(filePath))
+                                .load(identifier)
                                 .crossFade()
-//                                .into(imageViewTarget)
-                    }
+                                .into(imageViewTarget)
+                    } catch (e: Exception) { }
                 }
     }
 }
