@@ -23,6 +23,12 @@
 
     <group android:id="@+id/action_group_settings" android:checkableBehavior="single">
         <item
+            android:id="@+id/action_menu_support_developer"
+            android:checked="false"
+            android:visible="false"
+            android:title="Support Developer" />
+
+        <item
             android:id="@+id/action_menu_settings"
             android:checked="false"
             android:title="Settings" />
