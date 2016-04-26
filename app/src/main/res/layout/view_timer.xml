@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/test_view"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="80dp"
     android:fitsSystemWindows="true"
     android:background="@color/primary">
 
@@ -45,8 +45,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center|bottom"
                         android:layout_above="@+id/reps_logger_reps"
-                        android:textSize="16sp"
-                        android:text="5-5-X"
+                        android:visibility="gone"
                         app:typeface="roboto_bold" />
 
                     <com.devspark.robototextview.widget.RobotoTextView
