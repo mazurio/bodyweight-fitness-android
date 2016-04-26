@@ -10,14 +10,12 @@ import com.bodyweight.fitness.R
 import com.bodyweight.fitness.adapter.CalendarAdapter
 import com.bodyweight.fitness.adapter.CalendarListAdapter
 import com.bodyweight.fitness.extension.debug
-import com.bodyweight.fitness.model.repository.RepositoryRoutine
+import com.bodyweight.fitness.isRoutineLoggedWithResults
 import com.bodyweight.fitness.stream.CalendarStream
-import com.bodyweight.fitness.stream.RepositoryStream
 import com.bodyweight.fitness.stream.Stream
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_calendar.view.*
-import org.joda.time.DateTime
 
 class CalendarPresenter : AbstractPresenter() {
     @Transient
@@ -60,32 +58,16 @@ class CalendarPresenter : AbstractPresenter() {
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
-                    val dateTime = it.date
+                    val results = it.date.isRoutineLoggedWithResults()
 
-                    if (isRoutineLogged(dateTime)) {
+                    if (results.isNotEmpty()) {
+                        mCalendarListAdapter.setItems(results)
+
                         view.showCardView()
                     } else {
                         view.hideCardView()
                     }
                 }
-    }
-
-    fun isRoutineLogged(dateTime: DateTime): Boolean {
-        val start = dateTime.withTimeAtStartOfDay().toDate()
-        val end = dateTime.withTimeAtStartOfDay().plusDays(1).minusSeconds(1).toDate()
-
-        val realm = RepositoryStream.getInstance().realm
-        val results = realm.where(RepositoryRoutine::class.java)
-                .between("startTime", start, end)
-                .findAll()
-
-        if (!results.isEmpty()) {
-            mCalendarListAdapter.setItems(results)
-
-            return true
-        }
-
-        return false
     }
 
     fun onPageSelected(position: Int) {

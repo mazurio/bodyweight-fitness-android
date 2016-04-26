@@ -44,13 +44,15 @@ public class RepositoryStream {
                     RealmSchema schema = realm.getSchema();
                     RealmObjectSchema routineSchema = schema.get("RepositoryRoutine");
 
-                    routineSchema
-                            .addField("title", String.class)
-                            .addField("subtitle", String.class)
-                            .transform((DynamicRealmObject obj) -> {
-                                obj.set("title", "Bodyweight Fitness");
-                                obj.set("subtitle", "Recommended Routine");
-                            });
+                    if (oldVersion == 1) {
+                        routineSchema
+                                .addField("title", String.class)
+                                .addField("subtitle", String.class)
+                                .transform((DynamicRealmObject obj) -> {
+                                    obj.set("title", "Bodyweight Fitness");
+                                    obj.set("subtitle", "Recommended Routine");
+                                });
+                    }
                 })
                 .build());
     }

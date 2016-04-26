@@ -32,6 +32,7 @@ import butterknife.InjectView;
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.stream.RoutineStream;
+import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 import com.bodyweight.fitness.view.listener.RepeatListener;
 
@@ -179,6 +180,8 @@ public class LogWorkoutDialog {
             if (mOnDismissLogWorkoutDialogListener != null) {
                 mOnDismissLogWorkoutDialogListener.onDismissed();
             }
+
+            Stream.INSTANCE.setRepository();
         });
 
         mDialog.show();
@@ -737,8 +740,7 @@ public class LogWorkoutDialog {
     }
 
     public String formatWeight(double weight) {
-        return String.format("%s %s", weight, mWeightMeasurementUnit.toString()
-        );
+        return String.format("%s %s", weight, mWeightMeasurementUnit.toString());
     }
 
     public String formatWeightDescription() {

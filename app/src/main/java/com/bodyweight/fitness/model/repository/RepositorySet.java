@@ -2,9 +2,10 @@ package com.bodyweight.fitness.model.repository;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 public class RepositorySet extends RealmObject {
-    @PrimaryKey
+    @PrimaryKey @Required
     private String id;
 
     private boolean isTimed = false;

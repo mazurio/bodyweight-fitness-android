@@ -14,6 +14,7 @@ import com.bodyweight.fitness.model.repository.RepositoryExercise;
 import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.model.repository.RepositorySet;
 import com.bodyweight.fitness.stream.RepositoryStream;
+import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.ui.ProgressActivity;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 
@@ -29,6 +30,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+//    private boolean mEmpty = true;
     private RealmResults<RepositoryRoutine> mResults;
 
     public CalendarListAdapter() {
@@ -36,10 +38,17 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public void setItems(RealmResults<RepositoryRoutine> results) {
+//        mEmpty = false;
         mResults = results;
 
         notifyDataSetChanged();
     }
+
+//    public void setEmpty() {
+//        mEmpty = true;
+//
+//        notifyDataSetChanged();
+//    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -56,6 +65,10 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
+//        if (mEmpty) {
+//            return 0;
+//        }
+
         if (mResults != null) {
             return mResults.size();
         }
@@ -123,15 +136,16 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     .setPositiveButton("Ok", (dialog, which) -> {
                         Realm realm = RepositoryStream.getInstance().getRealm();
 
-                        RepositoryRoutine repositoryRoutine = realm.where(RepositoryRoutine.class)
-                                .equalTo("id", mRepositoryRoutine.getId())
-                                .findFirst();
-
                         realm.beginTransaction();
-                        repositoryRoutine.removeFromRealm();
+                        mRepositoryRoutine.deleteFromRealm();
                         realm.commitTransaction();
 
+                        mResults = null;
+                        mRepositoryRoutine = null;
+
                         notifyDataSetChanged();
+
+                        Stream.INSTANCE.setRepository();
                     })
                     .setNegativeButton("Cancel", (dialog, which) -> {});
 
@@ -195,15 +209,13 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if (duration.toStandardMinutes().getMinutes() < 10) {
                 return "--";
             } else {
-                String formatted = new PeriodFormatterBuilder()
+                return new PeriodFormatterBuilder()
                         .appendHours()
                         .appendSuffix("h ")
                         .appendMinutes()
                         .appendSuffix("m")
                         .toFormatter()
                         .print(duration.toPeriod());
-
-                return formatted;
             }
         }
 

@@ -2,6 +2,7 @@ package com.bodyweight.fitness
 
 import com.bodyweight.fitness.model.repository.RepositoryRoutine
 import com.bodyweight.fitness.stream.RepositoryStream
+import io.realm.RealmResults
 import org.joda.time.DateTime
 
 fun DateTime.isToday(): Boolean {
@@ -27,6 +28,23 @@ fun DateTime.isRoutineLogged(): Boolean {
             .findFirst()
 
     return routine != null
+}
+
+fun DateTime.isRoutineLoggedWithResults(): RealmResults<RepositoryRoutine> {
+    val start = this.withTimeAtStartOfDay()
+            .toDate()
+
+    val end = this.withTimeAtStartOfDay()
+            .plusDays(1)
+            .minusSeconds(1)
+            .toDate()
+
+    val realm = RepositoryStream.getInstance().realm
+    val results: RealmResults<RepositoryRoutine> = realm.where(RepositoryRoutine::class.java)
+            .between("startTime", start, end)
+            .findAll()
+
+    return results
 }
 
 fun Int.formatMinutes(): String {

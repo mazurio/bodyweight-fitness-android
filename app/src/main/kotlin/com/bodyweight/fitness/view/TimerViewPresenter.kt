@@ -7,7 +7,7 @@ import android.os.CountDownTimer
 import android.util.AttributeSet
 
 import com.bodyweight.fitness.*
-import com.bodyweight.fitness.extension.debug
+import com.bodyweight.fitness.extension.*
 import com.bodyweight.fitness.model.repository.RepositoryExercise
 import com.bodyweight.fitness.model.repository.RepositorySet
 import com.bodyweight.fitness.stream.RepositoryStream

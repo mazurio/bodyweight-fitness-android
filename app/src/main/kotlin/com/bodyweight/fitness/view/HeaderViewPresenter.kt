@@ -4,27 +4,25 @@ import android.content.Context
 import android.util.AttributeSet
 
 import com.bodyweight.fitness.model.Routine
-import com.bodyweight.fitness.stream.RoutineStream
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_main_header.view.*
 
-class HeaderPresenter : AbstractPresenter() {
+open class HeaderPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        RoutineStream.getInstance()
-                .routineObservable
+        getRoutineObservable()
                 .bindToLifecycle(view)
-                .subscribe { setText(it) }
+                .subscribe {
+                    setText(it)
+                }
     }
 
     override fun restoreView(view: AbstractView) {
         super.restoreView(view)
 
-        val routine = RoutineStream.getInstance().routine
-
-        setText(routine)
+        setText(getCurrentRoutine())
     }
 
     fun setText(routine: Routine) {

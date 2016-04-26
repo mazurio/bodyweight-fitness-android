@@ -6,9 +6,10 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 public class RepositoryRoutine extends RealmObject {
-    @PrimaryKey
+    @PrimaryKey @Required
     private String id;
 
     @Index
