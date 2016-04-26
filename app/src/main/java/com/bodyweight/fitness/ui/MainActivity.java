@@ -153,7 +153,6 @@ public class MainActivity extends RxAppCompatActivity implements SharedPreferenc
         mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
-
                 if (position == 0) {
                     mTimerView.setVisibility(View.VISIBLE);
                     mRepsLoggerView.setVisibility(View.GONE);

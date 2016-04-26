@@ -75,7 +75,7 @@
                         android:drawablePadding="24dp"
                         android:drawableLeft="@drawable/state_movie"
                         android:drawableStart="@drawable/state_movie"
-                        android:text="Watch on YouTube" />
+                        android:text="Watch Full Video" />
 
                     <TextView
                         android:id="@+id/action_view_action_sheet_choose_progression"

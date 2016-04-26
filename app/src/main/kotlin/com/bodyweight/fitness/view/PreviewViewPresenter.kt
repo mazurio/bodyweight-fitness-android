@@ -26,8 +26,10 @@ class PreviewPresenter : AbstractPresenter() {
                         Glide.with(view.context)
                                 .load(identifier)
                                 .crossFade()
-                                .into(imageViewTarget)
-                    } catch (e: Exception) { }
+//                                .into(imageViewTarget)
+                    } catch (e: Exception) {
+                        error("Glide Exception = " + e.message)
+                    }
                 }
     }
 }

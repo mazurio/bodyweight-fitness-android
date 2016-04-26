@@ -143,6 +143,10 @@ open class RepsLoggerView : AbstractView {
 
     override fun onCreateView() {}
 
+    fun setSets(sets: String) {
+        reps_logger_sets.text = sets
+    }
+
     fun setNumberOfReps(numberOfReps: String) {
         reps_logger_reps.text = numberOfReps
     }
