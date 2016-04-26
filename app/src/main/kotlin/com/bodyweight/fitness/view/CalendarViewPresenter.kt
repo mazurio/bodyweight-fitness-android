@@ -11,7 +11,6 @@ import com.bodyweight.fitness.adapter.CalendarAdapter
 import com.bodyweight.fitness.adapter.CalendarListAdapter
 import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.isRoutineLoggedWithResults
-import com.bodyweight.fitness.stream.CalendarStream
 import com.bodyweight.fitness.stream.Stream
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
@@ -52,13 +51,12 @@ class CalendarPresenter : AbstractPresenter() {
                     view.scrollToDefaultItem()
                 }
 
-        CalendarStream.getInstance()
-                .calendarDayChangedObservable
+        Stream.calendarDayObservable
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
-                    val results = it.date.isRoutineLoggedWithResults()
+                    val results = it.getDate().isRoutineLoggedWithResults()
 
                     if (results.isNotEmpty()) {
                         mCalendarListAdapter.setItems(results)
@@ -71,7 +69,7 @@ class CalendarPresenter : AbstractPresenter() {
     }
 
     fun onPageSelected(position: Int) {
-        CalendarStream.getInstance().calendarPage = position
+        Stream.setCalendarPage(position)
     }
 }
 

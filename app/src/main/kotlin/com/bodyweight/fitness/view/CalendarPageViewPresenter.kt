@@ -9,8 +9,8 @@ import com.bodyweight.fitness.R
 import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.isRoutineLogged
 import com.bodyweight.fitness.isToday
-import com.bodyweight.fitness.model.CalendarDayChanged
-import com.bodyweight.fitness.stream.CalendarStream
+import com.bodyweight.fitness.model.CalendarDay
+import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.utils.ViewUtils
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
@@ -26,7 +26,7 @@ class CalendarPagePresenter : AbstractPresenter() {
 
         val view = (mView as CalendarPageView)
 
-        val firstDayOfTheWeek = CalendarDayChanged(0, mViewPagerPosition).date
+        val firstDayOfTheWeek = CalendarDay(mViewPagerPosition, 0).getDate()
 
         for (index in 0..6) {
             val currentDayOfTheWeek = firstDayOfTheWeek.plusDays(index)
@@ -36,7 +36,7 @@ class CalendarPagePresenter : AbstractPresenter() {
 
                 view.setActive(index)
 
-                if (CalendarStream.getInstance().calendarPage == mViewPagerPosition) {
+                if (Stream.currentCalendarPage == mViewPagerPosition) {
                     view.select(index)
                     clickedAt(index)
                 }
@@ -48,8 +48,7 @@ class CalendarPagePresenter : AbstractPresenter() {
             view.setText(index, currentDayOfTheWeek.dayOfMonth().asText)
         }
 
-        CalendarStream.getInstance()
-                .calendarPageObservable
+        Stream.calendarPageObservable
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
@@ -64,24 +63,21 @@ class CalendarPagePresenter : AbstractPresenter() {
                     }
                 }
 
-        CalendarStream.getInstance()
-                .calendarDayChangedObservable
+        Stream.calendarDayObservable
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
-                    if (it.presenterSelected != mViewPagerPosition) {
+                    if (it.page != mViewPagerPosition) {
                         view.unselect(mIsTodaysDate)
                     } else {
-                        view.select(it.daySelected)
+                        view.select(it.day)
                     }
                 }
     }
 
     fun clickedAt(dayView: Int) {
-        CalendarStream.getInstance().setCalendarDay(
-                CalendarDayChanged(dayView, mViewPagerPosition)
-        )
+        Stream.setCalendarDay(CalendarDay(mViewPagerPosition, dayView))
     }
 }
 

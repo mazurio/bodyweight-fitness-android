@@ -4,10 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 
 import com.bodyweight.fitness.R
-
-import com.bodyweight.fitness.model.CalendarDayChanged
+import com.bodyweight.fitness.extension.debug
+import com.bodyweight.fitness.model.CalendarDay
 import com.bodyweight.fitness.model.Exercise
-import com.bodyweight.fitness.stream.CalendarStream
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
 
@@ -18,33 +17,38 @@ import org.joda.time.DateTime
 
 import java.util.*
 
-object ToolbarShared {
-    var id: Int = R.id.action_menu_home
-}
-
 class ToolbarPresenter : AbstractPresenter() {
+    companion object {
+        var id: Int = R.id.action_menu_home
+    }
+
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
         getExerciseObservable()
+                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
+                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .bindToLifecycle(view)
-                .filter { ToolbarShared.id.equals(R.id.action_menu_home) }
+                .filter { id.equals(R.id.action_menu_home) }
                 .subscribe {
                     setToolbarForHome(it)
                 }
 
-        CalendarStream.getInstance()
-                .calendarDayChangedObservable
+        Stream.calendarDayObservable
+                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
+                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .bindToLifecycle(view)
-                .filter { ToolbarShared.id.equals(R.id.action_menu_workout_log) }
+                .filter { id.equals(R.id.action_menu_workout_log) }
                 .subscribe {
                     setToolbarForWorkoutLog(it)
                 }
 
         Stream.drawerObservable
                 .bindToLifecycle(view)
+                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
+                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
-                    ToolbarShared.id = it
+                    id = it
 
                     setToolbar()
                 }
@@ -57,13 +61,11 @@ class ToolbarPresenter : AbstractPresenter() {
     }
 
     fun setToolbar() {
-        when (ToolbarShared.id) {
+        when (id) {
             R.id.action_menu_home ->
                 setToolbarForHome(RoutineStream.getInstance().exercise)
             R.id.action_menu_workout_log ->
-                setToolbarForWorkoutLog(CalendarStream.getInstance().calendarDayChanged)
-            R.id.action_menu_change_routine ->
-                setToolbarForChangeRoutine()
+                setToolbarForWorkoutLog(Stream.currentCalendarDay)
         }
     }
 
@@ -77,18 +79,11 @@ class ToolbarPresenter : AbstractPresenter() {
         view.setDescription(exercise.description)
     }
 
-    fun setToolbarForChangeRoutine() {
-        val view: ToolbarView = (mView as ToolbarView)
-
-        view.inflateChangeRoutineMenu()
-        view.setSingleTitle("Change Routine")
-    }
-
-    fun setToolbarForWorkoutLog(calendarDayChanged: CalendarDayChanged?) {
-        if (calendarDayChanged == null) {
+    fun setToolbarForWorkoutLog(calendarDay: CalendarDay?) {
+        if (calendarDay == null) {
             setDateTimeSingleTitle(DateTime())
         } else {
-            setDateTimeSingleTitle(calendarDayChanged.date)
+            setDateTimeSingleTitle(calendarDay.getDate())
         }
     }
 
@@ -96,9 +91,7 @@ class ToolbarPresenter : AbstractPresenter() {
         val view: ToolbarView = (mView as ToolbarView)
 
         view.inflateWorkoutLogMenu()
-        view.setSingleTitle(
-                dateTime.toString("dd MMMM, YYYY", Locale.ENGLISH)
-        )
+        view.setSingleTitle(dateTime.toString("dd MMMM, YYYY", Locale.ENGLISH))
     }
 }
 
@@ -119,10 +112,6 @@ class ToolbarView : AbstractView {
     fun inflateWorkoutLogMenu() {
         toolbar.menu.clear()
         toolbar.inflateMenu(R.menu.calendar)
-    }
-
-    fun inflateChangeRoutineMenu() {
-        toolbar.menu.clear()
     }
 
     fun setSingleTitle(text: String) {
