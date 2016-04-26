@@ -218,13 +218,9 @@ class TimerPresenter : AbstractPresenter() {
     }
 
     fun getSeconds(): Int {
-        debug("getSeconds")
-
-        val seconds = (PreferenceUtils.getInstance().getTimerValueForExercise(getCurrentExercise().exerciseId, 60 * 1000) / 1000).toInt()
-
-        debug(getCurrentExercise().exerciseId + " = " + seconds.toString())
-
-        return seconds
+        return (PreferenceUtils.getInstance()
+                .getTimerValueForExercise(getCurrentExercise().exerciseId, 60 * 1000) / 1000
+                ).toInt()
     }
 
     fun logTime() {
