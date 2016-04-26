@@ -76,7 +76,7 @@ public class ProgressActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
-            actionBar.setTitle(new DateTime(mRepositoryRoutine.getStartTime()).toString("d MMMM", Locale.ENGLISH));
+            actionBar.setTitle(new DateTime(mRepositoryRoutine.getStartTime()).toString("dd MMMM, YYYY", Locale.ENGLISH));
             actionBar.setElevation(0);
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
             actionBar.setHomeButtonEnabled(true);

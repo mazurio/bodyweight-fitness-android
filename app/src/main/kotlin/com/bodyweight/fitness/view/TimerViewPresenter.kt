@@ -17,6 +17,7 @@ import com.bodyweight.fitness.utils.PreferenceUtils
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_timer.view.*
+import org.joda.time.DateTime
 import java.util.*
 
 object TimerShared {
@@ -34,6 +35,12 @@ object TimerShared {
 class TimerPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
+
+        Stream.drawerObservable
+                .bindToLifecycle(view)
+                .subscribe {
+                    pauseTimer()
+                }
 
         getExerciseObservable()
                 .bindToLifecycle(view)
@@ -145,7 +152,9 @@ class TimerPresenter : AbstractPresenter() {
 
             TimerShared.mSeconds = TimerShared.mCurrentSeconds
 
-            PreferenceUtils.getInstance().setTimerValue(getCurrentExercise().id, (TimerShared.mSeconds * 1000).toLong())
+            val save = (TimerShared.mSeconds * 1000).toLong()
+
+            PreferenceUtils.getInstance().setTimerValue(getCurrentExercise().exerciseId, save)
         }, TimerShared.mCurrentSeconds.formatMinutesAsNumber(), TimerShared.mCurrentSeconds.formatSecondsAsNumber(), true)
 
         timePickerDialog.show()
@@ -187,13 +196,13 @@ class TimerPresenter : AbstractPresenter() {
 
         return object : CountDownTimer((seconds * 1000).toLong(), 100) {
             override fun onTick(millisUntilFinished: Long) {
-                val seconds = millisUntilFinished.toInt() / 1000
+                val timerSeconds = millisUntilFinished.toInt() / 1000
 
                 TimerShared.mPlaying = true
-                TimerShared.mCurrentSeconds = seconds
+                TimerShared.mCurrentSeconds = timerSeconds
 
-                view.setMinutes(seconds.formatMinutes())
-                view.setSeconds(seconds.formatSeconds())
+                view.setMinutes(timerSeconds.formatMinutes())
+                view.setSeconds(timerSeconds.formatSeconds())
 
                 view.showPlaying()
             }
@@ -201,7 +210,7 @@ class TimerPresenter : AbstractPresenter() {
             override fun onFinish() {
                 logTime()
 
-                restartTimer(seconds, false, false)
+                restartTimer(getSeconds(), false, false)
 
                 playSound()
             }
@@ -209,7 +218,13 @@ class TimerPresenter : AbstractPresenter() {
     }
 
     fun getSeconds(): Int {
-        return (PreferenceUtils.getInstance().getTimerValueForExercise(getCurrentExercise().exerciseId, 60 * 1000) / 1000).toInt()
+        debug("getSeconds")
+
+        val seconds = (PreferenceUtils.getInstance().getTimerValueForExercise(getCurrentExercise().exerciseId, 60 * 1000) / 1000).toInt()
+
+        debug(getCurrentExercise().exerciseId + " = " + seconds.toString())
+
+        return seconds
     }
 
     fun logTime() {
@@ -273,7 +288,10 @@ class TimerPresenter : AbstractPresenter() {
                 mRepositoryExercise.sets.add(repositorySet)
             }
 
-            realm.copyToRealmOrUpdate<RepositoryExercise>(mRepositoryExercise)
+            // TODO: Unit test the fact that lastUpdatedTime is changed when logging sets from main UI.
+            repositoryRoutine.lastUpdatedTime = DateTime().toDate()
+
+            realm.copyToRealmOrUpdate(repositoryRoutine)
             realm.commitTransaction()
 
             return true
