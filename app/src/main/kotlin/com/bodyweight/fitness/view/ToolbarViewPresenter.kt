@@ -17,11 +17,11 @@ import org.joda.time.DateTime
 
 import java.util.*
 
-class ToolbarPresenter : AbstractPresenter() {
-    companion object {
-        var id: Int = R.id.action_menu_home
-    }
+object ToolbarPresenterState {
+    var id: Int = R.id.action_menu_home
+}
 
+class ToolbarPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
@@ -29,7 +29,7 @@ class ToolbarPresenter : AbstractPresenter() {
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .bindToLifecycle(view)
-                .filter { id.equals(R.id.action_menu_home) }
+                .filter { ToolbarPresenterState.id.equals(R.id.action_menu_home) }
                 .subscribe {
                     setToolbarForHome(it)
                 }
@@ -38,7 +38,7 @@ class ToolbarPresenter : AbstractPresenter() {
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .bindToLifecycle(view)
-                .filter { id.equals(R.id.action_menu_workout_log) }
+                .filter { ToolbarPresenterState.id.equals(R.id.action_menu_workout_log) }
                 .subscribe {
                     setToolbarForWorkoutLog(it)
                 }
@@ -48,7 +48,7 @@ class ToolbarPresenter : AbstractPresenter() {
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
-                    id = it
+                    ToolbarPresenterState.id = it
 
                     setToolbar()
                 }
@@ -61,7 +61,7 @@ class ToolbarPresenter : AbstractPresenter() {
     }
 
     fun setToolbar() {
-        when (id) {
+        when (ToolbarPresenterState.id) {
             R.id.action_menu_home ->
                 setToolbarForHome(RoutineStream.getInstance().exercise)
             R.id.action_menu_workout_log ->

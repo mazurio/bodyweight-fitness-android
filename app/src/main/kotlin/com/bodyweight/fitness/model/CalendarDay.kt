@@ -3,7 +3,7 @@ package com.bodyweight.fitness.model
 import com.bodyweight.fitness.adapter.CalendarAdapter
 import org.joda.time.DateTime
 
-data class CalendarDay(val page: Int = 60, val day: Int = 3) {
+data class CalendarDay(var page: Int = 60, var day: Int = 3) {
     fun getDate(): DateTime {
         if (this.page == CalendarAdapter.DEFAULT_POSITION) {
             return DateTime()

@@ -69,7 +69,7 @@ class CalendarPresenter : AbstractPresenter() {
     }
 
     fun onPageSelected(position: Int) {
-        Stream.setCalendarPage(position)
+        Stream.streamPage(position)
     }
 }
 

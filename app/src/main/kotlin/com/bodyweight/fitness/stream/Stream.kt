@@ -1,6 +1,8 @@
 package com.bodyweight.fitness.stream
 
+import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.CalendarDay
+
 import rx.Observable
 import rx.subjects.PublishSubject
 
@@ -39,13 +41,12 @@ object Stream {
     fun setLoggedSeconds(loggedSeconds: Int) = mLoggedSecondsSubject.onNext(loggedSeconds)
     fun setLoggedSetReps(setReps: SetReps) = mLoggedSetRepsSubject.onNext(setReps)
 
-    fun setCalendarPage(page: Int) = {
+    fun streamPage(page: Int) {
         currentCalendarPage = page
-
         mCalendarPageSubject.onNext(page)
     }
 
-    fun setCalendarDay(day: CalendarDay) = {
+    fun streamDay(day: CalendarDay) {
         currentCalendarDay = day
         mCalendarDaySubject.onNext(day)
     }
