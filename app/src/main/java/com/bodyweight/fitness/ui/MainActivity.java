@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -17,15 +18,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.bodyweight.fitness.Constants;
+import com.bodyweight.fitness.model.Exercise;
+import com.bodyweight.fitness.stream.Dialog;
 import com.bodyweight.fitness.stream.RepositoryStream;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.stream.Stream;
+import com.bodyweight.fitness.stream.UiEvent;
 import com.bodyweight.fitness.utils.ApplicationStoreUtils;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 
+import com.bodyweight.fitness.view.dialog.LogWorkoutDialog;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+
+import rx.functions.Action1;
 
 public class MainActivity extends RxAppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private Integer mId = R.id.action_menu_home;
@@ -176,6 +184,21 @@ public class MainActivity extends RxAppCompatActivity implements SharedPreferenc
     }
 
     private void subscribe() {
+        UiEvent.INSTANCE.getDialogObservable()
+                .compose(bindToLifecycle())
+                .subscribe(new Action1<Dialog>() {
+                    @Override
+                    public void call(Dialog dialog) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Constants.INSTANCE.getExerciseId(), dialog.getExerciseId());
+
+                        LogWorkoutDialog logWorkoutDialog = new LogWorkoutDialog();
+                        logWorkoutDialog.setArguments(bundle);
+
+                        logWorkoutDialog.show(getSupportFragmentManager(), "dialog");
+                    }
+                });
+
         RoutineStream.getInstance()
                 .getExerciseObservable()
                 .compose(bindToLifecycle())

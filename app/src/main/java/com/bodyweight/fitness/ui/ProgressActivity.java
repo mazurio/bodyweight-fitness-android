@@ -4,12 +4,13 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.adapter.ProgressPagerAdapter;
+import com.bodyweight.fitness.model.Exercise;
+import com.bodyweight.fitness.stream.Dialog;
 import com.bodyweight.fitness.stream.RepositoryStream;
 
 import org.joda.time.DateTime;
@@ -21,10 +22,15 @@ import butterknife.InjectView;
 
 import com.bodyweight.fitness.R;
 import com.bodyweight.fitness.model.repository.RepositoryRoutine;
+import com.bodyweight.fitness.stream.RoutineStream;
+import com.bodyweight.fitness.stream.UiEvent;
+import com.bodyweight.fitness.view.dialog.LogWorkoutDialog;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import io.realm.Realm;
+import rx.functions.Action1;
 
-public class ProgressActivity extends AppCompatActivity {
+public class ProgressActivity extends RxAppCompatActivity {
     @InjectView(R.id.view_progress_pager)
     ViewPager mViewPager;
 
@@ -47,6 +53,26 @@ public class ProgressActivity extends AppCompatActivity {
 
         setToolbar();
         setTabLayout();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        UiEvent.INSTANCE.getDialogObservable()
+                .compose(bindToLifecycle())
+                .subscribe(new Action1<Dialog>() {
+                    @Override
+                    public void call(Dialog dialog) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Constants.INSTANCE.getExerciseId(), dialog.getExerciseId());
+
+                        LogWorkoutDialog logWorkoutDialog = new LogWorkoutDialog();
+                        logWorkoutDialog.setArguments(bundle);
+
+                        logWorkoutDialog.show(getSupportFragmentManager(), "dialog");
+                    }
+                });
     }
 
     @Override

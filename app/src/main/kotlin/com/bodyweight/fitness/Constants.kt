@@ -1,6 +1,7 @@
 package com.bodyweight.fitness
 
 object Constants {
+    val exerciseId = "exerciseId"
     val MAXIMUM_NUMBER_OF_SETS = 12
     val PRIMARY_KEY_ROUTINE_ID = "primaryKeyRoutineId"
 

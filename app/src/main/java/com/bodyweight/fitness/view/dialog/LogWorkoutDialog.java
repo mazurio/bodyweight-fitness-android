@@ -2,6 +2,9 @@ package com.bodyweight.fitness.view.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -38,16 +41,9 @@ import com.bodyweight.fitness.view.listener.RepeatListener;
 
 import io.realm.Realm;
 
-public class LogWorkoutDialog {
-    public interface OnDismissLogWorkoutDialogListener {
-        void onDismissed();
-    }
-
+public class LogWorkoutDialog extends DialogFragment {
     private static final int REPEAT_INITIAL_INTERVAL = 400;
     private static final int REPEAT_NORMAL_INTERVAL = 100;
-
-    private Dialog mDialog;
-    private OnDismissLogWorkoutDialogListener mOnDismissLogWorkoutDialogListener;
 
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
@@ -98,36 +94,27 @@ public class LogWorkoutDialog {
 
     private WeightMeasurementUnit mWeightMeasurementUnit;
 
-    public LogWorkoutDialog(Context context) {
-        Exercise exercise = RoutineStream.getInstance().getExercise();
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        String exerciseId = getArguments().getString(Constants.INSTANCE.getExerciseId());
 
         mRepositoryRoutine = RepositoryStream.getInstance().getRepositoryRoutineForToday();
 
-        for(RepositoryExercise repositoryExercise : mRepositoryRoutine.getExercises()) {
-            if(repositoryExercise.getTitle().equals(exercise.getTitle())) {
+        for (RepositoryExercise repositoryExercise : mRepositoryRoutine.getExercises()) {
+            if (repositoryExercise.getExerciseId().equals(exerciseId)) {
                 mRepositoryExercise = repositoryExercise;
 
                 break;
             }
         }
 
-        buildDialog(context);
-    }
+        Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.view_dialog_log_workout);
+        dialog.setCanceledOnTouchOutside(true);
 
-    public LogWorkoutDialog(Context context, RepositoryExercise repositoryExercise) {
-        mRepositoryRoutine = null;
-        mRepositoryExercise = repositoryExercise;
-
-        buildDialog(context);
-    }
-
-    private void buildDialog(Context context) {
-        mDialog = new Dialog(context);
-        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mDialog.setContentView(R.layout.view_dialog_log_workout);
-        mDialog.setCanceledOnTouchOutside(true);
-
-        ButterKnife.inject(this, mDialog);
+        ButterKnife.inject(this, dialog);
 
         mWeightIncrease.setOnTouchListener(
                 new RepeatListener(REPEAT_INITIAL_INTERVAL, REPEAT_NORMAL_INTERVAL, (view) -> onClickIncreaseWeight())
@@ -150,9 +137,7 @@ public class LogWorkoutDialog {
                 .getWeightMeasurementUnit();
 
         mActionView.setVisibility(View.GONE);
-    }
 
-    public void show() {
         mToolbar.setTitle(mRepositoryExercise.getTitle());
         mToolbar.setSubtitle(mRepositoryExercise.getDescription());
 
@@ -160,8 +145,9 @@ public class LogWorkoutDialog {
 
         buildSets();
 
-        mSaveButton.setOnClickListener(v -> mDialog.dismiss());
-        mDialog.setOnDismissListener(l -> {
+        mSaveButton.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.setOnDismissListener(l -> {
             String mode = mRepositoryExercise.getSection().getMode();
 
             if (mode.equals(SectionMode.LEVELS.toString()) || mode.equals(SectionMode.PICK.toString())) {
@@ -177,22 +163,10 @@ public class LogWorkoutDialog {
                 realm.commitTransaction();
             }
 
-            if (mOnDismissLogWorkoutDialogListener != null) {
-                mOnDismissLogWorkoutDialogListener.onDismissed();
-            }
-
             Stream.INSTANCE.setRepository();
         });
 
-        mDialog.show();
-    }
-
-    public void dismiss() {
-        mDialog.dismiss();
-    }
-
-    public void setOnDismissLogWorkoutDialogListener(OnDismissLogWorkoutDialogListener onDismissLogWorkoutDialogListener) {
-        mOnDismissLogWorkoutDialogListener = onDismissLogWorkoutDialogListener;
+        return dialog;
     }
 
     public void buildSets() {
@@ -228,7 +202,7 @@ public class LogWorkoutDialog {
 
         mSaveButton.setText("Save");
         mSaveButton.setOnClickListener(v -> {
-            mDialog.dismiss();
+            this.dismiss();
         });
     }
 
@@ -271,7 +245,7 @@ public class LogWorkoutDialog {
         int numberOfSets = mViewSets.size();
 
         if(numberOfSets == 0 || numberOfSets == 3 || numberOfSets == 6 || numberOfSets == 9) {
-            View view = LayoutInflater.from(mDialog.getContext())
+            View view = LayoutInflater.from(getContext())
                     .inflate(R.layout.view_dialog_log_workout_row, mSetView, false);
 
             mRowLayout = (LinearLayout) view;
@@ -282,7 +256,7 @@ public class LogWorkoutDialog {
     public boolean addSet(RepositorySet set) {
         addRow();
 
-        View view = LayoutInflater.from(mDialog.getContext())
+        View view = LayoutInflater.from(getContext())
                 .inflate(R.layout.view_dialog_log_workout_set, mSetView, false);
 
         updateSet(set, view);
@@ -317,7 +291,7 @@ public class LogWorkoutDialog {
     public boolean addTimedSet(RepositorySet set) {
         addRow();
 
-        View view = LayoutInflater.from(mDialog.getContext())
+        View view = LayoutInflater.from(getContext())
                 .inflate(R.layout.view_dialog_log_workout_timed_set, mSetView, false);
 
         updateTimedSet(set, view);

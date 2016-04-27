@@ -1,9 +1,17 @@
 package com.bodyweight.fitness
 
+import android.support.annotation.LayoutRes
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.bodyweight.fitness.model.repository.RepositoryRoutine
 import com.bodyweight.fitness.stream.RepositoryStream
 import io.realm.RealmResults
 import org.joda.time.DateTime
+
+fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
+    return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
+}
 
 fun DateTime.isToday(): Boolean {
     val now = DateTime()

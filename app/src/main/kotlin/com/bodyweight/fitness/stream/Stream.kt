@@ -8,6 +8,18 @@ import rx.subjects.PublishSubject
 
 data class SetReps(val set: Int, val reps: Int)
 
+data class Dialog(val exerciseId: String)
+
+object UiEvent {
+    private val dialogSubject = PublishSubject.create<Dialog>()
+
+    val dialogObservable: Observable<Dialog> get() = dialogSubject
+
+    fun showLogWorkoutDialog(exerciseId: String) {
+        dialogSubject.onNext(Dialog(exerciseId))
+    }
+}
+
 object Stream {
     var currentCalendarPage: Int = 60
         private set

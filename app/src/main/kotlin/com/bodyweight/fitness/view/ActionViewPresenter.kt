@@ -18,6 +18,7 @@ import com.bodyweight.fitness.stream.RepositoryStream
 
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
+import com.bodyweight.fitness.stream.UiEvent
 import com.bodyweight.fitness.ui.ProgressActivity
 import com.bodyweight.fitness.utils.ViewUtils
 import com.bodyweight.fitness.view.dialog.LogWorkoutDialog
@@ -34,12 +35,6 @@ object ActionShared {
 }
 
 class ActionPresenter : AbstractPresenter() {
-    val logWorkoutDialog: LogWorkoutDialog? by lazy {
-        mView?.context.let {
-            LogWorkoutDialog(it)
-        }
-    }
-
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
@@ -106,14 +101,8 @@ class ActionPresenter : AbstractPresenter() {
         }
     }
 
-    override fun saveView() {
-        super.saveView()
-
-        logWorkoutDialog?.dismiss()
-    }
-
     fun logWorkout() {
-        logWorkoutDialog?.show()
+        UiEvent.showLogWorkoutDialog(getCurrentExercise().exerciseId)
     }
 
     fun watchFullVideo() {
