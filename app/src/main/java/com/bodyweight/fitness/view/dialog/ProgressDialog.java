@@ -1,8 +1,10 @@
 package com.bodyweight.fitness.view.dialog;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
@@ -10,7 +12,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.model.Exercise;
+import com.bodyweight.fitness.model.Routine;
 import com.bodyweight.fitness.model.SectionMode;
 import com.bodyweight.fitness.stream.RoutineStream;
 import com.bodyweight.fitness.view.widget.CircularProgressBar;
@@ -20,7 +24,7 @@ import butterknife.InjectView;
 
 import com.bodyweight.fitness.R;
 
-public class ProgressDialog {
+public class ProgressDialog extends DialogFragment {
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
 
@@ -39,26 +43,34 @@ public class ProgressDialog {
     @InjectView(R.id.chooseButton)
     Button mLevelConfirmButton;
 
-    private Dialog mDialog;
-
     private Exercise mExercise;
 
     private int mAvailableLevels;
     private int mChosenLevel = 0;
 
-    public ProgressDialog(Context context, Exercise exercise) {
-        mExercise = exercise;
-        mAvailableLevels = mExercise.getSection().getAvailableLevels();
-        mChosenLevel = mExercise.getSection().getCurrentLevel();
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        String exerciseId = getArguments().getString(Constants.INSTANCE.getExerciseId());
 
-        mDialog = new Dialog(context);
-        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mDialog.setContentView(R.layout.view_dialog_level);
-        mDialog.setCanceledOnTouchOutside(true);
-    }
+        Routine routine = RoutineStream.getInstance().getRoutine();
 
-    public void show() {
-        ButterKnife.inject(this, mDialog);
+        for (Exercise exercise : routine.getExercises()) {
+            if (exercise.getExerciseId().equals(exerciseId)) {
+                mExercise = exercise;
+                mAvailableLevels = mExercise.getSection().getAvailableLevels();
+                mChosenLevel = mExercise.getSection().getCurrentLevel();
+
+                break;
+            }
+        }
+
+        Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.view_dialog_level);
+        dialog.setCanceledOnTouchOutside(true);
+
+        ButterKnife.inject(this, dialog);
 
         mLevelPreviousButton.setOnClickListener(v -> {
             mChosenLevel = mChosenLevel - 1;
@@ -75,7 +87,7 @@ public class ProgressDialog {
 
             RoutineStream.getInstance().setLevel(chosenExercise, mChosenLevel);
 
-            mDialog.dismiss();
+            dialog.dismiss();
         });
 
         mLevelProgressBar.setWheelSize(12);
@@ -84,7 +96,7 @@ public class ProgressDialog {
 
         updateDialog();
 
-        mDialog.show();
+        return dialog;
     }
 
     private void updateDialog() {

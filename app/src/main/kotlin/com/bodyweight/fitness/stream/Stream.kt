@@ -1,6 +1,5 @@
 package com.bodyweight.fitness.stream
 
-import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.CalendarDay
 
 import rx.Observable
@@ -8,15 +7,16 @@ import rx.subjects.PublishSubject
 
 data class SetReps(val set: Int, val reps: Int)
 
-data class Dialog(val exerciseId: String)
+enum class DialogType { LogWorkout, Progress }
+data class Dialog(val dialogType: DialogType, val exerciseId: String)
 
 object UiEvent {
     private val dialogSubject = PublishSubject.create<Dialog>()
 
     val dialogObservable: Observable<Dialog> get() = dialogSubject
 
-    fun showLogWorkoutDialog(exerciseId: String) {
-        dialogSubject.onNext(Dialog(exerciseId))
+    fun showDialog(dialogType: DialogType, exerciseId: String) {
+        dialogSubject.onNext(Dialog(dialogType, exerciseId))
     }
 }
 

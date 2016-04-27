@@ -14,11 +14,8 @@ import com.bodyweight.fitness.R
 import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.formatMinutes
 import com.bodyweight.fitness.formatSeconds
-import com.bodyweight.fitness.stream.RepositoryStream
+import com.bodyweight.fitness.stream.*
 
-import com.bodyweight.fitness.stream.RoutineStream
-import com.bodyweight.fitness.stream.Stream
-import com.bodyweight.fitness.stream.UiEvent
 import com.bodyweight.fitness.ui.ProgressActivity
 import com.bodyweight.fitness.utils.ViewUtils
 import com.bodyweight.fitness.view.dialog.LogWorkoutDialog
@@ -102,7 +99,7 @@ class ActionPresenter : AbstractPresenter() {
     }
 
     fun logWorkout() {
-        UiEvent.showLogWorkoutDialog(getCurrentExercise().exerciseId)
+        UiEvent.showDialog(DialogType.LogWorkout, getCurrentExercise().exerciseId)
     }
 
     fun watchFullVideo() {
@@ -117,10 +114,7 @@ class ActionPresenter : AbstractPresenter() {
     }
 
     fun chooseProgression() {
-        val view = (mView as ActionView)
-
-        val progressDialog = ProgressDialog(view.context, RoutineStream.getInstance().exercise)
-        progressDialog.show()
+        UiEvent.showDialog(DialogType.Progress, getCurrentExercise().exerciseId)
     }
 
     fun todaysWorkout() {

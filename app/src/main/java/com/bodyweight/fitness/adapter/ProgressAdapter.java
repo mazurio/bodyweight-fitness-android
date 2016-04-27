@@ -12,8 +12,8 @@ import com.bodyweight.fitness.model.repository.RepositoryCategory;
 import com.bodyweight.fitness.model.repository.RepositoryExercise;
 import com.bodyweight.fitness.model.repository.RepositorySection;
 import com.bodyweight.fitness.model.repository.RepositorySet;
+import com.bodyweight.fitness.stream.DialogType;
 import com.bodyweight.fitness.stream.UiEvent;
-import com.bodyweight.fitness.view.dialog.LogWorkoutDialog;
 
 import java.util.HashMap;
 
@@ -130,7 +130,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
             }
 
             mButton.setOnClickListener(view -> {
-                UiEvent.INSTANCE.showLogWorkoutDialog(mRepositoryExercise.getExerciseId());
+                UiEvent.INSTANCE.showDialog(DialogType.LogWorkout, mRepositoryExercise.getExerciseId());
             });
         }
     }

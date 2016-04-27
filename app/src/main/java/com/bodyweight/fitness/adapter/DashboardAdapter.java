@@ -182,22 +182,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         return 0;
     }
 
-    public boolean isCompleted(RepositoryExercise repositoryExercise) {
-        int size = repositoryExercise.getSets().size();
-
-        if (size == 0) {
-            return false;
-        }
-
-        RepositorySet firstSet = repositoryExercise.getSets().get(0);
-
-        if(size == 1 && firstSet.getSeconds() == 0 && firstSet.getReps() == 0) {
-            return false;
-        }
-
-        return true;
-    }
-
     public abstract class DashboardAbstractPresenter extends RecyclerView.ViewHolder {
         public DashboardAbstractPresenter(View itemView) {
             super(itemView);

@@ -21,6 +21,7 @@ import android.view.WindowManager;
 import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.stream.Dialog;
+import com.bodyweight.fitness.stream.DialogType;
 import com.bodyweight.fitness.stream.RepositoryStream;
 
 import com.bodyweight.fitness.R;
@@ -31,6 +32,7 @@ import com.bodyweight.fitness.utils.ApplicationStoreUtils;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 
 import com.bodyweight.fitness.view.dialog.LogWorkoutDialog;
+import com.bodyweight.fitness.view.dialog.ProgressDialog;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import rx.functions.Action1;
@@ -189,13 +191,23 @@ public class MainActivity extends RxAppCompatActivity implements SharedPreferenc
                 .subscribe(new Action1<Dialog>() {
                     @Override
                     public void call(Dialog dialog) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString(Constants.INSTANCE.getExerciseId(), dialog.getExerciseId());
+                        if (dialog.getDialogType() == DialogType.LogWorkout) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString(Constants.INSTANCE.getExerciseId(), dialog.getExerciseId());
 
-                        LogWorkoutDialog logWorkoutDialog = new LogWorkoutDialog();
-                        logWorkoutDialog.setArguments(bundle);
+                            LogWorkoutDialog logWorkoutDialog = new LogWorkoutDialog();
+                            logWorkoutDialog.setArguments(bundle);
 
-                        logWorkoutDialog.show(getSupportFragmentManager(), "dialog");
+                            logWorkoutDialog.show(getSupportFragmentManager(), "logWorkoutDialog");
+                        } else if (dialog.getDialogType() == DialogType.Progress) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString(Constants.INSTANCE.getExerciseId(), dialog.getExerciseId());
+
+                            ProgressDialog progressDialog = new ProgressDialog();
+                            progressDialog.setArguments(bundle);
+
+                            progressDialog.show(getSupportFragmentManager(), "progressDialog");
+                        }
                     }
                 });
 

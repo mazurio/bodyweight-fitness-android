@@ -11,6 +11,7 @@ import com.bodyweight.fitness.Constants;
 import com.bodyweight.fitness.adapter.ProgressPagerAdapter;
 import com.bodyweight.fitness.model.Exercise;
 import com.bodyweight.fitness.stream.Dialog;
+import com.bodyweight.fitness.stream.DialogType;
 import com.bodyweight.fitness.stream.RepositoryStream;
 
 import org.joda.time.DateTime;
@@ -61,6 +62,7 @@ public class ProgressActivity extends RxAppCompatActivity {
 
         UiEvent.INSTANCE.getDialogObservable()
                 .compose(bindToLifecycle())
+                .filter(dialog -> dialog.getDialogType() == DialogType.LogWorkout)
                 .subscribe(new Action1<Dialog>() {
                     @Override
                     public void call(Dialog dialog) {
