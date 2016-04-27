@@ -23,6 +23,14 @@ abstract class AbstractPresenter : Serializable {
     }
 
     open fun updateView() {}
+
+    open fun getView(): AbstractView {
+        return mView!!
+    }
+
+    open fun context(): Context {
+        return mView!!.context
+    }
 }
 
 abstract class AbstractView : RelativeLayout {
@@ -43,7 +51,7 @@ abstract class AbstractView : RelativeLayout {
         mPresenter.bindView(this)
     }
 
-    abstract fun onCreateView();
+    open fun onCreateView() {}
 
     open fun updateView() {
         mPresenter.updateView()

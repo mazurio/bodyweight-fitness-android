@@ -33,10 +33,12 @@ open class HeaderPresenter : AbstractPresenter() {
         setText(getCurrentRoutine())
     }
 
-    fun setText(routine: Routine) {
-        val headerView: HeaderView = (mView as HeaderView)
+    override fun getView(): HeaderView {
+        return (mView as HeaderView)
+    }
 
-        headerView.setText(routine.title, routine.subtitle)
+    fun setText(routine: Routine) {
+        getView().setText(routine.title, routine.subtitle)
     }
 }
 
@@ -47,9 +49,7 @@ open class HeaderView : AbstractView {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    override fun onCreateView() {}
-
-    fun setText(title: String, subtitle: String) {
+    open fun setText(title: String, subtitle: String) {
         routine_title.text = title
         routine_subtitle.text = subtitle
     }
