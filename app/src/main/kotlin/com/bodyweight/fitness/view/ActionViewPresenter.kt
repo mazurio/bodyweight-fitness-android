@@ -34,6 +34,12 @@ object ActionShared {
 }
 
 class ActionPresenter : AbstractPresenter() {
+    val logWorkoutDialog: LogWorkoutDialog? by lazy {
+        mView?.context.let {
+            LogWorkoutDialog(it)
+        }
+    }
+
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
@@ -100,12 +106,14 @@ class ActionPresenter : AbstractPresenter() {
         }
     }
 
-    fun logWorkout() {
-        val view = (mView as ActionView)
+    override fun saveView() {
+        super.saveView()
 
-        // todo make it global and hide/destroy onDestroy
-        val mLogWorkoutDialog = LogWorkoutDialog(view.context)
-        mLogWorkoutDialog.show()
+        logWorkoutDialog?.dismiss()
+    }
+
+    fun logWorkout() {
+        logWorkoutDialog?.show()
     }
 
     fun watchFullVideo() {

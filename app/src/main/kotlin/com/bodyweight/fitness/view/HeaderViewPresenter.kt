@@ -4,11 +4,19 @@ import android.content.Context
 import android.util.AttributeSet
 
 import com.bodyweight.fitness.model.Routine
+import com.bodyweight.fitness.stream.RoutineStream
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_main_header.view.*
+import rx.Observable
 
 open class HeaderPresenter : AbstractPresenter() {
+    open fun getCurrentRoutine(): Routine =
+            RoutineStream.getInstance().routine
+
+    open fun getRoutineObservable(): Observable<Routine> =
+            RoutineStream.getInstance().routineObservable
+
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 

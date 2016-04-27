@@ -79,7 +79,7 @@ configurations {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
-    testCompile 'org.jetbrains.spek:spek:0.1.199'
+    testCompile 'org.jetbrains.spek:spek:1.0.9'
 //    testCompile "com.nhaarman:mockito-kotlin:0.3.0"
     testCompile 'org.mockito:mockito-all:2.0.2-beta'
 
