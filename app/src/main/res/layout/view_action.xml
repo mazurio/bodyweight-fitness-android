@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.bodyweight.fitness.view.widget.CompatTextView
                         android:id="@+id/action_view_action_sheet_watch_on_youtube"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -73,11 +73,10 @@
                         android:textSize="16sp"
                         android:textColor="#de000000"
                         android:drawablePadding="24dp"
-                        android:drawableLeft="@drawable/state_movie"
-                        android:drawableStart="@drawable/state_movie"
+                        app:drawableStart="@drawable/action_movie"
                         android:text="Watch Full Video" />
 
-                    <TextView
+                    <com.bodyweight.fitness.view.widget.CompatTextView
                         android:id="@+id/action_view_action_sheet_choose_progression"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -87,8 +86,7 @@
                         android:textSize="16sp"
                         android:textColor="#de000000"
                         android:drawablePadding="24dp"
-                        android:drawableLeft="@drawable/state_progression"
-                        android:drawableStart="@drawable/state_progression"
+                        app:drawableStart="@drawable/action_progression"
                         android:text="Choose Progression" />
 
                     <RelativeLayout
@@ -96,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/primary">
 
-                        <TextView
+                        <com.bodyweight.fitness.view.widget.CompatTextView
                             android:id="@+id/action_view_action_sheet_todays_workout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -106,8 +104,7 @@
                             android:textSize="16sp"
                             android:textColor="#fff"
                             android:drawablePadding="24dp"
-                            android:drawableLeft="@drawable/state_log_workout"
-                            android:drawableStart="@drawable/state_log_workout"
+                            app:drawableStart="@drawable/action_log_workout_white"
                             android:text="Today's Workout" />
                     </RelativeLayout>
                 </LinearLayout>

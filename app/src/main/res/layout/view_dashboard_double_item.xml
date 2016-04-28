@@ -20,13 +20,12 @@
             android:layout_marginRight="8dp"
             android:orientation="vertical">
 
-            <View
+            <android.support.v7.widget.AppCompatImageButton
                 android:id="@+id/left_exercise_button"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_margin="0dp"
                 android:gravity="center"
-                android:background="@drawable/dashboard_circle_weighted"
                 android:elevation="4dp"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
@@ -51,13 +50,12 @@
             android:layout_marginLeft="8dp"
             android:orientation="vertical">
 
-            <View
+            <android.support.v7.widget.AppCompatImageButton
                 android:id="@+id/right_exercise_button"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_margin="0dp"
                 android:gravity="center"
-                android:background="@drawable/dashboard_circle_weighted"
                 android:elevation="4dp"/>
 
             <com.devspark.robototextview.widget.RobotoTextView

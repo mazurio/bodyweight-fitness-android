@@ -62,17 +62,18 @@ public class ProgressActivity extends RxAppCompatActivity {
 
         UiEvent.INSTANCE.getDialogObservable()
                 .compose(bindToLifecycle())
-                .filter(dialog -> dialog.getDialogType() == DialogType.LogWorkout)
                 .subscribe(new Action1<Dialog>() {
                     @Override
                     public void call(Dialog dialog) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString(Constants.INSTANCE.getExerciseId(), dialog.getExerciseId());
+                        if (dialog.getDialogType() == DialogType.LogWorkout) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString(Constants.INSTANCE.getExerciseId(), dialog.getExerciseId());
 
-                        LogWorkoutDialog logWorkoutDialog = new LogWorkoutDialog();
-                        logWorkoutDialog.setArguments(bundle);
+                            LogWorkoutDialog logWorkoutDialog = new LogWorkoutDialog();
+                            logWorkoutDialog.setArguments(bundle);
 
-                        logWorkoutDialog.show(getSupportFragmentManager(), "dialog");
+                            logWorkoutDialog.show(getSupportFragmentManager(), "dialog");
+                        }
                     }
                 });
     }

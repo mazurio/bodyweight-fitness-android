@@ -17,4 +17,8 @@
         <attr name="shadowDrawable" format="reference" />
         <attr name="shadowVisible" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="CompatTextView">
+        <attr name="drawableStart" format="reference"/>
+    </declare-styleable>
 </resources>

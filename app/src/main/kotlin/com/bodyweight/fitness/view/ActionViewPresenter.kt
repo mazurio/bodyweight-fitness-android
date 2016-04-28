@@ -139,7 +139,7 @@ open class ActionView : AbstractView {
         val presenter = (mPresenter as ActionPresenter)
 
         ViewUtils.resetFloatingActionButtonMargin(action_view_log_workout_button)
-        ViewUtils.resetFloatingActionButtonMargin(action_view_action_button, 0, 0, 12, 12)
+        ViewUtils.resetFloatingActionButtonMargin(action_view_action_button)
 
         mMaterialSheet = MaterialSheetFab<ActionButton>(
                 action_view_action_button,
@@ -209,6 +209,6 @@ open class ActionView : AbstractView {
     }
 
     fun setActionButtonImageDrawable(drawable: Int) {
-        action_view_action_button.setImageDrawable(resources.getDrawable(drawable))
+        action_view_action_button.setImageResource(drawable)
     }
 }

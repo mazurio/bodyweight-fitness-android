@@ -328,14 +328,10 @@ open class TimerView : AbstractView {
     }
 
     fun showPlaying() {
-        start_stop_timer_button.setImageDrawable(
-                getResources().getDrawable(R.drawable.action_pause)
-        );
+        start_stop_timer_button.setImageResource(R.drawable.action_pause)
     }
 
     fun showPaused() {
-        start_stop_timer_button.setImageDrawable(
-                getResources().getDrawable(R.drawable.action_play)
-        );
+        start_stop_timer_button.setImageResource(R.drawable.action_play)
     }
 }
