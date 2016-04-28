@@ -1,6 +1,7 @@
 package com.bodyweight.fitness
 
 object Constants {
+    val exerciseId = "exerciseId"
     val MAXIMUM_NUMBER_OF_SETS = 12
     val PRIMARY_KEY_ROUTINE_ID = "primaryKeyRoutineId"
 
@@ -10,7 +11,5 @@ object Constants {
     val PREFERENCE_AUTOMATICALLY_LOG_WORKOUT_TIME = "PREFERENCE_AUTOMATICALLY_LOG_WORKOUT_TIME"
     val PREFERENCE_KEEP_SCREEN_ON = "PREFERENCE_KEEP_SCREEN_ON"
     val PREFERENCE_TIMER_KEY = "PREFERENCE_TIMER_KEY_"
-
-    val SUPER_STATE_KEY = "superState"
-    val PRESENTER_KEY = "presenter"
+    val PREFERENCE_NUMBER_OF_REPS_KEY = "PREFERENCE_NUMBER_OF_REPS_KEY_"
 }

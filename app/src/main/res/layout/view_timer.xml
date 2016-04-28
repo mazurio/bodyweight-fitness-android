@@ -1,104 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.bodyweight.fitness.view.TimerView
+<com.bodyweight.fitness.view.NavigationView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/timer_view"
+    android:id="@+id/test_view"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight=".25"
-    android:orientation="horizontal"
+    android:layout_height="80dp"
     android:fitsSystemWindows="true"
     android:background="@color/primary">
 
-    <ImageButton
-        android:id="@+id/prev_exercise_button"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight=".10"
-        android:background="@drawable/view_action_exercise_drawable"
-        android:scaleType="center"
-        app:srcCompat="@drawable/action_arrow_left"/>
+        android:orientation="horizontal">
 
-    <RelativeLayout
-        android:id="@+id/timer_layout"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight=".40"
-        android:clickable="true">
-
-        <com.devspark.robototextview.widget.RobotoTextView
-            android:id="@+id/timer_minutes"
-            android:layout_width="wrap_content"
+        <ImageButton
+            android:id="@+id/prev_exercise_button"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_toLeftOf="@+id/timer_spacing"
-            android:gravity="center"
-            android:textSize="60sp"
-            app:typeface="roboto_bold" />
+            android:layout_weight=".10"
+            android:background="@drawable/view_action_exercise_drawable"
+            android:scaleType="center"
+            app:srcCompat="@drawable/action_arrow_left"/>
 
-        <RelativeLayout
-            android:id="@+id/timer_spacing"
-            android:layout_width="wrap_content"
+        <com.bodyweight.fitness.view.RepsLoggerView
+            android:id="@+id/reps_logger_view"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true" />
+            android:layout_weight=".80">
 
-        <com.devspark.robototextview.widget.RobotoTextView
-            android:id="@+id/timer_seconds"
-            android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".50"
+                    android:clickable="true">
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/reps_logger_sets"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|bottom"
+                        android:layout_above="@+id/reps_logger_reps"
+                        android:visibility="gone"
+                        app:typeface="roboto_bold" />
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/reps_logger_reps"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:textSize="60sp"
+                        app:typeface="roboto_light" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".50">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/decrease_reps_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_centerInParent="true"
+                        android:layout_toLeftOf="@+id/log_reps_button"
+                        android:layout_marginRight="12dp"
+                        app:srcCompat="@drawable/action_minus"
+                        app:borderWidth="0dp"
+                        app:elevation="0dp"
+                        app:fabSize="mini"/>
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/log_reps_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/action_log"
+                        android:layout_centerInParent="true"
+                        app:borderWidth="0dp"
+                        app:elevation="@dimen/view_action_elevation"/>
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/increase_reps_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@+id/log_reps_button"
+                        android:layout_marginLeft="12dp"
+                        app:srcCompat="@drawable/action_add"
+                        app:borderWidth="0dp"
+                        app:elevation="0dp"
+                        app:fabSize="mini"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </com.bodyweight.fitness.view.RepsLoggerView>
+
+        <com.bodyweight.fitness.view.TimerView
+            android:id="@+id/timer_view"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/timer_spacing"
-            android:gravity="center"
-            android:textSize="60sp"
-            app:typeface="roboto_light" />
-    </RelativeLayout>
+            android:layout_weight=".80">
 
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight=".40">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/increase_timer_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_centerInParent="true"
-            android:layout_toLeftOf="@+id/start_stop_timer_button"
-            android:layout_marginRight="12dp"
-            app:srcCompat="@drawable/action_add"
-            app:borderWidth="0dp"
-            app:elevation="0dp"
-            app:fabSize="mini"/>
+                <RelativeLayout
+                    android:id="@+id/timer_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".50"
+                    android:clickable="true">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/start_stop_timer_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/action_play"
-            android:layout_centerInParent="true"
-            app:borderWidth="0dp"
-            app:elevation="0dp"/>
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/timer_minutes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toLeftOf="@+id/timer_spacing"
+                        android:gravity="center"
+                        android:textSize="60sp"
+                        app:typeface="roboto_bold" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/restart_timer_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_centerInParent="true"
-            android:layout_toRightOf="@+id/start_stop_timer_button"
-            android:layout_marginLeft="12dp"
-            app:srcCompat="@drawable/action_refresh"
-            app:borderWidth="0dp"
-            app:elevation="0dp"
-            app:fabSize="mini"/>
-    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/timer_spacing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true" />
 
-    <ImageButton
-        android:id="@+id/next_exercise_button"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight=".10"
-        android:background="@drawable/view_action_exercise_drawable"
-        android:scaleType="center"
-        app:srcCompat="@drawable/action_arrow_right"/>
-</com.bodyweight.fitness.view.TimerView>
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/timer_seconds"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/timer_spacing"
+                        android:gravity="center"
+                        android:textSize="60sp"
+                        app:typeface="roboto_light" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".50">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/increase_timer_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_centerInParent="true"
+                        android:layout_toLeftOf="@+id/start_stop_timer_button"
+                        android:layout_marginRight="12dp"
+                        app:srcCompat="@drawable/action_add"
+                        app:borderWidth="0dp"
+                        app:elevation="0dp"
+                        app:fabSize="mini"/>
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/start_stop_timer_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/action_play"
+                        android:layout_centerInParent="true"
+                        app:borderWidth="0dp"
+                        app:elevation="0dp"/>
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/restart_timer_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@+id/start_stop_timer_button"
+                        android:layout_marginLeft="12dp"
+                        app:srcCompat="@drawable/action_refresh"
+                        app:borderWidth="0dp"
+                        app:elevation="0dp"
+                        app:fabSize="mini"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </com.bodyweight.fitness.view.TimerView>
+
+        <ImageButton
+            android:id="@+id/next_exercise_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".10"
+            android:background="@drawable/view_action_exercise_drawable"
+            android:scaleType="center"
+            app:srcCompat="@drawable/action_arrow_right"/>
+    </LinearLayout>
+</com.bodyweight.fitness.view.NavigationView>

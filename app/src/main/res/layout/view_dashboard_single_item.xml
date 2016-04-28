@@ -17,13 +17,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <View
+            <android.support.v7.widget.AppCompatImageButton
                 android:id="@+id/exercise_button"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_margin="0dp"
                 android:layout_gravity="center"
-                android:background="@drawable/dashboard_circle_weighted"
                 android:elevation="4dp"/>
 
             <com.devspark.robototextview.widget.RobotoTextView

@@ -12,13 +12,6 @@
             android:checked="false"
             android:icon="@drawable/action_calendar"
             android:title="Workout Log" />
-
-        <item
-            android:id="@+id/action_menu_change_routine"
-            android:checked="false"
-            android:icon="@drawable/action_download"
-            android:visible="false"
-            android:title="Download Routines" />
     </group>
 
     <group android:id="@+id/action_group_settings" android:checkableBehavior="single">

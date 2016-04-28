@@ -1,3 +1,5 @@
 <resources>
     <dimen name="view_action_elevation">6dp</dimen>
+    <dimen name="view_action_margin">12dp</dimen>
+    <dimen name="view_action_margin_bottom">0dp</dimen>
 </resources>

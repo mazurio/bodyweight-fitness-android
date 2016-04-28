@@ -16,30 +16,12 @@
       "mode": "all"
     },
     {
-      "exerciseId": "exercise0",
-      "id": "wall_extensions",
-      "title": "Wall Extensions",
+      "exerciseId": "01379fb5-80af-474a-90b6-efcebed138d4",
+      "id": "shoulder_rolls",
+      "title": "Shoulder Rolls",
       "description": "1x(5-10)",
       "type": "exercise",
-      "youTubeId": "d6V2Exzb324",
-      "defaultSet": "weighted"
-    },
-    {
-      "exerciseId": "exercise1",
-      "id": "band_dislocates",
-      "title": "Band Dislocates",
-      "description": "1x(5-10)",
-      "type": "exercise",
-      "youTubeId": "WyW5jGGxoZk",
-      "defaultSet": "weighted"
-    },
-    {
-      "exerciseId": "exercise2",
-      "id": "cat_camel",
-      "title": "Camel Bends",
-      "description": "1x(5-10)",
-      "type": "exercise",
-      "youTubeId": "K9bK0BwKFjs",
+      "youTubeId": "H01oGIS1C_g",
       "defaultSet": "weighted"
     },
     {
@@ -52,12 +34,39 @@
       "defaultSet": "weighted"
     },
     {
-      "exerciseId": "exercise4",
-      "id": "full_body_circles",
-      "title": "Full Body Circles",
+      "exerciseId": "exercise2",
+      "id": "cat_camel",
+      "title": "Camel Bends",
       "description": "1x(5-10)",
       "type": "exercise",
-      "youTubeId": "yRigKuEou7k",
+      "youTubeId": "K9bK0BwKFjs",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "084e964d-875b-4fb2-81db-02de9820363c",
+      "id": "band_pull_downs",
+      "title": "Straight Arm Overhead Pull Downs",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "8lDC4Ri9zAQ&feature=youtu.be&t=4m22s",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "2589e669-6bc6-4796-a3a5-0b4e32456e92",
+      "id": "band_chest_flies",
+      "title": "Straight Arm Chest Flies",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "8lDC4Ri9zAQ&feature=youtu.be&t=5m12s",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "exercise1",
+      "id": "band_dislocates",
+      "title": "Band Dislocates",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "WyW5jGGxoZk",
       "defaultSet": "weighted"
     },
     {

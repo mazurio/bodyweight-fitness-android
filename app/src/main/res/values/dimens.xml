@@ -4,4 +4,6 @@
 	<dimen name="activity_vertical_margin">16dp</dimen>
 
 	<dimen name="view_action_elevation">0dp</dimen>
+	<dimen name="view_action_margin">16dp</dimen>
+	<dimen name="view_action_margin_bottom">16dp</dimen>
 </resources>

@@ -12,7 +12,8 @@ import com.bodyweight.fitness.model.repository.RepositoryCategory;
 import com.bodyweight.fitness.model.repository.RepositoryExercise;
 import com.bodyweight.fitness.model.repository.RepositorySection;
 import com.bodyweight.fitness.model.repository.RepositorySet;
-import com.bodyweight.fitness.view.dialog.LogWorkoutDialog;
+import com.bodyweight.fitness.stream.DialogType;
+import com.bodyweight.fitness.stream.UiEvent;
 
 import java.util.HashMap;
 
@@ -21,8 +22,7 @@ import butterknife.InjectView;
 
 import com.bodyweight.fitness.R;
 
-public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.ProgressPresenter>
-        implements LogWorkoutDialog.OnDismissLogWorkoutDialogListener {
+public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.ProgressPresenter> {
     private RepositoryCategory mRepositoryCategory;
 
     private HashMap<Integer, RepositorySection> mItemViewMapping = new HashMap<>();
@@ -83,7 +83,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
             presenter.bindView(mItemViewMapping.get(position));
         } else if (mExerciseViewMapping.containsKey(position)) {
             ProgressCardPresenter presenter = (ProgressCardPresenter) holder;
-            presenter.bindView(mExerciseViewMapping.get(position), this);
+            presenter.bindView(mExerciseViewMapping.get(position));
         }
     }
 
@@ -99,11 +99,6 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         }
 
         return 0;
-    }
-
-    @Override
-    public void onDismissed() {
-        notifyDataSetChanged();
     }
 
     public abstract class ProgressPresenter extends RecyclerView.ViewHolder {
@@ -124,7 +119,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
             ButterKnife.inject(this, itemView);
         }
 
-        public void bindView(RepositoryExercise repositoryExercise, LogWorkoutDialog.OnDismissLogWorkoutDialogListener onDismissLogWorkoutDialogListener) {
+        public void bindView(RepositoryExercise repositoryExercise) {
             mRepositoryExercise = repositoryExercise;
 
             mToolbar.setTitle(repositoryExercise.getTitle());
@@ -135,9 +130,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
             }
 
             mButton.setOnClickListener(view -> {
-                LogWorkoutDialog logWorkoutDialog = new LogWorkoutDialog(itemView.getContext(), mRepositoryExercise);
-                logWorkoutDialog.setOnDismissLogWorkoutDialogListener(onDismissLogWorkoutDialogListener);
-                logWorkoutDialog.show();
+                UiEvent.INSTANCE.showDialog(DialogType.LogWorkout, mRepositoryExercise.getExerciseId());
             });
         }
     }

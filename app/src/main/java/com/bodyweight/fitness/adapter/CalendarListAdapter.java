@@ -14,15 +14,13 @@ import com.bodyweight.fitness.model.repository.RepositoryExercise;
 import com.bodyweight.fitness.model.repository.RepositoryRoutine;
 import com.bodyweight.fitness.model.repository.RepositorySet;
 import com.bodyweight.fitness.stream.RepositoryStream;
+import com.bodyweight.fitness.stream.Stream;
 import com.bodyweight.fitness.ui.ProgressActivity;
-import com.bodyweight.fitness.utils.Logger;
 import com.bodyweight.fitness.utils.PreferenceUtils;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.format.PeriodFormatterBuilder;
-
-import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -32,6 +30,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+//    private boolean mEmpty = true;
     private RealmResults<RepositoryRoutine> mResults;
 
     public CalendarListAdapter() {
@@ -39,20 +38,20 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public void setItems(RealmResults<RepositoryRoutine> results) {
+//        mEmpty = false;
         mResults = results;
 
         notifyDataSetChanged();
     }
 
+//    public void setEmpty() {
+//        mEmpty = true;
+//
+//        notifyDataSetChanged();
+//    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        if (viewType == 1) {
-//            return new CalendarSummaryPresenter(
-//                    LayoutInflater.from(parent.getContext()).inflate(
-//                            R.layout.view_calendar_summary, parent, false)
-//            );
-//        }
-
         return new CalendarRoutinePresenter(
                 LayoutInflater.from(parent.getContext()).inflate(
                         R.layout.view_calendar_card, parent, false)
@@ -61,16 +60,15 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-//        if (position == 0) {
-//            return;
-//        }
-
-//        ((CalendarRoutinePresenter) holder).onBindView(mResults.get(position - 1));
         ((CalendarRoutinePresenter) holder).onBindView(mResults.get(position));
     }
 
     @Override
     public int getItemCount() {
+//        if (mEmpty) {
+//            return 0;
+//        }
+
         if (mResults != null) {
             return mResults.size();
         }
@@ -80,17 +78,7 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-//        if (position == 0) {
-//            return 1;
-//        }
-
         return 0;
-    }
-
-    public class CalendarSummaryPresenter extends RecyclerView.ViewHolder {
-        public CalendarSummaryPresenter(View itemView) {
-            super(itemView);
-        }
     }
 
     public class CalendarRoutinePresenter extends RecyclerView.ViewHolder {
@@ -148,15 +136,16 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     .setPositiveButton("Ok", (dialog, which) -> {
                         Realm realm = RepositoryStream.getInstance().getRealm();
 
-                        RepositoryRoutine repositoryRoutine = realm.where(RepositoryRoutine.class)
-                                .equalTo("id", mRepositoryRoutine.getId())
-                                .findFirst();
-
                         realm.beginTransaction();
-                        repositoryRoutine.removeFromRealm();
+                        mRepositoryRoutine.deleteFromRealm();
                         realm.commitTransaction();
 
+                        mResults = null;
+                        mRepositoryRoutine = null;
+
                         notifyDataSetChanged();
+
+                        Stream.INSTANCE.setRepository();
                     })
                     .setNegativeButton("Cancel", (dialog, which) -> {});
 
@@ -211,41 +200,6 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return content;
         }
 
-//        private void exportCSV() {
-//            String header = "Date, Start Time, End Time, Workout Length, Routine, Exercise, Set Order, Weight, Weight Unit, Reps, Minutes, Seconds";
-//
-//            Logger.d(header);
-//
-//            String routineTitle = mRepositoryRoutine.getTitle() + " - " + mRepositoryRoutine.getSubtitle();
-//            int index = 1;
-//            for (RepositoryExercise exercise : mRepositoryRoutine.getExercises()) {
-//                if (exercise.isVisible()) {
-//                    String title = exercise.getTitle();
-//                    String weightUnit = PreferenceUtils.getInstance().getWeightMeasurementUnit().toString();
-//
-//                    for (RepositorySet set : exercise.getSets()) {
-//                        Logger.d(String.format(
-//                                "%s,%s,%s,%s,%s,%s,%d,%.2f,%s,%d,%s,%s\n",
-//                                new DateTime(mRepositoryRoutine.getStartTime()).toString("EEEE d MMMM", Locale.ENGLISH),
-//                                new DateTime(mRepositoryRoutine.getStartTime()).toString("HH:mm", Locale.ENGLISH),
-//                                new DateTime(mRepositoryRoutine.getLastUpdatedTime()).toString("HH:mm", Locale.ENGLISH),
-//                                getWorkoutLength(),
-//                                routineTitle,
-//                                title,
-//                                index,
-//                                set.getWeight(),
-//                                weightUnit,
-//                                set.getReps(),
-//                                formatMinutes(set.getSeconds()),
-//                                formatSeconds(set.getSeconds())
-//                        ));
-//                    }
-//
-//                    index += 1;
-//                }
-//            }
-//        }
-
         public String getWorkoutLength() {
             DateTime startTime = new DateTime(mRepositoryRoutine.getStartTime());
             DateTime lastUpdatedTime = new DateTime(mRepositoryRoutine.getLastUpdatedTime());
@@ -255,15 +209,13 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if (duration.toStandardMinutes().getMinutes() < 10) {
                 return "--";
             } else {
-                String formatted = new PeriodFormatterBuilder()
+                return new PeriodFormatterBuilder()
                         .appendHours()
                         .appendSuffix("h ")
                         .appendMinutes()
                         .appendSuffix("m")
                         .toFormatter()
                         .print(duration.toPeriod());
-
-                return formatted;
             }
         }
 

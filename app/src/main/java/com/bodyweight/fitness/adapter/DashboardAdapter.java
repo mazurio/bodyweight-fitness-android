@@ -1,5 +1,6 @@
 package com.bodyweight.fitness.adapter;
 
+import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,6 @@ import com.bodyweight.fitness.model.Routine;
 import com.bodyweight.fitness.model.RoutineType;
 import com.bodyweight.fitness.model.Section;
 import com.bodyweight.fitness.model.SectionMode;
-import com.bodyweight.fitness.model.repository.RepositoryExercise;
-import com.bodyweight.fitness.model.repository.RepositorySet;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -182,22 +181,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         return 0;
     }
 
-    public boolean isCompleted(RepositoryExercise repositoryExercise) {
-        int size = repositoryExercise.getSets().size();
-
-        if (size == 0) {
-            return false;
-        }
-
-        RepositorySet firstSet = repositoryExercise.getSets().get(0);
-
-        if(size == 1 && firstSet.getSeconds() == 0 && firstSet.getReps() == 0) {
-            return false;
-        }
-
-        return true;
-    }
-
     public abstract class DashboardAbstractPresenter extends RecyclerView.ViewHolder {
         public DashboardAbstractPresenter(View itemView) {
             super(itemView);
@@ -253,7 +236,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
 
     public class DashboardSingleItemPresenter extends DashboardAbstractPresenter {
         @InjectView(R.id.exercise_button)
-        View mExerciseButton;
+        AppCompatImageButton mExerciseButton;
 
         @InjectView(R.id.exercise_title)
         TextView mExerciseTitle;
@@ -302,10 +285,10 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
 
     public class DashboardDoubleItemPresenter extends DashboardAbstractPresenter {
         @InjectView(R.id.left_exercise_button)
-        View mLeftExerciseButton;
+        AppCompatImageButton mLeftExerciseButton;
 
         @InjectView(R.id.right_exercise_button)
-        View mRightExerciseButton;
+        AppCompatImageButton mRightExerciseButton;
 
         @InjectView(R.id.left_exercise_title)
         TextView mLeftExerciseTitle;

@@ -31,28 +31,6 @@ public class RoutineStream {
 
     private RoutineStream() {
         setRoutine(R.raw.bodyweight_fitness_recommended_routine);
-
-//        String defaultRoutine = PreferenceUtils.getInstance().getDefaultRoutine();
-//
-//        switch (defaultRoutine) {
-//            case "routine-1564cc76-24fc-4a02-bc57-0c99e632f6af": {
-//                setRoutine(R.raw.flexibility_molding_mobility);
-//
-//                break;
-//            }
-//
-//            case "routine-4afa306b-4026-44e4-90d9-913afead82ff": {
-//                setRoutine(R.raw.flexibility_starting_stretching);
-//
-//                break;
-//            }
-//
-//            default: {
-//                setRoutine(R.raw.bodyweight_fitness_recommended_routine);
-//
-//                break;
-//            }
-//        }
     }
 
     public static RoutineStream getInstance() {
@@ -137,10 +115,6 @@ public class RoutineStream {
         return mRoutineChangedSubject;
     }
 
-    public Observable<Exercise> getExerciseChangedObservable() {
-        return mExerciseSubject;
-    }
-
     public Observable<Exercise> getExerciseObservable() {
         Observable<Exercise> exerciseObservable = Observable
                 .just(mExercise)
@@ -149,9 +123,5 @@ public class RoutineStream {
                 .refCount();
 
         return Observable.merge(mExerciseSubject, exerciseObservable);
-    }
-
-    public Observable<Routine> getLevelChangedObservable() {
-        return mLevelChangedSubject;
     }
 }

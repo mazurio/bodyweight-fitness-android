@@ -1,34 +1,59 @@
 package com.bodyweight.fitness
 
 import com.bodyweight.fitness.model.Routine
-import com.bodyweight.fitness.presenter.HeaderPresenter
-import com.bodyweight.fitness.stream.RoutineStream
+import com.bodyweight.fitness.view.HeaderPresenter
 import com.bodyweight.fitness.view.HeaderView
-import com.nhaarman.mockito_kotlin.argThat
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
 
 import org.jetbrains.spek.api.Spek
 
+import org.mockito.Mockito.*
+import rx.subjects.PublishSubject
 import kotlin.test.assertEquals
 
-class HeaderPresenterSpec: Spek() { init {
-    given("Header Presenter") {
-        on("bindView") {
-            val routine: Routine = mock()
+class TestSpec: Spek({
+    given("HeaderPresenter") {
+        beforeEach {
+            routine = mock(Routine::class.java)
+            headerPresenter = mock(HeaderPresenter::class.java)
+            headerView = mock(HeaderView::class.java)
+            observable = PublishSubject.create()
 
-            routine.title = "Mock Title"
-            routine.subtitle = "Mock Subtitle"
+            `when`(routine.title).thenReturn("Title")
+            `when`(routine.subtitle).thenReturn("Subtitle")
 
-            it("should set title and subtitle of the header") {
-                val presenter = HeaderPresenter()
-                val mockView: HeaderView = mock()
+            `when`(headerPresenter.getCurrentRoutine()).thenReturn(routine)
+            `when`(headerPresenter.getRoutineObservable()).thenReturn(observable)
+            `when`(headerPresenter.getView()).thenReturn(headerView)
+        }
 
-                presenter.bindView(mockView)
-                presenter.setText(routine)
+        it("creates presenter") {
+            assertEquals(observable, headerPresenter.getRoutineObservable())
+            assertEquals(routine, headerPresenter.getCurrentRoutine())
+            assertEquals(headerView, headerPresenter.getView())
+        }
 
-                verify(mockView).setText("Mock Title", "Mock Subtitle")
-            }
+        it("binds view by setting title and subtitle") {
+            headerPresenter.bindView(headerView)
+            headerPresenter.setText(routine)
+
+            verify(headerView).setText("Title", "Subtitle")
+        }
+
+        it("restores view by setting title and subtitle") {
+            `when`(headerPresenter.restoreView(headerView)).thenCallRealMethod()
+
+            headerPresenter.restoreView(headerView)
+
+            verify(headerView).setText("Title", "Subtitle")
         }
     }
-}}
+}) {
+    companion object {
+        var routine: Routine = mock(Routine::class.java)
+
+        var headerPresenter: HeaderPresenter = mock(HeaderPresenter::class.java)
+        var headerView: HeaderView = mock(HeaderView::class.java)
+
+        var observable: PublishSubject<Routine> = PublishSubject.create()
+    }
+}
