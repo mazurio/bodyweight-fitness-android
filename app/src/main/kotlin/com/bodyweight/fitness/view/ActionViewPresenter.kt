@@ -15,12 +15,9 @@ import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.formatMinutes
 import com.bodyweight.fitness.formatSeconds
 import com.bodyweight.fitness.stream.*
-
 import com.bodyweight.fitness.ui.ProgressActivity
-import com.bodyweight.fitness.utils.ViewUtils
-import com.bodyweight.fitness.view.dialog.LogWorkoutDialog
-import com.bodyweight.fitness.view.dialog.ProgressDialog
 import com.bodyweight.fitness.view.widget.ActionButton
+
 import com.gordonwong.materialsheetfab.MaterialSheetFab
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener
 
@@ -137,9 +134,6 @@ open class ActionView : AbstractView {
 
     override fun onCreateView() {
         val presenter = (mPresenter as ActionPresenter)
-
-        ViewUtils.resetFloatingActionButtonMargin(action_view_log_workout_button)
-        ViewUtils.resetFloatingActionButtonMargin(action_view_action_button)
 
         mMaterialSheet = MaterialSheetFab<ActionButton>(
                 action_view_action_button,
