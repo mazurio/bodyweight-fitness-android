@@ -2,6 +2,7 @@ package com.bodyweight.fitness.view.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -147,26 +148,29 @@ public class LogWorkoutDialog extends DialogFragment {
 
         mSaveButton.setOnClickListener(v -> dialog.dismiss());
 
-        dialog.setOnDismissListener(l -> {
-            String mode = mRepositoryExercise.getSection().getMode();
+        return dialog;
+    }
 
-            if (mode.equals(SectionMode.LEVELS.toString()) || mode.equals(SectionMode.PICK.toString())) {
-                Realm realm = RepositoryStream.getInstance().getRealm();
-                realm.beginTransaction();
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
 
-                if (isCompleted(mRepositoryExercise)) {
-                    mRepositoryExercise.setVisible(true);
-                } else {
-                    mRepositoryExercise.setVisible(false);
-                }
+        String mode = mRepositoryExercise.getSection().getMode();
 
-                realm.commitTransaction();
+        if (mode.equals(SectionMode.LEVELS.toString()) || mode.equals(SectionMode.PICK.toString())) {
+            Realm realm = RepositoryStream.getInstance().getRealm();
+            realm.beginTransaction();
+
+            if (isCompleted(mRepositoryExercise)) {
+                mRepositoryExercise.setVisible(true);
+            } else {
+                mRepositoryExercise.setVisible(false);
             }
 
-            Stream.INSTANCE.setRepository();
-        });
+            realm.commitTransaction();
+        }
 
-        return dialog;
+        Stream.INSTANCE.setRepository();
     }
 
     public void buildSets() {

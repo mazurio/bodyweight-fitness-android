@@ -7,8 +7,6 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'realm-android'
 apply plugin: 'io.fabric'
 
-apply plugin: 'spoon'
-
 android {
     dexOptions {
         incremental true

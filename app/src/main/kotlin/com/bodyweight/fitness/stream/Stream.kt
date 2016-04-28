@@ -48,10 +48,21 @@ object Stream {
     val calendarDayObservable: Observable<CalendarDay> get() = mCalendarDaySubject
     val repositoryObservable: Observable<Boolean> get() = mRepositorySubject
 
-    fun setMenu(menuId: Int) = mMenuSubject.onNext(menuId)
-    fun setDrawer(menuId: Int) = mDrawerSubject.onNext(menuId)
-    fun setLoggedSeconds(loggedSeconds: Int) = mLoggedSecondsSubject.onNext(loggedSeconds)
-    fun setLoggedSetReps(setReps: SetReps) = mLoggedSetRepsSubject.onNext(setReps)
+    fun setMenu(menuId: Int) {
+        mMenuSubject.onNext(menuId)
+    }
+
+    fun setDrawer(menuId: Int) {
+        mDrawerSubject.onNext(menuId)
+    }
+
+    fun setLoggedSeconds(loggedSeconds: Int) {
+        mLoggedSecondsSubject.onNext(loggedSeconds)
+    }
+
+    fun setLoggedSetReps(setReps: SetReps) {
+        mLoggedSetRepsSubject.onNext(setReps)
+    }
 
     fun streamPage(page: Int) {
         currentCalendarPage = page
@@ -63,5 +74,7 @@ object Stream {
         mCalendarDaySubject.onNext(day)
     }
 
-    fun setRepository() = mRepositorySubject.onNext(true)
+    fun setRepository() {
+        mRepositorySubject.onNext(true)
+    }
 }
