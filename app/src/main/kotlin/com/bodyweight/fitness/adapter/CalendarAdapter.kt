@@ -13,7 +13,9 @@ import com.bodyweight.fitness.R
 import com.bodyweight.fitness.inflate
 
 class CalendarAdapter : PagerAdapter() {
-    val DEFAULT_POSITION = 60
+    companion object {
+        val DEFAULT_POSITION = 60
+    }
 
     override fun instantiateItem(viewGroup: ViewGroup, position: Int): Any {
         val viewPager = viewGroup as ViewPager
