@@ -30,7 +30,6 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-//    private boolean mEmpty = true;
     private RealmResults<RepositoryRoutine> mResults;
 
     public CalendarListAdapter() {
@@ -38,17 +37,10 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public void setItems(RealmResults<RepositoryRoutine> results) {
-//        mEmpty = false;
         mResults = results;
 
         notifyDataSetChanged();
     }
-
-//    public void setEmpty() {
-//        mEmpty = true;
-//
-//        notifyDataSetChanged();
-//    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -65,10 +57,6 @@ public class CalendarListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-//        if (mEmpty) {
-//            return 0;
-//        }
-
         if (mResults != null) {
             return mResults.size();
         }
