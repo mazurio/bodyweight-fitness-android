@@ -55,11 +55,15 @@ fun DateTime.isRoutineLoggedWithResults(): RealmResults<RepositoryRoutine> {
     return results
 }
 
-fun Int.formatMinutes(): String {
+fun Int.formatMinutes(format: Boolean = true): String {
     val minutes = this / 60
 
     if (minutes == 0) {
-        return "00"
+        if (format) {
+            return "00"
+        }
+
+        return "0"
     } else if (minutes < 10) {
         return "0" + minutes
     }
@@ -71,11 +75,15 @@ fun Int.formatMinutesAsNumber(): Int {
     return this / 60
 }
 
-fun Int.formatSeconds(): String {
+fun Int.formatSeconds(format: Boolean = true): String {
     val seconds = this % 60
 
     if (seconds == 0) {
-        return "00"
+        if (format) {
+            return "00"
+        }
+
+        return "0"
     } else if (seconds < 10) {
         return "0" + seconds
     }
