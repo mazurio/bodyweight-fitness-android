@@ -7,6 +7,7 @@ import com.bodyweight.fitness.model.persistence.Glacier;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
+import com.kobakei.ratethisapp.RateThisApp;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -21,6 +22,9 @@ public class App extends Application {
 
         Glacier.init(getApplicationContext());
         JodaTimeAndroid.init(getApplicationContext());
+
+        RateThisApp.Config config = new RateThisApp.Config(3, 5);
+        RateThisApp.init(config);
 
         if (!BuildConfig.DEBUG) {
             Fabric.with(

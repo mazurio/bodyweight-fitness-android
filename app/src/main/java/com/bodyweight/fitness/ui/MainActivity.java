@@ -33,6 +33,7 @@ import com.bodyweight.fitness.utils.PreferenceUtils;
 
 import com.bodyweight.fitness.view.dialog.LogWorkoutDialog;
 import com.bodyweight.fitness.view.dialog.ProgressDialog;
+import com.kobakei.ratethisapp.RateThisApp;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import rx.functions.Action1;
@@ -66,6 +67,14 @@ public class MainActivity extends RxAppCompatActivity implements SharedPreferenc
 
         keepScreenOnWhenAppIsRunning();
         subscribe();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        RateThisApp.onStart(this);
+        RateThisApp.showRateDialogIfNeeded(this);
     }
 
     @Override

@@ -3,12 +3,14 @@ package com.bodyweight.fitness.view
 import android.content.Context
 import android.util.AttributeSet
 import com.bodyweight.fitness.extension.debug
+import com.bodyweight.fitness.model.Exercise
 
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_preview.view.*
+import rx.Subscriber
 
 class PreviewPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
@@ -18,19 +20,23 @@ class PreviewPresenter : AbstractPresenter() {
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
-                .subscribe {
-                    val imageViewTarget = GlideDrawableImageViewTarget(view.image_view)
-                    val identifier = view.context.resources.getIdentifier(it.id, "drawable", view.context.packageName)
+                .subscribe(object: Subscriber<Exercise>(){
+                    override fun onCompleted() {}
 
-                    try {
+                    override fun onError(e: Throwable) {
+                        error("Glide Exception = " + e.message)
+                    }
+
+                    override fun onNext(it: Exercise) {
+                        val imageViewTarget = GlideDrawableImageViewTarget(view.image_view)
+                        val identifier = view.context.resources.getIdentifier(it.id, "drawable", view.context.packageName)
+
                         Glide.with(view.context)
                                 .load(identifier)
                                 .crossFade()
-                                .into(imageViewTarget)
-                    } catch (e: Exception) {
-                        error("Glide Exception = " + e.message)
+//                                .into(imageViewTarget)
                     }
-                }
+                })
     }
 }
 
