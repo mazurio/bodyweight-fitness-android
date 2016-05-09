@@ -2,17 +2,18 @@ package com.bodyweight.fitness.ui
 
 import android.os.Bundle
 import android.support.v7.app.ActionBar
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 
 import com.bodyweight.fitness.R
 import com.bodyweight.fitness.adapter.DashboardAdapter
 import com.bodyweight.fitness.stream.RoutineStream
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity
+import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
 import kotlinx.android.synthetic.main.activity_dashboard.*
 
-class DashboardActivity : AppCompatActivity() {
+class DashboardActivity : RxAppCompatActivity() {
     val dashboardAdapter: DashboardAdapter by lazy {
         val routine = RoutineStream.getInstance().routine
         val exercise = RoutineStream.getInstance().exercise
@@ -36,8 +37,8 @@ class DashboardActivity : AppCompatActivity() {
             it.setDisplayHomeAsUpEnabled(true)
         }
 
-        dashboardAdapter.setOnExerciseClickListener { exercise ->
-            RoutineStream.getInstance().exercise = exercise
+        dashboardAdapter.asObservable().bindToLifecycle(this).subscribe {
+            RoutineStream.getInstance().exercise = it
 
             supportFinishAfterTransition()
         }
