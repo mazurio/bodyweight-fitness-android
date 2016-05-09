@@ -1,6 +1,5 @@
 package com.bodyweight.fitness
 
-import android.support.annotation.LayoutRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +29,17 @@ object Exercise {
     }
 }
 
-fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
+fun View.setBackgroundResourceWithPadding(resource: Int) {
+    val bottom = paddingBottom
+    val top = paddingTop
+    val right = paddingRight
+    val left = paddingLeft
+
+    setBackgroundResource(resource)
+    setPadding(left, top, right, bottom)
+}
+
+fun ViewGroup.inflate(layoutRes: Int, attachToRoot: Boolean = false): View {
     return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 }
 

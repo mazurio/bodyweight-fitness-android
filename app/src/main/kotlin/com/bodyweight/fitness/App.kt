@@ -34,7 +34,8 @@ class App : Application() {
 
         context = applicationContext
 
-        val schemaMigration = SchemaMigration()
-        schemaMigration.migrateSchemaIfNeeded()
+        SchemaMigration().apply {
+            migrateSchemaIfNeeded()
+        }
     }
 }

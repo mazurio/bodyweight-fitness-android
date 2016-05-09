@@ -24,7 +24,7 @@ import com.bodyweight.fitness.stream.UiEvent
 import com.bodyweight.fitness.utils.ApplicationStoreUtils
 import com.bodyweight.fitness.utils.PreferenceUtils
 import com.bodyweight.fitness.view.dialog.LogWorkoutDialog
-import com.bodyweight.fitness.view.dialog.ProgressDialog
+import com.bodyweight.fitness.dialog.ProgressDialog
 
 import com.kobakei.ratethisapp.RateThisApp
 
