@@ -3,6 +3,7 @@ package com.bodyweight.fitness.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import com.bodyweight.fitness.Exercise
 
 import com.bodyweight.fitness.model.repository.RepositoryCategory
 import com.bodyweight.fitness.model.repository.RepositoryExercise
@@ -96,29 +97,13 @@ class ProgressCardPresenter(itemView: View) : ProgressPresenter(itemView) {
         itemView.toolbar.title = repositoryExercise.title
         itemView.toolbar.subtitle = repositoryExercise.description
 
-        if (!isCompleted(repositoryExercise)) {
+        if (!Exercise.isCompleted(repositoryExercise)) {
             itemView.toolbar.subtitle = "Not completed"
         }
 
         itemView.view_button.setOnClickListener {
             UiEvent.showDialog(DialogType.LogWorkout, repositoryExercise.exerciseId)
         }
-    }
-
-    private fun isCompleted(repositoryExercise: RepositoryExercise): Boolean {
-        val size = repositoryExercise.sets.size
-
-        if (size == 0) {
-            return false
-        }
-
-        val firstSet = repositoryExercise.sets[0]
-
-        if (size == 1 && firstSet.seconds == 0 && firstSet.reps == 0) {
-            return false
-        }
-
-        return true
     }
 }
 

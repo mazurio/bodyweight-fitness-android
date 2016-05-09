@@ -4,10 +4,31 @@ import android.support.annotation.LayoutRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
+import com.bodyweight.fitness.model.repository.RepositoryExercise
 import com.bodyweight.fitness.model.repository.RepositoryRoutine
 import com.bodyweight.fitness.stream.RepositoryStream
+
 import io.realm.RealmResults
 import org.joda.time.DateTime
+
+object Exercise {
+    fun isCompleted(repositoryExercise: RepositoryExercise): Boolean {
+        val size = repositoryExercise.sets.size
+
+        if (size == 0) {
+            return false
+        }
+
+        val firstSet = repositoryExercise.sets[0]
+
+        if (size == 1 && firstSet.seconds == 0 && firstSet.reps == 0) {
+            return false
+        }
+
+        return true
+    }
+}
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
     return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
