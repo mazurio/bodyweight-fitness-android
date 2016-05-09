@@ -148,6 +148,13 @@ public class RepositoryStream {
         return repositoryRoutine;
     }
 
+    public RepositoryRoutine getRepositoryRoutineForPrimaryKeyRoutineId(String primaryKeyRoutineId) {
+        return getRealm()
+                .where(RepositoryRoutine.class)
+                .equalTo("id", primaryKeyRoutineId)
+                .findFirst();
+    }
+
     public RepositoryRoutine getRepositoryRoutineForToday() {
         final Date start = new DateTime()
                 .withTimeAtStartOfDay()

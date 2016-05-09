@@ -98,15 +98,31 @@ public class LogWorkoutDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        String primaryKeyRoutineId = getArguments().getString(Constants.INSTANCE.getPrimaryKeyRoutineId());
         String exerciseId = getArguments().getString(Constants.INSTANCE.getExerciseId());
 
-        mRepositoryRoutine = RepositoryStream.getInstance().getRepositoryRoutineForToday();
+        /**
+         * routineId = pass id in order to show dialog for different date.
+         */
+        if (primaryKeyRoutineId == null) {
+            mRepositoryRoutine = RepositoryStream.getInstance().getRepositoryRoutineForToday();
 
-        for (RepositoryExercise repositoryExercise : mRepositoryRoutine.getExercises()) {
-            if (repositoryExercise.getExerciseId().equals(exerciseId)) {
-                mRepositoryExercise = repositoryExercise;
+            for (RepositoryExercise repositoryExercise : mRepositoryRoutine.getExercises()) {
+                if (repositoryExercise.getExerciseId().equals(exerciseId)) {
+                    mRepositoryExercise = repositoryExercise;
 
-                break;
+                    break;
+                }
+            }
+        } else {
+            mRepositoryRoutine = RepositoryStream.getInstance().getRepositoryRoutineForPrimaryKeyRoutineId(primaryKeyRoutineId);
+
+            for (RepositoryExercise repositoryExercise : mRepositoryRoutine.getExercises()) {
+                if (repositoryExercise.getExerciseId().equals(exerciseId)) {
+                    mRepositoryExercise = repositoryExercise;
+
+                    break;
+                }
             }
         }
 

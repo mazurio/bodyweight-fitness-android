@@ -25,12 +25,15 @@ import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_progress.*
 
 class ProgressActivity : RxAppCompatActivity() {
+    val primaryKeyRoutineId: String by lazy {
+        intent.getStringExtra(Constants.PRIMARY_KEY_ROUTINE_ID)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_progress)
 
-        val primaryKeyRoutineId = intent.getStringExtra(Constants.PRIMARY_KEY_ROUTINE_ID)
         val realm = RepositoryStream.getInstance().realm
         val repositoryRoutine = realm.where(RepositoryRoutine::class.java)
                 .equalTo("id", primaryKeyRoutineId)
@@ -77,6 +80,7 @@ class ProgressActivity : RxAppCompatActivity() {
                 .filter { it.dialogType == DialogType.LogWorkout }
                 .subscribe { dialog ->
                     val bundle = Bundle()
+                    bundle.putString(Constants.primaryKeyRoutineId, primaryKeyRoutineId)
                     bundle.putString(Constants.exerciseId, dialog.exerciseId)
 
                     val logWorkoutDialog = LogWorkoutDialog()
