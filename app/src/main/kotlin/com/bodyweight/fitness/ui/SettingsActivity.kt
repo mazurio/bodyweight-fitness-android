@@ -15,7 +15,13 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setActionBar()
+        supportActionBar?.let {
+            it.setTitle(R.string.action_settings)
+            it.elevation = 0f
+            it.displayOptions = ActionBar.DISPLAY_SHOW_HOME or ActionBar.DISPLAY_HOME_AS_UP or ActionBar.DISPLAY_SHOW_TITLE
+            it.setHomeButtonEnabled(true)
+            it.setDisplayHomeAsUpEnabled(true)
+        }
 
         if (fragmentManager.findFragmentById(android.R.id.content) == null) {
             fragmentManager.beginTransaction().add(android.R.id.content, SettingsFragment()).commit()
@@ -33,49 +39,38 @@ class SettingsActivity : AppCompatActivity() {
 
         return super.onOptionsItemSelected(item)
     }
+}
 
-    fun setActionBar() {
-        val actionBar = supportActionBar
+class SettingsFragment : PreferenceFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        if (actionBar != null) {
-            actionBar.setTitle(R.string.action_settings)
-            actionBar.displayOptions = ActionBar.DISPLAY_SHOW_HOME or ActionBar.DISPLAY_HOME_AS_UP or ActionBar.DISPLAY_SHOW_TITLE
-            actionBar.setHomeButtonEnabled(true)
-            actionBar.setDisplayHomeAsUpEnabled(true)
-        }
+        addPreferencesFromResource(R.xml.settings)
+
+        updatePreferenceSummaryForKey(Constants.PREFERENCE_WEIGHT_MEASUREMENT_UNITS)
     }
 
-    class SettingsFragment : PreferenceFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
+    override fun onResume() {
+        super.onResume()
 
-            addPreferencesFromResource(R.xml.settings)
+        preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+    }
 
-            updatePreferenceSummaryForKey(Constants.PREFERENCE_WEIGHT_MEASUREMENT_UNITS)
-        }
+    override fun onPause() {
+        super.onPause()
 
-        override fun onResume() {
-            super.onResume()
+        preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+    }
 
-            preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
-        }
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        updatePreferenceSummaryForKey(key)
+    }
 
-        override fun onPause() {
-            super.onPause()
+    fun updatePreferenceSummaryForKey(key: String) {
+        if (key.matches(Constants.PREFERENCE_WEIGHT_MEASUREMENT_UNITS.toRegex())) {
+            val listPreference = findPreference(key) as ListPreference
 
-            preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
-        }
-
-        override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-            updatePreferenceSummaryForKey(key)
-        }
-
-        fun updatePreferenceSummaryForKey(key: String) {
-            if (key.matches(Constants.PREFERENCE_WEIGHT_MEASUREMENT_UNITS.toRegex())) {
-                val listPreference = findPreference(key) as ListPreference
-
-                listPreference.summary = listPreference.entry
-            }
+            listPreference.summary = listPreference.entry
         }
     }
 }
