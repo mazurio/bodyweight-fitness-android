@@ -25,8 +25,7 @@ class ContentPresenter : AbstractPresenter() {
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .filter {
-                    id -> id == R.id.action_menu_home ||
-                        id == R.id.action_menu_workout_log
+                    it.equals(R.id.action_menu_home) || it.equals(R.id.action_menu_workout_log)
                 }
                 .subscribe { id ->
                     ContentShared.id = id

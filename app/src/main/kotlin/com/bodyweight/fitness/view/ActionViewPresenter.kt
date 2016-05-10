@@ -52,6 +52,9 @@ class ActionPresenter : AbstractPresenter() {
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
+                .filter {
+                    it.equals(R.id.action_menu_home) || it.equals(R.id.action_menu_workout_log)
+                }
                 .subscribe {
                     ActionShared.id = it
 
