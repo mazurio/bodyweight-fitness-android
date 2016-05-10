@@ -81,7 +81,7 @@
             </LinearLayout>
 
             <com.devspark.robototextview.widget.RobotoButton
-                android:id="@+id/chooseButton"
+                android:id="@+id/level_confirm_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"

@@ -40,14 +40,14 @@ android {
     productFlavors {
         pro {
             applicationId 'com.bodyweight.fitness.pro'
-            versionCode 121
-            versionName "1.2.1"
+            versionCode 122
+            versionName "1.2.2"
         }
 
         free {
             applicationId 'com.bodyweight.fitness.free'
-            versionCode 121
-            versionName "1.2.1"
+            versionCode 122
+            versionName "1.2.2"
         }
     }
     buildTypes {
@@ -98,8 +98,8 @@ dependencies {
     kapt 'com.jakewharton:butterknife:6.1.0'
 
     compile 'com.netflix.rxjava:rxjava-core:0.20.7'
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'io.reactivex:rxandroid:1.2.0'
+    compile 'io.reactivex:rxjava:1.1.5'
 
     compile 'com.trello:rxlifecycle:0.5.0'
     compile 'com.trello:rxlifecycle-components:0.5.0'
@@ -108,7 +108,7 @@ dependencies {
     compile 'com.github.johnkil.android-robototextview:robototextview:2.5.0'
     compile 'com.gordonwong:material-sheet-fab:1.2.1'
     compile 'com.github.bmarrdev:android-DecoView-charting:v1.0.1'
-
+    compile 'io.github.kobakei:ratethisapp:1.0.3'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }

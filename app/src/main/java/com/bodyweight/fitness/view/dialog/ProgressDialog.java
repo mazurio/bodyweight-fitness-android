@@ -3,7 +3,6 @@ package com.bodyweight.fitness.view.dialog;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -40,7 +39,7 @@ public class ProgressDialog extends DialogFragment {
     @InjectView(R.id.level_text_view)
     TextView mLevelTextView;
 
-    @InjectView(R.id.chooseButton)
+    @InjectView(R.id.level_confirm_button)
     Button mLevelConfirmButton;
 
     private Exercise mExercise;
@@ -48,7 +47,6 @@ public class ProgressDialog extends DialogFragment {
     private int mAvailableLevels;
     private int mChosenLevel = 0;
 
-    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         String exerciseId = getArguments().getString(Constants.INSTANCE.getExerciseId());
@@ -67,7 +65,7 @@ public class ProgressDialog extends DialogFragment {
 
         Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.view_dialog_level);
+        dialog.setContentView(R.layout.view_dialog_progress);
         dialog.setCanceledOnTouchOutside(true);
 
         ButterKnife.inject(this, dialog);

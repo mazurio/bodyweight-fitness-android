@@ -1,15 +1,45 @@
 package com.bodyweight.fitness
 
-import android.support.annotation.LayoutRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
+import com.bodyweight.fitness.model.repository.RepositoryExercise
 import com.bodyweight.fitness.model.repository.RepositoryRoutine
 import com.bodyweight.fitness.stream.RepositoryStream
+
 import io.realm.RealmResults
 import org.joda.time.DateTime
 
-fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
+object Exercise {
+    fun isCompleted(repositoryExercise: RepositoryExercise): Boolean {
+        val size = repositoryExercise.sets.size
+
+        if (size == 0) {
+            return false
+        }
+
+        val firstSet = repositoryExercise.sets[0]
+
+        if (size == 1 && firstSet.seconds == 0 && firstSet.reps == 0) {
+            return false
+        }
+
+        return true
+    }
+}
+
+fun View.setBackgroundResourceWithPadding(resource: Int) {
+    val bottom = paddingBottom
+    val top = paddingTop
+    val right = paddingRight
+    val left = paddingLeft
+
+    setBackgroundResource(resource)
+    setPadding(left, top, right, bottom)
+}
+
+fun ViewGroup.inflate(layoutRes: Int, attachToRoot: Boolean = false): View {
     return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 }
 
@@ -55,11 +85,15 @@ fun DateTime.isRoutineLoggedWithResults(): RealmResults<RepositoryRoutine> {
     return results
 }
 
-fun Int.formatMinutes(): String {
+fun Int.formatMinutes(format: Boolean = true): String {
     val minutes = this / 60
 
     if (minutes == 0) {
-        return "00"
+        if (format) {
+            return "00"
+        }
+
+        return "0"
     } else if (minutes < 10) {
         return "0" + minutes
     }
@@ -71,11 +105,15 @@ fun Int.formatMinutesAsNumber(): Int {
     return this / 60
 }
 
-fun Int.formatSeconds(): String {
+fun Int.formatSeconds(format: Boolean = true): String {
     val seconds = this % 60
 
     if (seconds == 0) {
-        return "00"
+        if (format) {
+            return "00"
+        }
+
+        return "0"
     } else if (seconds < 10) {
         return "0" + seconds
     }

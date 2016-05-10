@@ -10,8 +10,8 @@ import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.isRoutineLogged
 import com.bodyweight.fitness.isToday
 import com.bodyweight.fitness.model.CalendarDay
+import com.bodyweight.fitness.setBackgroundResourceWithPadding
 import com.bodyweight.fitness.stream.Stream
-import com.bodyweight.fitness.utils.ViewUtils
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
 import kotlinx.android.synthetic.main.view_calendar_page.view.*
@@ -116,9 +116,8 @@ open class CalendarPageView : AbstractView {
         unselect(mClickedDay)
 
         view?.let {
-            view.setTextColor(Color.parseColor("#ffffff"))
-
-            ViewUtils.setBackgroundResourceWithPadding(view, R.drawable.rounded_corner_today)
+            it.setTextColor(Color.parseColor("#ffffff"))
+            it.setBackgroundResourceWithPadding(R.drawable.rounded_corner_today)
         }
 
         mClickedDay = dayView
@@ -132,12 +131,11 @@ open class CalendarPageView : AbstractView {
 
         clickedView?.let {
             if (isToday) {
-                clickedView.setTextColor(Color.parseColor("#00453E"))
-
-                ViewUtils.setBackgroundResourceWithPadding(clickedView, R.drawable.rounded_corner_active)
+                it.setTextColor(Color.parseColor("#00453E"))
+                it.setBackgroundResourceWithPadding(R.drawable.rounded_corner_active)
             } else {
-                clickedView.setTextColor(Color.parseColor("#00453E"))
-                clickedView.setBackgroundResource(0)
+                it.setTextColor(Color.parseColor("#00453E"))
+                it.setBackgroundResource(0)
             }
         }
     }
@@ -145,7 +143,7 @@ open class CalendarPageView : AbstractView {
     fun setActive(dayView: Int) {
         val view: TextView = mDayViews[dayView]
 
-        ViewUtils.setBackgroundResourceWithPadding(view, R.drawable.rounded_corner_active)
+        view.setBackgroundResourceWithPadding(R.drawable.rounded_corner_active)
     }
 
     fun setIsToday(dayView: Int, tag: Boolean) {
