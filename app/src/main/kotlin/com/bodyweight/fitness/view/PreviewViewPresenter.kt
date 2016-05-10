@@ -34,7 +34,7 @@ class PreviewPresenter : AbstractPresenter() {
                         Glide.with(view.context)
                                 .load(identifier)
                                 .crossFade()
-//                                .into(imageViewTarget)
+                                .into(imageViewTarget)
                     }
                 })
     }
