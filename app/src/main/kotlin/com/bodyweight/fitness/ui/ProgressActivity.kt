@@ -8,16 +8,15 @@ import android.view.MenuItem
 import com.bodyweight.fitness.Constants
 import com.bodyweight.fitness.adapter.ProgressPagerAdapter
 import com.bodyweight.fitness.stream.DialogType
-import com.bodyweight.fitness.stream.RepositoryStream
+import com.bodyweight.fitness.repository.Repository
 
 import org.joda.time.DateTime
 
 import java.util.Locale
 
 import com.bodyweight.fitness.R
-import com.bodyweight.fitness.model.repository.RepositoryRoutine
+import com.bodyweight.fitness.model.RepositoryRoutine
 import com.bodyweight.fitness.stream.UiEvent
-import com.bodyweight.fitness.view.dialog.LogWorkoutDialog
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
@@ -26,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_progress.*
 
 class ProgressActivity : RxAppCompatActivity() {
     val primaryKeyRoutineId: String by lazy {
-        intent.getStringExtra(Constants.PRIMARY_KEY_ROUTINE_ID)
+        intent.getStringExtra(Constants.primaryKeyRoutineId)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +33,7 @@ class ProgressActivity : RxAppCompatActivity() {
 
         setContentView(R.layout.activity_progress)
 
-        val realm = RepositoryStream.getInstance().realm
+        val realm = Repository.realm
         val repositoryRoutine = realm.where(RepositoryRoutine::class.java)
                 .equalTo("id", primaryKeyRoutineId)
                 .findFirst()
@@ -75,19 +74,19 @@ class ProgressActivity : RxAppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        UiEvent.dialogObservable
-                .bindToLifecycle(this)
-                .filter { it.dialogType == DialogType.LogWorkout }
-                .subscribe { dialog ->
-                    val bundle = Bundle()
-                    bundle.putString(Constants.primaryKeyRoutineId, primaryKeyRoutineId)
-                    bundle.putString(Constants.exerciseId, dialog.exerciseId)
-
-                    val logWorkoutDialog = LogWorkoutDialog()
-                    logWorkoutDialog.arguments = bundle
-
-                    logWorkoutDialog.show(supportFragmentManager, "dialog")
-                }
+//        UiEvent.dialogObservable
+//                .bindToLifecycle(this)
+//                .filter { it.dialogType == DialogType.LogWorkout }
+//                .subscribe { dialog ->
+//                    val bundle = Bundle()
+//                    bundle.putString(Constants.primaryKeyRoutineId, primaryKeyRoutineId)
+//                    bundle.putString(Constants.exerciseId, dialog.exerciseId)
+//
+//                    val logWorkoutDialog = LogWorkoutDialog()
+//                    logWorkoutDialog.arguments = bundle
+//
+//                    logWorkoutDialog.show(supportFragmentManager, "dialog")
+//                }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

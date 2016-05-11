@@ -2,6 +2,7 @@ package com.bodyweight.fitness.model
 
 import com.bodyweight.fitness.adapter.CalendarAdapter
 import org.joda.time.DateTime
+import java.io.Serializable
 
 data class CalendarDay(var page: Int = 60, var day: Int = 3) {
     fun getDate(): DateTime {
@@ -24,4 +25,16 @@ data class CalendarDay(var page: Int = 60, var day: Int = 3) {
                 .withMinimumValue()
                 .plusDays(this.day)
     }
+}
+
+enum class WeightMeasurementUnit constructor(val asString: String) {
+    kg("kg"), lbs("lbs")
+}
+
+enum class RoutineType : Serializable {
+    CATEGORY, SECTION, EXERCISE, EXERCISE_ACTIVE;
+}
+
+enum class SectionMode(val asString: String) {
+    ALL("all"), PICK("pick"), LEVELS("levels")
 }

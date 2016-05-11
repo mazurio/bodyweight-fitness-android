@@ -6,7 +6,7 @@ import com.bodyweight.fitness.stream.RoutineStream
 import rx.Observable
 
 fun AbstractPresenter.getCurrentExercise(): Exercise =
-        RoutineStream.getInstance().exercise
+        RoutineStream.exercise
 
 fun AbstractPresenter.getExerciseObservable(): Observable<Exercise> =
-        RoutineStream.getInstance().exerciseObservable
+        RoutineStream.exerciseObservable

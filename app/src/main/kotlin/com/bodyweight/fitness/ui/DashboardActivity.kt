@@ -15,8 +15,8 @@ import kotlinx.android.synthetic.main.activity_dashboard.*
 
 class DashboardActivity : RxAppCompatActivity() {
     val dashboardAdapter: DashboardAdapter by lazy {
-        val routine = RoutineStream.getInstance().routine
-        val exercise = RoutineStream.getInstance().exercise
+        val routine = RoutineStream.routine
+        val exercise = RoutineStream.exercise
 
         DashboardAdapter(routine, exercise)
     }
@@ -38,7 +38,7 @@ class DashboardActivity : RxAppCompatActivity() {
         }
 
         dashboardAdapter.asObservable().bindToLifecycle(this).subscribe {
-            RoutineStream.getInstance().exercise = it
+            RoutineStream.exercise = it
 
             supportFinishAfterTransition()
         }

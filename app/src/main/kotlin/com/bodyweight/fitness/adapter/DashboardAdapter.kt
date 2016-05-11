@@ -6,18 +6,13 @@ import android.view.ViewGroup
 
 import com.bodyweight.fitness.R
 import com.bodyweight.fitness.inflate
-import com.bodyweight.fitness.model.Category
-import com.bodyweight.fitness.model.Exercise
-import com.bodyweight.fitness.model.LinkedRoutine
-import com.bodyweight.fitness.model.Routine
-import com.bodyweight.fitness.model.RoutineType
-import com.bodyweight.fitness.model.Section
-import com.bodyweight.fitness.model.SectionMode
+import com.bodyweight.fitness.model.*
 
 import kotlinx.android.synthetic.main.view_dashboard_category.view.*
 import kotlinx.android.synthetic.main.view_dashboard_double_item.view.*
 import kotlinx.android.synthetic.main.view_dashboard_section.view.*
 import kotlinx.android.synthetic.main.view_dashboard_single_item.view.*
+
 import rx.Observable
 import rx.subjects.PublishSubject
 
@@ -48,7 +43,7 @@ class DashboardAdapter(private val routine: Routine, currentExercise: Exercise) 
             } else {
                 val category = exercise.category
                 if (!categorySet.contains(category)) {
-                    categorySet.add(category)
+                    categorySet.add(category!!)
 
                     dashboardTree.put(index, Tuple(category))
 
@@ -57,7 +52,7 @@ class DashboardAdapter(private val routine: Routine, currentExercise: Exercise) 
 
                 val section = exercise.section
                 if (!set.contains(section)) {
-                    set.add(section)
+                    set.add(section!!)
 
                     dashboardTree.put(index, Tuple(section))
 
@@ -72,9 +67,9 @@ class DashboardAdapter(private val routine: Routine, currentExercise: Exercise) 
                     firstInSection = false
                 }
 
-                if (exercise.section.sectionMode == SectionMode.ALL
+                if (exercise.section!!.sectionMode == SectionMode.ALL
                         && exercise.next != null
-                        && exercise.next.section == exercise.section
+                        && exercise!!.next!!.section == exercise.section
                         && !firstInSection) {
                     dashboardTree.put(index, Tuple(exercise, exercise.next))
 
@@ -179,10 +174,10 @@ class DashboardSingleItemPresenter(itemView: View) : DashboardAbstractPresenter(
             itemView.exercise_button.setBackgroundDrawable(itemView.context.resources.getDrawable(R.drawable.dashboard_circle_weighted))
         }
 
-        if (exercise.section.sectionMode == SectionMode.LEVELS) {
+        if (exercise.section!!.sectionMode == SectionMode.LEVELS) {
             itemView.exercise_title.text = exercise.title
 
-            itemView.exercise_level.text = String.format("%s/%s", exercise.level, exercise.section.exercises.size)
+            itemView.exercise_level.text = String.format("%s/%s", exercise.level, exercise.section!!.exercises.size)
             itemView.exercise_level.visibility = View.VISIBLE
         } else {
             itemView.exercise_title.text = exercise.title

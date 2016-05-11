@@ -12,10 +12,10 @@ import rx.Observable
 
 open class HeaderPresenter : AbstractPresenter() {
     open fun getCurrentRoutine(): Routine =
-            RoutineStream.getInstance().routine
+            RoutineStream.routine
 
     open fun getRoutineObservable(): Observable<Routine> =
-            RoutineStream.getInstance().routineObservable
+            RoutineStream.routineObservable
 
     override fun bindView(view: AbstractView) {
         super.bindView(view)
@@ -38,7 +38,7 @@ open class HeaderPresenter : AbstractPresenter() {
     }
 
     fun setText(routine: Routine) {
-        getView().setText(routine.title, routine.subtitle)
+        getView().setText(routine.title!!, routine.subtitle!!)
     }
 }
 

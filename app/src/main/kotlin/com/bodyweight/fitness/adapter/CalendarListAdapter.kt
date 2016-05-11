@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.bodyweight.fitness.*
 
-import com.bodyweight.fitness.model.repository.RepositoryRoutine
-import com.bodyweight.fitness.stream.RepositoryStream
+import com.bodyweight.fitness.model.RepositoryRoutine
+import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.ui.ProgressActivity
-import com.bodyweight.fitness.utils.PreferenceUtils
+import com.bodyweight.fitness.utils.Preferences
 
 import org.joda.time.DateTime
 import org.joda.time.Duration
@@ -61,14 +61,14 @@ class CalendarRoutinePresenter(itemView: View) : RecyclerView.ViewHolder(itemVie
 
         itemView.view_calendar_card_view_button.setOnClickListener {
             val intent = Intent(it.context, ProgressActivity::class.java)
-            intent.putExtra(Constants.PRIMARY_KEY_ROUTINE_ID, repositoryRoutine.id)
+            intent.putExtra(Constants.primaryKeyRoutineId, repositoryRoutine.id)
 
             it.context.startActivity(intent)
         }
 
         itemView.view_calendar_card_export_button.setOnClickListener {
             val intent = Intent(it.context, ProgressActivity::class.java)
-            intent.putExtra(Constants.PRIMARY_KEY_ROUTINE_ID, repositoryRoutine.id)
+            intent.putExtra(Constants.primaryKeyRoutineId, repositoryRoutine.id)
 
             it.context.startActivity(intent)
         }
@@ -91,7 +91,7 @@ class CalendarRoutinePresenter(itemView: View) : RecyclerView.ViewHolder(itemVie
             AlertDialog.Builder(it.context)
                     .setTitle("Remove Logged Workout?")
                     .setPositiveButton("Ok") { dialog, which ->
-                        val realm = RepositoryStream.getInstance().realm
+                        val realm = Repository.realm
 
                         realm.executeTransaction {
                             repositoryRoutine.deleteFromRealm()
@@ -131,7 +131,7 @@ class CalendarRoutinePresenter(itemView: View) : RecyclerView.ViewHolder(itemVie
             if (exercise.isVisible) {
                 content += String.format("\n\n%s", exercise.title)
 
-                val weightUnit = PreferenceUtils.getInstance().weightMeasurementUnit.toString()
+                val weightUnit = Preferences.weightMeasurementUnit.toString()
 
                 var index = 0
                 for (set in exercise.sets) {

@@ -1,10 +1,10 @@
-package com.bodyweight.fitness.model.persistence;
+package com.bodyweight.fitness.persistence;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.bodyweight.fitness.model.persistence.file.FileObjectPersister;
+import com.bodyweight.fitness.persistence.file.FileObjectPersister;
 
 import java.io.File;
 import java.util.HashMap;

@@ -33,7 +33,7 @@ class ContentPresenter : AbstractPresenter() {
                     setContent(id)
                 }
 
-        RoutineStream.getInstance().routineChangedObservable.subscribe { routine ->
+        RoutineStream.routineChangedObservable.subscribe { routine ->
             ContentShared.id = R.id.action_menu_home
 
             (mView as ContentView).showHome()

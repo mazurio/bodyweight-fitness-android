@@ -3,12 +3,12 @@ package com.bodyweight.fitness.view
 import android.content.Context
 import android.util.AttributeSet
 import com.bodyweight.fitness.Constants
-import com.bodyweight.fitness.model.repository.RepositorySet
+import com.bodyweight.fitness.model.*
 
-import com.bodyweight.fitness.stream.RepositoryStream
+import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.SetReps
 import com.bodyweight.fitness.stream.Stream
-import com.bodyweight.fitness.utils.PreferenceUtils
+import com.bodyweight.fitness.utils.Preferences
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
 import kotlinx.android.synthetic.main.view_timer.view.*
@@ -24,7 +24,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
         getExerciseObservable()
                 .bindToLifecycle(view)
                 .subscribe {
-                    mNumberOfReps = PreferenceUtils.getInstance().getNumberOfRepsForExercise(it.exerciseId, 5)
+                    mNumberOfReps = Preferences.getNumberOfRepsForExercise(it.exerciseId, 5)
                     updateLabels()
                 }
 
@@ -38,8 +38,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
     override fun restoreView(view: AbstractView) {
         super.restoreView(view)
 
-        mNumberOfReps = PreferenceUtils.getInstance()
-                .getNumberOfRepsForExercise(getCurrentExercise().exerciseId, 5)
+        mNumberOfReps = Preferences.getNumberOfRepsForExercise(getCurrentExercise().exerciseId, 5)
 
         updateLabels()
     }
@@ -50,12 +49,12 @@ class RepsLoggerPresenter : AbstractPresenter() {
         repsLoggerView.setSets(formatSets())
         repsLoggerView.setNumberOfReps(formatNumberOfReps(mNumberOfReps))
 
-        PreferenceUtils.getInstance().setNumberOfReps(getCurrentExercise().exerciseId, mNumberOfReps)
+        Preferences.setNumberOfReps(getCurrentExercise().exerciseId, mNumberOfReps)
     }
 
     fun logReps() {
-        val realm = RepositoryStream.getInstance().realm
-        val repositoryRoutine = RepositoryStream.getInstance().repositoryRoutineForToday
+        val realm = Repository.realm
+        val repositoryRoutine = Repository.repositoryRoutineForToday
 
         realm.executeTransaction {
             val currentExercise = repositoryRoutine.exercises.filter {
@@ -65,7 +64,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
             if (currentExercise != null) {
                 val numberOfSets = currentExercise.sets.size
 
-                if (numberOfSets < Constants.MAXIMUM_NUMBER_OF_SETS) {
+                if (numberOfSets < Constants.maximumNumberOfSets) {
                     val firstSet = currentExercise.sets.first()
 
                     if (numberOfSets == 1 && firstSet.reps == 0) {
@@ -76,7 +75,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
                         val repositorySet = realm.createObject(RepositorySet::class.java)
 
                         repositorySet.id = "Set-" + UUID.randomUUID().toString()
-                        repositorySet.setIsTimed(false)
+                        repositorySet.isTimed = false
                         repositorySet.seconds = 0
                         repositorySet.weight = 0.0
                         repositorySet.reps = mNumberOfReps
@@ -116,10 +115,10 @@ class RepsLoggerPresenter : AbstractPresenter() {
     }
 
     fun formatSets(): String {
-        val exists = RepositoryStream.getInstance().repositoryRoutineForTodayExists()
+        val exists = Repository.repositoryRoutineForTodayExists()
 
         if (exists) {
-            val routine = RepositoryStream.getInstance().repositoryRoutineForToday
+            val routine = Repository.repositoryRoutineForToday
 
             routine.exercises.filter {
                 it.exerciseId == getCurrentExercise().exerciseId
@@ -128,7 +127,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
 
                 if (sets.size == 1 && sets.first().reps == 0) {
                     return "First Set"
-                } else if (sets.size >= Constants.MAXIMUM_NUMBER_OF_SETS) {
+                } else if (sets.size >= Constants.maximumNumberOfSets) {
                     return "12 Sets"
                 } else if (sets.size >= 5) {
                     return "Set ${sets.count() + 1}"

@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import com.bodyweight.fitness.model.repository.RepositoryExercise
-import com.bodyweight.fitness.model.repository.RepositoryRoutine
-import com.bodyweight.fitness.stream.RepositoryStream
+import com.bodyweight.fitness.model.RepositoryExercise
+import com.bodyweight.fitness.model.RepositoryRoutine
+import com.bodyweight.fitness.repository.Repository
 
 import io.realm.RealmResults
 import org.joda.time.DateTime
@@ -60,7 +60,7 @@ fun DateTime.isRoutineLogged(): Boolean {
             .minusSeconds(1)
             .toDate()
 
-    val realm = RepositoryStream.getInstance().realm
+    val realm = Repository.realm
     val routine = realm.where(RepositoryRoutine::class.java)
             .between("startTime", start, end)
             .findFirst()
@@ -77,7 +77,7 @@ fun DateTime.isRoutineLoggedWithResults(): RealmResults<RepositoryRoutine> {
             .minusSeconds(1)
             .toDate()
 
-    val realm = RepositoryStream.getInstance().realm
+    val realm = Repository.realm
     val results: RealmResults<RepositoryRoutine> = realm.where(RepositoryRoutine::class.java)
             .between("startTime", start, end)
             .findAll()

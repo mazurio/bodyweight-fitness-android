@@ -33,11 +33,11 @@ class NavigationPresenter : AbstractPresenter() {
     }
 
     fun previousExercise() {
-        RoutineStream.getInstance().setExercise(getCurrentExercise().previous)
+        RoutineStream.exercise = getCurrentExercise().previous!!
     }
 
     fun nextExercise() {
-        RoutineStream.getInstance().setExercise(getCurrentExercise().next)
+        RoutineStream.exercise = getCurrentExercise().next!!
     }
 }
 

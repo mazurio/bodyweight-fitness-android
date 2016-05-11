@@ -1,4 +1,4 @@
-package com.bodyweight.fitness.model.persistence;
+package com.bodyweight.fitness.persistence;
 
 public interface Duration {
     /**

@@ -14,6 +14,7 @@ import com.bodyweight.fitness.R
 import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.formatMinutes
 import com.bodyweight.fitness.formatSeconds
+import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.*
 import com.bodyweight.fitness.ui.ProgressActivity
 import com.bodyweight.fitness.view.widget.ActionButton
@@ -39,7 +40,7 @@ class ActionPresenter : AbstractPresenter() {
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
-                    if (it.hasProgressions()) {
+                    if (it.hasProgressions) {
                         view.setActionButtonImageDrawable(R.drawable.action_progression_white)
                         view.showActionSheetChooseProgression()
                     } else {
@@ -104,7 +105,7 @@ class ActionPresenter : AbstractPresenter() {
 
     fun watchFullVideo() {
         val view = (mView as ActionView)
-        val id = RoutineStream.getInstance().exercise.youTubeId
+        val id = RoutineStream.exercise.youTubeId
 
         try {
             view.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id)))
@@ -119,10 +120,10 @@ class ActionPresenter : AbstractPresenter() {
 
     fun todaysWorkout() {
         val view = (mView as ActionView)
-        val routineId = RepositoryStream.getInstance().repositoryRoutineForToday.id
+        val routineId = Repository.repositoryRoutineForToday.id
 
         view.context.startActivity(Intent(view.context, ProgressActivity::class.java)
-                .putExtra(Constants.PRIMARY_KEY_ROUTINE_ID, routineId))
+                .putExtra(Constants.primaryKeyRoutineId, routineId))
     }
 }
 

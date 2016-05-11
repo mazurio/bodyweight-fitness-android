@@ -66,7 +66,7 @@ class ToolbarPresenter : AbstractPresenter() {
     fun setToolbar() {
         when (ToolbarPresenterState.id) {
             R.id.action_menu_home ->
-                setToolbarForHome(RoutineStream.getInstance().exercise)
+                setToolbarForHome(RoutineStream.exercise)
             R.id.action_menu_workout_log ->
                 setToolbarForWorkoutLog(Stream.currentCalendarDay)
         }
@@ -78,7 +78,7 @@ class ToolbarPresenter : AbstractPresenter() {
         view.inflateHomeMenu()
 
         view.setTitle(exercise.title)
-        view.setSubtitle(exercise.section.title)
+        view.setSubtitle(exercise.section!!.title)
         view.setDescription(exercise.description)
     }
 

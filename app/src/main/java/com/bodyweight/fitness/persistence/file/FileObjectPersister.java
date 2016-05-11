@@ -1,10 +1,10 @@
-package com.bodyweight.fitness.model.persistence.file;
+package com.bodyweight.fitness.persistence.file;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.bodyweight.fitness.model.exception.CacheDirectoryCreationException;
-import com.bodyweight.fitness.model.persistence.Duration;
+import com.bodyweight.fitness.exception.CacheDirectoryCreationException;
+import com.bodyweight.fitness.persistence.Duration;
 
 import org.apache.commons.io.FileUtils;
 

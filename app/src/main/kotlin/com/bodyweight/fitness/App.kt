@@ -3,7 +3,8 @@ package com.bodyweight.fitness
 import android.app.Application
 import android.content.Context
 
-import com.bodyweight.fitness.model.persistence.Glacier
+import com.bodyweight.fitness.persistence.Glacier
+import com.bodyweight.fitness.repository.SchemaMigration
 
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.Answers

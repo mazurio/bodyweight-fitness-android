@@ -1,15 +1,14 @@
-package com.bodyweight.fitness
+package com.bodyweight.fitness.repository
 
 import com.bodyweight.fitness.model.Routine
-import com.bodyweight.fitness.model.repository.RepositoryRoutine
-import com.bodyweight.fitness.stream.RepositoryStream
+import com.bodyweight.fitness.model.RepositoryRoutine
 import com.bodyweight.fitness.stream.RoutineStream
 
 class SchemaMigration {
     fun migrateSchemaIfNeeded() {
-        if (RepositoryStream.getInstance().repositoryRoutineForTodayExists()) {
-            val routine = RoutineStream.getInstance().routine
-            val currentSchema = RepositoryStream.getInstance().repositoryRoutineForToday
+        if (Repository.repositoryRoutineForTodayExists()) {
+            val routine = RoutineStream.routine
+            val currentSchema = Repository.repositoryRoutineForToday
 
             migrateSchemaIfNeeded(routine, currentSchema)
         }
@@ -17,9 +16,9 @@ class SchemaMigration {
 
     private fun migrateSchemaIfNeeded(routine: Routine, currentSchema: RepositoryRoutine) {
         if (!(isValidSchema(routine, currentSchema))) {
-            val newSchema = RepositoryStream.getInstance().buildRealmRoutine(routine)
+            val newSchema = Repository.buildRealmRoutine(routine)
 
-            val realm = RepositoryStream.getInstance().realm
+            val realm = Repository.realm
 
             realm.executeTransaction {
                 newSchema.startTime = currentSchema.startTime

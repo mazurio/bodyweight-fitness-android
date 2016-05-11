@@ -4,14 +4,15 @@ object Constants {
     val primaryKeyRoutineId = "primaryKeyRoutineId"
     val exerciseId = "exerciseId"
 
-    val MAXIMUM_NUMBER_OF_SETS = 12
-    val PRIMARY_KEY_ROUTINE_ID = "primaryKeyRoutineId"
+    val googlePlayUrl = "https://play.google.com/store/apps/details?id=com.bodyweight.fitness.pro"
 
-    val PREFERENCE_DEFAULT_ROUTINE = "PREFERENCE_DEFAULT_ROUTINE"
-    val PREFERENCE_WEIGHT_MEASUREMENT_UNITS = "PREFERENCE_WEIGHT_MEASUREMENT_UNITS"
-    val PREFERENCE_PLAY_SOUND_WHEN_TIMER_STOPS = "PREFERENCE_PLAY_SOUND_WHEN_TIMER_STOPS"
-    val PREFERENCE_AUTOMATICALLY_LOG_WORKOUT_TIME = "PREFERENCE_AUTOMATICALLY_LOG_WORKOUT_TIME"
-    val PREFERENCE_KEEP_SCREEN_ON = "PREFERENCE_KEEP_SCREEN_ON"
-    val PREFERENCE_TIMER_KEY = "PREFERENCE_TIMER_KEY_"
-    val PREFERENCE_NUMBER_OF_REPS_KEY = "PREFERENCE_NUMBER_OF_REPS_KEY_"
+    val maximumNumberOfSets = 12
+
+    val preferencesDefaultRoutineKey = "PREFERENCE_DEFAULT_ROUTINE"
+    val preferencesWeightMeasurementUnitsKey = "PREFERENCE_WEIGHT_MEASUREMENT_UNITS"
+    val preferencesPlaySoundWhenTimerStopsKey = "PREFERENCE_PLAY_SOUND_WHEN_TIMER_STOPS"
+    val preferencesAutomaticallyLogWorkoutTimeKey = "PREFERENCE_AUTOMATICALLY_LOG_WORKOUT_TIME"
+    val preferencesKeepScreenOnKey = "PREFERENCE_KEEP_SCREEN_ON"
+    val preferencesTimerKey = "PREFERENCE_TIMER_KEY_"
+    val preferencesNumberOfRepsKey = "PREFERENCE_NUMBER_OF_REPS_KEY_"
 }

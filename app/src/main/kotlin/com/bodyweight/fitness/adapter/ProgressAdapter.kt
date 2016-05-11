@@ -5,9 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.bodyweight.fitness.Exercise
 
-import com.bodyweight.fitness.model.repository.RepositoryCategory
-import com.bodyweight.fitness.model.repository.RepositoryExercise
-import com.bodyweight.fitness.model.repository.RepositorySection
+import com.bodyweight.fitness.model.RepositoryExercise
+import com.bodyweight.fitness.model.RepositorySection
 import com.bodyweight.fitness.stream.DialogType
 import com.bodyweight.fitness.stream.UiEvent
 
@@ -15,6 +14,8 @@ import java.util.HashMap
 
 import com.bodyweight.fitness.R
 import com.bodyweight.fitness.inflate
+import com.bodyweight.fitness.model.*
+
 import kotlinx.android.synthetic.main.activity_progress_card.view.*
 import kotlinx.android.synthetic.main.activity_progress_title.view.*
 
@@ -102,7 +103,7 @@ class ProgressCardPresenter(itemView: View) : ProgressPresenter(itemView) {
         }
 
         itemView.view_button.setOnClickListener {
-            UiEvent.showDialog(DialogType.LogWorkout, repositoryExercise.exerciseId)
+            UiEvent.showDialog(DialogType.LogWorkout, repositoryExercise.exerciseId!!)
         }
     }
 }

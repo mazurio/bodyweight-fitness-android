@@ -20,7 +20,7 @@ import org.joda.time.format.PeriodFormatterBuilder
 import com.bodyweight.fitness.R
 import com.bodyweight.fitness.Exercise
 import com.bodyweight.fitness.inflate
-import com.bodyweight.fitness.model.repository.RepositoryRoutine
+import com.bodyweight.fitness.model.RepositoryRoutine
 
 import kotlinx.android.synthetic.main.activity_progress_info.view.*
 import kotlinx.android.synthetic.main.activity_progress_page.view.*
@@ -82,7 +82,7 @@ class ProgressPagerAdapter(private val repositoryRoutine: RepositoryRoutine) : P
     override fun getPageTitle(position: Int): CharSequence {
         when (position) {
             0 -> return "General"
-            else -> return repositoryRoutine.categories[position - 1].title
+            else -> return repositoryRoutine.categories[position - 1].title!!
         }
     }
 

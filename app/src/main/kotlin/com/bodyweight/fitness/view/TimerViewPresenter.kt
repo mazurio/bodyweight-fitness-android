@@ -8,12 +8,12 @@ import android.util.AttributeSet
 
 import com.bodyweight.fitness.*
 import com.bodyweight.fitness.extension.*
-import com.bodyweight.fitness.model.repository.RepositoryExercise
-import com.bodyweight.fitness.model.repository.RepositorySet
-import com.bodyweight.fitness.stream.RepositoryStream
+import com.bodyweight.fitness.model.RepositoryExercise
+import com.bodyweight.fitness.model.RepositorySet
+import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
-import com.bodyweight.fitness.utils.PreferenceUtils
+import com.bodyweight.fitness.utils.Preferences
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_timer.view.*
@@ -128,7 +128,7 @@ class TimerPresenter : AbstractPresenter() {
     fun playSound() {
         val view = (mView as TimerView)
 
-        if (PreferenceUtils.getInstance().playSoundWhenTimerStops()) {
+        if (Preferences.playSoundWhenTimerStops()) {
             val mediaPlayer = MediaPlayer.create(view.context, R.raw.finished)
 
             mediaPlayer.isLooping = false
@@ -154,7 +154,7 @@ class TimerPresenter : AbstractPresenter() {
 
             val save = (TimerShared.mSeconds * 1000).toLong()
 
-            PreferenceUtils.getInstance().setTimerValue(getCurrentExercise().exerciseId, save)
+            Preferences.setTimerValue(getCurrentExercise().exerciseId, save)
         }, TimerShared.mCurrentSeconds.formatMinutesAsNumber(), TimerShared.mCurrentSeconds.formatSecondsAsNumber(), true)
 
         timePickerDialog.show()
@@ -218,13 +218,11 @@ class TimerPresenter : AbstractPresenter() {
     }
 
     fun getSeconds(): Int {
-        return (PreferenceUtils.getInstance()
-                .getTimerValueForExercise(getCurrentExercise().exerciseId, 60 * 1000) / 1000
-                ).toInt()
+        return (Preferences.getTimerValueForExercise(getCurrentExercise().exerciseId, 60 * 1000) / 1000).toInt()
     }
 
     fun logTime() {
-        if (PreferenceUtils.getInstance().automaticallyLogWorkoutTime() && getCurrentExercise().isTimedSet) {
+        if (Preferences.automaticallyLogWorkoutTime() && getCurrentExercise().isTimedSet) {
             val loggedSeconds = TimerShared.mLoggedSeconds - TimerShared.mCurrentSeconds
 
             if (loggedSeconds > 0) {
@@ -237,11 +235,11 @@ class TimerPresenter : AbstractPresenter() {
 
     private fun logIntoRealm(logSeconds: Int): Boolean {
         // getRepositoryRoutineForToday method - begins realm transaction.
-        val repositoryRoutine = RepositoryStream.getInstance().repositoryRoutineForToday
+        val repositoryRoutine = Repository.repositoryRoutineForToday
         var mRepositoryExercise: RepositoryExercise? = null
 
-        val realm = RepositoryStream.getInstance().realm
-        val exercise = RoutineStream.getInstance().exercise
+        val realm = Repository.realm
+        val exercise = RoutineStream.exercise
 
         realm.beginTransaction()
         for (repositoryExercise in repositoryRoutine.exercises) {
@@ -258,7 +256,7 @@ class TimerPresenter : AbstractPresenter() {
 
             val numberOfSets = mRepositoryExercise.sets.size
 
-            if (numberOfSets >= Constants.MAXIMUM_NUMBER_OF_SETS) {
+            if (numberOfSets >= Constants.maximumNumberOfSets) {
                 realm.cancelTransaction()
 
                 return false
@@ -274,7 +272,7 @@ class TimerPresenter : AbstractPresenter() {
                 val repositorySet = realm.createObject(RepositorySet::class.java)
 
                 repositorySet.id = "Set-" + UUID.randomUUID().toString()
-                repositorySet.setIsTimed(true)
+                repositorySet.isTimed = true
                 repositorySet.seconds = logSeconds
                 repositorySet.weight = 0.0
                 repositorySet.reps = 0

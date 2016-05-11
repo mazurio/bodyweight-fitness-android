@@ -14,17 +14,12 @@ import android.view.View
 import android.view.WindowManager
 
 import com.bodyweight.fitness.Constants
-import com.bodyweight.fitness.stream.DialogType
-import com.bodyweight.fitness.stream.RepositoryStream
+import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.R
 import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
-import com.bodyweight.fitness.stream.UiEvent
-import com.bodyweight.fitness.utils.ApplicationStoreUtils
-import com.bodyweight.fitness.utils.PreferenceUtils
-import com.bodyweight.fitness.view.dialog.LogWorkoutDialog
-import com.bodyweight.fitness.view.dialog.ProgressDialog
+import com.bodyweight.fitness.utils.Preferences
 
 import com.kobakei.ratethisapp.RateThisApp
 
@@ -62,30 +57,29 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
     override fun onStart() {
         super.onStart()
 
-        UiEvent.dialogObservable
-                .bindToLifecycle(this)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
-                .subscribe {
-                    if (it.dialogType === DialogType.LogWorkout) {
-                        val bundle = Bundle()
-                        bundle.putString(Constants.exerciseId, it.exerciseId)
+//        UiEvent.dialogObservable
+//                .bindToLifecycle(this)
+//                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
+//                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
+//                .subscribe {
+//                    if (it.dialogType === DialogType.LogWorkout) {
+//                        val bundle = Bundle()
+//                        bundle.putString(Constants.exerciseId, it.exerciseId)
+//
+//                        val logWorkoutDialog = LogWorkoutDialog()
+//                        logWorkoutDialog.arguments = bundle
+//                        logWorkoutDialog.show(supportFragmentManager, "logWorkoutDialog")
+//                    } else if (it.dialogType === DialogType.Progress) {
+//                        val bundle = Bundle()
+//                        bundle.putString(Constants.exerciseId, it.exerciseId)
+//
+//                        val progressDialog = ProgressDialog()
+//                        progressDialog.arguments = bundle
+//                        progressDialog.show(supportFragmentManager, "progressDialog")
+//                    }
+//                }
 
-                        val logWorkoutDialog = LogWorkoutDialog()
-                        logWorkoutDialog.arguments = bundle
-                        logWorkoutDialog.show(supportFragmentManager, "logWorkoutDialog")
-                    } else if (it.dialogType === DialogType.Progress) {
-                        val bundle = Bundle()
-                        bundle.putString(Constants.exerciseId, it.exerciseId)
-
-                        val progressDialog = ProgressDialog()
-                        progressDialog.arguments = bundle
-                        progressDialog.show(supportFragmentManager, "progressDialog")
-                    }
-                }
-
-        RoutineStream.getInstance()
-                .exerciseObservable
+        RoutineStream.exerciseObservable
                 .bindToLifecycle(this)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
@@ -135,17 +129,13 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
                 .subscribe {
                     when (it) {
                         R.id.action_menu_support_developer -> {
-                            val installerPackageName = packageManager.getInstallerPackageName(packageName)
-                            val intent = Intent(Intent.ACTION_VIEW)
-
-                            intent.data = Uri.parse(ApplicationStoreUtils.getApplicationStoreUrl(installerPackageName).applicationStoreAppUrl)
-
-                            startActivity(intent)
+                            startActivity(Intent(Intent.ACTION_VIEW).apply {
+                                data = Uri.parse(Constants.googlePlayUrl)
+                            })
                         }
 
                         R.id.action_menu_settings -> {
-                            startActivity(
-                                    Intent(applicationContext, SettingsActivity::class.java))
+                            startActivity(Intent(applicationContext, SettingsActivity::class.java))
                         }
                     }
                 }
@@ -159,7 +149,7 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
 
         clearFlagKeepScreenOn()
 
-        RepositoryStream.getInstance().realm.close()
+        Repository.realm.close()
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {
@@ -245,7 +235,7 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
     }
 
     private fun keepScreenOnWhenAppIsRunning() {
-        if (PreferenceUtils.getInstance().keepScreenOnWhenAppIsRunning()) {
+        if (Preferences.keepScreenOnWhenAppIsRunning()) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         } else {
             clearFlagKeepScreenOn()
