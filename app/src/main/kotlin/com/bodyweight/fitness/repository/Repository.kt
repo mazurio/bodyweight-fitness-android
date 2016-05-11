@@ -102,7 +102,7 @@ object Repository {
             /**
              * Hide exercises not relevant to user level.
              */
-            if (exercise.section!!.sectionMode == SectionMode.LEVELS || exercise.section!!.sectionMode == SectionMode.PICK) {
+            if (exercise.section!!.sectionMode == SectionMode.Levels || exercise.section!!.sectionMode == SectionMode.Pick) {
                 if (exercise == exercise.section!!.currentExercise) {
                     repositoryExercise.isVisible = true
                 } else {

@@ -67,7 +67,7 @@ class DashboardAdapter(private val routine: Routine, currentExercise: Exercise) 
                     firstInSection = false
                 }
 
-                if (exercise.section!!.sectionMode == SectionMode.ALL
+                if (exercise.section!!.sectionMode == SectionMode.All
                         && exercise.next != null
                         && exercise!!.next!!.section == exercise.section
                         && !firstInSection) {
@@ -118,11 +118,11 @@ class DashboardAdapter(private val routine: Routine, currentExercise: Exercise) 
     override fun getItemViewType(position: Int): Int {
         val tuple = dashboardTree[position] as Tuple
 
-        if (tuple.left?.type == RoutineType.SECTION) {
+        if (tuple.left?.type == RoutineType.Section) {
             return 1
         }
 
-        if (tuple.left?.type == RoutineType.CATEGORY) {
+        if (tuple.left?.type == RoutineType.Category) {
             return 3
         }
 
@@ -154,7 +154,7 @@ class DashboardSectionPresenter(itemView: View) : DashboardAbstractPresenter(ite
     override fun onBindView(exerciseSubject: PublishSubject<Exercise>, tuple: Tuple) {
         val section = tuple.left as Section
 
-        if (section.sectionMode == SectionMode.ALL) {
+        if (section.sectionMode == SectionMode.All) {
             itemView.section_title.text = section.title
         } else {
             itemView.section_title.text = section.title
@@ -174,7 +174,7 @@ class DashboardSingleItemPresenter(itemView: View) : DashboardAbstractPresenter(
             itemView.exercise_button.setBackgroundDrawable(itemView.context.resources.getDrawable(R.drawable.dashboard_circle_weighted))
         }
 
-        if (exercise.section!!.sectionMode == SectionMode.LEVELS) {
+        if (exercise.section!!.sectionMode == SectionMode.Levels) {
             itemView.exercise_title.text = exercise.title
 
             itemView.exercise_level.text = String.format("%s/%s", exercise.level, exercise.section!!.exercises.size)

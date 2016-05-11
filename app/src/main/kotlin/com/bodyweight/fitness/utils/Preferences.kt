@@ -20,7 +20,10 @@ object Preferences {
         }
 
         set(defaultRoutine) {
-            getSharedPreferences().edit().putString(Constants.preferencesDefaultRoutineKey, defaultRoutine).commit()
+            getSharedPreferences()
+                    .edit()
+                    .putString(Constants.preferencesDefaultRoutineKey, defaultRoutine)
+                    .commit()
         }
 
     val weightMeasurementUnit: WeightMeasurementUnit

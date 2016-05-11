@@ -28,13 +28,13 @@ data class CalendarDay(var page: Int = 60, var day: Int = 3) {
 }
 
 enum class WeightMeasurementUnit constructor(val asString: String) {
-    kg("kg"), lbs("lbs")
+    Kg("kg"), Lbs("lbs")
 }
 
 enum class RoutineType : Serializable {
-    CATEGORY, SECTION, EXERCISE, EXERCISE_ACTIVE;
+    Category, Section, Exercise, ExerciseActive;
 }
 
 enum class SectionMode(val asString: String) {
-    ALL("all"), PICK("pick"), LEVELS("levels")
+    All("all"), Pick("pick"), Levels("levels")
 }

@@ -63,22 +63,22 @@ class JSONLinkedRoutine {
     var defaultSet: String = ""
 
     val type: RoutineType by lazy {
-        if (mType.matches("category".toRegex())) {
-            RoutineType.CATEGORY
-        } else if (mType.matches("section".toRegex())) {
-            RoutineType.SECTION
+        if (mType.equals("category")) {
+            RoutineType.Category
+        } else if (mType.equals("section")) {
+            RoutineType.Section
         } else {
-            RoutineType.EXERCISE
+            RoutineType.Exercise
         }
     }
 
     val mode: SectionMode by lazy {
-        if (mMode.matches("all".toRegex())) {
-            SectionMode.ALL
-        } else if (mMode.matches("pick".toRegex())) {
-            SectionMode.PICK
+        if (mMode.equals("all")) {
+            SectionMode.All
+        } else if (mMode.equals("pick")) {
+            SectionMode.Pick
         } else {
-            SectionMode.LEVELS
+            SectionMode.Levels
         }
     }
 }

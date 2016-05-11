@@ -15,7 +15,6 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.0'
-        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
         classpath 'io.realm:realm-gradle-plugin:0.89.1'
         classpath 'io.fabric.tools:gradle:1.+'
     }

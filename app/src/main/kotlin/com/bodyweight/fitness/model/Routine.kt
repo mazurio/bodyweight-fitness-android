@@ -30,14 +30,14 @@ class Routine(JSONRoutine: JSONRoutine) : Serializable {
         var currentExercise: Exercise? = null
 
         for (JSONLinkedRoutine in JSONRoutine.partRoutines) {
-            if (JSONLinkedRoutine.type === RoutineType.CATEGORY) {
+            if (JSONLinkedRoutine.type === RoutineType.Category) {
                 currentCategory = Category(
                         JSONLinkedRoutine.categoryId,
                         JSONLinkedRoutine.title)
 
                 categories.add(currentCategory)
                 linkedRoutine.add(currentCategory)
-            } else if (JSONLinkedRoutine.type === RoutineType.SECTION) {
+            } else if (JSONLinkedRoutine.type === RoutineType.Section) {
                 currentSection = Section(
                         JSONLinkedRoutine.sectionId,
                         JSONLinkedRoutine.title,
@@ -48,7 +48,7 @@ class Routine(JSONRoutine: JSONRoutine) : Serializable {
 
                 sections.add(currentSection)
                 linkedRoutine.add(currentSection)
-            } else if (JSONLinkedRoutine.type === RoutineType.EXERCISE) {
+            } else if (JSONLinkedRoutine.type === RoutineType.Exercise) {
                 val exercise = Exercise(
                         JSONLinkedRoutine.exerciseId,
                         JSONLinkedRoutine.id,
@@ -64,7 +64,7 @@ class Routine(JSONRoutine: JSONRoutine) : Serializable {
 
                 exercises.add(exercise)
 
-                if (currentSection.sectionMode === SectionMode.LEVELS || currentSection.sectionMode === SectionMode.PICK) {
+                if (currentSection.sectionMode === SectionMode.Levels || currentSection.sectionMode === SectionMode.Pick) {
                     val currentExerciseId = Glacier.get(currentSection.sectionId, String::class.java)
 
                     if (currentExerciseId != null) {
@@ -151,7 +151,7 @@ class Category(
     val sections = ArrayList<Section>()
 
     override val title: String = categoryTitle
-    override val type: RoutineType = RoutineType.CATEGORY
+    override val type: RoutineType = RoutineType.Category
 
     fun insertSection(section: Section) {
         section.category = this
@@ -169,7 +169,7 @@ class Section(
     var category: Category? = null
     var currentLevel = 0
         set(level) {
-            if (sectionMode == SectionMode.LEVELS || sectionMode == SectionMode.PICK) {
+            if (sectionMode == SectionMode.Levels || sectionMode == SectionMode.Pick) {
                 if (level < 0 || level >= exercises.size) {
                     return
                 }
@@ -184,7 +184,7 @@ class Section(
         get() = sectionTitle
 
     override val type: RoutineType
-        get() = RoutineType.SECTION
+        get() = RoutineType.Section
 
     fun setCurrentLevel(exercise: Exercise) {
         var current = 0
@@ -200,7 +200,7 @@ class Section(
 
     val availableLevels: Int
         get() {
-            if (sectionMode == SectionMode.LEVELS || sectionMode == SectionMode.PICK) {
+            if (sectionMode == SectionMode.Levels || sectionMode == SectionMode.Pick) {
                 return exercises.size
             } else {
                 return 0
@@ -239,13 +239,13 @@ class Exercise(
         get() = exerciseTitle
 
     override val type: RoutineType
-        get() = RoutineType.EXERCISE
+        get() = RoutineType.Exercise
 
     val isTimedSet: Boolean
         get() = defaultSet.equals("timed", ignoreCase = true)
 
     val hasProgressions: Boolean
-        get() = section?.sectionMode != SectionMode.ALL
+        get() = section?.sectionMode != SectionMode.All
 
     val isPrevious: Boolean
         get() = previous != null
