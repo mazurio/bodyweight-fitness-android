@@ -19,6 +19,7 @@ import com.bodyweight.fitness.R
 import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
+import com.bodyweight.fitness.stream.UiEvent
 import com.bodyweight.fitness.utils.Preferences
 
 import com.kobakei.ratethisapp.RateThisApp
@@ -57,11 +58,13 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
     override fun onStart() {
         super.onStart()
 
-//        UiEvent.dialogObservable
-//                .bindToLifecycle(this)
-//                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-//                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
-//                .subscribe {
+        UiEvent.dialogObservable
+                .bindToLifecycle(this)
+                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
+                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
+                .subscribe {
+                    debug("Dialog")
+
 //                    if (it.dialogType === DialogType.LogWorkout) {
 //                        val bundle = Bundle()
 //                        bundle.putString(Constants.exerciseId, it.exerciseId)
@@ -77,7 +80,7 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
 //                        progressDialog.arguments = bundle
 //                        progressDialog.show(supportFragmentManager, "progressDialog")
 //                    }
-//                }
+                }
 
         RoutineStream.exerciseObservable
                 .bindToLifecycle(this)

@@ -3,6 +3,7 @@ package com.bodyweight.fitness.view
 import android.content.Context
 import android.util.AttributeSet
 import com.bodyweight.fitness.Constants
+import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.*
 
 import com.bodyweight.fitness.repository.Repository
@@ -25,6 +26,9 @@ class RepsLoggerPresenter : AbstractPresenter() {
                 .bindToLifecycle(view)
                 .subscribe {
                     mNumberOfReps = Preferences.getNumberOfRepsForExercise(it.exerciseId, 5)
+
+                    debug(it.title)
+
                     updateLabels()
                 }
 

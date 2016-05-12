@@ -15,7 +15,9 @@ import com.bodyweight.fitness.R
 
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
+import rx.observables.ConnectableObservable
 import rx.subjects.PublishSubject
+import kotlin.properties.Delegates
 
 class JsonRoutineLoader {
     fun getRoutine(resource: Int): Routine {
@@ -24,39 +26,36 @@ class JsonRoutineLoader {
             val jsonRoutine = Gson().fromJson(raw, JSONRoutine::class.java)
 
             return Routine(jsonRoutine)
-        } catch (e: IOException) {}
+        } catch (e: IOException) {
+            error(e.message.toString())
+        }
 
         return Routine(JSONRoutine())
     }
 }
 
 object RoutineStream {
-    val routine: Routine by lazy {
-        val loader = JsonRoutineLoader()
-        val routine: Routine = loader.getRoutine(R.raw.bodyweight_fitness_recommended_routine)
+    private val routineSubject = PublishSubject.create<Routine>()
+    private val exerciseSubject = PublishSubject.create<Exercise>()
+    private val levelChangedSubject = PublishSubject.create<Routine>()
 
-        Preferences.defaultRoutine = routine.routineId
+    var routine: Routine = JsonRoutineLoader().getRoutine(R.raw.bodyweight_fitness_recommended_routine)
+        set(value) {
+            Preferences.defaultRoutine = routine.routineId
 
-        exercise = routine.linkedExercises.first()
+            exercise = routine.linkedExercises.first()
 
-        mRoutineSubject.onNext(routine)
-        mExerciseSubject.onNext(exercise)
+            routineSubject.onNext(routine)
 
-        mRoutineChangedSubject.onNext(routine)
-
-        routine
-    }
-
-    var exercise: Exercise = routine.linkedExercises.first()
-        set(exercise) {
-            this.exercise = exercise
-            mExerciseSubject.onNext(exercise)
+            field = value
         }
 
-    private val mRoutineSubject = PublishSubject.create<Routine>()
-    private val mRoutineChangedSubject = PublishSubject.create<Routine>()
-    private val mExerciseSubject = PublishSubject.create<Exercise>()
-    private val mLevelChangedSubject = PublishSubject.create<Routine>()
+    var exercise: Exercise = routine.linkedExercises.first()
+        set(value) {
+            exerciseSubject.onNext(value)
+
+            field = value
+        }
 
     fun setLevel(exercise: Exercise, level: Int) {
         routine.setLevel(exercise, level)
@@ -65,30 +64,18 @@ object RoutineStream {
 
         Glacier.put(exercise.section!!.sectionId, exercise.section!!.currentExercise.exerciseId)
 
-        mLevelChangedSubject.onNext(routine)
+        levelChangedSubject.onNext(routine)
     }
 
-    val routineObservable: Observable<Routine>
-        get() {
-
-            val routineObservable = Observable.just<Routine>(routine)
+    val routineObservable: Observable<Routine> =
+            Observable.merge(Observable.just(routine), routineSubject)
                     .observeOn(AndroidSchedulers.mainThread())
                     .publish()
                     .refCount()
 
-            return Observable.merge(mRoutineSubject, routineObservable)
-        }
-
-    val routineChangedObservable: Observable<Routine>
-        get() = mRoutineChangedSubject
-
-    val exerciseObservable: Observable<Exercise>
-        get() {
-            val exerciseObservable = Observable.just<Exercise>(exercise)
+    val exerciseObservable: Observable<Exercise> =
+            Observable.merge(Observable.just(exercise), exerciseSubject)
                     .observeOn(AndroidSchedulers.mainThread())
                     .publish()
                     .refCount()
-
-            return Observable.merge(mExerciseSubject, exerciseObservable)
-        }
 }

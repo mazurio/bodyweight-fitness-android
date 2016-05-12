@@ -19,7 +19,7 @@ public class Glacier {
 
     private static FileObjectPersister mFileObjectPersister;
 
-    private static HashMap<String, PublishSubject> hashMap = new HashMap<>();
+    private static HashMap<String, PublishSubject> hashMap = new HashMap<String, PublishSubject>();
 
     public synchronized static void init() {
         mFileObjectPersister = new FileObjectPersister();

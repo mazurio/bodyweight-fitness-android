@@ -8,7 +8,7 @@ apply plugin: 'io.fabric'
 
 android {
     dexOptions {
-        incremental true
+        incremental false
         maxProcessCount 4
     }
 
@@ -18,6 +18,10 @@ android {
         applicationId 'com.bodyweight.fitness'
         minSdkVersion 14
         targetSdkVersion 23
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_6
+        targetCompatibility JavaVersion.VERSION_1_6
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'

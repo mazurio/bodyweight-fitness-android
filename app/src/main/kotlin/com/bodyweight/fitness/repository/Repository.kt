@@ -14,9 +14,11 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 
 object Repository {
+    private val realmName = "bodyweight.fitness.realm"
+
     val realm: Realm
         get() = Realm.getInstance(RealmConfiguration.Builder(App.context)
-                .name("bodyweight.fitness.realm")
+                .name(realmName)
                 .schemaVersion(2)
                 .migration { realm: DynamicRealm, oldVersion: Long, newVersion: Long ->
                     val schema = realm.schema
