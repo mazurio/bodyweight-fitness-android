@@ -6,44 +6,29 @@ import android.view.View
 import com.bodyweight.fitness.R
 
 import com.bodyweight.fitness.extension.debug
-import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_main.view.*
 
-object ContentShared {
-    var id: Int = R.id.action_menu_home
-}
-
 class ContentPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        Stream.drawerObservable
+        Stream.drawerObservable()
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .filter {
                     it.equals(R.id.action_menu_home) || it.equals(R.id.action_menu_workout_log)
                 }
-                .subscribe { id ->
-                    ContentShared.id = id
-
-                    setContent(id)
-                }
-
-        RoutineStream.routineObservable().subscribe { routine ->
-            ContentShared.id = R.id.action_menu_home
-
-            (mView as ContentView).showHome()
-        }
+                .subscribe { setContent(it) }
     }
 
     override fun restoreView(view: AbstractView) {
         super.restoreView(view)
 
-        setContent(ContentShared.id)
+        setContent(Stream.currentDrawerId)
     }
 
     fun setContent(id: Int) {

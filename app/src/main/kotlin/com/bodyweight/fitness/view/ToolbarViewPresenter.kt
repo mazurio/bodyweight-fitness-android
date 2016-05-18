@@ -17,10 +17,6 @@ import org.joda.time.DateTime
 
 import java.util.*
 
-object ToolbarPresenterState {
-    var id: Int = R.id.action_menu_home
-}
-
 class ToolbarPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
@@ -29,21 +25,21 @@ class ToolbarPresenter : AbstractPresenter() {
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .bindToLifecycle(view)
-                .filter { ToolbarPresenterState.id.equals(R.id.action_menu_home) }
+                .filter { Stream.currentDrawerId.equals(R.id.action_menu_home) }
                 .subscribe {
                     setToolbarForHome(it)
                 }
 
-        Stream.calendarDayObservable
+        Stream.calendarDayObservable()
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .bindToLifecycle(view)
-                .filter { ToolbarPresenterState.id.equals(R.id.action_menu_workout_log) }
+                .filter { Stream.currentDrawerId.equals(R.id.action_menu_workout_log) }
                 .subscribe {
                     setToolbarForWorkoutLog(it)
                 }
 
-        Stream.drawerObservable
+        Stream.drawerObservable()
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
@@ -51,8 +47,6 @@ class ToolbarPresenter : AbstractPresenter() {
                     it.equals(R.id.action_menu_home) || it.equals(R.id.action_menu_workout_log)
                 }
                 .subscribe {
-                    ToolbarPresenterState.id = it
-
                     setToolbar()
                 }
     }
@@ -64,7 +58,7 @@ class ToolbarPresenter : AbstractPresenter() {
     }
 
     fun setToolbar() {
-        when (ToolbarPresenterState.id) {
+        when (Stream.currentDrawerId) {
             R.id.action_menu_home ->
                 setToolbarForHome(RoutineStream.exercise)
             R.id.action_menu_workout_log ->

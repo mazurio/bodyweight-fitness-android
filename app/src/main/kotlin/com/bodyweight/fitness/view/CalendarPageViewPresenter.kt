@@ -48,7 +48,7 @@ class CalendarPagePresenter : AbstractPresenter() {
             view.setText(index, currentDayOfTheWeek.dayOfMonth().asText)
         }
 
-        Stream.calendarPageObservable
+        Stream.calendarPageObservable()
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
@@ -63,7 +63,7 @@ class CalendarPagePresenter : AbstractPresenter() {
                     }
                 }
 
-        Stream.calendarDayObservable
+        Stream.calendarDayObservable()
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }

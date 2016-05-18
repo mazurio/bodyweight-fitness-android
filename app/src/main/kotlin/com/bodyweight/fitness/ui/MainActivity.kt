@@ -10,7 +10,6 @@ import android.support.v7.app.ActionBarDrawerToggle
 
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.WindowManager
 
 import com.bodyweight.fitness.Constants
@@ -31,7 +30,6 @@ import com.kobakei.ratethisapp.RateThisApp
 import com.trello.rxlifecycle.ActivityEvent
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity
-import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import com.trello.rxlifecycle.kotlin.bindUntilEvent
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -40,14 +38,8 @@ import kotlinx.android.synthetic.main.view_timer.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 
 class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
-    private var mId: Int = R.id.action_menu_home
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (savedInstanceState != null) {
-            mId = savedInstanceState.getInt("ID")
-        }
 
         setContentView(R.layout.activity_main)
 
@@ -112,17 +104,7 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
                     startActivity(Intent(this, DashboardActivity::class.java))
                 }
 
-
-        Stream.drawerObservable
-                .bindUntilEvent(this, event)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
-                .filter { it == R.id.action_menu_home || it == R.id.action_menu_workout_log }
-                .subscribe {
-                    mId = it
-                }
-
-        Stream.drawerObservable
+        Stream.drawerObservable()
                 .bindUntilEvent(this, event)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
@@ -162,12 +144,6 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
         Repository.realm.close()
     }
 
-    public override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt("ID", mId)
-
-        super.onSaveInstanceState(outState)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         Stream.setMenu(item.itemId)
 
@@ -179,9 +155,9 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
     }
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        if (mId == R.id.action_menu_home) {
+        if (Stream.currentDrawerId == R.id.action_menu_home) {
             menuInflater.inflate(R.menu.home, menu)
-        } else if (mId == R.id.action_menu_workout_log) {
+        } else if (Stream.currentDrawerId  == R.id.action_menu_workout_log) {
             menuInflater.inflate(R.menu.calendar, menu)
         }
 

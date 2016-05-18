@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
-import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.Snackbar
 import android.util.AttributeSet
 import android.view.View
@@ -25,10 +24,6 @@ import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_action.view.*
-
-object ActionShared {
-    var id: Int = R.id.action_menu_home
-}
 
 class ActionPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
@@ -50,7 +45,7 @@ class ActionPresenter : AbstractPresenter() {
                     }
                 }
 
-        Stream.drawerObservable
+        Stream.drawerObservable()
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
@@ -58,8 +53,6 @@ class ActionPresenter : AbstractPresenter() {
                     it.equals(R.id.action_menu_home) || it.equals(R.id.action_menu_workout_log)
                 }
                 .subscribe {
-                    ActionShared.id = it
-
                     if (it == R.id.action_menu_home) {
                         view.showActionButtons()
                     } else {
@@ -93,7 +86,7 @@ class ActionPresenter : AbstractPresenter() {
 
         val view = (mView as ActionView)
 
-        if (ActionShared.id == R.id.action_menu_home) {
+        if (Stream.currentDrawerId == R.id.action_menu_home) {
             view.showActionButtons()
         } else {
             view.hideActionButtons()
