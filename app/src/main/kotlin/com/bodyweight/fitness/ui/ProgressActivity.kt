@@ -15,6 +15,7 @@ import org.joda.time.DateTime
 import java.util.Locale
 
 import com.bodyweight.fitness.R
+import com.bodyweight.fitness.dialog.LogWorkoutDialog
 import com.bodyweight.fitness.model.RepositoryRoutine
 import com.bodyweight.fitness.stream.UiEvent
 
@@ -74,19 +75,19 @@ class ProgressActivity : RxAppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-//        UiEvent.dialogObservable
-//                .bindToLifecycle(this)
-//                .filter { it.dialogType == DialogType.LogWorkout }
-//                .subscribe { dialog ->
-//                    val bundle = Bundle()
-//                    bundle.putString(Constants.primaryKeyRoutineId, primaryKeyRoutineId)
-//                    bundle.putString(Constants.exerciseId, dialog.exerciseId)
-//
-//                    val logWorkoutDialog = LogWorkoutDialog()
-//                    logWorkoutDialog.arguments = bundle
-//
-//                    logWorkoutDialog.show(supportFragmentManager, "dialog")
-//                }
+        UiEvent.dialogObservable
+                .bindToLifecycle(this)
+                .filter { it.dialogType == DialogType.LogWorkout }
+                .subscribe { dialog ->
+                    val bundle = Bundle()
+                    bundle.putString(Constants.primaryKeyRoutineId, primaryKeyRoutineId)
+                    bundle.putString(Constants.exerciseId, dialog.exerciseId)
+
+                    val logWorkoutDialog = LogWorkoutDialog()
+                    logWorkoutDialog.arguments = bundle
+
+                    logWorkoutDialog.show(supportFragmentManager, "dialog")
+                }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

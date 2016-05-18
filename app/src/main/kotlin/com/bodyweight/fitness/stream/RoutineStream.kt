@@ -37,7 +37,6 @@ class JsonRoutineLoader {
 object RoutineStream {
     private val routineSubject = PublishSubject.create<Routine>()
     private val exerciseSubject = PublishSubject.create<Exercise>()
-    private val levelChangedSubject = PublishSubject.create<Routine>()
 
     var routine: Routine = JsonRoutineLoader().getRoutine(R.raw.bodyweight_fitness_recommended_routine)
         set(value) {
@@ -57,16 +56,6 @@ object RoutineStream {
             field = value
         }
 
-    fun setLevel(exercise: Exercise, level: Int) {
-        routine.setLevel(exercise, level)
-
-        this.exercise = exercise
-
-        Glacier.put(exercise.section!!.sectionId, exercise.section!!.currentExercise.exerciseId)
-
-        levelChangedSubject.onNext(routine)
-    }
-
     val routineObservable: Observable<Routine> =
             Observable.merge(Observable.just(routine), routineSubject)
                     .observeOn(AndroidSchedulers.mainThread())
@@ -78,4 +67,12 @@ object RoutineStream {
                     .observeOn(AndroidSchedulers.mainThread())
                     .publish()
                     .refCount()
+
+    fun setLevel(chosenExercise: Exercise, level: Int) {
+        routine.setLevel(chosenExercise, level)
+
+        exercise = chosenExercise
+
+        Glacier.put(chosenExercise.section!!.sectionId, chosenExercise.section!!.currentExercise.exerciseId)
+    }
 }

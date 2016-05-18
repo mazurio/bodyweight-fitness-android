@@ -30,7 +30,11 @@ object Preferences {
         get() {
             val value = getSharedPreferences().getString(Constants.preferencesWeightMeasurementUnitsKey, "kg")
 
-            return WeightMeasurementUnit.valueOf(value)
+            if (value.equals("kg", ignoreCase = true)) {
+                return WeightMeasurementUnit.Kg
+            }
+
+            return WeightMeasurementUnit.Lbs
         }
 
     fun playSoundWhenTimerStops(): Boolean {

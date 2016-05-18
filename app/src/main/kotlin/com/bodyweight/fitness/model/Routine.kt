@@ -29,26 +29,24 @@ class Routine(JSONRoutine: JSONRoutine) : Serializable {
         var currentSection: Section? = null
         var currentExercise: Exercise? = null
 
-        for (JSONLinkedRoutine in JSONRoutine.partRoutines) {
-            if (JSONLinkedRoutine.type === RoutineType.Category) {
-                currentCategory = Category(
-                        JSONLinkedRoutine.categoryId,
-                        JSONLinkedRoutine.title)
+        for (JSONLinkedRoutine in JSONRoutine.routine) {
+            if (JSONLinkedRoutine.routineType === RoutineType.Category) {
+                currentCategory = Category(JSONLinkedRoutine.categoryId, JSONLinkedRoutine.title)
 
                 categories.add(currentCategory)
                 linkedRoutine.add(currentCategory)
-            } else if (JSONLinkedRoutine.type === RoutineType.Section) {
+            } else if (JSONLinkedRoutine.routineType === RoutineType.Section) {
                 currentSection = Section(
                         JSONLinkedRoutine.sectionId,
                         JSONLinkedRoutine.title,
                         JSONLinkedRoutine.description,
-                        JSONLinkedRoutine.mode)
+                        JSONLinkedRoutine.sectionMode)
 
                 currentCategory!!.insertSection(currentSection)
 
                 sections.add(currentSection)
                 linkedRoutine.add(currentSection)
-            } else if (JSONLinkedRoutine.type === RoutineType.Exercise) {
+            } else if (JSONLinkedRoutine.routineType === RoutineType.Exercise) {
                 val exercise = Exercise(
                         JSONLinkedRoutine.exerciseId,
                         JSONLinkedRoutine.id,
@@ -56,8 +54,6 @@ class Routine(JSONRoutine: JSONRoutine) : Serializable {
                         JSONLinkedRoutine.title,
                         JSONLinkedRoutine.description,
                         JSONLinkedRoutine.youTubeId,
-                        JSONLinkedRoutine.gifId,
-                        JSONLinkedRoutine.gifUrl,
                         JSONLinkedRoutine.defaultSet)
 
                 currentSection!!.insertExercise(exercise)
@@ -174,7 +170,7 @@ class Section(
                     return
                 }
 
-                currentLevel = level
+                field = level
             }
         }
 
@@ -225,8 +221,6 @@ class Exercise(
         val exerciseTitle: String,
         val description: String,
         val youTubeId: String,
-        val gifId: String,
-        val gifUrl: String,
         val defaultSet: String) : LinkedRoutine(), Serializable {
 
     var category: Category? = null

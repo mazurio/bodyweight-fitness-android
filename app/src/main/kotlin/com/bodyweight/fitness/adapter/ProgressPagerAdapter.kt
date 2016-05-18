@@ -18,8 +18,8 @@ import org.joda.time.Duration
 import org.joda.time.format.PeriodFormatterBuilder
 
 import com.bodyweight.fitness.R
-import com.bodyweight.fitness.Exercise
 import com.bodyweight.fitness.inflate
+import com.bodyweight.fitness.model.RepositoryExercise
 import com.bodyweight.fitness.model.RepositoryRoutine
 
 import kotlinx.android.synthetic.main.activity_progress_info.view.*
@@ -37,7 +37,7 @@ class ProgressPagerAdapter(private val repositoryRoutine: RepositoryRoutine) : P
             if (repositoryExercise.isVisible) {
                 numberOfExercises++
 
-                if (Exercise.isCompleted(repositoryExercise)) {
+                if (RepositoryExercise.isCompleted(repositoryExercise)) {
                     currentExerciseIndex++
                 }
             }

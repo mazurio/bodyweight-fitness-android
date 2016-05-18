@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.Snackbar
 import android.util.AttributeSet
 import android.view.View
@@ -130,7 +131,7 @@ class ActionPresenter : AbstractPresenter() {
 open class ActionView : AbstractView {
     override var mPresenter: AbstractPresenter = ActionPresenter()
 
-    internal var mMaterialSheet: MaterialSheetFab<ActionButton>? = null
+    var mMaterialSheet: MaterialSheetFab<ActionButton>? = null
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)

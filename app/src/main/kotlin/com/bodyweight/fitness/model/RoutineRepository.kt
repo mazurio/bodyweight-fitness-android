@@ -81,7 +81,25 @@ open class RepositoryExercise(
     open var section: RepositorySection? = null,
 
     open var sets: RealmList<RepositorySet> = RealmList()
-) : RealmObject() {}
+) : RealmObject() {
+    companion object {
+        fun isCompleted(repositoryExercise: RepositoryExercise): Boolean {
+            val size = repositoryExercise.sets.size
+
+            if (size == 0) {
+                return false
+            }
+
+            val firstSet = repositoryExercise.sets[0]
+
+            if (size == 1 && firstSet.seconds == 0 && firstSet.reps == 0) {
+                return false
+            }
+
+            return true
+        }
+    }
+}
 
 open class RepositorySet(
     @PrimaryKey

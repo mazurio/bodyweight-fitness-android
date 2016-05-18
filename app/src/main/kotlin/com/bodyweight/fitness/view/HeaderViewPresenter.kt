@@ -38,7 +38,7 @@ open class HeaderPresenter : AbstractPresenter() {
     }
 
     fun setText(routine: Routine) {
-        getView().setText(routine.title!!, routine.subtitle!!)
+        getView().setText(routine.title, routine.subtitle)
     }
 }
 

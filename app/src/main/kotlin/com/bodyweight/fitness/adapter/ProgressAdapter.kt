@@ -3,7 +3,6 @@ package com.bodyweight.fitness.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import com.bodyweight.fitness.Exercise
 
 import com.bodyweight.fitness.model.RepositoryExercise
 import com.bodyweight.fitness.model.RepositorySection
@@ -13,6 +12,7 @@ import com.bodyweight.fitness.stream.UiEvent
 import java.util.HashMap
 
 import com.bodyweight.fitness.R
+import com.bodyweight.fitness.dialog.LogWorkoutPresenter
 import com.bodyweight.fitness.inflate
 import com.bodyweight.fitness.model.*
 
@@ -20,10 +20,10 @@ import kotlinx.android.synthetic.main.activity_progress_card.view.*
 import kotlinx.android.synthetic.main.activity_progress_title.view.*
 
 class ProgressAdapter(private val mRepositoryCategory: RepositoryCategory) : RecyclerView.Adapter<ProgressPresenter>() {
-    private val mItemViewMapping = HashMap<Int, RepositorySection>()
-    private val mExerciseViewMapping = HashMap<Int, RepositoryExercise>()
+    private val itemViewMapping = HashMap<Int, RepositorySection>()
+    private val exerciseViewMapping = HashMap<Int, RepositoryExercise>()
 
-    private var mTotalSize = 0
+    private var totalSize = 0
 
     init {
         /**
@@ -33,16 +33,16 @@ class ProgressAdapter(private val mRepositoryCategory: RepositoryCategory) : Rec
         var sectionId = 0
         var exerciseId = 1
         for (repositorySection in mRepositoryCategory.sections) {
-            mItemViewMapping.put(sectionId, repositorySection)
+            itemViewMapping.put(sectionId, repositorySection)
 
             var numberOfExercises = 0
 
             for (repositoryExercise in repositorySection.exercises) {
-                if (repositoryExercise.isVisible) {
-                    mExerciseViewMapping.put(exerciseId, repositoryExercise)
+                if (repositoryExercise.isVisible || RepositoryExercise.isCompleted(repositoryExercise)) {
+                    exerciseViewMapping.put(exerciseId, repositoryExercise)
 
                     exerciseId += 1
-                    mTotalSize += 1
+                    totalSize += 1
 
                     numberOfExercises++
                 }
@@ -50,7 +50,7 @@ class ProgressAdapter(private val mRepositoryCategory: RepositoryCategory) : Rec
 
             sectionId = sectionId + numberOfExercises + 1
             exerciseId += 1
-            mTotalSize += 1
+            totalSize += 1
         }
     }
 
@@ -67,23 +67,23 @@ class ProgressAdapter(private val mRepositoryCategory: RepositoryCategory) : Rec
     }
 
     override fun onBindViewHolder(holder: ProgressPresenter, position: Int) {
-        if (mItemViewMapping.containsKey(position)) {
+        if (itemViewMapping.containsKey(position)) {
             val presenter = holder as ProgressTitlePresenter
 
-            presenter.bindView(mItemViewMapping[position]!!)
-        } else if (mExerciseViewMapping.containsKey(position)) {
+            presenter.bindView(itemViewMapping[position]!!)
+        } else if (exerciseViewMapping.containsKey(position)) {
             val presenter = holder as ProgressCardPresenter
 
-            presenter.bindView(mExerciseViewMapping[position]!!)
+            presenter.bindView(exerciseViewMapping[position]!!)
         }
     }
 
     override fun getItemCount(): Int {
-        return mTotalSize
+        return totalSize
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (mItemViewMapping.containsKey(position)) {
+        if (itemViewMapping.containsKey(position)) {
             return 1
         }
 
@@ -96,14 +96,10 @@ abstract class ProgressPresenter(itemView: View) : RecyclerView.ViewHolder(itemV
 class ProgressCardPresenter(itemView: View) : ProgressPresenter(itemView) {
     fun bindView(repositoryExercise: RepositoryExercise) {
         itemView.toolbar.title = repositoryExercise.title
-        itemView.toolbar.subtitle = repositoryExercise.description
-
-        if (!Exercise.isCompleted(repositoryExercise)) {
-            itemView.toolbar.subtitle = "Not completed"
-        }
+        itemView.toolbar.subtitle = LogWorkoutPresenter().getToolbarDescription(repositoryExercise)
 
         itemView.view_button.setOnClickListener {
-            UiEvent.showDialog(DialogType.LogWorkout, repositoryExercise.exerciseId!!)
+            UiEvent.showDialog(DialogType.LogWorkout, repositoryExercise.exerciseId)
         }
     }
 }

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="320dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@null">
 
@@ -28,13 +27,13 @@
             <LinearLayout
                 android:id="@+id/actionView"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="240dp"
                 android:orientation="horizontal"
                 android:weightSum="6"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp">
 
@@ -183,10 +182,13 @@
                 android:id="@+id/setView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="240dp"
                 android:paddingTop="24dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="24dp"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:orientation="vertical" />
 
             <com.devspark.robototextview.widget.RobotoButton

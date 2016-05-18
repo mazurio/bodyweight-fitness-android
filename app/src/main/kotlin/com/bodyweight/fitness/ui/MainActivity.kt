@@ -16,7 +16,10 @@ import android.view.WindowManager
 import com.bodyweight.fitness.Constants
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.R
+import com.bodyweight.fitness.dialog.LogWorkoutDialog
+import com.bodyweight.fitness.dialog.ProgressDialog
 import com.bodyweight.fitness.extension.debug
+import com.bodyweight.fitness.stream.DialogType
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.stream.UiEvent
@@ -63,23 +66,21 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
-                    debug("Dialog")
+                    if (it.dialogType === DialogType.LogWorkout) {
+                        val bundle = Bundle()
+                        bundle.putString(Constants.exerciseId, it.exerciseId)
 
-//                    if (it.dialogType === DialogType.LogWorkout) {
-//                        val bundle = Bundle()
-//                        bundle.putString(Constants.exerciseId, it.exerciseId)
-//
-//                        val logWorkoutDialog = LogWorkoutDialog()
-//                        logWorkoutDialog.arguments = bundle
-//                        logWorkoutDialog.show(supportFragmentManager, "logWorkoutDialog")
-//                    } else if (it.dialogType === DialogType.Progress) {
-//                        val bundle = Bundle()
-//                        bundle.putString(Constants.exerciseId, it.exerciseId)
-//
-//                        val progressDialog = ProgressDialog()
-//                        progressDialog.arguments = bundle
-//                        progressDialog.show(supportFragmentManager, "progressDialog")
-//                    }
+                        val logWorkoutDialog = LogWorkoutDialog()
+                        logWorkoutDialog.arguments = bundle
+                        logWorkoutDialog.show(supportFragmentManager, "logWorkoutDialog")
+                    } else if (it.dialogType === DialogType.Progress) {
+                        val bundle = Bundle()
+                        bundle.putString(Constants.exerciseId, it.exerciseId)
+
+                        val progressDialog = ProgressDialog()
+                        progressDialog.arguments = bundle
+                        progressDialog.show(supportFragmentManager, "progressDialog")
+                    }
                 }
 
         RoutineStream.exerciseObservable

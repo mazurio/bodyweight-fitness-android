@@ -1,33 +1,28 @@
 package com.bodyweight.fitness
 
+import android.content.Context
+import android.graphics.Color
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import com.bodyweight.fitness.model.RepositoryExercise
 import com.bodyweight.fitness.model.RepositoryRoutine
 import com.bodyweight.fitness.repository.Repository
+import com.bodyweight.fitness.utils.Preferences
 
 import io.realm.RealmResults
 import org.joda.time.DateTime
 
-object Exercise {
-    fun isCompleted(repositoryExercise: RepositoryExercise): Boolean {
-        val size = repositoryExercise.sets.size
-
-        if (size == 0) {
-            return false
-        }
-
-        val firstSet = repositoryExercise.sets[0]
-
-        if (size == 1 && firstSet.seconds == 0 && firstSet.reps == 0) {
-            return false
-        }
-
-        return true
-    }
+fun primary(): Int {
+    return Color.parseColor("#009688")
 }
+
+fun primaryDark(): Int {
+    return Color.parseColor("#00453E")
+}
+
+fun Int.toPx(context: Context): Int = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics).toInt()
 
 fun View.setBackgroundResourceWithPadding(resource: Int) {
     val bottom = paddingBottom
@@ -41,6 +36,22 @@ fun View.setBackgroundResourceWithPadding(resource: Int) {
 
 fun ViewGroup.inflate(layoutRes: Int, attachToRoot: Boolean = false): View {
     return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
+}
+
+fun View.inflate(layoutRes: Int, root: ViewGroup, attachToRoot: Boolean = false): View {
+    return LayoutInflater.from(context).inflate(layoutRes, root, attachToRoot)
+}
+
+fun View.setVisible() {
+    this.visibility = View.VISIBLE
+}
+
+fun View.setInvisible() {
+    this.visibility = View.INVISIBLE
+}
+
+fun View.setGone() {
+    this.visibility = View.GONE
 }
 
 fun DateTime.isToday(): Boolean {
@@ -85,6 +96,22 @@ fun DateTime.isRoutineLoggedWithResults(): RealmResults<RepositoryRoutine> {
     return results
 }
 
+fun Double.formatWeight(): String {
+    return "$this ${Preferences.weightMeasurementUnit.asString}"
+}
+
+fun Int.formatReps(append: Boolean = false): String {
+    if (append) {
+        return "$this x"
+    } else {
+        if (this == 0) {
+            return "/"
+        }
+
+        return this.toString()
+    }
+}
+
 fun Int.formatMinutes(format: Boolean = true): String {
     val minutes = this / 60
 
@@ -95,10 +122,24 @@ fun Int.formatMinutes(format: Boolean = true): String {
 
         return "0"
     } else if (minutes < 10) {
-        return "0" + minutes
+        if (format) {
+            return "0" + minutes
+        }
+
+        return minutes.toString()
     }
 
     return minutes.toString()
+}
+
+fun Int.formatMinutesPostfix(): String {
+    val minutes = this / 60
+
+    if (minutes == 0) {
+        return "0m"
+    }
+
+    return "${minutes.toString()}m"
 }
 
 fun Int.formatMinutesAsNumber(): Int {
@@ -115,10 +156,24 @@ fun Int.formatSeconds(format: Boolean = true): String {
 
         return "0"
     } else if (seconds < 10) {
-        return "0" + seconds
+        if (format) {
+            return "0" + seconds
+        }
+
+        return seconds.toString()
     }
 
     return seconds.toString()
+}
+
+fun Int.formatSecondsPostfix(): String {
+    val seconds = this % 60
+
+    if (seconds == 0) {
+        return "0s"
+    }
+
+    return "${seconds.toString()}s"
 }
 
 fun Int.formatSecondsAsNumber(): Int {
