@@ -40,6 +40,9 @@ object Stream {
      */
     private val mRepositorySubject = PublishSubject.create<Boolean>()
 
+    /**
+     * All observables should be fun() similar to RoutineStream
+     */
     val menuObservable: Observable<Int> get() = mMenuSubject
     val drawerObservable: Observable<Int> get() = mDrawerSubject
     val loggedSecondsObservable: Observable<Int> get() = mLoggedSecondsSubject

@@ -19,6 +19,8 @@ import com.bodyweight.fitness.R
 import com.bodyweight.fitness.dialog.LogWorkoutDialog
 import com.bodyweight.fitness.dialog.ProgressDialog
 import com.bodyweight.fitness.extension.debug
+import com.bodyweight.fitness.setGone
+import com.bodyweight.fitness.setVisible
 import com.bodyweight.fitness.stream.DialogType
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
@@ -26,9 +28,11 @@ import com.bodyweight.fitness.stream.UiEvent
 import com.bodyweight.fitness.utils.Preferences
 
 import com.kobakei.ratethisapp.RateThisApp
+import com.trello.rxlifecycle.ActivityEvent
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
+import com.trello.rxlifecycle.kotlin.bindUntilEvent
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_home.*
@@ -50,19 +54,11 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
         setToolbar()
         setTabLayout()
         keepScreenOnWhenAppIsRunning()
-    }
 
-    override fun onResume() {
-        super.onResume()
-
-        keepScreenOnWhenAppIsRunning()
-    }
-
-    override fun onStart() {
-        super.onStart()
+        val event = ActivityEvent.DESTROY
 
         UiEvent.dialogObservable
-                .bindToLifecycle(this)
+                .bindUntilEvent(this, event)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
@@ -84,7 +80,7 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
                 }
 
         RoutineStream.exerciseObservable()
-                .bindToLifecycle(this)
+                .bindUntilEvent(this, event)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
@@ -108,7 +104,7 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
                 }
 
         Stream.menuObservable
-                .bindToLifecycle(this)
+                .bindUntilEvent(this, event)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .filter { it == R.id.action_dashboard }
@@ -118,7 +114,7 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
 
 
         Stream.drawerObservable
-                .bindToLifecycle(this)
+                .bindUntilEvent(this, event)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .filter { it == R.id.action_menu_home || it == R.id.action_menu_workout_log }
@@ -127,7 +123,7 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
                 }
 
         Stream.drawerObservable
-                .bindToLifecycle(this)
+                .bindUntilEvent(this, event)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
@@ -143,6 +139,16 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
                         }
                     }
                 }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        keepScreenOnWhenAppIsRunning()
+    }
+
+    override fun onStart() {
+        super.onStart()
 
         RateThisApp.onStart(this)
         RateThisApp.showRateDialogIfNeeded(this)
@@ -225,11 +231,11 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
                 val position = tab.position
 
                 if (position == 0) {
-                    timer_view.visibility = View.VISIBLE
-                    reps_logger_view.visibility = View.GONE
+                    timer_view.setVisible()
+                    reps_logger_view.setGone()
                 } else {
-                    timer_view.visibility = View.GONE
-                    reps_logger_view.visibility = View.VISIBLE
+                    timer_view.setGone()
+                    reps_logger_view.setVisible()
                 }
             }
 
