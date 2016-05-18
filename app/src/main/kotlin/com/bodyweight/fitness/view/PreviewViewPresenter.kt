@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.Exercise
+import com.bodyweight.fitness.stream.RoutineStream
 
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget
@@ -16,7 +17,7 @@ class PreviewPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        getExerciseObservable()
+        RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }

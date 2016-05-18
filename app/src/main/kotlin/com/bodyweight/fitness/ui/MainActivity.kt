@@ -83,7 +83,7 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
                     }
                 }
 
-        RoutineStream.exerciseObservable
+        RoutineStream.exerciseObservable()
                 .bindToLifecycle(this)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }

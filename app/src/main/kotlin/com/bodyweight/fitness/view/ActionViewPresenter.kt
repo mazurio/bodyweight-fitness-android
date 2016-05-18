@@ -36,7 +36,7 @@ class ActionPresenter : AbstractPresenter() {
 
         val view = (mView as ActionView)
 
-        getExerciseObservable()
+        RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
@@ -101,7 +101,7 @@ class ActionPresenter : AbstractPresenter() {
     }
 
     fun logWorkout() {
-        UiEvent.showDialog(DialogType.LogWorkout, getCurrentExercise().exerciseId)
+        UiEvent.showDialog(DialogType.LogWorkout, RoutineStream.exercise.exerciseId)
     }
 
     fun watchFullVideo() {
@@ -116,7 +116,7 @@ class ActionPresenter : AbstractPresenter() {
     }
 
     fun chooseProgression() {
-        UiEvent.showDialog(DialogType.Progress, getCurrentExercise().exerciseId)
+        UiEvent.showDialog(DialogType.Progress, RoutineStream.exercise.exerciseId)
     }
 
     fun todaysWorkout() {

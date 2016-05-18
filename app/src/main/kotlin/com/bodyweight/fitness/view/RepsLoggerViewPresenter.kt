@@ -7,6 +7,7 @@ import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.*
 
 import com.bodyweight.fitness.repository.Repository
+import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.SetReps
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.utils.Preferences
@@ -22,7 +23,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        getExerciseObservable()
+        RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
                 .subscribe {
                     mNumberOfReps = Preferences.getNumberOfRepsForExercise(it.exerciseId, 5)
@@ -42,7 +43,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
     override fun restoreView(view: AbstractView) {
         super.restoreView(view)
 
-        mNumberOfReps = Preferences.getNumberOfRepsForExercise(getCurrentExercise().exerciseId, 5)
+        mNumberOfReps = Preferences.getNumberOfRepsForExercise(RoutineStream.exercise.exerciseId, 5)
 
         updateLabels()
     }
@@ -53,7 +54,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
         repsLoggerView.setSets(formatSets())
         repsLoggerView.setNumberOfReps(formatNumberOfReps(mNumberOfReps))
 
-        Preferences.setNumberOfReps(getCurrentExercise().exerciseId, mNumberOfReps)
+        Preferences.setNumberOfReps(RoutineStream.exercise.exerciseId, mNumberOfReps)
     }
 
     fun logReps() {
@@ -62,7 +63,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
 
         realm.executeTransaction {
             val currentExercise = repositoryRoutine.exercises.filter {
-                it.exerciseId == getCurrentExercise().exerciseId
+                it.exerciseId == RoutineStream.exercise.exerciseId
             }.firstOrNull()
 
             if (currentExercise != null) {
@@ -125,7 +126,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
             val routine = Repository.repositoryRoutineForToday
 
             routine.exercises.filter {
-                it.exerciseId == getCurrentExercise().exerciseId
+                it.exerciseId == RoutineStream.exercise.exerciseId
             }.first()?.let {
                 val sets = it.sets
 

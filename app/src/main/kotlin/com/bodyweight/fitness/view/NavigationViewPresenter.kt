@@ -14,7 +14,7 @@ class NavigationPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        getExerciseObservable()
+        RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
@@ -29,15 +29,15 @@ class NavigationPresenter : AbstractPresenter() {
     override fun restoreView(view: AbstractView) {
         super.restoreView(view)
 
-        (view as NavigationView).showOrHideButtons(getCurrentExercise().isPrevious, getCurrentExercise().isNext)
+        (view as NavigationView).showOrHideButtons(RoutineStream.exercise.isPrevious, RoutineStream.exercise.isNext)
     }
 
     fun previousExercise() {
-        RoutineStream.exercise = getCurrentExercise().previous!!
+        RoutineStream.exercise = RoutineStream.exercise.previous!!
     }
 
     fun nextExercise() {
-        RoutineStream.exercise = getCurrentExercise().next!!
+        RoutineStream.exercise = RoutineStream.exercise.next!!
     }
 }
 

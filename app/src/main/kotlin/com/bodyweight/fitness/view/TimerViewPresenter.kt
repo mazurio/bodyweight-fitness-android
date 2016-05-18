@@ -42,7 +42,7 @@ class TimerPresenter : AbstractPresenter() {
                     pauseTimer()
                 }
 
-        getExerciseObservable()
+        RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
@@ -154,7 +154,7 @@ class TimerPresenter : AbstractPresenter() {
 
             val save = (TimerShared.mSeconds * 1000).toLong()
 
-            Preferences.setTimerValue(getCurrentExercise().exerciseId, save)
+            Preferences.setTimerValue(RoutineStream.exercise.exerciseId, save)
         }, TimerShared.mCurrentSeconds.formatMinutesAsNumber(), TimerShared.mCurrentSeconds.formatSecondsAsNumber(), true)
 
         timePickerDialog.show()
@@ -218,11 +218,11 @@ class TimerPresenter : AbstractPresenter() {
     }
 
     fun getSeconds(): Int {
-        return (Preferences.getTimerValueForExercise(getCurrentExercise().exerciseId, 60 * 1000) / 1000).toInt()
+        return (Preferences.getTimerValueForExercise(RoutineStream.exercise.exerciseId, 60 * 1000) / 1000).toInt()
     }
 
     fun logTime() {
-        if (Preferences.automaticallyLogWorkoutTime() && getCurrentExercise().isTimedSet) {
+        if (Preferences.automaticallyLogWorkoutTime() && RoutineStream.exercise.isTimedSet) {
             val loggedSeconds = TimerShared.mLoggedSeconds - TimerShared.mCurrentSeconds
 
             if (loggedSeconds > 0) {

@@ -56,17 +56,19 @@ object RoutineStream {
             field = value
         }
 
-    val routineObservable: Observable<Routine> =
-            Observable.merge(Observable.just(routine), routineSubject)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .publish()
-                    .refCount()
+    fun routineObservable(): Observable<Routine> {
+        return Observable.merge(Observable.just(routine).publish().refCount(), routineSubject)
+                .observeOn(AndroidSchedulers.mainThread())
+                .publish()
+                .refCount()
+    }
 
-    val exerciseObservable: Observable<Exercise> =
-            Observable.merge(Observable.just(exercise), exerciseSubject)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .publish()
-                    .refCount()
+    fun exerciseObservable(): Observable<Exercise> {
+        return Observable.merge(Observable.just(exercise).publish().refCount(), exerciseSubject)
+                .observeOn(AndroidSchedulers.mainThread())
+                .publish()
+                .refCount()
+    }
 
     fun setLevel(chosenExercise: Exercise, level: Int) {
         routine.setLevel(chosenExercise, level)
