@@ -33,15 +33,6 @@ class CalendarPresenter : AbstractPresenter() {
 
         view.scrollToDefaultItem()
 
-        Stream.drawerObservable()
-                .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
-                .filter { it == R.id.action_menu_workout_log }
-                .subscribe {
-                    view.scrollToDefaultItem()
-                }
-
         Stream.menuObservable
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }

@@ -17,26 +17,26 @@ import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_calendar_page.view.*
 
 class CalendarPagePresenter : AbstractPresenter() {
-    var mViewPagerPosition = 0
-    var mIsTodaysWeek = false
-    var mIsTodaysDate = 3
+    var viewPagerPosition = 0
+    var isTodaysWeek = false
+    var isTodaysDate = 3
 
     override fun updateView() {
         super.updateView()
 
         val view = (mView as CalendarPageView)
 
-        val firstDayOfTheWeek = CalendarDay(mViewPagerPosition, 0).getDate()
+        val firstDayOfTheWeek = CalendarDay(viewPagerPosition, 0).getDate()
 
         for (index in 0..6) {
             val currentDayOfTheWeek = firstDayOfTheWeek.plusDays(index)
             if (currentDayOfTheWeek.isToday()) {
-                mIsTodaysWeek = true
-                mIsTodaysDate = index
+                isTodaysWeek = true
+                isTodaysDate = index
 
                 view.setActive(index)
 
-                if (Stream.currentCalendarPage == mViewPagerPosition) {
+                if (Stream.currentCalendarPage == viewPagerPosition) {
                     view.select(index)
                     clickedAt(index)
                 }
@@ -52,11 +52,11 @@ class CalendarPagePresenter : AbstractPresenter() {
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
-                .filter { it == mViewPagerPosition }
+                .filter { it == viewPagerPosition }
                 .subscribe {
-                    if (mIsTodaysWeek) {
-                        view.select(mIsTodaysDate)
-                        clickedAt(mIsTodaysDate)
+                    if (isTodaysWeek) {
+                        view.select(isTodaysDate)
+                        clickedAt(isTodaysDate)
                     } else {
                         view.select(3)
                         clickedAt(3)
@@ -68,8 +68,8 @@ class CalendarPagePresenter : AbstractPresenter() {
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
-                    if (it.page != mViewPagerPosition) {
-                        view.unselect(mIsTodaysDate)
+                    if (it.page != viewPagerPosition) {
+                        view.unselect(isTodaysDate)
                     } else {
                         view.select(it.day)
                     }
@@ -77,7 +77,7 @@ class CalendarPagePresenter : AbstractPresenter() {
     }
 
     fun clickedAt(dayView: Int) {
-        Stream.streamDay(CalendarDay(mViewPagerPosition, dayView))
+        Stream.streamDay(CalendarDay(viewPagerPosition, dayView))
     }
 }
 

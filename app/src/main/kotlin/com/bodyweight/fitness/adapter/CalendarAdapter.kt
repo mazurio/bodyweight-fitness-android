@@ -23,7 +23,7 @@ class CalendarAdapter : PagerAdapter() {
         val calendarPageView = viewGroup.inflate(R.layout.view_calendar_page) as CalendarPageView
         val calendarPagePresenter = calendarPageView.mPresenter as CalendarPagePresenter
 
-        calendarPagePresenter.mViewPagerPosition = position
+        calendarPagePresenter.viewPagerPosition = position
         calendarPageView.updateView()
 
         viewPager.addView(calendarPageView)
