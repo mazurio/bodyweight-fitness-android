@@ -14,11 +14,17 @@ data class Dialog(val dialogType: DialogType, val exerciseId: String)
 
 object UiEvent {
     private val dialogSubject = PublishSubject.create<Dialog>()
+    private val homePageSubject = PublishSubject.create<Int>()
 
     val dialogObservable: Observable<Dialog> get() = dialogSubject
+    val homePageObservable: Observable<Int> get() = homePageSubject
 
     fun showDialog(dialogType: DialogType, exerciseId: String) {
         dialogSubject.onNext(Dialog(dialogType, exerciseId))
+    }
+
+    fun showHomePage(position: Int) {
+        homePageSubject.onNext(position)
     }
 }
 

@@ -10,6 +10,7 @@ import com.bodyweight.fitness.adapter.HomePagerAdapter
 import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
+import com.bodyweight.fitness.stream.UiEvent
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_main.view.*
@@ -24,6 +25,13 @@ class ContentPresenter : AbstractPresenter() {
         val view = view as ContentView
 
         view.setAdapter(homePagerAdapter)
+
+        UiEvent.homePageObservable
+                .bindToLifecycle(view)
+                .filter { Stream.currentDrawerId.equals(R.id.action_menu_home) }
+                .subscribe {
+                    view.setPage(it)
+                }
 
         RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
@@ -78,6 +86,10 @@ open class ContentView : AbstractView {
                 (mPresenter as ContentPresenter).onPageSelected(position)
             }
         })
+    }
+
+    fun setPage(position: Int) {
+        view_home.setCurrentItem(position, true)
     }
 
     fun setAdapter(adapter: HomePagerAdapter) {

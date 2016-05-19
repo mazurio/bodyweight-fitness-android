@@ -16,7 +16,7 @@
         <include layout="@layout/view_toolbar"
             android:id="@+id/view_toolbar" />
 
-        <android.support.v4.view.ViewPager
+        <com.bodyweight.fitness.view.widget.StillViewPager
             android:id="@+id/view_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
