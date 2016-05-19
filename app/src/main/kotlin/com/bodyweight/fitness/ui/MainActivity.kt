@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 
-import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 
@@ -18,7 +17,6 @@ import com.bodyweight.fitness.dialog.LogWorkoutDialog
 import com.bodyweight.fitness.dialog.ProgressDialog
 import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.stream.DialogType
-import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.stream.UiEvent
 import com.bodyweight.fitness.utils.Preferences
@@ -45,8 +43,6 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
 
         UiEvent.dialogObservable
                 .bindUntilEvent(this, event)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
                     if (it.dialogType === DialogType.LogWorkout) {
                         val bundle = Bundle()
@@ -67,8 +63,6 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
 
         Stream.menuObservable
                 .bindUntilEvent(this, event)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .filter { it == R.id.action_dashboard }
                 .subscribe {
                     startActivity(Intent(this, DashboardActivity::class.java))
@@ -76,8 +70,6 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
 
         Stream.drawerObservable()
                 .bindUntilEvent(this, event)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
                     when (it) {
                         R.id.action_menu_support_developer -> {
@@ -122,18 +114,6 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         keepScreenOnWhenAppIsRunning()
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        if (Stream.currentDrawerId == R.id.action_menu_home) {
-            if (Stream.currentHomePage != 0 && Stream.currentHomePage != 2) {
-                menuInflater.inflate(R.menu.home, menu)
-            }
-        } else if (Stream.currentDrawerId  == R.id.action_menu_workout_log) {
-            menuInflater.inflate(R.menu.calendar, menu)
-        }
-
-        return super.onCreateOptionsMenu(menu)
     }
 
     private fun setToolbar() {
