@@ -7,6 +7,8 @@ import com.bodyweight.fitness.R
 import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.CalendarDay
 import com.bodyweight.fitness.model.Exercise
+import com.bodyweight.fitness.setGone
+import com.bodyweight.fitness.setVisible
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
 
@@ -95,9 +97,10 @@ class ToolbarPresenter : AbstractPresenter() {
 
     private fun setToolbarForWelcome() {
         val view: ToolbarView = (mView as ToolbarView)
+        val routine = RoutineStream.routine
 
         view.invalidateMenu()
-        view.setSingleTitle("Welcome")
+        view.setTitleSubtitle(title = routine.title, subtitle = routine.subtitle)
     }
 
     private fun setToolbarForSummary() {
@@ -159,22 +162,29 @@ class ToolbarView : AbstractView {
     }
 
     fun setSingleTitle(text: String) {
-        toolbar_layout.visibility = GONE
+        toolbar_layout.setGone()
         toolbar.title = text
+        toolbar.subtitle = ""
+    }
+
+    fun setTitleSubtitle(title: String, subtitle: String) {
+        toolbar_layout.setGone()
+        toolbar.title = title
+        toolbar.subtitle = subtitle
     }
 
     fun setTitle(text: String) {
-        toolbar_layout.visibility = VISIBLE
+        toolbar_layout.setVisible()
         toolbar_exercise_title.text = text
     }
 
     fun setSubtitle(text: String) {
-        toolbar_layout.visibility = VISIBLE
+        toolbar_layout.setVisible()
         toolbar_section_title.text = text
     }
 
     fun setDescription(text: String) {
-        toolbar_layout.visibility = VISIBLE
+        toolbar_layout.setVisible()
         toolbar_exercise_description.text = text
     }
 }
