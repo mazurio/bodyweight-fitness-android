@@ -9,7 +9,7 @@ import rx.subjects.PublishSubject
 
 data class SetReps(val set: Int, val reps: Int)
 
-enum class DialogType { LogWorkout, Progress }
+enum class DialogType { MainActivityLogWorkout, ProgressActivityLogWorkout, Progress }
 data class Dialog(val dialogType: DialogType, val exerciseId: String)
 
 object UiEvent {

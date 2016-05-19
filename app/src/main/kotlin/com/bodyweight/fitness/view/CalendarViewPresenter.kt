@@ -35,17 +35,20 @@ class CalendarPresenter : AbstractPresenter() {
 
         Stream.menuObservable
                 .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .filter { it == R.id.action_today }
                 .subscribe {
                     view.scrollToDefaultItem()
                 }
 
+        Stream.menuObservable
+                .bindToLifecycle(view)
+                .filter { it == R.id.action_export }
+                .subscribe {
+                    debug("Export")
+                }
+
         Stream.calendarDayObservable()
                 .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
                     val results = it.getDate().isRoutineLoggedWithResults()
 

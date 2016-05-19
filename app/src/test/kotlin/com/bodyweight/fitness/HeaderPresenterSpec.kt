@@ -12,40 +12,40 @@ import kotlin.test.assertEquals
 
 class TestSpec: Spek({
     given("HeaderPresenter") {
-        beforeEach {
-            routine = mock(Routine::class.java)
-            headerPresenter = mock(HeaderPresenter::class.java)
-            headerView = mock(HeaderView::class.java)
-            observable = PublishSubject.create()
-
-            `when`(routine.title).thenReturn("Title")
-            `when`(routine.subtitle).thenReturn("Subtitle")
-
-            `when`(headerPresenter.getCurrentRoutine()).thenReturn(routine)
-            `when`(headerPresenter.getRoutineObservable()).thenReturn(observable)
-            `when`(headerPresenter.getView()).thenReturn(headerView)
-        }
-
-        it("creates presenter") {
-            assertEquals(observable, headerPresenter.getRoutineObservable())
-            assertEquals(routine, headerPresenter.getCurrentRoutine())
-            assertEquals(headerView, headerPresenter.getView())
-        }
-
-        it("binds view by setting title and subtitle") {
-            headerPresenter.bindView(headerView)
-            headerPresenter.setText(routine)
-
-            verify(headerView).setText("Title", "Subtitle")
-        }
-
-        it("restores view by setting title and subtitle") {
-            `when`(headerPresenter.restoreView(headerView)).thenCallRealMethod()
-
-            headerPresenter.restoreView(headerView)
-
-            verify(headerView).setText("Title", "Subtitle")
-        }
+//        beforeEach {
+//            routine = mock(Routine::class.java)
+//            headerPresenter = mock(HeaderPresenter::class.java)
+//            headerView = mock(HeaderView::class.java)
+//            observable = PublishSubject.create()
+//
+//            `when`(routine.title).thenReturn("Title")
+//            `when`(routine.subtitle).thenReturn("Subtitle")
+//
+//            `when`(headerPresenter.getCurrentRoutine()).thenReturn(routine)
+//            `when`(headerPresenter.getRoutineObservable()).thenReturn(observable)
+//            `when`(headerPresenter.getView()).thenReturn(headerView)
+//        }
+//
+//        it("creates presenter") {
+//            assertEquals(observable, headerPresenter.getRoutineObservable())
+//            assertEquals(routine, headerPresenter.getCurrentRoutine())
+//            assertEquals(headerView, headerPresenter.getView())
+//        }
+//
+//        it("binds view by setting title and subtitle") {
+//            headerPresenter.bindView(headerView)
+//            headerPresenter.setText(routine)
+//
+//            verify(headerView).setText("Title", "Subtitle")
+//        }
+//
+//        it("restores view by setting title and subtitle") {
+//            `when`(headerPresenter.restoreView(headerView)).thenCallRealMethod()
+//
+//            headerPresenter.restoreView(headerView)
+//
+//            verify(headerView).setText("Title", "Subtitle")
+//        }
     }
 }) {
     companion object {

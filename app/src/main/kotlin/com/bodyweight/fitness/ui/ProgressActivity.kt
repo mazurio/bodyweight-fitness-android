@@ -77,7 +77,7 @@ class ProgressActivity : RxAppCompatActivity() {
 
         UiEvent.dialogObservable
                 .bindToLifecycle(this)
-                .filter { it.dialogType == DialogType.LogWorkout }
+                .filter { it.dialogType == DialogType.ProgressActivityLogWorkout }
                 .subscribe { dialog ->
                     val bundle = Bundle()
                     bundle.putString(Constants.primaryKeyRoutineId, primaryKeyRoutineId)

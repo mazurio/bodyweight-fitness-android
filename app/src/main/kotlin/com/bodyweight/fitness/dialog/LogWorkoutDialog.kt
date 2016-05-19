@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 
 import com.bodyweight.fitness.*
+import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.*
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.Stream
@@ -26,6 +27,72 @@ import java.util.*
 import kotlin.properties.Delegates
 
 class LogWorkoutPresenter {
+    fun getPreviousWorkoutDescription(repositoryExercise: RepositoryExercise): String {
+        if (!RepositoryExercise.isCompleted(repositoryExercise)) {
+            return "Not Completed"
+        }
+
+        val numberOfSets = repositoryExercise.sets.size
+        val numberOfReps = repositoryExercise.sets.map { it.reps }.sum()
+
+        val rawSeconds = repositoryExercise.sets.map { it.seconds }.sum()
+
+        val stringMinutes = rawSeconds.formatMinutes(format = false)
+        val numberOfMinutes = rawSeconds.formatMinutesAsNumber()
+        val stringSeconds = rawSeconds.formatSeconds(format = false)
+        val numberOfSeconds = rawSeconds.formatSecondsAsNumber()
+
+        val sets = if (numberOfSets == 1) { "Set" } else { "Sets" }
+        val reps = if (numberOfReps == 1) { "Rep" } else { "Reps" }
+
+        val minutes = if (numberOfMinutes == 1) { "Minute" } else { "Minutes" }
+        val seconds = if (numberOfSeconds == 1) { "Second" } else { "Seconds" }
+
+        if (numberOfSets == 1) {
+            if (repositoryExercise.defaultSet == "timed") {
+                if (rawSeconds < 60) {
+                    return "$numberOfSets $sets, $stringSeconds $seconds"
+                } else if (numberOfSeconds == 60) {
+                    return "$numberOfSets $sets, $stringMinutes $minutes"
+                } else if (numberOfSeconds == 0) {
+                    return "$numberOfSets $sets, $stringMinutes $minutes"
+                } else {
+                    return "$numberOfSets $sets, $stringMinutes $minutes $stringSeconds $seconds"
+                }
+            }
+
+            return "1 Set, $numberOfReps $reps"
+        } else {
+            if (repositoryExercise.defaultSet == "timed") {
+                var t = ""
+
+                for (set in repositoryExercise.sets) {
+                    if (repositoryExercise.sets.last() == set) {
+                        t += "${set.seconds}s"
+                    } else {
+                        t += "${set.seconds}s-"
+                    }
+                }
+
+                return t
+            }
+
+            var t = ""
+
+            for (set in repositoryExercise.sets) {
+                if (repositoryExercise.sets.last() == set) {
+                    t += "${set.reps}"
+                } else {
+                    t += "${set.reps}-"
+                }
+            }
+
+            return t
+        }
+
+        return "";
+    }
+
     fun getToolbarDescription(repositoryExercise: RepositoryExercise): String {
         if (!RepositoryExercise.isCompleted(repositoryExercise)) {
             return "Not Completed"
@@ -130,6 +197,32 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
         layout.weightDecrease.setOnTouchListener(RepeatListener(initialInterval, normalInterval, {
             decreaseRight()
         }));
+
+        val realm = Repository.realm
+        val results = realm.where(RepositoryRoutine::class.java)
+                .lessThan("startTime", repositoryRoutine.startTime)
+                .notEqualTo("id", repositoryRoutine.id)
+                .findAll()
+
+        if (results.isNotEmpty()) {
+            layout.previous_workout_label.setVisible()
+            layout.previous_workout_value.setVisible()
+            layout.this_workout_label.setVisible()
+
+            results.last()?.let {
+                val exercise = results.last().exercises.filter {
+                    it.exerciseId.equals(repositoryExercise.exerciseId)
+                }.firstOrNull()
+
+                exercise?.let {
+                    layout.previous_workout_value.text = logWorkoutPresenter.getPreviousWorkoutDescription(it)
+                }
+            }
+        } else {
+            layout.previous_workout_label.setGone()
+            layout.previous_workout_value.setGone()
+            layout.this_workout_label.setGone()
+        }
 
         layout.actionView.setGone()
         layout.saveButton.setOnClickListener { dismiss() }

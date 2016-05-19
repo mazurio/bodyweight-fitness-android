@@ -161,6 +161,137 @@ class LogWorkoutPresenterSpec: Spek({
                 }
             }
         }
+
+        given("previous workout description") {
+            it("shows not completed") {
+                val description = logWorkoutPresenter.getPreviousWorkoutDescription(repositoryExercise)
+
+                assertEquals("Not Completed", description)
+            }
+
+            given("weighted exercise") {
+                it("shows number of reps for 1 set") {
+                    repositoryExercise.sets = RealmList(
+                            RepositorySet(id = "id", isTimed = false, weight = 0.0, reps = 2, seconds = 0, exercise = repositoryExercise)
+                    )
+
+                    val description = logWorkoutPresenter.getPreviousWorkoutDescription(repositoryExercise)
+
+                    assertEquals("1 Set, 2 Reps", description)
+                }
+
+                it("shows number of reps for 2 sets") {
+                    repositoryExercise.sets = RealmList(
+                            RepositorySet(id = "id", isTimed = false, weight = 0.0, reps = 2, seconds = 0, exercise = repositoryExercise),
+                            RepositorySet(id = "id", isTimed = false, weight = 0.0, reps = 5, seconds = 0, exercise = repositoryExercise)
+                    )
+
+                    val description = logWorkoutPresenter.getPreviousWorkoutDescription(repositoryExercise)
+
+                    assertEquals("2-5", description)
+                }
+
+                it("shows number of reps for many sets") {
+                    repositoryExercise.sets = RealmList(
+                            RepositorySet(id = "id", isTimed = false, weight = 0.0, reps = 2, seconds = 0, exercise = repositoryExercise),
+                            RepositorySet(id = "id", isTimed = false, weight = 0.0, reps = 5, seconds = 0, exercise = repositoryExercise),
+                            RepositorySet(id = "id", isTimed = false, weight = 0.0, reps = 5, seconds = 0, exercise = repositoryExercise),
+                            RepositorySet(id = "id", isTimed = false, weight = 0.0, reps = 5, seconds = 0, exercise = repositoryExercise),
+                            RepositorySet(id = "id", isTimed = false, weight = 0.0, reps = 6, seconds = 0, exercise = repositoryExercise),
+                            RepositorySet(id = "id", isTimed = false, weight = 0.0, reps = 7, seconds = 0, exercise = repositoryExercise),
+                            RepositorySet(id = "id", isTimed = false, weight = 0.0, reps = 3, seconds = 0, exercise = repositoryExercise)
+                    )
+
+                    val description = logWorkoutPresenter.getPreviousWorkoutDescription(repositoryExercise)
+
+                    assertEquals("2-5-5-5-6-7-3", description)
+                }
+            }
+
+            given("timed exercise") {
+                beforeEach {
+                    repositoryExercise.defaultSet = "timed"
+                }
+
+                it("shows time for 1 set and 10 seconds") {
+                    repositoryExercise.sets = RealmList(
+                            RepositorySet(id = "id", isTimed = true, weight = 0.0, reps = 0, seconds = 10, exercise = repositoryExercise)
+                    )
+
+                    val description = logWorkoutPresenter.getPreviousWorkoutDescription(repositoryExercise)
+
+                    assertEquals("1 Set, 10 Seconds", description)
+                }
+
+                it("shows time for 1 set and 1 second") {
+                    repositoryExercise.sets = RealmList(
+                            RepositorySet(id = "id", isTimed = true, weight = 0.0, reps = 0, seconds = 1, exercise = repositoryExercise)
+                    )
+
+                    val description = logWorkoutPresenter.getPreviousWorkoutDescription(repositoryExercise)
+
+                    assertEquals("1 Set, 1 Second", description)
+                }
+
+                it("shows time for 1 set and 1 minute") {
+                    repositoryExercise.sets = RealmList(
+                            RepositorySet(id = "id", isTimed = true, weight = 0.0, reps = 0, seconds = 60, exercise = repositoryExercise)
+                    )
+
+                    val description = logWorkoutPresenter.getPreviousWorkoutDescription(repositoryExercise)
+
+                    assertEquals("1 Set, 1 Minute", description)
+                }
+
+                it("shows time for 1 set and 2 minutes") {
+                    repositoryExercise.sets = RealmList(
+                            RepositorySet(id = "id", isTimed = true, weight = 0.0, reps = 0, seconds = 120, exercise = repositoryExercise)
+                    )
+
+                    val description = logWorkoutPresenter.getPreviousWorkoutDescription(repositoryExercise)
+
+                    assertEquals("1 Set, 2 Minutes", description)
+                }
+
+                it("shows time for 1 set and 2 minutes 31 seconds") {
+                    repositoryExercise.sets = RealmList(
+                            RepositorySet(id = "id", isTimed = true, weight = 0.0, reps = 0, seconds = 151, exercise = repositoryExercise)
+                    )
+
+                    val description = logWorkoutPresenter.getPreviousWorkoutDescription(repositoryExercise)
+
+                    assertEquals("1 Set, 2 Minutes 31 Seconds", description)
+                }
+
+                it("shows time for 2 sets") {
+                    repositoryExercise.sets = RealmList(
+                            RepositorySet(id = "id", isTimed = true, weight = 0.0, reps = 0, seconds = 45, exercise = repositoryExercise),
+                            RepositorySet(id = "id", isTimed = true, weight = 0.0, reps = 0, seconds = 45, exercise = repositoryExercise)
+                    )
+
+                    val description = logWorkoutPresenter.getPreviousWorkoutDescription(repositoryExercise)
+
+                    assertEquals("45s-45s", description)
+                }
+
+                it("shows time for multiple sets") {
+                    repositoryExercise.sets = RealmList(
+                            RepositorySet(id = "id", isTimed = true, weight = 0.0, reps = 0, seconds = 45, exercise = repositoryExercise),
+                            RepositorySet(id = "id", isTimed = true, weight = 0.0, reps = 0, seconds = 45, exercise = repositoryExercise),
+                            RepositorySet(id = "id", isTimed = true, weight = 0.0, reps = 0, seconds = 60, exercise = repositoryExercise),
+                            RepositorySet(id = "id", isTimed = true, weight = 0.0, reps = 0, seconds = 121, exercise = repositoryExercise),
+                            RepositorySet(id = "id", isTimed = true, weight = 0.0, reps = 0, seconds = 1, exercise = repositoryExercise),
+                            RepositorySet(id = "id", isTimed = true, weight = 0.0, reps = 0, seconds = 5, exercise = repositoryExercise),
+                            RepositorySet(id = "id", isTimed = true, weight = 0.0, reps = 0, seconds = 0, exercise = repositoryExercise),
+                            RepositorySet(id = "id", isTimed = true, weight = 0.0, reps = 0, seconds = 60, exercise = repositoryExercise)
+                    )
+
+                    val description = logWorkoutPresenter.getPreviousWorkoutDescription(repositoryExercise)
+
+                    assertEquals("45s-45s-60s-121s-1s-5s-0s-60s", description)
+                }
+            }
+        }
     }
 }) {
     companion object {

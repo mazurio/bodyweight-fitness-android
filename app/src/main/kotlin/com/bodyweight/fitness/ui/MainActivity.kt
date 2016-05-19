@@ -29,6 +29,7 @@ import com.trello.rxlifecycle.kotlin.bindUntilEvent
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_toolbar.*
+import rx.android.schedulers.AndroidSchedulers
 
 class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +45,7 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
         UiEvent.dialogObservable
                 .bindUntilEvent(this, event)
                 .subscribe {
-                    if (it.dialogType === DialogType.LogWorkout) {
+                    if (it.dialogType === DialogType.MainActivityLogWorkout) {
                         val bundle = Bundle()
                         bundle.putString(Constants.exerciseId, it.exerciseId)
 

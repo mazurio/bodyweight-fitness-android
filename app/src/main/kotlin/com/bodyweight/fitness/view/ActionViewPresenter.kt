@@ -109,7 +109,7 @@ class ActionPresenter : AbstractPresenter() {
     }
 
     fun logWorkout() {
-        UiEvent.showDialog(DialogType.LogWorkout, RoutineStream.exercise.exerciseId)
+        UiEvent.showDialog(DialogType.MainActivityLogWorkout, RoutineStream.exercise.exerciseId)
     }
 
     fun watchFullVideo() {

@@ -189,7 +189,40 @@
                 android:paddingBottom="24dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:orientation="vertical" />
+                android:orientation="vertical">
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/previous_workout_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:gravity="center"
+                    android:textColor="#111"
+                    android:textSize="18sp"
+                    android:text="Previous Workout"
+                    app:typeface="roboto_regular"/>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/previous_workout_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:text="5-5-5-5"
+                    app:typeface="roboto_regular"/>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/this_workout_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:padding="8dp"
+                    android:gravity="center"
+                    android:textColor="#111"
+                    android:textSize="18sp"
+                    android:text="This Workout"
+                    app:typeface="roboto_regular"/>
+            </LinearLayout>
 
             <com.devspark.robototextview.widget.RobotoButton
                 android:id="@+id/saveButton"

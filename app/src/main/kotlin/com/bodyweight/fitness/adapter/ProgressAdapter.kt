@@ -99,7 +99,7 @@ class ProgressCardPresenter(itemView: View) : ProgressPresenter(itemView) {
         itemView.toolbar.subtitle = LogWorkoutPresenter().getToolbarDescription(repositoryExercise)
 
         itemView.view_button.setOnClickListener {
-            UiEvent.showDialog(DialogType.LogWorkout, repositoryExercise.exerciseId)
+            UiEvent.showDialog(DialogType.ProgressActivityLogWorkout, repositoryExercise.exerciseId)
         }
     }
 }

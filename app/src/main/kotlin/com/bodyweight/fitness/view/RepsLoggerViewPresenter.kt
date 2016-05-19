@@ -127,7 +127,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
 
             routine.exercises.filter {
                 it.exerciseId == RoutineStream.exercise.exerciseId
-            }.first()?.let {
+            }.firstOrNull()?.let {
                 val sets = it.sets
 
                 if (sets.size == 1 && sets.first().reps == 0) {
