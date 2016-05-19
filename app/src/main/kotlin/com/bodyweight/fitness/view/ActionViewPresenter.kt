@@ -49,14 +49,29 @@ class ActionPresenter : AbstractPresenter() {
                 .bindToLifecycle(view)
                 .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
                 .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
-                .filter {
-                    it.equals(R.id.action_menu_home) || it.equals(R.id.action_menu_workout_log)
-                }
+                .filter { it.equals(R.id.action_menu_home) || it.equals(R.id.action_menu_workout_log) }
                 .subscribe {
                     if (it == R.id.action_menu_home) {
-                        view.showActionButtons()
+                        if (Stream.currentHomePage == 0 || Stream.currentHomePage == 2) {
+                            view.hideActionButtons()
+                        } else {
+                            view.showActionButtons()
+                        }
                     } else {
                         view.hideActionButtons()
+                    }
+                }
+
+        Stream.homePageObservable()
+                .bindToLifecycle(view)
+                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
+                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
+                .filter { Stream.currentDrawerId.equals(R.id.action_menu_home) }
+                .subscribe {
+                    if (it == 0 || it == 2) {
+                        view.hideActionButtons()
+                    } else {
+                        view.showActionButtons()
                     }
                 }
 

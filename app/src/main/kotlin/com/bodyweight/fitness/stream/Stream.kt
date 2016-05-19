@@ -32,6 +32,9 @@ object Stream {
     var currentCalendarDay: CalendarDay = CalendarDay()
         private set
 
+    var currentHomePage: Int = 0
+        private set
+
     private val menuSubject = PublishSubject.create<Int>()
     private val drawerSubject = PublishSubject.create<Int>()
     private val loggedSecondsSubject = PublishSubject.create<Int>()
@@ -39,6 +42,8 @@ object Stream {
 
     private val calendarPageSubject = PublishSubject.create<Int>()
     private val calendarDaySubject = PublishSubject.create<CalendarDay>()
+
+    private val homePageSubject = PublishSubject.create<Int>()
 
     /**
      * Emits when changes to repository have been made.
@@ -74,6 +79,13 @@ object Stream {
                 .refCount()
     }
 
+    fun homePageObservable(): Observable<Int> {
+        return Observable.merge(Observable.just(currentHomePage).publish().refCount(), homePageSubject)
+                .observeOn(AndroidSchedulers.mainThread())
+                .publish()
+                .refCount()
+    }
+
     fun setMenu(toolbarMenuItemId: Int) {
         menuSubject.onNext(toolbarMenuItemId)
     }
@@ -94,17 +106,22 @@ object Stream {
         loggedSetRepsSubject.onNext(setReps)
     }
 
-    fun streamPage(page: Int) {
+    fun setCalendarPage(page: Int) {
         currentCalendarPage = page
         calendarPageSubject.onNext(page)
     }
 
-    fun streamDay(day: CalendarDay) {
+    fun setCalendarDay(day: CalendarDay) {
         currentCalendarDay = day
         calendarDaySubject.onNext(day)
     }
 
     fun setRepository() {
         repositorySubject.onNext(true)
+    }
+
+    fun setHomePage(page: Int) {
+        currentHomePage = page
+        homePageSubject.onNext(page)
     }
 }

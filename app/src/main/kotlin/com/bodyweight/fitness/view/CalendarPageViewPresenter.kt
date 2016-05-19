@@ -77,7 +77,7 @@ class CalendarPagePresenter : AbstractPresenter() {
     }
 
     fun clickedAt(dayView: Int) {
-        Stream.streamDay(CalendarDay(viewPagerPosition, dayView))
+        Stream.setCalendarDay(CalendarDay(viewPagerPosition, dayView))
     }
 }
 

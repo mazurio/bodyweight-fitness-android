@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 
@@ -18,8 +17,6 @@ import com.bodyweight.fitness.R
 import com.bodyweight.fitness.dialog.LogWorkoutDialog
 import com.bodyweight.fitness.dialog.ProgressDialog
 import com.bodyweight.fitness.extension.debug
-import com.bodyweight.fitness.setGone
-import com.bodyweight.fitness.setVisible
 import com.bodyweight.fitness.stream.DialogType
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
@@ -33,8 +30,6 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle.kotlin.bindUntilEvent
 
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.view_home.*
-import kotlinx.android.synthetic.main.view_timer.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 
 class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -44,7 +39,6 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
         setContentView(R.layout.activity_main)
 
         setToolbar()
-        setTabLayout()
         keepScreenOnWhenAppIsRunning()
 
         val event = ActivityEvent.DESTROY
@@ -68,30 +62,6 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
                         val progressDialog = ProgressDialog()
                         progressDialog.arguments = bundle
                         progressDialog.show(supportFragmentManager, "progressDialog")
-                    }
-                }
-
-        RoutineStream.exerciseObservable()
-                .bindUntilEvent(this, event)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
-                .subscribe {
-                    if (it.isTimedSet) {
-                        if (view_tabs.tabCount == 2) {
-                            view_tabs.removeAllTabs()
-                            view_tabs.addTab(view_tabs.newTab().setText("Timer"))
-                        }
-
-                        view_tabs.getTabAt(0)?.select()
-                    } else {
-                        if (view_tabs.tabCount == 1) {
-                            view_tabs.removeAllTabs()
-
-                            view_tabs.addTab(view_tabs.newTab().setText("Timer"))
-                            view_tabs.addTab(view_tabs.newTab().setText("Reps Logger"))
-                        }
-
-                        view_tabs.getTabAt(1)?.select()
                     }
                 }
 
@@ -156,7 +126,9 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         if (Stream.currentDrawerId == R.id.action_menu_home) {
-            menuInflater.inflate(R.menu.home, menu)
+            if (Stream.currentHomePage != 0 && Stream.currentHomePage != 2) {
+                menuInflater.inflate(R.menu.home, menu)
+            }
         } else if (Stream.currentDrawerId  == R.id.action_menu_workout_log) {
             menuInflater.inflate(R.menu.calendar, menu)
         }
@@ -196,28 +168,6 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
                 return@setNavigationItemSelectedListener true
             }
         }
-    }
-
-    private fun setTabLayout() {
-        view_tabs.addTab(view_tabs.newTab().setText("Timer"))
-        view_tabs.addTab(view_tabs.newTab().setText("Reps Logger"))
-
-        view_tabs.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                val position = tab.position
-
-                if (position == 0) {
-                    timer_view.setVisible()
-                    reps_logger_view.setGone()
-                } else {
-                    timer_view.setGone()
-                    reps_logger_view.setVisible()
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) { }
-            override fun onTabReselected(tab: TabLayout.Tab) { }
-        })
     }
 
     private fun keepScreenOnWhenAppIsRunning() {

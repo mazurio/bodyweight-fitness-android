@@ -27,7 +27,13 @@ class ToolbarPresenter : AbstractPresenter() {
                 .bindToLifecycle(view)
                 .filter { Stream.currentDrawerId.equals(R.id.action_menu_home) }
                 .subscribe {
-                    setToolbarForHome(it)
+                    if (Stream.currentHomePage == 0) {
+                        setToolbarForWelcome()
+                    } else if (Stream.currentHomePage == 2) {
+                        setToolbarForSummary()
+                    } else {
+                        setToolbarForHome(it)
+                    }
                 }
 
         Stream.calendarDayObservable()
@@ -37,6 +43,21 @@ class ToolbarPresenter : AbstractPresenter() {
                 .filter { Stream.currentDrawerId.equals(R.id.action_menu_workout_log) }
                 .subscribe {
                     setToolbarForWorkoutLog(it)
+                }
+
+        Stream.homePageObservable()
+                .bindToLifecycle(view)
+                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
+                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
+                .filter { Stream.currentDrawerId.equals(R.id.action_menu_home) }
+                .subscribe {
+                    if (it == 0) {
+                        setToolbarForWelcome()
+                    } else if (it == 2) {
+                        setToolbarForSummary()
+                    } else {
+                        setToolbar()
+                    }
                 }
 
         Stream.drawerObservable()
@@ -60,13 +81,33 @@ class ToolbarPresenter : AbstractPresenter() {
     fun setToolbar() {
         when (Stream.currentDrawerId) {
             R.id.action_menu_home ->
-                setToolbarForHome(RoutineStream.exercise)
+                if (Stream.currentHomePage == 0) {
+                    setToolbarForWelcome()
+                } else if (Stream.currentHomePage == 2) {
+                    setToolbarForSummary()
+                } else {
+                    setToolbarForHome(RoutineStream.exercise)
+                }
             R.id.action_menu_workout_log ->
                 setToolbarForWorkoutLog(Stream.currentCalendarDay)
         }
     }
 
-    fun setToolbarForHome(exercise: Exercise) {
+    private fun setToolbarForWelcome() {
+        val view: ToolbarView = (mView as ToolbarView)
+
+        view.invalidateMenu()
+        view.setSingleTitle("Welcome")
+    }
+
+    private fun setToolbarForSummary() {
+        val view: ToolbarView = (mView as ToolbarView)
+
+        view.invalidateMenu()
+        view.setSingleTitle("Summary")
+    }
+
+    private fun setToolbarForHome(exercise: Exercise) {
         val view: ToolbarView = (mView as ToolbarView)
 
         view.inflateHomeMenu()
@@ -76,7 +117,7 @@ class ToolbarPresenter : AbstractPresenter() {
         view.setDescription(exercise.description)
     }
 
-    fun setToolbarForWorkoutLog(calendarDay: CalendarDay?) {
+    private fun setToolbarForWorkoutLog(calendarDay: CalendarDay?) {
         if (calendarDay == null) {
             setDateTimeSingleTitle(DateTime())
         } else {
@@ -101,13 +142,19 @@ class ToolbarView : AbstractView {
 
     override fun onCreateView() {}
 
-    fun inflateHomeMenu() {
+    fun invalidateMenu() {
         toolbar.menu.clear()
+    }
+
+    fun inflateHomeMenu() {
+        invalidateMenu()
+
         toolbar.inflateMenu(R.menu.home)
     }
 
     fun inflateWorkoutLogMenu() {
-        toolbar.menu.clear()
+        invalidateMenu()
+
         toolbar.inflateMenu(R.menu.calendar)
     }
 

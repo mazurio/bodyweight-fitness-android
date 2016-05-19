@@ -29,9 +29,9 @@ class App : Application() {
         val config = RateThisApp.Config(3, 5)
         RateThisApp.init(config)
 
-        if (!BuildConfig.DEBUG) {
-            Fabric.with(applicationContext, Crashlytics(), Answers())
-        }
+//        if (!BuildConfig.DEBUG) {
+//            Fabric.with(applicationContext, Crashlytics(), Answers())
+//        }
 
         context = applicationContext
 
