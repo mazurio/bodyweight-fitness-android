@@ -6,6 +6,7 @@ import android.view.View
 
 import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.stream.RoutineStream
+import com.bodyweight.fitness.stream.UiEvent
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_timer.view.*
@@ -21,23 +22,24 @@ class NavigationPresenter : AbstractPresenter() {
                 .subscribe {
                     val view = (view as NavigationView)
 
-                    view.showOrHideButtons(it.isPrevious, it.isNext)
                     view.showTimerOrRepsLogger(it.isTimedSet)
                 }
     }
 
-    override fun restoreView(view: AbstractView) {
-        super.restoreView(view)
-
-        (view as NavigationView).showOrHideButtons(RoutineStream.exercise.isPrevious, RoutineStream.exercise.isNext)
-    }
-
     fun previousExercise() {
-        RoutineStream.exercise = RoutineStream.exercise.previous!!
+        if (RoutineStream.exercise.isPrevious) {
+            RoutineStream.exercise = RoutineStream.exercise.previous!!
+        } else {
+            UiEvent.showHomePage(0)
+        }
     }
 
     fun nextExercise() {
-        RoutineStream.exercise = RoutineStream.exercise.next!!
+        if (RoutineStream.exercise.isNext) {
+            RoutineStream.exercise = RoutineStream.exercise.next!!
+        } else {
+            UiEvent.showHomePage(2)
+        }
     }
 }
 
@@ -55,20 +57,6 @@ open class NavigationView : AbstractView {
 
         next_exercise_button.setOnClickListener {
             (mPresenter as NavigationPresenter).nextExercise()
-        }
-    }
-
-    fun showOrHideButtons(isPrevious: Boolean, isNext: Boolean) {
-        if (isPrevious) {
-            prev_exercise_button.visibility = View.VISIBLE
-        } else {
-            prev_exercise_button.visibility = View.INVISIBLE
-        }
-
-        if (isNext) {
-            next_exercise_button.visibility = View.VISIBLE
-        } else {
-            next_exercise_button.visibility = View.INVISIBLE
         }
     }
 
