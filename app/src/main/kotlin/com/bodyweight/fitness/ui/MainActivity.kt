@@ -85,6 +85,10 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
                         R.id.action_menu_settings -> {
                             startActivity(Intent(applicationContext, SettingsActivity::class.java))
                         }
+
+                        else -> {
+                            navigation_view.setCheckedItem(it)
+                        }
                     }
                 }
     }

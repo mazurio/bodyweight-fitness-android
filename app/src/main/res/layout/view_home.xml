@@ -39,10 +39,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <!--<RelativeLayout-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="16dp" />-->
-
                         <android.support.v7.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -75,10 +71,10 @@
                                     android:paddingRight="16dp">
 
                                     <com.devspark.robototextview.widget.RobotoTextView
+                                        android:id="@+id/category_one_title"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:paddingTop="4dp"
-                                        android:text="Warmup"
                                         android:textSize="15sp"/>
 
                                     <LinearLayout
@@ -87,30 +83,32 @@
                                         android:weightSum="100"
                                         android:orientation="horizontal">
 
-                                        <RelativeLayout
+                                        <LinearLayout
+                                            android:id="@+id/category_one_completion_rate_value"
                                             android:layout_width="0dp"
                                             android:layout_height="16dp"
                                             android:layout_weight="70"
                                             android:background="@drawable/action_welcome"
                                             android:layout_marginTop="8dp"
-                                            android:layout_marginBottom="8dp"/>
+                                            android:layout_marginBottom="8dp"
+                                            android:orientation="horizontal"/>
 
                                         <com.devspark.robototextview.widget.RobotoTextView
+                                            android:id="@+id/category_one_completion_rate_label"
                                             android:layout_width="0dp"
                                             android:layout_height="match_parent"
                                             android:layout_weight="30"
                                             android:paddingLeft="8dp"
                                             android:gravity="center|left"
-                                            android:text="70%"
                                             android:textSize="20sp"
                                             android:textColor="#111"/>
                                     </LinearLayout>
 
                                     <com.devspark.robototextview.widget.RobotoTextView
+                                        android:id="@+id/category_two_title"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:paddingTop="4dp"
-                                        android:text="Skills Work"
                                         android:textSize="15sp"/>
 
                                     <LinearLayout
@@ -119,30 +117,32 @@
                                         android:weightSum="100"
                                         android:orientation="horizontal">
 
-                                        <RelativeLayout
+                                        <LinearLayout
+                                            android:id="@+id/category_two_completion_rate_value"
                                             android:layout_width="0dp"
                                             android:layout_height="16dp"
                                             android:layout_weight="20"
                                             android:background="@drawable/action_welcome"
                                             android:layout_marginTop="8dp"
-                                            android:layout_marginBottom="8dp"/>
+                                            android:layout_marginBottom="8dp"
+                                            android:orientation="horizontal"/>
 
                                         <com.devspark.robototextview.widget.RobotoTextView
+                                            android:id="@+id/category_two_completion_rate_label"
                                             android:layout_width="0dp"
                                             android:layout_height="match_parent"
                                             android:layout_weight="80"
                                             android:paddingLeft="8dp"
                                             android:gravity="center|left"
-                                            android:text="20%"
                                             android:textSize="20sp"
                                             android:textColor="#111"/>
                                     </LinearLayout>
 
                                     <com.devspark.robototextview.widget.RobotoTextView
+                                        android:id="@+id/category_three_title"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:paddingTop="4dp"
-                                        android:text="Strength Work"
                                         android:textSize="15sp"/>
 
                                     <LinearLayout
@@ -151,21 +151,23 @@
                                         android:weightSum="100"
                                         android:orientation="horizontal">
 
-                                        <RelativeLayout
+                                        <LinearLayout
+                                            android:id="@+id/category_three_completion_rate_value"
                                             android:layout_width="0dp"
                                             android:layout_height="16dp"
                                             android:layout_weight="50"
                                             android:background="@drawable/action_welcome"
                                             android:layout_marginTop="8dp"
-                                            android:layout_marginBottom="8dp"/>
+                                            android:layout_marginBottom="8dp"
+                                            android:orientation="horizontal"/>
 
                                         <com.devspark.robototextview.widget.RobotoTextView
+                                            android:id="@+id/category_three_completion_rate_label"
                                             android:layout_width="0dp"
                                             android:layout_height="match_parent"
                                             android:layout_weight="50"
                                             android:paddingLeft="8dp"
                                             android:gravity="center|left"
-                                            android:text="50%"
                                             android:textSize="20sp"
                                             android:textColor="#111"/>
                                     </LinearLayout>
@@ -179,7 +181,6 @@
                                     android:layout_marginLeft="8dp"
                                     android:layout_marginBottom="8dp"
                                     android:gravity="center"
-                                    android:text="Start Workout"
                                     android:textSize="16sp"
                                     android:textColor="@color/primaryDark"
                                     style="@style/Widget.AppCompat.Button.Borderless"/>

@@ -6,6 +6,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 
 import com.bodyweight.fitness.model.RepositoryRoutine
 import com.bodyweight.fitness.repository.Repository
@@ -20,6 +21,14 @@ fun primary(): Int {
 
 fun primaryDark(): Int {
     return Color.parseColor("#00453E")
+}
+
+fun LinearLayout.setLayoutWeight(weight: Float) {
+    val params = this.layoutParams as LinearLayout.LayoutParams
+
+    params.weight = weight;
+
+    this.layoutParams = params
 }
 
 fun Int.toPx(context: Context): Int = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics).toInt()
