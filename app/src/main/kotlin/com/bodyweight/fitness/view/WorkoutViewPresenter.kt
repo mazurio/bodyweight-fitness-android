@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import com.bodyweight.fitness.setGone
 import com.bodyweight.fitness.setVisible
 import com.bodyweight.fitness.stream.RoutineStream
+
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
 import kotlinx.android.synthetic.main.view_timer.view.*

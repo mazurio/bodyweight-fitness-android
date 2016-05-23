@@ -3,7 +3,6 @@ package com.bodyweight.fitness.view
 import android.content.Context
 import android.util.AttributeSet
 import com.bodyweight.fitness.Constants
-import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.*
 
 import com.bodyweight.fitness.repository.Repository
@@ -18,7 +17,7 @@ import org.joda.time.DateTime
 import java.util.*
 
 class RepsLoggerPresenter : AbstractPresenter() {
-    var mNumberOfReps: Int = 5
+    var numberOfReps: Int = 5
 
     override fun bindView(view: AbstractView) {
         super.bindView(view)
@@ -26,9 +25,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
         RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
                 .subscribe {
-                    mNumberOfReps = Preferences.getNumberOfRepsForExercise(it.exerciseId, 5)
-
-                    debug(it.title)
+                    numberOfReps = Preferences.getNumberOfRepsForExercise(it.exerciseId, 5)
 
                     updateLabels()
                 }
@@ -43,7 +40,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
     override fun restoreView(view: AbstractView) {
         super.restoreView(view)
 
-        mNumberOfReps = Preferences.getNumberOfRepsForExercise(RoutineStream.exercise.exerciseId, 5)
+        numberOfReps = Preferences.getNumberOfRepsForExercise(RoutineStream.exercise.exerciseId, 5)
 
         updateLabels()
     }
@@ -52,9 +49,9 @@ class RepsLoggerPresenter : AbstractPresenter() {
         val repsLoggerView: RepsLoggerView = (mView as RepsLoggerView)
 
         repsLoggerView.setSets(formatSets())
-        repsLoggerView.setNumberOfReps(formatNumberOfReps(mNumberOfReps))
+        repsLoggerView.setNumberOfReps(formatNumberOfReps(numberOfReps))
 
-        Preferences.setNumberOfReps(RoutineStream.exercise.exerciseId, mNumberOfReps)
+        Preferences.setNumberOfReps(RoutineStream.exercise.exerciseId, numberOfReps)
     }
 
     fun logReps() {
@@ -73,9 +70,9 @@ class RepsLoggerPresenter : AbstractPresenter() {
                     val firstSet = currentExercise.sets.first()
 
                     if (numberOfSets == 1 && firstSet.reps == 0) {
-                        firstSet.reps = mNumberOfReps
+                        firstSet.reps = numberOfReps
 
-                        Stream.setLoggedSetReps(SetReps(numberOfSets, mNumberOfReps))
+                        Stream.setLoggedSetReps(SetReps(numberOfSets, numberOfReps))
                     } else {
                         val repositorySet = realm.createObject(RepositorySet::class.java)
 
@@ -83,14 +80,14 @@ class RepsLoggerPresenter : AbstractPresenter() {
                         repositorySet.isTimed = false
                         repositorySet.seconds = 0
                         repositorySet.weight = 0.0
-                        repositorySet.reps = mNumberOfReps
+                        repositorySet.reps = numberOfReps
 
                         repositorySet.exercise = currentExercise
 
                         currentExercise.sets.add(repositorySet)
 
                         Stream.setRepository()
-                        Stream.setLoggedSetReps(SetReps(numberOfSets + 1, mNumberOfReps))
+                        Stream.setLoggedSetReps(SetReps(numberOfSets + 1, numberOfReps))
                     }
 
                     repositoryRoutine.lastUpdatedTime = DateTime().toDate()
@@ -104,16 +101,16 @@ class RepsLoggerPresenter : AbstractPresenter() {
     }
 
     fun increaseReps() {
-        if (mNumberOfReps < 25) {
-            mNumberOfReps += 1
+        if (numberOfReps < 25) {
+            numberOfReps += 1
 
             updateLabels()
         }
     }
 
     fun decreaseReps() {
-        if (mNumberOfReps > 1) {
-            mNumberOfReps -= 1
+        if (numberOfReps > 1) {
+            numberOfReps -= 1
 
             updateLabels()
         }
