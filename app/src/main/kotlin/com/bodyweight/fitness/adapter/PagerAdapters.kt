@@ -27,37 +27,6 @@ import kotlinx.android.synthetic.main.activity_progress_page.view.*
 
 import java.util.*
 
-
-//val view = container.inflate(R.layout.view_home_exercise)
-//
-//view.view_tabs.addTab(view.view_tabs.newTab().setText("Timer"))
-//view.view_tabs.addTab(view.view_tabs.newTab().setText("Reps Logger"))
-//
-//view.view_tabs.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-//    override fun onTabSelected(tab: TabLayout.Tab) {
-//            val position = tab.position
-//
-//            if (position == 0) {
-//                view.timer_view.setVisible()
-//                view.reps_logger_view.setGone()
-//            } else {
-//                view.timer_view.setGone()
-//                view.reps_logger_view.setVisible()
-//            }
-//        }
-//
-//        override fun onTabUnselected(tab: TabLayout.Tab) { }
-//        override fun onTabReselected(tab: TabLayout.Tab) { }
-//    })
-//
-//if (RoutineStream.exercise.isTimedSet) {
-//    view.view_tabs.getTabAt(0)?.select()
-//} else {
-//    view.view_tabs.getTabAt(1)?.select()
-//}
-
-
-
 class ProgressPagerAdapter(private val repositoryRoutine: RepositoryRoutine) : PagerAdapter() {
     private var numberOfExercises: Int = 0
     private var currentExerciseIndex: Int = 0
