@@ -221,9 +221,9 @@
                                         android:orientation="vertical">
 
                                         <com.devspark.robototextview.widget.RobotoTextView
+                                            android:id="@+id/total_workouts_value"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="31"
                                             android:textSize="20sp"
                                             android:textColor="#111"/>
 
@@ -231,7 +231,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:paddingTop="4dp"
-                                            android:text="Total Workouts"
+                                            android:text="Total"
                                             android:textSize="15sp"/>
                                     </LinearLayout>
                                     <LinearLayout
@@ -241,9 +241,9 @@
                                         android:orientation="vertical">
 
                                         <com.devspark.robototextview.widget.RobotoTextView
+                                            android:id="@+id/last_workout_value"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="2 days ago"
                                             android:textSize="20sp"
                                             android:textColor="#111"/>
 
@@ -270,9 +270,9 @@
                                         android:orientation="vertical">
 
                                         <com.devspark.robototextview.widget.RobotoTextView
+                                            android:id="@+id/last_7_days_value"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="2 Workouts"
                                             android:textSize="20sp"
                                             android:textColor="#111"/>
 
@@ -290,9 +290,9 @@
                                         android:orientation="vertical">
 
                                         <com.devspark.robototextview.widget.RobotoTextView
+                                            android:id="@+id/last_30_days_value"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="12 Workouts"
                                             android:textSize="20sp"
                                             android:textColor="#111"/>
 
@@ -300,28 +300,15 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:paddingTop="4dp"
-                                            android:text="Last 31 Days"
+                                            android:text="Last 30 Days"
                                             android:textSize="15sp"/>
                                     </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>
-
                         </android.support.v7.widget.CardView>
                     </LinearLayout>
                 </FrameLayout>
             </LinearLayout>
         </ScrollView>
-
-        <!--<com.bodyweight.fitness.view.widget.ActionButton-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="bottom|end"-->
-            <!--android:layout_marginBottom="@dimen/view_action_margin"-->
-            <!--android:layout_marginRight="@dimen/view_action_margin"-->
-            <!--app:borderWidth="0dp"-->
-            <!--app:useCompatPadding="false"-->
-            <!--app:backgroundTint="@color/primaryDark"-->
-            <!--app:elevation="@dimen/view_action_elevation"-->
-            <!--app:srcCompat="@drawable/action_add"/>-->
     </android.support.design.widget.CoordinatorLayout>
 </com.bodyweight.fitness.view.HomeView>

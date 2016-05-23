@@ -64,33 +64,31 @@ class LogWorkoutPresenter {
             return "1 Set, $numberOfReps $reps"
         } else {
             if (repositoryExercise.defaultSet == "timed") {
-                var t = ""
+                var description = ""
 
                 for (set in repositoryExercise.sets) {
                     if (repositoryExercise.sets.last() == set) {
-                        t += "${set.seconds}s"
+                        description += "${set.seconds}s"
                     } else {
-                        t += "${set.seconds}s-"
+                        description += "${set.seconds}s-"
                     }
                 }
 
-                return t
+                return description
             }
 
-            var t = ""
+            var description = ""
 
             for (set in repositoryExercise.sets) {
                 if (repositoryExercise.sets.last() == set) {
-                    t += "${set.reps}"
+                    description += "${set.reps}"
                 } else {
-                    t += "${set.reps}-"
+                    description += "${set.reps}-"
                 }
             }
 
-            return t
+            return description
         }
-
-        return "";
     }
 
     fun getToolbarDescription(repositoryExercise: RepositoryExercise): String {
@@ -209,12 +207,10 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
             layout.previous_workout_value.setVisible()
             layout.this_workout_label.setVisible()
 
-            results.last()?.let {
-                val exercise = results.last().exercises.filter {
+            results.lastOrNull()?.let {
+                it.exercises.filter {
                     it.exerciseId.equals(repositoryExercise.exerciseId)
-                }.firstOrNull()
-
-                exercise?.let {
+                }.firstOrNull()?.let {
                     layout.previous_workout_value.text = logWorkoutPresenter.getPreviousWorkoutDescription(it)
                 }
             }

@@ -2,8 +2,7 @@ package com.bodyweight.fitness.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
+
 import com.bodyweight.fitness.R
 import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.RepositoryCategory
@@ -14,10 +13,10 @@ import com.bodyweight.fitness.setLayoutWeight
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
 
-import com.bodyweight.fitness.stream.UiEvent
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
 import kotlinx.android.synthetic.main.view_home.view.*
+import org.joda.time.DateTime
 
 data class CompletionRate(val percentage: Int, val label: String)
 
@@ -30,6 +29,14 @@ class HomeViewPresenter : AbstractPresenter() {
                 .filter { it.equals(R.id.action_menu_home) }
                 .subscribe {
                     updateTodaysProgress()
+                    updateStatistics()
+                }
+
+        Stream.repositoryObservable
+                .bindToLifecycle(view)
+                .subscribe {
+                    updateTodaysProgress()
+                    updateStatistics()
                 }
     }
 
@@ -77,6 +84,22 @@ class HomeViewPresenter : AbstractPresenter() {
         }
     }
 
+    fun updateStatistics() {
+        val view = (getView() as HomeView)
+
+        // lastWorkout = X years ago / X months ago / X weeks ago / X days ago / Today / Yesterday / Never
+
+        val totalWorkouts = getNumberOfWorkouts()
+        val lastWorkoutLabel = getLastWorkoutLabel()
+        val last7Days = getNumberOfWorkouts(days = 7)
+        val last30Days = getNumberOfWorkouts(days = 30)
+
+        view.setNumberOfWorkouts("$totalWorkouts ${getNumberOfWorkoutsPostfix(totalWorkouts)}")
+        view.setLastWorkout("$lastWorkoutLabel")
+        view.setNumberOfWorkoutsLast7Days("$last7Days ${getNumberOfWorkoutsPostfix(last7Days)}")
+        view.setNumberOfWorkoutsLast30Days("$last30Days ${getNumberOfWorkoutsPostfix(last30Days)}")
+    }
+
     fun getCompletionRateForCategory(repositoryRoutineForTodayExists: Boolean, repositoryCategory: RepositoryCategory? = null): CompletionRate {
         if (repositoryRoutineForTodayExists && repositoryCategory != null) {
             val exercises = repositoryCategory.exercises.filter {
@@ -122,6 +145,50 @@ class HomeViewPresenter : AbstractPresenter() {
         return "Start Workout"
     }
 
+    fun getLastWorkoutLabel(): String {
+        val startTime = DateTime().withTimeAtStartOfDay()
+
+        val results = Repository.realm.where(RepositoryRoutine::class.java)
+                .lessThan("startTime", startTime.toDate())
+                .findAll()
+
+        if (results.isNotEmpty()) {
+            results.lastOrNull()?.let {
+                return it.startTime.toString()
+            }
+        }
+
+        return "Never"
+    }
+
+    fun getNumberOfWorkouts(): Int {
+        return Repository.realm.where(RepositoryRoutine::class.java)
+                .count()
+                .toInt()
+    }
+
+    fun getNumberOfWorkouts(days: Int = 7): Int {
+        val start = DateTime()
+                .withTimeAtStartOfDay()
+                .plusDays(1)
+                .minusSeconds(1) // 23:59
+
+        val end = start.minusDays(days) // 23:59 - 7 Days
+
+        return Repository.realm.where(RepositoryRoutine::class.java)
+                .between("startTime", end.toDate(), start.toDate())
+                .count()
+                .toInt()
+    }
+
+    fun getNumberOfWorkoutsPostfix(count: Int): String {
+        if (count == 1) {
+            return "Workout"
+        } else {
+            return "Workouts"
+        }
+    }
+
     fun startWorkout() {
         Stream.setDrawer(R.id.action_menu_workout)
     }
@@ -162,5 +229,21 @@ open class HomeView : AbstractView {
         category_three_title.text = title
         category_three_completion_rate_label.text = completionRateLabel
         category_three_completion_rate_value.setLayoutWeight(completionRateValue)
+    }
+
+    fun setNumberOfWorkouts(title: String) {
+        total_workouts_value.text = title
+    }
+
+    fun setLastWorkout(title: String) {
+        last_workout_value.text = title
+    }
+
+    fun setNumberOfWorkoutsLast7Days(title: String) {
+        last_7_days_value.text = title
+    }
+
+    fun setNumberOfWorkoutsLast30Days(title: String) {
+        last_30_days_value.text = title
     }
 }

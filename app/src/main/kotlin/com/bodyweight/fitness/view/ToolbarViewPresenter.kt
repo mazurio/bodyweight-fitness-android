@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 
 import com.bodyweight.fitness.R
-import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.CalendarDay
 import com.bodyweight.fitness.model.Exercise
 import com.bodyweight.fitness.setGone

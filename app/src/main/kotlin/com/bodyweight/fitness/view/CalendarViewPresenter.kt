@@ -18,18 +18,18 @@ import kotlinx.android.synthetic.main.view_calendar.view.*
 
 class CalendarPresenter : AbstractPresenter() {
     @Transient
-    val mCalendarAdapter = CalendarAdapter()
+    val calendarAdapter = CalendarAdapter()
 
     @Transient
-    val mCalendarListAdapter = CalendarListAdapter()
+    val calendarListAdapter = CalendarListAdapter()
 
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
         val view = (view as CalendarView)
 
-        view.view_calendar_pager.adapter = mCalendarAdapter
-        view.view_calendar_list.adapter = mCalendarListAdapter
+        view.view_calendar_pager.adapter = calendarAdapter
+        view.view_calendar_list.adapter = calendarListAdapter
 
         view.scrollToDefaultItem()
 
@@ -53,7 +53,7 @@ class CalendarPresenter : AbstractPresenter() {
                     val results = it.getDate().isRoutineLoggedWithResults()
 
                     if (results.isNotEmpty()) {
-                        mCalendarListAdapter.setItems(results)
+                        calendarListAdapter.setItems(results)
 
                         view.showCardView()
                     } else {
