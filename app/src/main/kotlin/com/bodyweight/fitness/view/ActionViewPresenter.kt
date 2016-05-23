@@ -116,7 +116,7 @@ class ActionPresenter : AbstractPresenter() {
 }
 
 open class ActionView : AbstractView {
-    override var mPresenter: AbstractPresenter = ActionPresenter()
+    override var presenter: AbstractPresenter = ActionPresenter()
 
     var mMaterialSheet: MaterialSheetFab<ActionButton>? = null
 
@@ -125,7 +125,7 @@ open class ActionView : AbstractView {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     override fun onCreateView() {
-        val presenter = (mPresenter as ActionPresenter)
+        val presenter = (presenter as ActionPresenter)
 
         mMaterialSheet = MaterialSheetFab<ActionButton>(
                 action_view_action_button,

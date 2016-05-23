@@ -297,7 +297,7 @@ class TimerPresenter : AbstractPresenter() {
 }
 
 open class TimerView : AbstractView {
-    override var mPresenter: AbstractPresenter = TimerPresenter()
+    override var presenter: AbstractPresenter = TimerPresenter()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -306,7 +306,7 @@ open class TimerView : AbstractView {
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        val presenter = (mPresenter as TimerPresenter)
+        val presenter = (presenter as TimerPresenter)
 
         timer_layout.setOnClickListener { presenter.onClickTimeLayout() }
         increase_timer_button.setOnClickListener { presenter.onClickIncreaseTimeButton() }

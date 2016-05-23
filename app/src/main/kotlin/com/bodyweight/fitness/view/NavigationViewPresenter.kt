@@ -50,7 +50,7 @@ class NavigationPresenter : AbstractPresenter() {
 }
 
 open class NavigationView : AbstractView {
-    override var mPresenter: AbstractPresenter = NavigationPresenter()
+    override var presenter: AbstractPresenter = NavigationPresenter()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -58,11 +58,11 @@ open class NavigationView : AbstractView {
 
     override fun onCreateView() {
         prev_exercise_button.setOnClickListener {
-            (mPresenter as NavigationPresenter).previousExercise()
+            (presenter as NavigationPresenter).previousExercise()
         }
 
         next_exercise_button.setOnClickListener {
-            (mPresenter as NavigationPresenter).nextExercise()
+            (presenter as NavigationPresenter).nextExercise()
         }
     }
 

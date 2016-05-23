@@ -103,7 +103,7 @@ class ToolbarPresenter : AbstractPresenter() {
 }
 
 class ToolbarView : AbstractView {
-    override var mPresenter: AbstractPresenter = ToolbarPresenter()
+    override var presenter: AbstractPresenter = ToolbarPresenter()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)

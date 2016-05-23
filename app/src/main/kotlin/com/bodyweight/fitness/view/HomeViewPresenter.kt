@@ -14,7 +14,7 @@ class HomeViewPresenter : AbstractPresenter() {
 }
 
 open class HomeView : AbstractView {
-    override var mPresenter: AbstractPresenter = HomeViewPresenter()
+    override var presenter: AbstractPresenter = HomeViewPresenter()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)

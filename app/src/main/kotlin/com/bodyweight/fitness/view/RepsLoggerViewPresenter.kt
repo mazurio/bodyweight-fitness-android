@@ -165,7 +165,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
 }
 
 open class RepsLoggerView : AbstractView {
-    override var mPresenter: AbstractPresenter = RepsLoggerPresenter()
+    override var presenter: AbstractPresenter = RepsLoggerPresenter()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -174,7 +174,7 @@ open class RepsLoggerView : AbstractView {
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        val repsLoggerPresenter: RepsLoggerPresenter = (mPresenter as RepsLoggerPresenter)
+        val repsLoggerPresenter: RepsLoggerPresenter = (presenter as RepsLoggerPresenter)
 
         log_reps_button.setOnClickListener {
             repsLoggerPresenter.logReps()

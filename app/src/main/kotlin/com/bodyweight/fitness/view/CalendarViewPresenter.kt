@@ -68,7 +68,7 @@ class CalendarPresenter : AbstractPresenter() {
 }
 
 open class CalendarView : AbstractView {
-    override var mPresenter: AbstractPresenter = CalendarPresenter()
+    override var presenter: AbstractPresenter = CalendarPresenter()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -81,7 +81,7 @@ open class CalendarView : AbstractView {
             override fun onPageScrollStateChanged(state: Int) {}
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
             override fun onPageSelected(position: Int) {
-                val presenter = (mPresenter as CalendarPresenter)
+                val presenter = (presenter as CalendarPresenter)
 
                 presenter.onPageSelected(position)
             }

@@ -25,7 +25,7 @@ class WorkoutViewPresenter : AbstractPresenter() {
 }
 
 open class WorkoutView : AbstractView {
-    override var mPresenter: AbstractPresenter = WorkoutViewPresenter()
+    override var presenter: AbstractPresenter = WorkoutViewPresenter()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)

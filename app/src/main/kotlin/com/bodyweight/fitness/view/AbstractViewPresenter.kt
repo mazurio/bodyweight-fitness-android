@@ -34,7 +34,7 @@ abstract class AbstractPresenter : Serializable {
 }
 
 abstract class AbstractView : RelativeLayout {
-    abstract var mPresenter: AbstractPresenter
+    abstract var presenter: AbstractPresenter
 
     val superStateKey = "superState"
     val presenterKey = "presenter"
@@ -48,33 +48,33 @@ abstract class AbstractView : RelativeLayout {
 
         this.onCreateView()
 
-        mPresenter.bindView(this)
+        presenter.bindView(this)
     }
 
     open fun onCreateView() {}
 
     open fun updateView() {
-        mPresenter.updateView()
+        presenter.updateView()
     }
 
     override fun onSaveInstanceState(): Parcelable? {
-        mPresenter.saveView()
+        presenter.saveView()
 
         val state = Bundle()
 
         state.putParcelable(superStateKey, super.onSaveInstanceState());
-        state.putSerializable(presenterKey, mPresenter);
+        state.putSerializable(presenterKey, presenter);
 
         return state;
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {
         if (state is Bundle) {
-            mPresenter = state.getSerializable(presenterKey) as AbstractPresenter
+            presenter = state.getSerializable(presenterKey) as AbstractPresenter
 
             super.onRestoreInstanceState(state.getParcelable(superStateKey))
         }
 
-        mPresenter.restoreView(this)
+        presenter.restoreView(this)
     }
 }

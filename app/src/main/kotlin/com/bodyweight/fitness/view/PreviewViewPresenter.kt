@@ -40,7 +40,7 @@ class PreviewPresenter : AbstractPresenter() {
 }
 
 open class PreviewView : AbstractView {
-    override var mPresenter: AbstractPresenter = PreviewPresenter()
+    override var presenter: AbstractPresenter = PreviewPresenter()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)

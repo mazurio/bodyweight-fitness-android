@@ -36,7 +36,7 @@ open class HeaderPresenter : AbstractPresenter() {
 }
 
 open class HeaderView : AbstractView {
-    override var mPresenter: AbstractPresenter = HeaderPresenter()
+    override var presenter: AbstractPresenter = HeaderPresenter()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)

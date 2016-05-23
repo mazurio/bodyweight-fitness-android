@@ -78,7 +78,7 @@ class CalendarPagePresenter : AbstractPresenter() {
 }
 
 open class CalendarPageView : AbstractView {
-    override var mPresenter: AbstractPresenter = CalendarPagePresenter()
+    override var presenter: AbstractPresenter = CalendarPagePresenter()
 
     var mClickedDay: Int = 3
 
@@ -102,7 +102,7 @@ open class CalendarPageView : AbstractView {
         view?.setOnClickListener {
             select(dayView)
 
-            (mPresenter as CalendarPagePresenter).clickedAt(dayView)
+            (presenter as CalendarPagePresenter).clickedAt(dayView)
         }
     }
 
