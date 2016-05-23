@@ -2,11 +2,11 @@ package com.bodyweight.fitness.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 
-import com.bodyweight.fitness.extension.debug
+import com.bodyweight.fitness.setGone
+import com.bodyweight.fitness.setInvisible
+import com.bodyweight.fitness.setVisible
 import com.bodyweight.fitness.stream.RoutineStream
-import com.bodyweight.fitness.stream.UiEvent
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_timer.view.*
@@ -17,28 +17,34 @@ class NavigationPresenter : AbstractPresenter() {
 
         RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
                     val view = (view as NavigationView)
 
                     view.showTimerOrRepsLogger(it.isTimedSet)
+                    view.showPreviousNextButtons(it.isPrevious, it.isNext)
                 }
+    }
+
+    override fun restoreView(view: AbstractView) {
+        super.restoreView(view)
+
+        val view = (view as NavigationView)
+
+        val exercise = RoutineStream.exercise
+
+        view.showTimerOrRepsLogger(exercise.isTimedSet)
+        view.showPreviousNextButtons(exercise.isPrevious, exercise.isNext)
     }
 
     fun previousExercise() {
         if (RoutineStream.exercise.isPrevious) {
             RoutineStream.exercise = RoutineStream.exercise.previous!!
-        } else {
-            UiEvent.showHomePage(0)
         }
     }
 
     fun nextExercise() {
         if (RoutineStream.exercise.isNext) {
             RoutineStream.exercise = RoutineStream.exercise.next!!
-        } else {
-            UiEvent.showHomePage(2)
         }
     }
 }
@@ -62,11 +68,25 @@ open class NavigationView : AbstractView {
 
     fun showTimerOrRepsLogger(isTimed: Boolean) {
         if (isTimed) {
-            timer_view.visibility = View.VISIBLE
-            reps_logger_view.visibility = View.GONE
+            timer_view.setVisible()
+            reps_logger_view.setGone()
         } else {
-            timer_view.visibility = View.GONE
-            reps_logger_view.visibility = View.VISIBLE
+            timer_view.setGone()
+            reps_logger_view.setVisible()
+        }
+    }
+
+    fun showPreviousNextButtons(hasPrevious: Boolean, hasNext: Boolean) {
+        if (hasPrevious) {
+            prev_exercise_button.setVisible()
+        } else {
+            prev_exercise_button.setInvisible()
+        }
+
+        if (hasNext) {
+            next_exercise_button.setVisible()
+        } else {
+            next_exercise_button.setInvisible()
         }
     }
 }

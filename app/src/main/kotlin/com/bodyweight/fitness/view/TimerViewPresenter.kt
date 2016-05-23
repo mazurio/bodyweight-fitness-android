@@ -38,15 +38,13 @@ class TimerPresenter : AbstractPresenter() {
 
         Stream.drawerObservable()
                 .bindToLifecycle(view)
-                .filter { !it.equals(R.id.action_menu_home) }
+                .filter { !it.equals(R.id.action_menu_workout) }
                 .subscribe {
                     pauseTimer()
                 }
 
         RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
                     TimerShared.countDownTimer?.cancel()
 

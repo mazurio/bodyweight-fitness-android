@@ -33,8 +33,6 @@ class ActionPresenter : AbstractPresenter() {
 
         RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
                     if (it.hasProgressions) {
                         view.setActionButtonImageDrawable(R.drawable.action_progression_white)
@@ -47,38 +45,21 @@ class ActionPresenter : AbstractPresenter() {
 
         Stream.drawerObservable()
                 .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
-                .filter { it.equals(R.id.action_menu_home) || it.equals(R.id.action_menu_workout_log) }
-                .subscribe {
-                    if (it == R.id.action_menu_home) {
-                        if (Stream.currentHomePage == 0 || Stream.currentHomePage == 2) {
-                            view.hideActionButtons()
-                        } else {
-                            view.showActionButtons()
-                        }
-                    } else {
-                        view.hideActionButtons()
-                    }
+                .filter {
+                    it.equals(R.id.action_menu_home)
+                            || it.equals(R.id.action_menu_workout)
+                            || it.equals(R.id.action_menu_workout_log)
                 }
-
-        Stream.homePageObservable()
-                .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
-                .filter { Stream.currentDrawerId.equals(R.id.action_menu_home) }
                 .subscribe {
-                    if (it == 0 || it == 2) {
-                        view.hideActionButtons()
-                    } else {
+                    if (it == R.id.action_menu_workout) {
                         view.showActionButtons()
+                    } else {
+                        view.hideActionButtons()
                     }
                 }
 
         Stream.loggedSecondsObservable
                 .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
                     val format = String.format("Logged time %s:%s", it.formatMinutes(), it.formatSeconds())
 
@@ -87,8 +68,6 @@ class ActionPresenter : AbstractPresenter() {
 
         Stream.loggedSetRepsObservable
                 .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
                     val format = String.format("Logged Set %d with %d Reps", it.set, it.reps)
 
@@ -101,7 +80,7 @@ class ActionPresenter : AbstractPresenter() {
 
         val view = (mView as ActionView)
 
-        if (Stream.currentDrawerId == R.id.action_menu_home) {
+        if (Stream.currentDrawerId == R.id.action_menu_workout) {
             view.showActionButtons()
         } else {
             view.hideActionButtons()

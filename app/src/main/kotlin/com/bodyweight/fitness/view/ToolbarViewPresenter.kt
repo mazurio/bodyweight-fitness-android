@@ -24,50 +24,25 @@ class ToolbarPresenter : AbstractPresenter() {
         super.bindView(view)
 
         RoutineStream.exerciseObservable()
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .bindToLifecycle(view)
-                .filter { Stream.currentDrawerId.equals(R.id.action_menu_home) }
+                .filter { Stream.currentDrawerId.equals(R.id.action_menu_workout) }
                 .subscribe {
-                    if (Stream.currentHomePage == 0) {
-                        setToolbarForWelcome()
-                    } else if (Stream.currentHomePage == 2) {
-                        setToolbarForSummary()
-                    } else {
-                        setToolbarForHome(it)
-                    }
+                    setToolbarForWorkout(it)
                 }
 
         Stream.calendarDayObservable()
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .bindToLifecycle(view)
                 .filter { Stream.currentDrawerId.equals(R.id.action_menu_workout_log) }
                 .subscribe {
                     setToolbarForWorkoutLog(it)
                 }
 
-        Stream.homePageObservable()
-                .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
-                .filter { Stream.currentDrawerId.equals(R.id.action_menu_home) }
-                .subscribe {
-                    if (it == 0) {
-                        setToolbarForWelcome()
-                    } else if (it == 2) {
-                        setToolbarForSummary()
-                    } else {
-                        setToolbar()
-                    }
-                }
-
         Stream.drawerObservable()
                 .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .filter {
-                    it.equals(R.id.action_menu_home) || it.equals(R.id.action_menu_workout_log)
+                    it.equals(R.id.action_menu_home)
+                            || it.equals(R.id.action_menu_workout)
+                            || it.equals(R.id.action_menu_workout_log)
                 }
                 .subscribe {
                     setToolbar()
@@ -82,38 +57,29 @@ class ToolbarPresenter : AbstractPresenter() {
 
     fun setToolbar() {
         when (Stream.currentDrawerId) {
-            R.id.action_menu_home ->
-                if (Stream.currentHomePage == 0) {
-                    setToolbarForWelcome()
-                } else if (Stream.currentHomePage == 2) {
-                    setToolbarForSummary()
-                } else {
-                    setToolbarForHome(RoutineStream.exercise)
-                }
-            R.id.action_menu_workout_log ->
+            R.id.action_menu_home -> {
+                setToolbarForHome()
+            }
+            R.id.action_menu_workout -> {
+                setToolbarForWorkout(RoutineStream.exercise)
+            }
+            R.id.action_menu_workout_log -> {
                 setToolbarForWorkoutLog(Stream.currentCalendarDay)
+            }
         }
     }
 
-    private fun setToolbarForWelcome() {
-        val view: ToolbarView = (mView as ToolbarView)
-        val routine = RoutineStream.routine
-
-        view.invalidateMenu()
-        view.setTitleSubtitle(title = routine.title, subtitle = routine.subtitle)
-    }
-
-    private fun setToolbarForSummary() {
+    private fun setToolbarForHome() {
         val view: ToolbarView = (mView as ToolbarView)
 
         view.invalidateMenu()
-        view.setSingleTitle("Summary")
+        view.setTitleSubtitle("Bodyweight Fitness", "Home")
     }
 
-    private fun setToolbarForHome(exercise: Exercise) {
+    private fun setToolbarForWorkout(exercise: Exercise) {
         val view: ToolbarView = (mView as ToolbarView)
 
-        view.inflateHomeMenu()
+        view.inflateWorkoutMenu()
 
         view.setTitle(exercise.title)
         view.setSubtitle(exercise.section!!.title)
@@ -149,10 +115,10 @@ class ToolbarView : AbstractView {
         toolbar.menu.clear()
     }
 
-    fun inflateHomeMenu() {
+    fun inflateWorkoutMenu() {
         invalidateMenu()
 
-        toolbar.inflateMenu(R.menu.home)
+        toolbar.inflateMenu(R.menu.menu_workout)
     }
 
     fun inflateWorkoutLogMenu() {

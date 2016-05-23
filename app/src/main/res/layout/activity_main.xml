@@ -16,19 +16,23 @@
         <include layout="@layout/view_toolbar"
             android:id="@+id/view_toolbar" />
 
-        <com.bodyweight.fitness.view.widget.StillViewPager
+        <include layout="@layout/view_home"
             android:id="@+id/view_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/view_toolbar"
-            android:visibility="visible"/>
+            android:layout_below="@+id/view_toolbar" />
+
+        <include layout="@layout/view_workout"
+            android:id="@+id/view_workout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/view_toolbar" />
 
         <include layout="@layout/view_calendar"
             android:id="@+id/view_calendar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/view_toolbar"
-            android:visibility="gone"/>
+            android:layout_below="@+id/view_toolbar"/>
 
         <include layout="@layout/view_action" />
     </com.bodyweight.fitness.view.ContentView>

@@ -2,10 +2,12 @@ package com.bodyweight.fitness.ui
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.view.Menu
 
 import android.view.MenuItem
 import android.view.WindowManager
@@ -29,13 +31,14 @@ import com.trello.rxlifecycle.kotlin.bindUntilEvent
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_toolbar.*
-import rx.android.schedulers.AndroidSchedulers
 
 class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
+
+//        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         setToolbar()
         keepScreenOnWhenAppIsRunning()

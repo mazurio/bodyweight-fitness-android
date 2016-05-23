@@ -50,8 +50,6 @@ class CalendarPagePresenter : AbstractPresenter() {
 
         Stream.calendarPageObservable()
                 .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .filter { it == viewPagerPosition }
                 .subscribe {
                     if (isTodaysWeek) {
@@ -65,8 +63,6 @@ class CalendarPagePresenter : AbstractPresenter() {
 
         Stream.calendarDayObservable()
                 .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
                     if (it.page != viewPagerPosition) {
                         view.unselect(isTodaysDate)

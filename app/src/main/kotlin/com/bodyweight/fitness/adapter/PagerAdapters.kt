@@ -1,7 +1,6 @@
 package com.bodyweight.fitness.adapter
 
 import android.graphics.Color
-import android.support.design.widget.TabLayout
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 
@@ -22,107 +21,42 @@ import com.bodyweight.fitness.R
 import com.bodyweight.fitness.inflate
 import com.bodyweight.fitness.model.RepositoryExercise
 import com.bodyweight.fitness.model.RepositoryRoutine
-import com.bodyweight.fitness.setGone
-import com.bodyweight.fitness.setVisible
-import com.bodyweight.fitness.stream.RoutineStream
 
 import kotlinx.android.synthetic.main.activity_progress_info.view.*
 import kotlinx.android.synthetic.main.activity_progress_page.view.*
-import kotlinx.android.synthetic.main.view_home_exercise.view.*
-import kotlinx.android.synthetic.main.view_timer.view.*
 
 import java.util.*
 
-class HomePagerAdapter() : PagerAdapter() {
-    var exerciseView: View? = null
 
-    fun set(isTimed: Boolean) {
-        exerciseView?.let {
-            if (isTimed) {
-                if (it.view_tabs.tabCount == 2) {
-                    it.view_tabs.removeAllTabs()
+//val view = container.inflate(R.layout.view_home_exercise)
+//
+//view.view_tabs.addTab(view.view_tabs.newTab().setText("Timer"))
+//view.view_tabs.addTab(view.view_tabs.newTab().setText("Reps Logger"))
+//
+//view.view_tabs.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+//    override fun onTabSelected(tab: TabLayout.Tab) {
+//            val position = tab.position
+//
+//            if (position == 0) {
+//                view.timer_view.setVisible()
+//                view.reps_logger_view.setGone()
+//            } else {
+//                view.timer_view.setGone()
+//                view.reps_logger_view.setVisible()
+//            }
+//        }
+//
+//        override fun onTabUnselected(tab: TabLayout.Tab) { }
+//        override fun onTabReselected(tab: TabLayout.Tab) { }
+//    })
+//
+//if (RoutineStream.exercise.isTimedSet) {
+//    view.view_tabs.getTabAt(0)?.select()
+//} else {
+//    view.view_tabs.getTabAt(1)?.select()
+//}
 
-                    it.view_tabs.addTab(it.view_tabs.newTab().setText("Timer"))
-                }
 
-                it.view_tabs.getTabAt(0)?.select()
-            } else {
-                if (it.view_tabs.tabCount == 1) {
-                    it.view_tabs.removeAllTabs()
-
-                    it.view_tabs.addTab(it.view_tabs.newTab().setText("Timer"))
-                    it.view_tabs.addTab(it.view_tabs.newTab().setText("Reps Logger"))
-                }
-
-                it.view_tabs.getTabAt(1)?.select()
-            }
-        }
-    }
-
-    override fun instantiateItem(container: ViewGroup?, position: Int): Any? {
-        val viewPager = container as ViewPager
-
-        when (position) {
-            0 -> {
-                val view = container.inflate(R.layout.view_home_welcome)
-                viewPager.addView(view)
-                return view
-            }
-            1 -> {
-                val view = container.inflate(R.layout.view_home_exercise)
-
-                view.view_tabs.addTab(view.view_tabs.newTab().setText("Timer"))
-                view.view_tabs.addTab(view.view_tabs.newTab().setText("Reps Logger"))
-
-                view.view_tabs.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-                    override fun onTabSelected(tab: TabLayout.Tab) {
-                            val position = tab.position
-
-                            if (position == 0) {
-                                view.timer_view.setVisible()
-                                view.reps_logger_view.setGone()
-                            } else {
-                                view.timer_view.setGone()
-                                view.reps_logger_view.setVisible()
-                            }
-                        }
-
-                        override fun onTabUnselected(tab: TabLayout.Tab) { }
-                        override fun onTabReselected(tab: TabLayout.Tab) { }
-                    })
-
-                if (RoutineStream.exercise.isTimedSet) {
-                    view.view_tabs.getTabAt(0)?.select()
-                } else {
-                    view.view_tabs.getTabAt(1)?.select()
-                }
-
-                exerciseView = view
-                viewPager.addView(view)
-
-                return view
-            }
-            else -> {
-                val view = container.inflate(R.layout.view_home_summary)
-                viewPager.addView(view)
-                return view
-            }
-        }
-
-    }
-
-    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        container.removeView(`object` as View)
-    }
-
-    override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        return view === `object`
-    }
-
-    override fun getCount(): Int {
-        return 3
-    }
-}
 
 class ProgressPagerAdapter(private val repositoryRoutine: RepositoryRoutine) : PagerAdapter() {
     private var numberOfExercises: Int = 0

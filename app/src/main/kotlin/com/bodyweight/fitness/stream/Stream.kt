@@ -14,17 +14,11 @@ data class Dialog(val dialogType: DialogType, val exerciseId: String)
 
 object UiEvent {
     private val dialogSubject = PublishSubject.create<Dialog>()
-    private val homePageSubject = PublishSubject.create<Int>()
 
     val dialogObservable: Observable<Dialog> get() = dialogSubject
-    val homePageObservable: Observable<Int> get() = homePageSubject
 
     fun showDialog(dialogType: DialogType, exerciseId: String) {
         dialogSubject.onNext(Dialog(dialogType, exerciseId))
-    }
-
-    fun showHomePage(position: Int) {
-        homePageSubject.onNext(position)
     }
 }
 
@@ -38,9 +32,6 @@ object Stream {
     var currentCalendarDay: CalendarDay = CalendarDay()
         private set
 
-    var currentHomePage: Int = 0
-        private set
-
     private val menuSubject = PublishSubject.create<Int>()
     private val drawerSubject = PublishSubject.create<Int>()
     private val loggedSecondsSubject = PublishSubject.create<Int>()
@@ -48,8 +39,6 @@ object Stream {
 
     private val calendarPageSubject = PublishSubject.create<Int>()
     private val calendarDaySubject = PublishSubject.create<CalendarDay>()
-
-    private val homePageSubject = PublishSubject.create<Int>()
 
     /**
      * Emits when changes to repository have been made.
@@ -85,19 +74,13 @@ object Stream {
                 .refCount()
     }
 
-    fun homePageObservable(): Observable<Int> {
-        return Observable.merge(Observable.just(currentHomePage).publish().refCount(), homePageSubject)
-                .observeOn(AndroidSchedulers.mainThread())
-                .publish()
-                .refCount()
-    }
-
     fun setMenu(toolbarMenuItemId: Int) {
         menuSubject.onNext(toolbarMenuItemId)
     }
 
     fun setDrawer(drawerMenuItemId: Int) {
-        if (drawerMenuItemId.equals(R.id.action_menu_home) || drawerMenuItemId.equals(R.id.action_menu_workout_log)) {
+        if (!drawerMenuItemId.equals(R.id.action_menu_support_developer)
+                && !drawerMenuItemId.equals(R.id.action_menu_settings)) {
             currentDrawerId = drawerMenuItemId
         }
 
@@ -124,10 +107,5 @@ object Stream {
 
     fun setRepository() {
         repositorySubject.onNext(true)
-    }
-
-    fun setHomePage(page: Int) {
-        currentHomePage = page
-        homePageSubject.onNext(page)
     }
 }

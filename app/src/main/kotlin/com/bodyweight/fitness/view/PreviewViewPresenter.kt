@@ -19,8 +19,6 @@ class PreviewPresenter : AbstractPresenter() {
 
         RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe(object: Subscriber<Exercise>(){
                     override fun onCompleted() {}
 
@@ -35,7 +33,7 @@ class PreviewPresenter : AbstractPresenter() {
                         Glide.with(view.context)
                                 .load(identifier)
                                 .crossFade()
-                                .into(imageViewTarget)
+//                                .into(imageViewTarget)
                     }
                 })
     }

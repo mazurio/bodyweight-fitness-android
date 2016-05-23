@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'realm-android'
 apply plugin: 'io.fabric'
 
+apply plugin: 'com.google.gms.google-services'
+
 android {
     dexOptions {
         incremental false

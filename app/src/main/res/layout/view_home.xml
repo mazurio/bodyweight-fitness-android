@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bodyweight.fitness.view.HomeView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F7">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:background="@color/primary" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!--<RelativeLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="16dp" />-->
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_gravity="center">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:padding="16dp">
+
+                                    <com.devspark.robototextview.widget.RobotoTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Today's Progress"
+                                        android:textSize="20sp"
+                                        android:textColor="#111"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:paddingLeft="16dp"
+                                    android:paddingRight="16dp">
+
+                                    <com.devspark.robototextview.widget.RobotoTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingTop="4dp"
+                                        android:text="Warmup"
+                                        android:textSize="15sp"/>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:weightSum="100"
+                                        android:orientation="horizontal">
+
+                                        <RelativeLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="16dp"
+                                            android:layout_weight="70"
+                                            android:background="@drawable/action_welcome"
+                                            android:layout_marginTop="8dp"
+                                            android:layout_marginBottom="8dp"/>
+
+                                        <com.devspark.robototextview.widget.RobotoTextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="30"
+                                            android:paddingLeft="8dp"
+                                            android:gravity="center|left"
+                                            android:text="70%"
+                                            android:textSize="20sp"
+                                            android:textColor="#111"/>
+                                    </LinearLayout>
+
+                                    <com.devspark.robototextview.widget.RobotoTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingTop="4dp"
+                                        android:text="Skills Work"
+                                        android:textSize="15sp"/>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:weightSum="100"
+                                        android:orientation="horizontal">
+
+                                        <RelativeLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="16dp"
+                                            android:layout_weight="20"
+                                            android:background="@drawable/action_welcome"
+                                            android:layout_marginTop="8dp"
+                                            android:layout_marginBottom="8dp"/>
+
+                                        <com.devspark.robototextview.widget.RobotoTextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="80"
+                                            android:paddingLeft="8dp"
+                                            android:gravity="center|left"
+                                            android:text="20%"
+                                            android:textSize="20sp"
+                                            android:textColor="#111"/>
+                                    </LinearLayout>
+
+                                    <com.devspark.robototextview.widget.RobotoTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingTop="4dp"
+                                        android:text="Strength Work"
+                                        android:textSize="15sp"/>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:weightSum="100"
+                                        android:orientation="horizontal">
+
+                                        <RelativeLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="16dp"
+                                            android:layout_weight="50"
+                                            android:background="@drawable/action_welcome"
+                                            android:layout_marginTop="8dp"
+                                            android:layout_marginBottom="8dp"/>
+
+                                        <com.devspark.robototextview.widget.RobotoTextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="50"
+                                            android:paddingLeft="8dp"
+                                            android:gravity="center|left"
+                                            android:text="50%"
+                                            android:textSize="20sp"
+                                            android:textColor="#111"/>
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <Button
+                                    android:id="@+id/start_workout"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:gravity="center"
+                                    android:text="Start Workout"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/primaryDark"
+                                    style="@style/Widget.AppCompat.Button.Borderless"/>
+                            </LinearLayout>
+                        </android.support.v7.widget.CardView>
+
+                        <com.devspark.robototextview.widget.RobotoTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="8dp"
+                            android:paddingLeft="16dp"
+                            android:paddingBottom="8dp"
+                            android:textSize="16sp"
+                            android:text="Statistics"
+                            app:typeface="roboto_regular"/>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <com.devspark.robototextview.widget.RobotoTextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="31"
+                                            android:textSize="20sp"
+                                            android:textColor="#111"/>
+
+                                        <com.devspark.robototextview.widget.RobotoTextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:paddingTop="4dp"
+                                            android:text="Total Workouts"
+                                            android:textSize="15sp"/>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <com.devspark.robototextview.widget.RobotoTextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="2 days ago"
+                                            android:textSize="20sp"
+                                            android:textColor="#111"/>
+
+                                        <com.devspark.robototextview.widget.RobotoTextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:paddingTop="4dp"
+                                            android:text="Last Workout"
+                                            android:textSize="15sp"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <com.devspark.robototextview.widget.RobotoTextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="2 Workouts"
+                                            android:textSize="20sp"
+                                            android:textColor="#111"/>
+
+                                        <com.devspark.robototextview.widget.RobotoTextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:paddingTop="4dp"
+                                            android:text="Last 7 Days"
+                                            android:textSize="15sp"/>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <com.devspark.robototextview.widget.RobotoTextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="12 Workouts"
+                                            android:textSize="20sp"
+                                            android:textColor="#111"/>
+
+                                        <com.devspark.robototextview.widget.RobotoTextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:paddingTop="4dp"
+                                            android:text="Last 31 Days"
+                                            android:textSize="15sp"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </android.support.v7.widget.CardView>
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <!--<com.bodyweight.fitness.view.widget.ActionButton-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="bottom|end"-->
+            <!--android:layout_marginBottom="@dimen/view_action_margin"-->
+            <!--android:layout_marginRight="@dimen/view_action_margin"-->
+            <!--app:borderWidth="0dp"-->
+            <!--app:useCompatPadding="false"-->
+            <!--app:backgroundTint="@color/primaryDark"-->
+            <!--app:elevation="@dimen/view_action_elevation"-->
+            <!--app:srcCompat="@drawable/action_add"/>-->
+    </android.support.design.widget.CoordinatorLayout>
+</com.bodyweight.fitness.view.HomeView>
