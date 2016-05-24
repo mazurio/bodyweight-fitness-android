@@ -70,9 +70,13 @@ open class NavigationView : AbstractView {
         if (isTimed) {
             timer_view.setVisible()
             reps_logger_view.setGone()
+
+            rest_timer_view.setGone()
         } else {
             timer_view.setGone()
             reps_logger_view.setVisible()
+
+            rest_timer_view.setGone()
         }
     }
 

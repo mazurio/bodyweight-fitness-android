@@ -22,6 +22,18 @@
             android:scaleType="center"
             app:srcCompat="@drawable/action_arrow_left"/>
 
+        <com.bodyweight.fitness.view.RestTimerView
+            android:id="@+id/rest_timer_view"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".60">
+
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Rest Timer" />
+        </com.bodyweight.fitness.view.RestTimerView>
+
         <com.bodyweight.fitness.view.RepsLoggerView
             android:id="@+id/reps_logger_view"
             android:layout_width="0dp"

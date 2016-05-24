@@ -37,23 +37,50 @@ open class WorkoutView : AbstractView {
 
         view_tabs.addTab(view_tabs.newTab().setText("Timer"))
         view_tabs.addTab(view_tabs.newTab().setText("Reps Logger"))
+        view_tabs.addTab(view_tabs.newTab().setText("Rest Timer"))
 
         view_tabs.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                    val position = tab.position
+                if (view_tabs.tabCount == 3) {
+                    when(tab.position) {
+                        0 -> {
+                            timer_view.setVisible()
+                            reps_logger_view.setGone()
+                            rest_timer_view.setGone()
+                        }
 
-                    if (position == 0) {
-                        timer_view.setVisible()
-                        reps_logger_view.setGone()
-                    } else {
-                        timer_view.setGone()
-                        reps_logger_view.setVisible()
+                        1 -> {
+                            timer_view.setGone()
+                            reps_logger_view.setVisible()
+                            rest_timer_view.setGone()
+                        }
+
+                        else -> {
+                            timer_view.setGone()
+                            reps_logger_view.setGone()
+                            rest_timer_view.setVisible()
+                        }
+                    }
+                } else if (view_tabs.tabCount == 2) {
+                    when(tab.position) {
+                        0 -> {
+                            timer_view.setVisible()
+                            reps_logger_view.setGone()
+                            rest_timer_view.setGone()
+                        }
+
+                        else -> {
+                            timer_view.setGone()
+                            reps_logger_view.setGone()
+                            rest_timer_view.setVisible()
+                        }
                     }
                 }
+            }
 
-                override fun onTabUnselected(tab: TabLayout.Tab) { }
-                override fun onTabReselected(tab: TabLayout.Tab) { }
-            })
+            override fun onTabUnselected(tab: TabLayout.Tab) { }
+            override fun onTabReselected(tab: TabLayout.Tab) { }
+        })
 
         if (RoutineStream.exercise.isTimedSet) {
             view_tabs.getTabAt(0)?.select()
@@ -64,19 +91,21 @@ open class WorkoutView : AbstractView {
 
     fun showHideViewTabs(isTimed: Boolean) {
         if (isTimed) {
-            if (view_tabs.tabCount == 2) {
+            if (view_tabs.tabCount == 3) {
                 view_tabs.removeAllTabs()
 
                 view_tabs.addTab(view_tabs.newTab().setText("Timer"))
+                view_tabs.addTab(view_tabs.newTab().setText("Rest Timer"))
             }
 
             view_tabs.getTabAt(0)?.select()
         } else {
-            if (view_tabs.tabCount == 1) {
+            if (view_tabs.tabCount == 2) {
                 view_tabs.removeAllTabs()
 
                 view_tabs.addTab(view_tabs.newTab().setText("Timer"))
                 view_tabs.addTab(view_tabs.newTab().setText("Reps Logger"))
+                view_tabs.addTab(view_tabs.newTab().setText("Rest Timer"))
             }
 
             view_tabs.getTabAt(1)?.select()
