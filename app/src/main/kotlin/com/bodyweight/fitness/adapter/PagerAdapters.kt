@@ -1,6 +1,6 @@
 package com.bodyweight.fitness.adapter
 
-import android.graphics.Color
+import android.graphics.RectF
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 
@@ -8,10 +8,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-
-import com.hookedonplay.decoviewlib.charts.DecoDrawEffect
-import com.hookedonplay.decoviewlib.charts.SeriesItem
-import com.hookedonplay.decoviewlib.events.DecoEvent
 
 import org.joda.time.DateTime
 import org.joda.time.Duration
@@ -21,11 +17,45 @@ import com.bodyweight.fitness.R
 import com.bodyweight.fitness.inflate
 import com.bodyweight.fitness.model.RepositoryExercise
 import com.bodyweight.fitness.model.RepositoryRoutine
+import com.robinhood.spark.SparkAdapter
 
 import kotlinx.android.synthetic.main.activity_progress_info.view.*
 import kotlinx.android.synthetic.main.activity_progress_page.view.*
 
 import java.util.*
+
+class MySparkAdapter : SparkAdapter() {
+    val xData = listOf(1, 2, 3, 4, 5, 6, 7, 8)
+    val yData = listOf(5, 4, 5, 0, 0, 0, 0, 0)
+
+    override fun getY(index: Int): Float {
+        return yData[index].toFloat()
+    }
+
+    override fun getX(index: Int): Float {
+        return xData[index].toFloat()
+    }
+
+    override fun getItem(index: Int): Any? {
+        val set = xData[index]
+        val reps = yData[index]
+
+        return "Set $set - Reps $reps"
+    }
+
+    override fun getDataBounds(): RectF? {
+        return RectF(
+                1f, // minimum X value (minimum set which is 0 or 1)
+                0f, // minimum Y value (minimum number of reps we can do which is 0)
+                super.getDataBounds().right, // maximum X value (maximum number of sets which is 12 per exercise)
+                super.getDataBounds().bottom + 5 // maximum Y value -  maximum number of reps which is 25-50
+        );
+    }
+
+    override fun getCount(): Int {
+        return xData.size
+    }
+}
 
 class ProgressPagerAdapter(private val repositoryRoutine: RepositoryRoutine) : PagerAdapter() {
     private var numberOfExercises: Int = 0
@@ -49,9 +79,38 @@ class ProgressPagerAdapter(private val repositoryRoutine: RepositoryRoutine) : P
 
         if (position == 0) {
             val view = parent.inflate(R.layout.activity_progress_info)
-
             createStartTimeEndTime(view)
-            createDecoView(view)
+
+            val workoutLengthView = view.graph_workout_length_view
+            workoutLengthView.adapter = MySparkAdapter()
+            workoutLengthView.isScrubEnabled = true
+            workoutLengthView.animateChanges = true
+            workoutLengthView.isFill = false
+            workoutLengthView.setScrubListener {
+
+            }
+
+            view.graph_workout_length_tablayout.addTab(view.graph_workout_length_tablayout.newTab().setText("1D"))
+            view.graph_workout_length_tablayout.addTab(view.graph_workout_length_tablayout.newTab().setText("1M"))
+            view.graph_workout_length_tablayout.addTab(view.graph_workout_length_tablayout.newTab().setText("3M"))
+            view.graph_workout_length_tablayout.addTab(view.graph_workout_length_tablayout.newTab().setText("6M"))
+            view.graph_workout_length_tablayout.addTab(view.graph_workout_length_tablayout.newTab().setText("1Y"))
+
+            val completionRateView = view.graph_completion_rate_view
+            completionRateView.adapter = MySparkAdapter()
+            completionRateView.isScrubEnabled = true
+            completionRateView.animateChanges = true
+            completionRateView.isFill = false
+            completionRateView.setScrubListener {
+
+            }
+
+            view.graph_completion_rate_tablayout.addTab(view.graph_completion_rate_tablayout.newTab().setText("1D"))
+            view.graph_completion_rate_tablayout.addTab(view.graph_completion_rate_tablayout.newTab().setText("1M"))
+            view.graph_completion_rate_tablayout.addTab(view.graph_completion_rate_tablayout.newTab().setText("3M"))
+            view.graph_completion_rate_tablayout.addTab(view.graph_completion_rate_tablayout.newTab().setText("6M"))
+            view.graph_completion_rate_tablayout.addTab(view.graph_completion_rate_tablayout.newTab().setText("1Y"))
+
             viewPager.addView(view)
 
             return view
@@ -126,62 +185,62 @@ class ProgressPagerAdapter(private val repositoryRoutine: RepositoryRoutine) : P
         viewWeakHashMap.put(position, view.recycler_view)
     }
 
-    private fun createDecoView(view: View) {
-        val backIndex = view.dynamicArcView.addSeries(SeriesItem.Builder(Color.parseColor("#FFE2E2E2"))
-                .setRange(0f, numberOfExercises.toFloat(), 0f)
-                .setInitialVisibility(true)
-                .build())
-
-        val frontSeries = SeriesItem.Builder(Color.parseColor("#0B9394"))
-                .setRange(0f, numberOfExercises.toFloat(), 0f)
-                .setInitialVisibility(false)
-                .build()
-
-        frontSeries.addArcSeriesItemListener(object : SeriesItem.SeriesItemListener {
-            override fun onSeriesItemAnimationProgress(percentComplete: Float, currentPosition: Float) {
-                val percentFilled = (currentPosition - frontSeries.minValue) / (frontSeries.maxValue - frontSeries.minValue)
-
-                view.textPercentage.text = String.format("%.0f%%", percentFilled * 100f)
-            }
-
-            override fun onSeriesItemDisplayProgress(percentComplete: Float) { }
-        })
-
-        frontSeries.addArcSeriesItemListener(object : SeriesItem.SeriesItemListener {
-            override fun onSeriesItemAnimationProgress(percentComplete: Float, currentPosition: Float) {
-                val remainingExercises = (frontSeries.maxValue - currentPosition).toInt()
-
-                if (remainingExercises > 0) {
-                    view.textRemaining.text = String.format("%d exercises to go", remainingExercises)
-                } else {
-                    view.textRemaining.text = "Congratulations!"
-                }
-            }
-
-            override fun onSeriesItemDisplayProgress(percentComplete: Float) { }
-        })
-
-        val frontIndex = view.dynamicArcView.addSeries(frontSeries)
-
-        view.dynamicArcView.executeReset()
-        view.dynamicArcView.addEvent(DecoEvent.Builder(numberOfExercises.toFloat())
-                .setIndex(backIndex)
-                .setDuration(0)
-                .setDelay(0)
-                .build())
-
-        view.dynamicArcView.addEvent(DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_OUT)
-                .setIndex(frontIndex)
-                .setDuration(0)
-                .setDelay(0)
-                .build())
-
-        view.dynamicArcView.addEvent(DecoEvent.Builder(currentExerciseIndex.toFloat())
-                .setIndex(frontIndex)
-                .setDelay(0)
-                .build())
-
-        view.textPercentage.text = ""
-        view.textRemaining.text = ""
-    }
+//    private fun createDecoView(view: View) {
+//        val backIndex = view.dynamicArcView.addSeries(SeriesItem.Builder(Color.parseColor("#FFE2E2E2"))
+//                .setRange(0f, numberOfExercises.toFloat(), 0f)
+//                .setInitialVisibility(true)
+//                .build())
+//
+//        val frontSeries = SeriesItem.Builder(Color.parseColor("#0B9394"))
+//                .setRange(0f, numberOfExercises.toFloat(), 0f)
+//                .setInitialVisibility(false)
+//                .build()
+//
+//        frontSeries.addArcSeriesItemListener(object : SeriesItem.SeriesItemListener {
+//            override fun onSeriesItemAnimationProgress(percentComplete: Float, currentPosition: Float) {
+//                val percentFilled = (currentPosition - frontSeries.minValue) / (frontSeries.maxValue - frontSeries.minValue)
+//
+//                view.textPercentage.text = String.format("%.0f%%", percentFilled * 100f)
+//            }
+//
+//            override fun onSeriesItemDisplayProgress(percentComplete: Float) { }
+//        })
+//
+//        frontSeries.addArcSeriesItemListener(object : SeriesItem.SeriesItemListener {
+//            override fun onSeriesItemAnimationProgress(percentComplete: Float, currentPosition: Float) {
+//                val remainingExercises = (frontSeries.maxValue - currentPosition).toInt()
+//
+//                if (remainingExercises > 0) {
+//                    view.textRemaining.text = String.format("%d exercises to go", remainingExercises)
+//                } else {
+//                    view.textRemaining.text = "Congratulations!"
+//                }
+//            }
+//
+//            override fun onSeriesItemDisplayProgress(percentComplete: Float) { }
+//        })
+//
+//        val frontIndex = view.dynamicArcView.addSeries(frontSeries)
+//
+//        view.dynamicArcView.executeReset()
+//        view.dynamicArcView.addEvent(DecoEvent.Builder(numberOfExercises.toFloat())
+//                .setIndex(backIndex)
+//                .setDuration(0)
+//                .setDelay(0)
+//                .build())
+//
+//        view.dynamicArcView.addEvent(DecoEvent.Builder(DecoDrawEffect.EffectType.EFFECT_SPIRAL_OUT)
+//                .setIndex(frontIndex)
+//                .setDuration(0)
+//                .setDelay(0)
+//                .build())
+//
+//        view.dynamicArcView.addEvent(DecoEvent.Builder(currentExerciseIndex.toFloat())
+//                .setIndex(frontIndex)
+//                .setDelay(0)
+//                .build())
+//
+//        view.textPercentage.text = ""
+//        view.textRemaining.text = ""
+//    }
 }

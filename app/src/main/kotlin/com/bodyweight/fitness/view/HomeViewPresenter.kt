@@ -1,10 +1,10 @@
 package com.bodyweight.fitness.view
 
 import android.content.Context
+import android.text.format.DateUtils
 import android.util.AttributeSet
 
 import com.bodyweight.fitness.R
-import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.RepositoryCategory
 import com.bodyweight.fitness.model.RepositoryExercise
 import com.bodyweight.fitness.model.RepositoryRoutine
@@ -87,15 +87,13 @@ class HomeViewPresenter : AbstractPresenter() {
     fun updateStatistics() {
         val view = (getView() as HomeView)
 
-        // lastWorkout = X years ago / X months ago / X weeks ago / X days ago / Today / Yesterday / Never
-
         val totalWorkouts = getNumberOfWorkouts()
-        val lastWorkoutLabel = getLastWorkoutLabel()
+        val previousWorkoutLabel = getPreviousWorkoutLabel()
         val last7Days = getNumberOfWorkouts(days = 7)
         val last30Days = getNumberOfWorkouts(days = 30)
 
         view.setNumberOfWorkouts("$totalWorkouts ${getNumberOfWorkoutsPostfix(totalWorkouts)}")
-        view.setLastWorkout("$lastWorkoutLabel")
+        view.setPreviousWorkout("$previousWorkoutLabel")
         view.setNumberOfWorkoutsLast7Days("$last7Days ${getNumberOfWorkoutsPostfix(last7Days)}")
         view.setNumberOfWorkoutsLast30Days("$last30Days ${getNumberOfWorkoutsPostfix(last30Days)}")
     }
@@ -145,7 +143,7 @@ class HomeViewPresenter : AbstractPresenter() {
         return "Start Workout"
     }
 
-    fun getLastWorkoutLabel(): String {
+    fun getPreviousWorkoutLabel(): String {
         val startTime = DateTime().withTimeAtStartOfDay()
 
         val results = Repository.realm.where(RepositoryRoutine::class.java)
@@ -154,11 +152,18 @@ class HomeViewPresenter : AbstractPresenter() {
 
         if (results.isNotEmpty()) {
             results.lastOrNull()?.let {
-                return it.startTime.toString()
+                return getRelativeTime(DateTime(it.startTime), System.currentTimeMillis())
             }
         }
 
         return "Never"
+    }
+
+    fun getRelativeTime(time: DateTime, currentTime: Long): String {
+        return DateUtils.getRelativeTimeSpanString(
+                time.millis,
+                currentTime,
+                DateUtils.MINUTE_IN_MILLIS).toString()
     }
 
     fun getNumberOfWorkouts(): Int {
@@ -235,8 +240,8 @@ open class HomeView : AbstractView {
         total_workouts_value.text = title
     }
 
-    fun setLastWorkout(title: String) {
-        last_workout_value.text = title
+    fun setPreviousWorkout(title: String) {
+        previous_workout_value.text = title
     }
 
     fun setNumberOfWorkoutsLast7Days(title: String) {

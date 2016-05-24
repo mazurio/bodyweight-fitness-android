@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EEEEEE">
+    android:background="#F5F5F7">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -23,8 +23,10 @@
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabTextColor="@color/primaryDark"
+            app:tabTextColor="@color/white"
+            app:tabIndicatorColor="@color/white"
             app:tabSelectedTextColor="@color/white"
+            app:tabMinWidth="100dp"
             app:tabMode="scrollable"/>
     </android.support.design.widget.AppBarLayout>
 

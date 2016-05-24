@@ -97,6 +97,10 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
         super.onResume()
 
         keepScreenOnWhenAppIsRunning()
+
+//        val routineId = Repository.repositoryRoutineForToday.id
+
+//        startActivity(Intent(this, ProgressActivity::class.java).putExtra(Constants.primaryKeyRoutineId, routineId))
     }
 
     override fun onStart() {
