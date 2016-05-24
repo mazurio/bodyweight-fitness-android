@@ -75,6 +75,8 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
         Stream.drawerObservable()
                 .bindUntilEvent(this, event)
                 .subscribe {
+                    invalidateOptionsMenu();
+
                     when (it) {
                         R.id.action_menu_support_developer -> {
                             startActivity(Intent(Intent.ACTION_VIEW).apply {
@@ -125,6 +127,8 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu?.clear()
+
         when (Stream.currentDrawerId) {
             R.id.action_menu_workout -> menuInflater.inflate(R.menu.menu_workout, menu)
             R.id.action_menu_workout_log -> menuInflater.inflate(R.menu.calendar, menu)

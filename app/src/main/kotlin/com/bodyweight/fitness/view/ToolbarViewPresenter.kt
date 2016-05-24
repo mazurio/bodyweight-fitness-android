@@ -71,14 +71,11 @@ class ToolbarPresenter : AbstractPresenter() {
     private fun setToolbarForHome() {
         val view: ToolbarView = (mView as ToolbarView)
 
-        view.invalidateMenu()
         view.setTitleSubtitle("Bodyweight Fitness", "Home")
     }
 
     private fun setToolbarForWorkout(exercise: Exercise) {
         val view: ToolbarView = (mView as ToolbarView)
-
-        view.inflateWorkoutMenu()
 
         view.setTitle(exercise.title)
         view.setSubtitle(exercise.section!!.title)
@@ -96,7 +93,6 @@ class ToolbarPresenter : AbstractPresenter() {
     private fun setDateTimeSingleTitle(dateTime: DateTime) {
         val view: ToolbarView = (mView as ToolbarView)
 
-        view.inflateWorkoutLogMenu()
         view.setSingleTitle(dateTime.toString("dd MMMM, YYYY", Locale.ENGLISH))
     }
 }
@@ -109,22 +105,6 @@ class ToolbarView : AbstractView {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     override fun onCreateView() {}
-
-    fun invalidateMenu() {
-        toolbar.menu.clear()
-    }
-
-    fun inflateWorkoutMenu() {
-        invalidateMenu()
-
-        toolbar.inflateMenu(R.menu.menu_workout)
-    }
-
-    fun inflateWorkoutLogMenu() {
-        invalidateMenu()
-
-        toolbar.inflateMenu(R.menu.calendar)
-    }
 
     fun setSingleTitle(text: String) {
         toolbar_layout.setGone()
