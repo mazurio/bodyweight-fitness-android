@@ -233,66 +233,46 @@ class TimerPresenter : AbstractPresenter() {
     }
 
     private fun logIntoRealm(logSeconds: Int): Boolean {
-        // getRepositoryRoutineForToday method - begins realm transaction.
-        val repositoryRoutine = Repository.repositoryRoutineForToday
-        var mRepositoryExercise: RepositoryExercise? = null
-
         val realm = Repository.realm
-        val exercise = RoutineStream.exercise
+        val repositoryRoutine = Repository.repositoryRoutineForToday
 
-        realm.beginTransaction()
-        for (repositoryExercise in repositoryRoutine.exercises) {
-            if (repositoryExercise.title == exercise.title) {
-                mRepositoryExercise = repositoryExercise
+        var isLogged: Boolean = false
 
-                break
-            }
-        }
+        realm.executeTransaction {
+            repositoryRoutine.exercises
+                    .filter { it.exerciseId == RoutineStream.exercise.exerciseId }
+                    .firstOrNull()?.let {
 
-        if (mRepositoryExercise != null) {
-            // if there is already a set which is timed and has 0 seconds then overwrite the values.
-            // otherwise create new one.
+                val numberOfSets = it.sets.size
+                if (numberOfSets < Constants.maximumNumberOfSets) {
+                    if (numberOfSets == 1 && it.sets[0].isTimed && it.sets[0].seconds == 0) {
+                        val firstSet = it.sets[0]
 
-            val numberOfSets = mRepositoryExercise.sets.size
+                        if (firstSet.isTimed && firstSet.seconds == 0) {
+                            firstSet.seconds = logSeconds
+                        }
+                    } else {
+                        val repositorySet = realm.createObject(RepositorySet::class.java)
 
-            if (numberOfSets >= Constants.maximumNumberOfSets) {
-                realm.cancelTransaction()
+                        repositorySet.id = "Set-" + UUID.randomUUID().toString()
+                        repositorySet.isTimed = true
+                        repositorySet.seconds = logSeconds
+                        repositorySet.weight = 0.0
+                        repositorySet.reps = 0
 
-                return false
-            }
+                        repositorySet.exercise = it
 
-            if (numberOfSets == 1 && mRepositoryExercise.sets[0].isTimed && mRepositoryExercise.sets[0].seconds == 0) {
-                val firstSet = mRepositoryExercise.sets[0]
+                        it.sets.add(repositorySet)
+                    }
 
-                if (firstSet.isTimed && firstSet.seconds == 0) {
-                    firstSet.seconds = logSeconds
+                    repositoryRoutine.lastUpdatedTime = DateTime().toDate()
+
+                    isLogged = true
                 }
-            } else {
-                val repositorySet = realm.createObject(RepositorySet::class.java)
-
-                repositorySet.id = "Set-" + UUID.randomUUID().toString()
-                repositorySet.isTimed = true
-                repositorySet.seconds = logSeconds
-                repositorySet.weight = 0.0
-                repositorySet.reps = 0
-
-                repositorySet.exercise = mRepositoryExercise
-
-                mRepositoryExercise.sets.add(repositorySet)
             }
-
-            // TODO: Unit test the fact that lastUpdatedTime is changed when logging sets from main UI.
-            repositoryRoutine.lastUpdatedTime = DateTime().toDate()
-
-            realm.copyToRealmOrUpdate(repositoryRoutine)
-            realm.commitTransaction()
-
-            return true
-        } else {
-            realm.cancelTransaction()
-
-            return false
         }
+
+        return isLogged
     }
 }
 
