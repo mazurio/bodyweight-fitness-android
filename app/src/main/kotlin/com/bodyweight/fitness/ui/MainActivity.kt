@@ -131,7 +131,7 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
 
         when (Stream.currentDrawerId) {
             R.id.action_menu_workout -> menuInflater.inflate(R.menu.menu_workout, menu)
-            R.id.action_menu_workout_log -> menuInflater.inflate(R.menu.calendar, menu)
+            R.id.action_menu_workout_log -> menuInflater.inflate(R.menu.menu_log_workout, menu)
         }
 
         return super.onPrepareOptionsMenu(menu)

@@ -284,7 +284,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
     }
 
     fun inflateToolbarMenu() {
-        layout.toolbar.inflateMenu(R.menu.menu_log_workout)
+        layout.toolbar.inflateMenu(R.menu.menu_dialog_log_workout)
         layout.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_add_set -> {
