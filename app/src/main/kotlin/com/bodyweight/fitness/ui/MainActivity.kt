@@ -124,6 +124,15 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        when (Stream.currentDrawerId) {
+            R.id.action_menu_workout -> menuInflater.inflate(R.menu.menu_workout, menu)
+            R.id.action_menu_workout_log -> menuInflater.inflate(R.menu.calendar, menu)
+        }
+
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         keepScreenOnWhenAppIsRunning()
     }
