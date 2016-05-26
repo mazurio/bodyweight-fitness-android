@@ -245,9 +245,9 @@ class TimerPresenter : AbstractPresenter() {
 
                 val numberOfSets = it.sets.size
                 if (numberOfSets < Constants.maximumNumberOfSets) {
-                    if (numberOfSets == 1 && it.sets[0].isTimed && it.sets[0].seconds == 0) {
-                        val firstSet = it.sets[0]
+                    val firstSet = it.sets.first()
 
+                    if (numberOfSets == 1 && firstSet.isTimed && firstSet.seconds == 0) {
                         if (firstSet.isTimed && firstSet.seconds == 0) {
                             firstSet.seconds = logSeconds
                         }

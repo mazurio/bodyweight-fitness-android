@@ -55,15 +55,25 @@ class ProgressAdapter(private val mRepositoryCategory: RepositoryCategory) : Rec
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProgressPresenter {
-        if (viewType == 1) {
-            val view = parent.inflate(R.layout.activity_progress_title)
+        when (viewType) {
+            1 -> {
+                val view = parent.inflate(R.layout.activity_progress_title)
 
-            return ProgressTitlePresenter(view)
+                return ProgressTitlePresenter(view)
+            }
+
+            2 -> {
+                val view = parent.inflate(R.layout.activity_progress_header)
+
+                return ProgressHeaderPresenter(view)
+            }
+
+            else -> {
+                val view = parent.inflate(R.layout.activity_progress_card)
+
+                return ProgressCardPresenter(view)
+            }
         }
-
-        val view = parent.inflate(R.layout.activity_progress_card)
-
-        return ProgressCardPresenter(view)
     }
 
     override fun onBindViewHolder(holder: ProgressPresenter, position: Int) {
@@ -79,10 +89,14 @@ class ProgressAdapter(private val mRepositoryCategory: RepositoryCategory) : Rec
     }
 
     override fun getItemCount(): Int {
-        return totalSize
+        return totalSize + 1
     }
 
     override fun getItemViewType(position: Int): Int {
+        if (position == 0) {
+            return 2
+        }
+
         if (itemViewMapping.containsKey(position)) {
             return 1
         }
@@ -92,6 +106,12 @@ class ProgressAdapter(private val mRepositoryCategory: RepositoryCategory) : Rec
 }
 
 abstract class ProgressPresenter(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+class ProgressHeaderPresenter(itemView: View) : ProgressPresenter(itemView) {
+    fun bindView(repositoryExercise: RepositoryExercise) {
+
+    }
+}
 
 class ProgressCardPresenter(itemView: View) : ProgressPresenter(itemView) {
     fun bindView(repositoryExercise: RepositoryExercise) {

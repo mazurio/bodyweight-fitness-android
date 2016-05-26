@@ -111,6 +111,7 @@ dependencies {
     compile 'com.trello:rxlifecycle-kotlin:0.5.0'
 
     compile 'com.robinhood.spark:spark:1.1.0'
+
     compile 'com.github.johnkil.android-robototextview:robototextview:2.5.0'
     compile 'com.gordonwong:material-sheet-fab:1.2.1'
     compile 'io.github.kobakei:ratethisapp:1.0.3'

@@ -59,15 +59,13 @@ class RepsLoggerPresenter : AbstractPresenter() {
         val repositoryRoutine = Repository.repositoryRoutineForToday
 
         realm.executeTransaction {
-            val currentExercise = repositoryRoutine.exercises.filter {
+            repositoryRoutine.exercises.filter {
                 it.exerciseId == RoutineStream.exercise.exerciseId
-            }.firstOrNull()
-
-            if (currentExercise != null) {
-                val numberOfSets = currentExercise.sets.size
+            }.firstOrNull()?.let {
+                val numberOfSets = it.sets.size
 
                 if (numberOfSets < Constants.maximumNumberOfSets) {
-                    val firstSet = currentExercise.sets.first()
+                    val firstSet = it.sets.first()
 
                     if (numberOfSets == 1 && firstSet.reps == 0) {
                         firstSet.reps = numberOfReps
@@ -82,17 +80,15 @@ class RepsLoggerPresenter : AbstractPresenter() {
                         repositorySet.weight = 0.0
                         repositorySet.reps = numberOfReps
 
-                        repositorySet.exercise = currentExercise
+                        repositorySet.exercise = it
 
-                        currentExercise.sets.add(repositorySet)
+                        it.sets.add(repositorySet)
 
                         Stream.setRepository()
                         Stream.setLoggedSetReps(SetReps(numberOfSets + 1, numberOfReps))
                     }
 
                     repositoryRoutine.lastUpdatedTime = DateTime().toDate()
-
-                    realm.copyToRealmOrUpdate(repositoryRoutine)
                 }
             }
         }

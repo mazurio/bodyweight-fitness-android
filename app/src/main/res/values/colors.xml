@@ -9,4 +9,7 @@
 	<color name="white">#FFFFFF</color>
 	<color name="black">#000000</color>
 	<color name="spacing">#EDEDED</color>
+
+	<color name="progress_card">#303032</color>
+	<color name="label_text">#6E6E70</color>
 </resources>

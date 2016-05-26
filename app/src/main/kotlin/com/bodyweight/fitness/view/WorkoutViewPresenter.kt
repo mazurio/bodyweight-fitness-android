@@ -7,6 +7,8 @@ import android.util.AttributeSet
 import com.bodyweight.fitness.setGone
 import com.bodyweight.fitness.setVisible
 import com.bodyweight.fitness.stream.RoutineStream
+import com.bodyweight.fitness.stream.Stream
+import com.bodyweight.fitness.stream.WorkoutViewType
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
@@ -17,10 +19,12 @@ class WorkoutViewPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
+        val view = view as WorkoutView
+
         RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
                 .subscribe {
-                    (view as WorkoutView).showHideViewTabs(it.isTimedSet)
+                    view.showHideViewTabs(it.isTimedSet)
                 }
     }
 }
@@ -35,45 +39,29 @@ open class WorkoutView : AbstractView {
     override fun onCreateView() {
         super.onCreateView()
 
-        view_tabs.addTab(view_tabs.newTab().setText("Timer"))
-        view_tabs.addTab(view_tabs.newTab().setText("Reps Logger"))
-        view_tabs.addTab(view_tabs.newTab().setText("Rest Timer"))
-
         view_tabs.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                if (view_tabs.tabCount == 3) {
-                    when(tab.position) {
-                        0 -> {
-                            timer_view.setVisible()
-                            reps_logger_view.setGone()
-                            rest_timer_view.setGone()
-                        }
+                when (tab.text) {
+                    "Timer" -> {
+                        Stream.setWorkoutView(WorkoutViewType.Timer)
 
-                        1 -> {
-                            timer_view.setGone()
-                            reps_logger_view.setVisible()
-                            rest_timer_view.setGone()
-                        }
-
-                        else -> {
-                            timer_view.setGone()
-                            reps_logger_view.setGone()
-                            rest_timer_view.setVisible()
-                        }
+                        timer_view.setVisible()
+                        reps_logger_view.setGone()
+                        rest_timer_view.setGone()
                     }
-                } else if (view_tabs.tabCount == 2) {
-                    when(tab.position) {
-                        0 -> {
-                            timer_view.setVisible()
-                            reps_logger_view.setGone()
-                            rest_timer_view.setGone()
-                        }
+                    "Reps Logger" -> {
+                        Stream.setWorkoutView(WorkoutViewType.RepsLogger)
 
-                        else -> {
-                            timer_view.setGone()
-                            reps_logger_view.setGone()
-                            rest_timer_view.setVisible()
-                        }
+                        timer_view.setGone()
+                        reps_logger_view.setVisible()
+                        rest_timer_view.setGone()
+                    }
+                    else -> {
+                        Stream.setWorkoutView(WorkoutViewType.RestTimer)
+
+                        timer_view.setGone()
+                        reps_logger_view.setGone()
+                        rest_timer_view.setVisible()
                     }
                 }
             }
@@ -82,33 +70,40 @@ open class WorkoutView : AbstractView {
             override fun onTabReselected(tab: TabLayout.Tab) { }
         })
 
-        if (RoutineStream.exercise.isTimedSet) {
-            view_tabs.getTabAt(0)?.select()
-        } else {
-            view_tabs.getTabAt(1)?.select()
-        }
+        showHideViewTabs(RoutineStream.exercise.isTimedSet)
     }
 
     fun showHideViewTabs(isTimed: Boolean) {
         if (isTimed) {
-            if (view_tabs.tabCount == 3) {
+            if (view_tabs.tabCount == 0 || view_tabs.getTabAt(0)!!.text != "Timer") {
                 view_tabs.removeAllTabs()
 
-                view_tabs.addTab(view_tabs.newTab().setText("Timer"))
-                view_tabs.addTab(view_tabs.newTab().setText("Rest Timer"))
+                addTab("Timer")
+                addTab("Rest Timer")
             }
 
-            view_tabs.getTabAt(0)?.select()
+            selectFirstTab()
+
+            Stream.setWorkoutView(WorkoutViewType.Timer)
         } else {
-            if (view_tabs.tabCount == 2) {
+            if (view_tabs.tabCount == 0 || view_tabs.getTabAt(0)!!.text != "Reps Logger") {
                 view_tabs.removeAllTabs()
 
-                view_tabs.addTab(view_tabs.newTab().setText("Timer"))
-                view_tabs.addTab(view_tabs.newTab().setText("Reps Logger"))
-                view_tabs.addTab(view_tabs.newTab().setText("Rest Timer"))
+                addTab("Reps Logger")
+                addTab("Rest Timer")
             }
 
-            view_tabs.getTabAt(1)?.select()
+            selectFirstTab()
+
+            Stream.setWorkoutView(WorkoutViewType.RepsLogger)
         }
+    }
+
+    fun selectFirstTab() {
+        view_tabs.getTabAt(0)?.select()
+    }
+
+    fun addTab(title: String) {
+        view_tabs.addTab(view_tabs.newTab().setText(title))
     }
 }

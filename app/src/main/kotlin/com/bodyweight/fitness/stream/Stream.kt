@@ -6,10 +6,16 @@ import com.bodyweight.fitness.model.CalendarDay
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.subjects.PublishSubject
+import kotlin.properties.Delegates
 
 data class SetReps(val set: Int, val reps: Int)
 
 enum class DialogType { MainActivityLogWorkout, ProgressActivityLogWorkout, Progress }
+enum class WorkoutViewType {
+    RestTimer,
+    Timer,
+    RepsLogger
+}
 data class Dialog(val dialogType: DialogType, val exerciseId: String)
 
 object UiEvent {
@@ -32,6 +38,9 @@ object Stream {
     var currentCalendarDay: CalendarDay = CalendarDay()
         private set
 
+    var currentWorkoutViewType: WorkoutViewType by Delegates.notNull()
+        private set
+
     private val menuSubject = PublishSubject.create<Int>()
     private val drawerSubject = PublishSubject.create<Int>()
     private val loggedSecondsSubject = PublishSubject.create<Int>()
@@ -39,6 +48,8 @@ object Stream {
 
     private val calendarPageSubject = PublishSubject.create<Int>()
     private val calendarDaySubject = PublishSubject.create<CalendarDay>()
+
+    private val currentWorkoutViewSubject = PublishSubject.create<WorkoutViewType>()
 
     /**
      * Emits when changes to repository have been made.
@@ -74,6 +85,13 @@ object Stream {
                 .refCount()
     }
 
+    fun currentWorkoutViewObservable(): Observable<WorkoutViewType> {
+        return Observable.merge(Observable.just(currentWorkoutViewType).publish().refCount(), currentWorkoutViewSubject)
+                .observeOn(AndroidSchedulers.mainThread())
+                .publish()
+                .refCount()
+    }
+
     fun setMenu(toolbarMenuItemId: Int) {
         menuSubject.onNext(toolbarMenuItemId)
     }
@@ -85,6 +103,11 @@ object Stream {
         }
 
         drawerSubject.onNext(drawerMenuItemId)
+    }
+
+    fun setWorkoutView(workoutViewType: WorkoutViewType) {
+        currentWorkoutViewType = workoutViewType
+        currentWorkoutViewSubject.onNext(workoutViewType)
     }
 
     fun setLoggedSeconds(loggedSeconds: Int) {

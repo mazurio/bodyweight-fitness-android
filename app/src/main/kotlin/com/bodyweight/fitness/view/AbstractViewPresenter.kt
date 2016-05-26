@@ -36,8 +36,8 @@ abstract class AbstractPresenter : Serializable {
 abstract class AbstractView : RelativeLayout {
     abstract var presenter: AbstractPresenter
 
-    val superStateKey = "superState"
-    val presenterKey = "presenter"
+    val superStateKey = this.javaClass.canonicalName + "superState"
+    val presenterKey = this.javaClass.canonicalName + "presenter"
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)

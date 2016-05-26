@@ -20,8 +20,8 @@
 	</style>
 
 	<style name="AppTheme.Progress.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="android:textColorPrimary">@color/white</item>
-		<item name="android:textColorSecondary">@color/white</item>
+		<item name="android:textColorPrimary">@color/primaryDark</item>
+		<item name="android:textColorSecondary">@color/primaryDark</item>
 
 		<item name="actionMenuTextColor">@color/white</item>
 	</style>
