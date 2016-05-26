@@ -172,7 +172,6 @@
                                     android:textSize="20sp"
                                     android:textColor="@color/label_text"/>
                             </LinearLayout>
-
                         </LinearLayout>
 
                         <LinearLayout

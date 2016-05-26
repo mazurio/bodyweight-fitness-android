@@ -80,9 +80,9 @@ class CalendarPagePresenter : AbstractPresenter() {
 open class CalendarPageView : AbstractView {
     override var presenter: AbstractPresenter = CalendarPagePresenter()
 
-    var mClickedDay: Int = 3
+    var clickedDay: Int = 3
 
-    val mDayViews: List<TextView> by lazy {
+    val dayViews: List<TextView> by lazy {
         listOf(this.day_1, this.day_2, this.day_3, this.day_4, this.day_5, this.day_6, this.day_7)
     }
 
@@ -97,7 +97,7 @@ open class CalendarPageView : AbstractView {
     }
 
     fun setListener(dayView: Int) {
-        val view: TextView? = mDayViews[dayView]
+        val view: TextView? = dayViews[dayView]
 
         view?.setOnClickListener {
             select(dayView)
@@ -107,23 +107,23 @@ open class CalendarPageView : AbstractView {
     }
 
     fun select(dayView: Int) {
-        val view: TextView? = mDayViews[dayView]
+        val view: TextView? = dayViews[dayView]
 
-        unselect(mClickedDay)
+        unselect(clickedDay)
 
         view?.let {
             it.setTextColor(Color.parseColor("#ffffff"))
             it.setBackgroundResourceWithPadding(R.drawable.rounded_corner_today)
         }
 
-        mClickedDay = dayView
+        clickedDay = dayView
     }
 
     fun unselect(dayView: Int) {
-        val view: TextView? = mDayViews[dayView]
+        val view: TextView? = dayViews[dayView]
         val isToday = view?.tag as? Boolean ?: false
 
-        val clickedView: TextView? = mDayViews[mClickedDay]
+        val clickedView: TextView? = dayViews[clickedDay]
 
         clickedView?.let {
             if (isToday) {
@@ -137,19 +137,19 @@ open class CalendarPageView : AbstractView {
     }
 
     fun setActive(dayView: Int) {
-        val view: TextView = mDayViews[dayView]
+        val view: TextView = dayViews[dayView]
 
         view.setBackgroundResourceWithPadding(R.drawable.rounded_corner_active)
     }
 
     fun setIsToday(dayView: Int, tag: Boolean) {
-        val view: TextView = mDayViews[dayView]
+        val view: TextView = dayViews[dayView]
 
         view.tag = tag
     }
 
     fun showDot(dayView: Int, show: Boolean) {
-        val view: TextView = mDayViews[dayView]
+        val view: TextView = dayViews[dayView]
 
         if (show) {
             view.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.dot)
@@ -159,7 +159,7 @@ open class CalendarPageView : AbstractView {
     }
 
     fun setText(dayView: Int, text: String) {
-        val view: TextView = mDayViews[dayView]
+        val view: TextView = dayViews[dayView]
 
         view.text = text
     }

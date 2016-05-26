@@ -5,6 +5,9 @@ import io.realm.RealmObject
 import io.realm.annotations.Index
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.Required
+import org.joda.time.DateTime
+import org.joda.time.Duration
+import org.joda.time.format.PeriodFormatterBuilder
 
 import java.util.*
 
@@ -28,7 +31,46 @@ open class RepositoryRoutine(
     open var categories: RealmList<RepositoryCategory> = RealmList(),
     open var sections: RealmList<RepositorySection> = RealmList(),
     open var exercises: RealmList<RepositoryExercise> = RealmList()
-) : RealmObject() {}
+) : RealmObject() {
+    companion object {
+        fun getStartTime(repositoryRoutine: RepositoryRoutine): String {
+            return DateTime(repositoryRoutine.startTime)
+                    .toString("HH:mm", Locale.ENGLISH)
+        }
+
+        fun getLastUpdatedTime(repositoryRoutine: RepositoryRoutine): String {
+            return DateTime(repositoryRoutine.lastUpdatedTime)
+                    .toString("HH:mm", Locale.ENGLISH)
+        }
+
+        fun getWorkoutLength(repositoryRoutine: RepositoryRoutine): String {
+            val duration = Duration(
+                    DateTime(repositoryRoutine.startTime),
+                    DateTime(repositoryRoutine.lastUpdatedTime))
+
+            val formatter =  PeriodFormatterBuilder()
+                    .appendHours()
+                    .appendSuffix("h ")
+                    .appendMinutes()
+                    .appendSuffix("m")
+                    .toFormatter()
+                    .print(duration.toPeriod())
+
+            if (formatter.replace(" ", "").equals("")) {
+                return "--"
+            } else {
+                return formatter
+            }
+        }
+
+        fun getWorkoutLengthInMinutes(repositoryRoutine: RepositoryRoutine): Int {
+            return Duration(
+                    DateTime(repositoryRoutine.startTime),
+                    DateTime(repositoryRoutine.lastUpdatedTime)
+            ).toStandardMinutes().minutes
+        }
+    }
+}
 
 open class RepositoryCategory(
     @PrimaryKey

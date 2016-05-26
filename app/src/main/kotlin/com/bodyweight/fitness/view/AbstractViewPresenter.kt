@@ -6,6 +6,11 @@ import android.os.Parcelable
 import android.util.AttributeSet
 import android.widget.RelativeLayout
 
+import com.bodyweight.fitness.model.CompletionRate
+import com.bodyweight.fitness.model.RepositoryCategory
+import com.bodyweight.fitness.model.RepositoryExercise
+import com.bodyweight.fitness.model.RepositoryRoutine
+
 import java.io.Serializable
 
 abstract class AbstractPresenter : Serializable {
@@ -30,6 +35,76 @@ abstract class AbstractPresenter : Serializable {
 
     open fun context(): Context {
         return mView!!.context
+    }
+
+    fun getVisibleAndCompletedExercises(exercises: List<RepositoryExercise>): List<RepositoryExercise> {
+        return exercises.filter {
+            it.isVisible || RepositoryExercise.isCompleted(it)
+        }
+    }
+
+    fun getMissedExercises(exercises: List<RepositoryExercise>): List<RepositoryExercise> {
+        return exercises.filter {
+            it.isVisible && !RepositoryExercise.isCompleted(it)
+        }
+    }
+
+    fun getNumberOfExercises(exercises: List<RepositoryExercise>): Int {
+        return exercises.count()
+    }
+
+    fun getNumberOfCompletedExercises(exercises: List<RepositoryExercise>): Int {
+        return exercises.filter {
+            RepositoryExercise.isCompleted(it)
+        }.count()
+    }
+
+    fun getCompletionRateForRoutine(repositoryRoutine: RepositoryRoutine): CompletionRate {
+        val exercises = getVisibleAndCompletedExercises(repositoryRoutine.exercises)
+
+        val numberOfExercises: Int = getNumberOfExercises(exercises)
+        val numberOfCompletedExercises: Int = getNumberOfCompletedExercises(exercises)
+
+        if (numberOfExercises == 0) {
+            return CompletionRate(0, "0%")
+        }
+
+        val completionRate = numberOfCompletedExercises * 100 / numberOfExercises
+
+        return CompletionRate(completionRate, "$completionRate%")
+    }
+
+    fun getCompletionRateForCategory(repositoryRoutineForTodayExists: Boolean, repositoryCategory: RepositoryCategory? = null): CompletionRate {
+        if (repositoryRoutineForTodayExists && repositoryCategory != null) {
+            val exercises = getVisibleAndCompletedExercises(repositoryCategory.exercises)
+
+            val numberOfExercises: Int = getNumberOfExercises(exercises)
+            val numberOfCompletedExercises: Int = getNumberOfCompletedExercises(exercises)
+
+            if (numberOfExercises == 0) {
+                return CompletionRate(0, "0%")
+            }
+
+            val completionRate = numberOfCompletedExercises * 100 / numberOfExercises
+
+            return CompletionRate(completionRate, "$completionRate%")
+        } else {
+            return CompletionRate(0, "0%")
+        }
+    }
+
+    fun calculateLayoutWeight(completionRate: Int): Float {
+        if (completionRate <= 10) {
+            return 7f
+        }
+
+        val weight = completionRate * 0.7f;
+
+        if (weight > 70f) {
+            return 70f
+        }
+
+        return weight
     }
 }
 

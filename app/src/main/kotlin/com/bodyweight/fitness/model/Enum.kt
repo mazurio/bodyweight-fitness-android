@@ -27,6 +27,10 @@ data class CalendarDay(var page: Int = 60, var day: Int = 3) {
     }
 }
 
+data class DateTimeWorkoutLength(val dateTime: DateTime, val repositoryRoutine: RepositoryRoutine? = null)
+
+data class CompletionRate(val percentage: Int, val label: String)
+
 enum class WeightMeasurementUnit constructor(val asString: String) {
     Kg("kg"), Lbs("lbs")
 }

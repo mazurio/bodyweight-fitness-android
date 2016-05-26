@@ -6,8 +6,6 @@ import android.text.format.DateUtils
 import android.util.AttributeSet
 import com.bodyweight.fitness.*
 
-import com.bodyweight.fitness.model.RepositoryCategory
-import com.bodyweight.fitness.model.RepositoryExercise
 import com.bodyweight.fitness.model.RepositoryRoutine
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.RoutineStream
@@ -18,8 +16,6 @@ import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
 import kotlinx.android.synthetic.main.view_home.view.*
 import org.joda.time.DateTime
-
-data class CompletionRate(val percentage: Int, val label: String)
 
 class HomeViewPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
@@ -99,43 +95,6 @@ class HomeViewPresenter : AbstractPresenter() {
         view.setPreviousWorkout("$previousWorkoutLabel")
         view.setNumberOfWorkoutsLast7Days("$last7Days ${getNumberOfWorkoutsPostfix(last7Days)}")
         view.setNumberOfWorkoutsLast30Days("$last30Days ${getNumberOfWorkoutsPostfix(last30Days)}")
-    }
-
-    fun getCompletionRateForCategory(repositoryRoutineForTodayExists: Boolean, repositoryCategory: RepositoryCategory? = null): CompletionRate {
-        if (repositoryRoutineForTodayExists && repositoryCategory != null) {
-            val exercises = repositoryCategory.exercises.filter {
-                it.isVisible == true || RepositoryExercise.isCompleted(it)
-            }
-
-            val numberOfExercises: Int = exercises.size
-            val numberOfCompletedExercises: Int = exercises.filter {
-                RepositoryExercise.isCompleted(it)
-            }.size
-
-            if (numberOfExercises == 0) {
-                return CompletionRate(0, "0%")
-            }
-
-            val completionRate = numberOfCompletedExercises * 100 / numberOfExercises
-
-            return CompletionRate(completionRate, "$completionRate%")
-        } else {
-            return CompletionRate(0, "0%")
-        }
-    }
-
-    fun calculateLayoutWeight(completionRate: Int): Float {
-        if (completionRate <= 10) {
-            return 7f
-        }
-
-        val weight = completionRate * 0.7f;
-
-        if (weight > 70f) {
-            return 70f
-        }
-
-        return weight
     }
 
     fun getStartWorkoutButtonText(repositoryRoutineForTodayExists: Boolean): String {

@@ -2,7 +2,6 @@ package com.bodyweight.fitness.ui
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
@@ -17,7 +16,6 @@ import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.R
 import com.bodyweight.fitness.dialog.LogWorkoutDialog
 import com.bodyweight.fitness.dialog.ProgressDialog
-import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.stream.DialogType
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.stream.UiEvent

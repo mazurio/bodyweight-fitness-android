@@ -6,8 +6,6 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'realm-android'
 apply plugin: 'io.fabric'
 
-apply plugin: 'com.google.gms.google-services'
-
 android {
     dexOptions {
         incremental false
@@ -83,7 +81,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
     testCompile 'org.jetbrains.spek:spek:1.0.9'
-//    testCompile "com.nhaarman:mockito-kotlin:0.3.0"
     testCompile 'org.mockito:mockito-all:2.0.2-beta'
 
     androidTestCompile 'com.android.support:support-annotations:23.3.0'
