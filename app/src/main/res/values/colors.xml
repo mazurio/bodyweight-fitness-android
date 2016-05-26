@@ -10,6 +10,16 @@
 	<color name="black">#000000</color>
 	<color name="spacing">#EDEDED</color>
 
-	<color name="progress_card">#303032</color>
-	<color name="label_text">#6E6E70</color>
+	<!-- Dark = #212124 -->
+	<!-- Light = #F5F5F7 -->
+	<color name="activity_background">#F5F5F7</color>
+
+	<!-- Dark = #303032 -->
+	<!-- Light = #FFFFFF -->
+	<color name="card_background">#FFFFFF</color>
+
+	<!-- Dark = #6E6E70 -->
+	<!-- Light = #111 -->
+	<color name="value_text">#111</color>
+	<color name="label_text">#111</color>
 </resources>

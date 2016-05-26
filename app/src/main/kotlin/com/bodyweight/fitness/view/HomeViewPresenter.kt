@@ -1,17 +1,18 @@
 package com.bodyweight.fitness.view
 
 import android.content.Context
+import android.content.Intent
 import android.text.format.DateUtils
 import android.util.AttributeSet
+import com.bodyweight.fitness.*
 
-import com.bodyweight.fitness.R
 import com.bodyweight.fitness.model.RepositoryCategory
 import com.bodyweight.fitness.model.RepositoryExercise
 import com.bodyweight.fitness.model.RepositoryRoutine
 import com.bodyweight.fitness.repository.Repository
-import com.bodyweight.fitness.setLayoutWeight
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
+import com.bodyweight.fitness.ui.ProgressActivity
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
@@ -65,6 +66,7 @@ class HomeViewPresenter : AbstractPresenter() {
             }
 
             view.setStartWorkoutButtonTitle(title = getStartWorkoutButtonText(true))
+            view.showTodaysWorkoutLogButton()
         } else {
             val routine = RoutineStream.routine
 
@@ -81,6 +83,7 @@ class HomeViewPresenter : AbstractPresenter() {
             }
 
             view.setStartWorkoutButtonTitle(title = getStartWorkoutButtonText(false))
+            view.hideTodaysWorkoutLogButton()
         }
     }
 
@@ -197,6 +200,13 @@ class HomeViewPresenter : AbstractPresenter() {
     fun startWorkout() {
         Stream.setDrawer(R.id.action_menu_workout)
     }
+
+    fun todaysWorkoutLog() {
+        val routineId = Repository.repositoryRoutineForToday.id
+
+        context().startActivity(Intent(context(), ProgressActivity::class.java)
+                .putExtra(Constants.primaryKeyRoutineId, routineId))
+    }
 }
 
 open class HomeView : AbstractView {
@@ -212,10 +222,22 @@ open class HomeView : AbstractView {
         start_workout.setOnClickListener {
             (presenter as HomeViewPresenter).startWorkout()
         }
+
+        todays_workout_log.setOnClickListener {
+            (presenter as HomeViewPresenter).todaysWorkoutLog()
+        }
     }
 
     fun setStartWorkoutButtonTitle(title: String) {
         start_workout.text = title
+    }
+
+    fun showTodaysWorkoutLogButton() {
+        todays_workout_log.setVisible()
+    }
+
+    fun hideTodaysWorkoutLogButton() {
+        todays_workout_log.setGone()
     }
 
     fun setCategoryOne(title: String, completionRateLabel: String, completionRateValue: Float) {

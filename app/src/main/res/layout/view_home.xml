@@ -5,198 +5,42 @@
     android:id="@+id/view_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F7">
+    android:background="@color/activity_background">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <LinearLayout
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:background="@color/primary" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="@color/card_background">
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:background="@color/primary" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:layout_gravity="center">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="16dp">
-
-                                <com.devspark.robototextview.widget.RobotoTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Today's Progress"
-                                    android:textSize="20sp"
-                                    android:textColor="#111"/>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:paddingLeft="16dp"
-                                android:paddingRight="16dp">
-
-                                <com.devspark.robototextview.widget.RobotoTextView
-                                    android:id="@+id/category_one_title"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:paddingTop="4dp"
-                                    android:textSize="15sp"/>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:weightSum="100"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:id="@+id/category_one_completion_rate_value"
-                                        android:layout_width="0dp"
-                                        android:layout_height="16dp"
-                                        android:layout_weight="70"
-                                        android:background="@drawable/action_welcome"
-                                        android:layout_marginTop="8dp"
-                                        android:layout_marginBottom="8dp"
-                                        android:orientation="horizontal"/>
-
-                                    <com.devspark.robototextview.widget.RobotoTextView
-                                        android:id="@+id/category_one_completion_rate_label"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="30"
-                                        android:paddingLeft="8dp"
-                                        android:gravity="center|left"
-                                        android:textSize="20sp"
-                                        android:textColor="#111"/>
-                                </LinearLayout>
-
-                                <com.devspark.robototextview.widget.RobotoTextView
-                                    android:id="@+id/category_two_title"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:paddingTop="4dp"
-                                    android:textSize="15sp"/>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:weightSum="100"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:id="@+id/category_two_completion_rate_value"
-                                        android:layout_width="0dp"
-                                        android:layout_height="16dp"
-                                        android:layout_weight="20"
-                                        android:background="@drawable/action_welcome"
-                                        android:layout_marginTop="8dp"
-                                        android:layout_marginBottom="8dp"
-                                        android:orientation="horizontal"/>
-
-                                    <com.devspark.robototextview.widget.RobotoTextView
-                                        android:id="@+id/category_two_completion_rate_label"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="80"
-                                        android:paddingLeft="8dp"
-                                        android:gravity="center|left"
-                                        android:textSize="20sp"
-                                        android:textColor="#111"/>
-                                </LinearLayout>
-
-                                <com.devspark.robototextview.widget.RobotoTextView
-                                    android:id="@+id/category_three_title"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:paddingTop="4dp"
-                                    android:textSize="15sp"/>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:weightSum="100"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:id="@+id/category_three_completion_rate_value"
-                                        android:layout_width="0dp"
-                                        android:layout_height="16dp"
-                                        android:layout_weight="50"
-                                        android:background="@drawable/action_welcome"
-                                        android:layout_marginTop="8dp"
-                                        android:layout_marginBottom="8dp"
-                                        android:orientation="horizontal"/>
-
-                                    <com.devspark.robototextview.widget.RobotoTextView
-                                        android:id="@+id/category_three_completion_rate_label"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="50"
-                                        android:paddingLeft="8dp"
-                                        android:gravity="center|left"
-                                        android:textSize="20sp"
-                                        android:textColor="#111"/>
-                                </LinearLayout>
-
-                            </LinearLayout>
-
-                            <Button
-                                android:id="@+id/start_workout"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginBottom="8dp"
-                                android:gravity="center"
-                                android:textSize="16sp"
-                                android:textColor="@color/primaryDark"
-                                style="@style/Widget.AppCompat.Button.Borderless"/>
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
-
-                    <com.devspark.robototextview.widget.RobotoTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="8dp"
-                        android:paddingLeft="16dp"
-                        android:paddingBottom="8dp"
-                        android:textSize="16sp"
-                        android:text="Statistics"
-                        app:typeface="roboto_regular"/>
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_gravity="center">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -204,106 +48,289 @@
                             android:orientation="vertical"
                             android:padding="16dp">
 
+                            <com.devspark.robototextview.widget.RobotoTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Today's Progress"
+                                android:textSize="20sp"
+                                android:textColor="@color/label_text"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp">
+
+                            <com.devspark.robototextview.widget.RobotoTextView
+                                android:id="@+id/category_one_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="4dp"
+                                android:text="Warmup"
+                                android:textSize="15sp"
+                                android:textColor="@color/label_text"/>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
+                                android:weightSum="100"
+                                android:orientation="horizontal">
 
                                 <LinearLayout
+                                    android:id="@+id/category_one_completion_rate_value"
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
+                                    android:layout_height="16dp"
+                                    android:layout_weight="70"
+                                    android:background="@drawable/action_welcome"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:orientation="horizontal"/>
 
-                                    <com.devspark.robototextview.widget.RobotoTextView
-                                        android:id="@+id/total_workouts_value"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textSize="20sp"
-                                        android:textColor="#111"/>
-
-                                    <com.devspark.robototextview.widget.RobotoTextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:paddingTop="4dp"
-                                        android:text="Total"
-                                        android:textSize="15sp"/>
-                                </LinearLayout>
-                                <LinearLayout
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:id="@+id/category_one_completion_rate_label"
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
-
-                                    <com.devspark.robototextview.widget.RobotoTextView
-                                        android:id="@+id/previous_workout_value"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textSize="20sp"
-                                        android:textColor="#111"/>
-
-                                    <com.devspark.robototextview.widget.RobotoTextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:paddingTop="4dp"
-                                        android:text="Previous Workout"
-                                        android:textSize="15sp"/>
-                                </LinearLayout>
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="30"
+                                    android:paddingLeft="8dp"
+                                    android:gravity="center|left"
+                                    android:text="70%"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/label_text"/>
                             </LinearLayout>
 
+                            <com.devspark.robototextview.widget.RobotoTextView
+                                android:id="@+id/category_two_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="4dp"
+                                android:text="Skills Work"
+                                android:textSize="15sp"
+                                android:textColor="@color/label_text"/>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:orientation="horizontal"
-                                android:weightSum="2">
+                                android:weightSum="100"
+                                android:orientation="horizontal">
 
                                 <LinearLayout
+                                    android:id="@+id/category_two_completion_rate_value"
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
+                                    android:layout_height="16dp"
+                                    android:layout_weight="20"
+                                    android:background="@drawable/action_welcome"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:orientation="horizontal"/>
 
-                                    <com.devspark.robototextview.widget.RobotoTextView
-                                        android:id="@+id/last_7_days_value"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textSize="20sp"
-                                        android:textColor="#111"/>
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:id="@+id/category_two_completion_rate_label"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="80"
+                                    android:paddingLeft="8dp"
+                                    android:gravity="center|left"
+                                    android:text="20%"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/label_text"/>
+                            </LinearLayout>
 
-                                    <com.devspark.robototextview.widget.RobotoTextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:paddingTop="4dp"
-                                        android:text="Last 7 Days"
-                                        android:textSize="15sp"/>
-                                </LinearLayout>
+                            <com.devspark.robototextview.widget.RobotoTextView
+                                android:id="@+id/category_three_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="4dp"
+                                android:text="Strength Work"
+                                android:textSize="15sp"
+                                android:textColor="@color/label_text"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:weightSum="100"
+                                android:orientation="horizontal">
+
                                 <LinearLayout
+                                    android:id="@+id/category_three_completion_rate_value"
                                     android:layout_width="0dp"
+                                    android:layout_height="16dp"
+                                    android:layout_weight="50"
+                                    android:background="@drawable/action_welcome"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:orientation="horizontal"/>
+
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:id="@+id/category_three_completion_rate_label"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="50"
+                                    android:paddingLeft="8dp"
+                                    android:gravity="center|left"
+                                    android:text="50%"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/label_text"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp">
+
+                            <Button
+                                android:id="@+id/start_workout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:gravity="center"
+                                android:text="Start Workout"
+                                android:textSize="16sp"
+                                style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+                            <Button
+                                android:id="@+id/todays_workout_log"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:gravity="center"
+                                android:text="Today's Workout Log"
+                                android:textSize="16sp"
+                                style="@style/Widget.AppCompat.Button.Borderless"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingBottom="8dp"
+                    android:textColor="@color/label_text"
+                    android:textSize="16sp"
+                    android:text="Statistics"
+                    app:typeface="roboto_regular"/>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="@color/card_background">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:id="@+id/total_workouts_value"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
+                                    android:textSize="20sp"
+                                    android:textColor="@color/value_text"/>
 
-                                    <com.devspark.robototextview.widget.RobotoTextView
-                                        android:id="@+id/last_30_days_value"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textSize="20sp"
-                                        android:textColor="#111"/>
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="4dp"
+                                    android:text="Total"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/label_text"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                                    <com.devspark.robototextview.widget.RobotoTextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:paddingTop="4dp"
-                                        android:text="Last 30 Days"
-                                        android:textSize="15sp"/>
-                                </LinearLayout>
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:id="@+id/previous_workout_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/value_text"/>
+
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="4dp"
+                                    android:text="Previous Workout"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/label_text"/>
                             </LinearLayout>
                         </LinearLayout>
-                    </android.support.v7.widget.CardView>
-                </LinearLayout>
-            </FrameLayout>
-        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:id="@+id/last_7_days_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/value_text"/>
+
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="4dp"
+                                    android:text="Last 7 Days"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/label_text"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:id="@+id/last_30_days_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/value_text"/>
+
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="4dp"
+                                    android:text="Last 30 Days"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/label_text"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+        </FrameLayout>
     </ScrollView>
 </com.bodyweight.fitness.view.HomeView>

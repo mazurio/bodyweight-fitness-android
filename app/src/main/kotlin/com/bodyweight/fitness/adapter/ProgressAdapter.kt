@@ -77,7 +77,9 @@ class ProgressAdapter(private val mRepositoryCategory: RepositoryCategory) : Rec
     }
 
     override fun onBindViewHolder(holder: ProgressPresenter, position: Int) {
-        if (itemViewMapping.containsKey(position)) {
+        if (position == 0) {
+
+        } else if (itemViewMapping.containsKey(position)) {
             val presenter = holder as ProgressTitlePresenter
 
             presenter.bindView(itemViewMapping[position]!!)
