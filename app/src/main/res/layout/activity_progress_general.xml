@@ -398,36 +398,6 @@
                 </android.support.v7.widget.CardView>
 
                 <com.devspark.robototextview.widget.RobotoTextView
-                    android:id="@+id/missed_exercises_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingLeft="16dp"
-                    android:paddingBottom="8dp"
-                    android:textColor="@color/label_text"
-                    android:textSize="16sp"
-                    android:text="Missed Exercises"
-                    app:typeface="roboto_regular"/>
-
-                <android.support.v7.widget.CardView
-                    android:id="@+id/missed_exercises_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    app:cardBackgroundColor="@color/card_background">
-
-                    <LinearLayout
-                        android:id="@+id/missed_exercises_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_gravity="center"
-                        android:paddingTop="16dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp" />
-                </android.support.v7.widget.CardView>
-
-                <com.devspark.robototextview.widget.RobotoTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="8dp"
@@ -462,7 +432,7 @@
                             app:typeface="roboto_light"/>
 
                         <com.devspark.robototextview.widget.RobotoTextView
-                            android:id="@+id/graph_completion_rate_description"
+                            android:id="@+id/graph_completion_rate_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
@@ -490,6 +460,36 @@
                             app:tabMinWidth="50dp"
                             app:tabMode="fixed"/>
                     </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/missed_exercises_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingBottom="8dp"
+                    android:textColor="@color/label_text"
+                    android:textSize="16sp"
+                    android:text="Missed Exercises"
+                    app:typeface="roboto_regular"/>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/missed_exercises_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="@color/card_background">
+
+                    <LinearLayout
+                        android:id="@+id/missed_exercises_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:paddingTop="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp" />
                 </android.support.v7.widget.CardView>
             </LinearLayout>
         </FrameLayout>

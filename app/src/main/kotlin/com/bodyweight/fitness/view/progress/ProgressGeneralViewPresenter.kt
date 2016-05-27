@@ -4,16 +4,18 @@ import android.content.Context
 import android.graphics.Color
 import android.support.design.widget.TabLayout
 import android.util.AttributeSet
-import com.bodyweight.fitness.*
-import com.bodyweight.fitness.extension.debug
-import com.bodyweight.fitness.model.DateTimeWorkoutLength
 
+import com.bodyweight.fitness.*
+import com.bodyweight.fitness.model.DateTimeCompletionRate
+import com.bodyweight.fitness.model.DateTimeWorkoutLength
 import com.bodyweight.fitness.model.RepositoryRoutine
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.view.AbstractPresenter
 import com.bodyweight.fitness.view.AbstractView
+
 import com.robinhood.spark.SparkAdapter
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
+
 import io.realm.Sort
 
 import kotlinx.android.synthetic.main.activity_progress_general.view.*
@@ -62,6 +64,42 @@ class WorkoutLengthAdapter : SparkAdapter() {
     }
 }
 
+class CompletionRateAdapter : SparkAdapter() {
+    private var data = ArrayList<DateTimeCompletionRate>()
+
+    fun changeData(data: ArrayList<DateTimeCompletionRate>) {
+        this.data = data
+
+        notifyDataSetChanged()
+    }
+
+    override fun getCount(): Int {
+        return data.size
+    }
+
+    override fun getItem(index: Int): Any {
+        val item = data.getOrNull(index)
+
+        item?.let {
+            return it
+        }
+
+        return ""
+    }
+
+    override fun getY(index: Int): Float {
+        data[index].repositoryRoutine?.let {
+            return RepositoryRoutine.getCompletionRate(it).percentage.toFloat()
+        }
+
+        return 0f
+    }
+
+    override fun getX(index: Int): Float {
+        return index.toFloat()
+    }
+}
+
 class ProgressGeneralViewPresenter : AbstractPresenter() {
     var repositoryRoutine: RepositoryRoutine by Delegates.notNull()
 
@@ -92,6 +130,7 @@ class ProgressGeneralViewPresenter : AbstractPresenter() {
         renderTodaysProgress()
         renderMissedExercises()
         renderWorkoutLengthHistoryGraph()
+        renderCompletionRateHistoryGraph()
     }
 
     fun renderTime() {
@@ -249,6 +288,112 @@ class ProgressGeneralViewPresenter : AbstractPresenter() {
                             dates.add(DateTimeWorkoutLength(date, repositoryRoutine))
                         } else {
                             dates.add(DateTimeWorkoutLength(date, null))
+                        }
+                    }
+
+                    dates
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .bindToLifecycle(getView())
+                .subscribe {
+                    adapter.changeData(it)
+                }
+    }
+
+    fun renderCompletionRateHistoryGraph() {
+        val view = getView() as ProgressGeneralView
+
+        val completionRateGraphView = view.graph_completion_rate_view
+        val completionRateTabLayout = view.graph_completion_rate_tablayout
+
+        val completionRateAdapter = CompletionRateAdapter()
+
+        completionRateGraphView.adapter = completionRateAdapter
+        completionRateGraphView.scrubLineColor = Color.parseColor("#111111")
+        completionRateGraphView.isScrubEnabled = true
+        completionRateGraphView.animateChanges = true
+
+        completionRateGraphView.setScrubListener {
+            val dateTimeCompletionRate = it as? DateTimeCompletionRate
+
+            dateTimeCompletionRate?.let {
+                view.graph_completion_rate_title.text = it.dateTime.toString("dd MMMM, YYYY", Locale.ENGLISH)
+
+                if (it.repositoryRoutine != null) {
+                    view.graph_completion_rate_value.text = "${getCompletionRateForRoutine(repositoryRoutine).percentage}%"
+                } else {
+                    view.graph_completion_rate_value.text = "Not Completed"
+                }
+            }
+        }
+
+        completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("1W"))
+        completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("1M"))
+        completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("3M"))
+        completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("6M"))
+        completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("1Y"))
+
+        completionRateTabLayout.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                updateCompletionRateTitle()
+
+                when (tab.position) {
+                    0 -> updateCompletionRateGraph(completionRateAdapter, 7)
+                    1 -> updateCompletionRateGraph(completionRateAdapter, 30)
+                    2 -> updateCompletionRateGraph(completionRateAdapter, 90)
+                    3 -> updateCompletionRateGraph(completionRateAdapter, 180)
+                    else -> updateCompletionRateGraph(completionRateAdapter, 360)
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+
+            }
+        })
+
+        updateCompletionRateGraph(completionRateAdapter, 7)
+        updateCompletionRateTitle()
+    }
+
+    fun updateCompletionRateTitle() {
+        val view = getView() as ProgressGeneralView
+
+        view.graph_completion_rate_title.text = DateTime(repositoryRoutine.startTime).toString("dd MMMM, YYYY", Locale.ENGLISH)
+        view.graph_completion_rate_value.text = "${getCompletionRateForRoutine(repositoryRoutine).percentage}%"
+    }
+
+    fun updateCompletionRateGraph(adapter: CompletionRateAdapter, minusDays: Int = 7) {
+        val start = DateTime.now().withTimeAtStartOfDay().minusDays(minusDays)
+        val end = DateTime.now()
+
+        Repository.realm.where(RepositoryRoutine::class.java)
+                .between("startTime", start.toDate(), end.toDate())
+                .findAllAsync()
+                .sort("startTime", Sort.DESCENDING)
+                .asObservable()
+                .filter { it.isLoaded }
+                .map {
+                    val dates = ArrayList<DateTimeCompletionRate>()
+
+                    for (index in 1..minusDays) {
+                        val date = start.plusDays(index)
+
+                        val repositoryRoutine = it.filter {
+                            val startTime = DateTime(it.startTime)
+
+                            date.dayOfMonth == startTime.dayOfMonth
+                                    && date.monthOfYear == startTime.monthOfYear
+                                    && date.year == startTime.year
+                        }.firstOrNull()
+
+                        if (repositoryRoutine != null) {
+                            dates.add(DateTimeCompletionRate(date, repositoryRoutine))
+                        } else {
+                            dates.add(DateTimeCompletionRate(date, null))
                         }
                     }
 

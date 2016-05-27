@@ -28,6 +28,7 @@ data class CalendarDay(var page: Int = 60, var day: Int = 3) {
 }
 
 data class DateTimeWorkoutLength(val dateTime: DateTime, val repositoryRoutine: RepositoryRoutine? = null)
+data class DateTimeCompletionRate(val dateTime: DateTime, val repositoryRoutine: RepositoryRoutine? = null)
 
 data class CompletionRate(val percentage: Int, val label: String)
 

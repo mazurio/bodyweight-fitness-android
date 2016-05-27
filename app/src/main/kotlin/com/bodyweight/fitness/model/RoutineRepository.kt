@@ -69,6 +69,37 @@ open class RepositoryRoutine(
                     DateTime(repositoryRoutine.lastUpdatedTime)
             ).toStandardMinutes().minutes
         }
+
+        fun getVisibleAndCompletedExercises(exercises: List<RepositoryExercise>): List<RepositoryExercise> {
+            return exercises.filter {
+                it.isVisible || RepositoryExercise.isCompleted(it)
+            }
+        }
+
+        fun getNumberOfExercises(exercises: List<RepositoryExercise>): Int {
+            return exercises.count()
+        }
+
+        fun getNumberOfCompletedExercises(exercises: List<RepositoryExercise>): Int {
+            return exercises.filter {
+                RepositoryExercise.isCompleted(it)
+            }.count()
+        }
+
+        fun getCompletionRate(repositoryRoutine: RepositoryRoutine): CompletionRate {
+            val exercises = getVisibleAndCompletedExercises(repositoryRoutine.exercises)
+
+            val numberOfExercises: Int = getNumberOfExercises(exercises)
+            val numberOfCompletedExercises: Int = getNumberOfCompletedExercises(exercises)
+
+            if (numberOfExercises == 0) {
+                return CompletionRate(0, "0%")
+            }
+
+            val completionRate = numberOfCompletedExercises * 100 / numberOfExercises
+
+            return CompletionRate(completionRate, "$completionRate%")
+        }
     }
 }
 
