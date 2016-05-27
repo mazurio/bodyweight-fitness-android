@@ -77,7 +77,7 @@ open class RepositoryRoutine(
         }
 
         fun getNumberOfExercises(exercises: List<RepositoryExercise>): Int {
-            return exercises.count()
+            return getVisibleAndCompletedExercises(exercises).count()
         }
 
         fun getNumberOfCompletedExercises(exercises: List<RepositoryExercise>): Int {
@@ -117,7 +117,24 @@ open class RepositoryCategory(
 
     open var sections: RealmList<RepositorySection> = RealmList(),
     open var exercises: RealmList<RepositoryExercise> = RealmList()
-) : RealmObject() {}
+) : RealmObject() {
+    companion object {
+        fun getCompletionRate(repositoryCategory: RepositoryCategory): CompletionRate {
+            val exercises = RepositoryRoutine.getVisibleAndCompletedExercises(repositoryCategory.exercises)
+
+            val numberOfExercises: Int = RepositoryRoutine.getNumberOfExercises(exercises)
+            val numberOfCompletedExercises: Int = RepositoryRoutine.getNumberOfCompletedExercises(exercises)
+
+            if (numberOfExercises == 0) {
+                return CompletionRate(0, "0%")
+            }
+
+            val completionRate = numberOfCompletedExercises * 100 / numberOfExercises
+
+            return CompletionRate(completionRate, "$completionRate%")
+        }
+    }
+}
 
 open class RepositorySection(
     @PrimaryKey

@@ -17,55 +17,54 @@ import com.bodyweight.fitness.inflate
 import com.bodyweight.fitness.model.*
 
 import kotlinx.android.synthetic.main.activity_progress_card.view.*
+import kotlinx.android.synthetic.main.activity_progress_header.view.*
 import kotlinx.android.synthetic.main.activity_progress_title.view.*
 
-class ProgressAdapter(private val mRepositoryCategory: RepositoryCategory) : RecyclerView.Adapter<ProgressPresenter>() {
-    private val itemViewMapping = HashMap<Int, RepositorySection>()
-    private val exerciseViewMapping = HashMap<Int, RepositoryExercise>()
+enum class ProgressAdapterViewType {
+    Header,
+    Section,
+    Exercise
+}
 
-    private var totalSize = 0
+class ProgressAdapter(private val repositoryCategory: RepositoryCategory) : RecyclerView.Adapter<ProgressPresenter>() {
+    private val indexViewTypeHashMap = HashMap<Int, Int>()
+    private val indexSectionHashMap = HashMap<Int, RepositorySection>()
+    private val indexExerciseHashMap = HashMap<Int, RepositoryExercise>()
 
     init {
-        /**
-         * We loop over the sections in order to find out the item view id
-         * for each section in the Recycler View.
-         */
-        var sectionId = 0
-        var exerciseId = 1
-        for (repositorySection in mRepositoryCategory.sections) {
-            itemViewMapping.put(sectionId, repositorySection)
+        var index = 0
 
-            var numberOfExercises = 0
+        indexViewTypeHashMap.put(index, ProgressAdapterViewType.Header.ordinal)
 
-            for (repositoryExercise in repositorySection.exercises) {
-                if (repositoryExercise.isVisible || RepositoryExercise.isCompleted(repositoryExercise)) {
-                    exerciseViewMapping.put(exerciseId, repositoryExercise)
+        index += 1
 
-                    exerciseId += 1
-                    totalSize += 1
+        for (repositorySection in repositoryCategory.sections) {
+            indexViewTypeHashMap.put(index, ProgressAdapterViewType.Section.ordinal)
+            indexSectionHashMap.put(index, repositorySection)
 
-                    numberOfExercises++
-                }
+            index += 1
+
+            for (repositoryExercise in RepositoryRoutine.getVisibleAndCompletedExercises(repositorySection.exercises)) {
+                indexViewTypeHashMap.put(index, ProgressAdapterViewType.Exercise.ordinal)
+                indexExerciseHashMap.put(index, repositoryExercise)
+
+                index += 1
             }
-
-            sectionId = sectionId + numberOfExercises + 1
-            exerciseId += 1
-            totalSize += 1
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProgressPresenter {
         when (viewType) {
-            1 -> {
-                val view = parent.inflate(R.layout.activity_progress_title)
-
-                return ProgressTitlePresenter(view)
-            }
-
-            2 -> {
+            ProgressAdapterViewType.Header.ordinal -> {
                 val view = parent.inflate(R.layout.activity_progress_header)
 
                 return ProgressHeaderPresenter(view)
+            }
+
+            ProgressAdapterViewType.Section.ordinal -> {
+                val view = parent.inflate(R.layout.activity_progress_title)
+
+                return ProgressTitlePresenter(view)
             }
 
             else -> {
@@ -77,35 +76,50 @@ class ProgressAdapter(private val mRepositoryCategory: RepositoryCategory) : Rec
     }
 
     override fun onBindViewHolder(holder: ProgressPresenter, position: Int) {
-        if (itemViewMapping.containsKey(position)) {
-            val presenter = holder as ProgressTitlePresenter
+        when (indexViewTypeHashMap[position]) {
+            ProgressAdapterViewType.Header.ordinal -> {
+                val presenter = holder as ProgressHeaderPresenter
 
-            presenter.bindView(itemViewMapping[position]!!)
-        } else if (exerciseViewMapping.containsKey(position)) {
-            val presenter = holder as ProgressCardPresenter
+                presenter.bindView(repositoryCategory)
+            }
 
-            presenter.bindView(exerciseViewMapping[position]!!)
+            ProgressAdapterViewType.Section.ordinal -> {
+                val presenter = holder as ProgressTitlePresenter
+
+                indexSectionHashMap[position]?.let {
+                    presenter.bindView(it)
+                }
+            }
+
+            else -> {
+                val presenter = holder as ProgressCardPresenter
+
+                indexExerciseHashMap[position]?.let {
+                    presenter.bindView(it)
+                }
+            }
         }
     }
 
     override fun getItemCount(): Int {
-        return totalSize
+        return indexViewTypeHashMap.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (itemViewMapping.containsKey(position)) {
-            return 1
-        }
-
-        return 0
+        return indexViewTypeHashMap[position]!!
     }
 }
 
 abstract class ProgressPresenter(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 class ProgressHeaderPresenter(itemView: View) : ProgressPresenter(itemView) {
-    fun bindView(repositoryExercise: RepositoryExercise) {
+    fun bindView(repositoryCategory: RepositoryCategory) {
+        val numberOfCompletedExercises = RepositoryRoutine.getNumberOfCompletedExercises(repositoryCategory.exercises)
+        val numberOfExercises = RepositoryRoutine.getNumberOfExercises(repositoryCategory.exercises)
+        val completionRate = RepositoryCategory.getCompletionRate(repositoryCategory)
 
+        itemView.completed_exercises_value.text = "$numberOfCompletedExercises out of $numberOfExercises"
+        itemView.completion_rate_value.text = "${completionRate.label}"
     }
 }
 
