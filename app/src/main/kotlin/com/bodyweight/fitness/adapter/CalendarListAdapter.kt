@@ -123,52 +123,31 @@ class CalendarRoutinePresenter(itemView: View) : RecyclerView.ViewHolder(itemVie
         content += "Hello, The following is your workout in Text/HTML format."
 
         content += String.format("\n\nWorkout on %s.", DateTime(repositoryRoutine.startTime).toString("EEEE, d MMMM YYYY - HH:mm"))
-        content += String.format("\nLast Updated at %s.", DateTime(repositoryRoutine.lastUpdatedTime).toString("HH:mm"))
-        content += String.format("\nWorkout length: %s.", workoutLength(repositoryRoutine))
+        content += String.format("\nLast Updated at %s.", RepositoryRoutine.getLastUpdatedTime(repositoryRoutine))
+        content += String.format("\nWorkout length: %s.", RepositoryRoutine.getWorkoutLength(repositoryRoutine))
         content += String.format("\n\n%s - %s", repositoryRoutine.title, repositoryRoutine.subtitle)
 
-        for (exercise in repositoryRoutine.exercises) {
-            if (exercise.isVisible) {
-                content += String.format("\n\n%s", exercise.title)
+        for (exercise in RepositoryRoutine.getVisibleAndCompletedExercises(repositoryRoutine.exercises)) {
+            content += String.format("\n\n%s", exercise.title)
 
-                val weightUnit = Preferences.weightMeasurementUnit.toString()
+            val weightUnit = Preferences.weightMeasurementUnit.toString()
 
-                var index = 0
-                for (set in exercise.sets) {
-                    index++
+            var index = 0
+            for (set in exercise.sets) {
+                index++
 
-                    content += String.format("\nSet %s", index)
+                content += String.format("\nSet %s", index)
 
-                    if (set.isTimed) {
-                        content += String.format("\nMinutes: %s", set.seconds.formatMinutes(false))
-                        content += String.format("\nSeconds: %s", set.seconds.formatSeconds(false))
-                    } else {
-                        content += String.format("\nReps: %s", set.reps)
-                        content += String.format("\nWeight: %s %s", set.weight, weightUnit)
-                    }
+                if (set.isTimed) {
+                    content += String.format("\nMinutes: %s", set.seconds.formatMinutes(false))
+                    content += String.format("\nSeconds: %s", set.seconds.formatSeconds(false))
+                } else {
+                    content += String.format("\nReps: %s", set.reps)
+                    content += String.format("\nWeight: %s %s", set.weight, weightUnit)
                 }
             }
         }
 
         return content
-    }
-
-    fun workoutLength(repositoryRoutine: RepositoryRoutine): String {
-        val startTime = DateTime(repositoryRoutine.startTime)
-        val lastUpdatedTime = DateTime(repositoryRoutine.lastUpdatedTime)
-
-        val duration = Duration(startTime, lastUpdatedTime)
-
-        if (duration.toStandardMinutes().minutes < 10) {
-            return "--"
-        } else {
-            return PeriodFormatterBuilder()
-                    .appendHours()
-                    .appendSuffix("h ")
-                    .appendMinutes()
-                    .appendSuffix("m")
-                    .toFormatter()
-                    .print(duration.toPeriod())
-        }
     }
 }
