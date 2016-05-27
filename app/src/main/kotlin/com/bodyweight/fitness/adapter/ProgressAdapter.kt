@@ -1,5 +1,7 @@
 package com.bodyweight.fitness.adapter
 
+import android.graphics.Color
+import android.support.design.widget.TabLayout
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -9,16 +11,21 @@ import com.bodyweight.fitness.model.RepositoryExercise
 import com.bodyweight.fitness.model.RepositorySection
 import com.bodyweight.fitness.stream.DialogType
 import com.bodyweight.fitness.stream.UiEvent
-
-import java.util.HashMap
-
 import com.bodyweight.fitness.dialog.LogWorkoutPresenter
 import com.bodyweight.fitness.model.*
+import com.bodyweight.fitness.repository.Repository
+import com.bodyweight.fitness.view.progress.CategoryCompletionRateAdapter
+
+import com.trello.rxlifecycle.kotlin.bindToLifecycle
+import io.realm.Sort
 
 import kotlinx.android.synthetic.main.activity_progress_card.view.*
 import kotlinx.android.synthetic.main.activity_progress_card_set.view.*
 import kotlinx.android.synthetic.main.activity_progress_header.view.*
 import kotlinx.android.synthetic.main.activity_progress_title.view.*
+import org.joda.time.DateTime
+import rx.android.schedulers.AndroidSchedulers
+import java.util.*
 
 enum class ProgressAdapterViewType {
     Header,
@@ -113,13 +120,130 @@ class ProgressAdapter(private val repositoryCategory: RepositoryCategory) : Recy
 abstract class ProgressPresenter(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 class ProgressHeaderPresenter(itemView: View) : ProgressPresenter(itemView) {
+    var repositoryCategory: RepositoryCategory? = null
+
+    init {
+        val completionRateGraphView = itemView.graph_category_completion_rate_view
+        val completionRateTabLayout = itemView.graph_category_completion_rate_tablayout
+
+        completionRateGraphView.scrubLineColor = Color.parseColor("#111111")
+        completionRateGraphView.isScrubEnabled = true
+        completionRateGraphView.animateChanges = true
+
+        completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("1W"))
+        completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("1M"))
+        completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("3M"))
+        completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("6M"))
+        completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("1Y"))
+    }
+
     fun bindView(repositoryCategory: RepositoryCategory) {
+        this.repositoryCategory = repositoryCategory
+
         val numberOfCompletedExercises = RepositoryRoutine.getNumberOfCompletedExercises(repositoryCategory.exercises)
         val numberOfExercises = RepositoryRoutine.getNumberOfExercises(repositoryCategory.exercises)
         val completionRate = RepositoryCategory.getCompletionRate(repositoryCategory)
 
         itemView.completed_exercises_value.text = "$numberOfCompletedExercises out of $numberOfExercises"
         itemView.completion_rate_value.text = "${completionRate.label}"
+
+        val completionRateGraphView = itemView.graph_category_completion_rate_view
+        val completionRateTabLayout = itemView.graph_category_completion_rate_tablayout
+
+        val completionRateAdapter = CategoryCompletionRateAdapter()
+
+        completionRateGraphView.adapter = completionRateAdapter
+        completionRateGraphView.setScrubListener {
+            val dateTimeCompletionRate = it as? CategoryDateTimeCompletionRate
+
+            dateTimeCompletionRate?.let {
+                itemView.graph_category_completion_rate_title.text = it.dateTime.toString("dd MMMM, YYYY", Locale.ENGLISH)
+
+                if (it.repositoryCategory != null) {
+                    val completionRate = RepositoryCategory.getCompletionRate(it.repositoryCategory)
+
+                    itemView.graph_category_completion_rate_description.text = "${completionRate.label}"
+                } else {
+                    itemView.graph_category_completion_rate_description.text = "Not Completed"
+                }
+            }
+        }
+
+        completionRateTabLayout.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                updateCompletionRateTitle()
+
+                when (tab.position) {
+                    0 -> updateCompletionRateGraph(completionRateAdapter, 7)
+                    1 -> updateCompletionRateGraph(completionRateAdapter, 30)
+                    2 -> updateCompletionRateGraph(completionRateAdapter, 90)
+                    3 -> updateCompletionRateGraph(completionRateAdapter, 180)
+                    else -> updateCompletionRateGraph(completionRateAdapter, 360)
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+
+            }
+        })
+
+        updateCompletionRateGraph(completionRateAdapter, 7)
+        updateCompletionRateTitle()
+    }
+
+    fun updateCompletionRateTitle() {
+        repositoryCategory?.let {
+            val completionRate = RepositoryCategory.getCompletionRate(it)
+
+            itemView.graph_category_completion_rate_title.text = DateTime(it.routine!!.startTime).toString("dd MMMM, YYYY", Locale.ENGLISH)
+            itemView.graph_category_completion_rate_description.text = "${completionRate.label}"
+        }
+    }
+
+    fun updateCompletionRateGraph(adapter: CategoryCompletionRateAdapter, minusDays: Int = 7) {
+        val start = DateTime.now().withTimeAtStartOfDay().minusDays(minusDays)
+        val end = DateTime.now()
+
+        Repository.realm.where(RepositoryRoutine::class.java)
+                .between("startTime", start.toDate(), end.toDate())
+                .findAllAsync()
+                .sort("startTime", Sort.DESCENDING)
+                .asObservable()
+                .filter { it.isLoaded }
+                .map {
+                    val dates = ArrayList<CategoryDateTimeCompletionRate>()
+
+                    for (index in 1..minusDays) {
+                        val date = start.plusDays(index)
+
+                        val repositoryCategory: RepositoryCategory? = it.filter {
+                            val startTime = DateTime(it.startTime)
+
+                            date.dayOfMonth == startTime.dayOfMonth
+                                    && date.monthOfYear == startTime.monthOfYear
+                                    && date.year == startTime.year
+                        }.firstOrNull()?.categories?.filter {
+                            it.categoryId == repositoryCategory?.categoryId
+                        }?.firstOrNull()
+
+                        if (repositoryCategory != null) {
+                            dates.add(CategoryDateTimeCompletionRate(date, repositoryCategory))
+                        } else {
+                            dates.add(CategoryDateTimeCompletionRate(date, null))
+                        }
+                    }
+
+                    dates
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .bindToLifecycle(itemView)
+                .subscribe {
+                    adapter.changeData(it)
+                }
     }
 }
 

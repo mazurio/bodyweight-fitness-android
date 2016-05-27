@@ -6,10 +6,7 @@ import android.support.design.widget.TabLayout
 import android.util.AttributeSet
 
 import com.bodyweight.fitness.*
-import com.bodyweight.fitness.model.DateTimeCompletionRate
-import com.bodyweight.fitness.model.DateTimeWorkoutLength
-import com.bodyweight.fitness.model.RepositoryCategory
-import com.bodyweight.fitness.model.RepositoryRoutine
+import com.bodyweight.fitness.model.*
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.view.AbstractPresenter
 import com.bodyweight.fitness.view.AbstractView
@@ -55,6 +52,42 @@ class WorkoutLengthAdapter : SparkAdapter() {
     override fun getY(index: Int): Float {
         data[index].repositoryRoutine?.let {
             return RepositoryRoutine.getWorkoutLengthInMinutes(it).toFloat()
+        }
+
+        return 0f
+    }
+
+    override fun getX(index: Int): Float {
+        return index.toFloat()
+    }
+}
+
+class CategoryCompletionRateAdapter : SparkAdapter() {
+    private var data = ArrayList<CategoryDateTimeCompletionRate>()
+
+    fun changeData(data: ArrayList<CategoryDateTimeCompletionRate>) {
+        this.data = data
+
+        notifyDataSetChanged()
+    }
+
+    override fun getCount(): Int {
+        return data.size
+    }
+
+    override fun getItem(index: Int): Any {
+        val item = data.getOrNull(index)
+
+        item?.let {
+            return it
+        }
+
+        return ""
+    }
+
+    override fun getY(index: Int): Float {
+        data[index].repositoryCategory?.let {
+            return RepositoryCategory.getCompletionRate(it).percentage.toFloat()
         }
 
         return 0f

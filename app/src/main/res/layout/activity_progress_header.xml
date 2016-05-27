@@ -106,16 +106,56 @@
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 app:cardBackgroundColor="@color/card_background">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_gravity="center">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/graph_category_completion_rate_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Tuesday, 24 May 2016"
+                        android:textSize="20sp"
+                        android:textColor="@color/label_text"
+                        app:typeface="roboto_regular"/>
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/graph_category_completion_rate_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="85%"
+                        android:textSize="18sp"
+                        android:textColor="@color/value_text"
+                        app:typeface="roboto_regular"/>
+
+                    <com.robinhood.spark.SparkView
+                        android:id="@+id/graph_category_completion_rate_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:spark_lineColor="@color/primary"/>
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/graph_category_completion_rate_tablayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tabTextColor="@color/primary"
+                        app:tabIndicatorColor="@color/primary"
+                        app:tabSelectedTextColor="@color/primary"
+                        app:tabMinWidth="50dp"
+                        app:tabMode="fixed"/>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
