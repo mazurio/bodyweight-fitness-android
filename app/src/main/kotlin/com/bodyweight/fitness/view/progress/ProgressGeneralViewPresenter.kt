@@ -105,23 +105,23 @@ class ProgressGeneralViewPresenter : AbstractPresenter() {
     var repositoryRoutine: RepositoryRoutine by Delegates.notNull()
 
     val exercises by lazy {
-        getVisibleAndCompletedExercises(repositoryRoutine.exercises)
+        RepositoryRoutine.getVisibleAndCompletedExercises(repositoryRoutine.exercises)
     }
 
     val missedExercises by lazy {
-        getMissedExercises(repositoryRoutine.exercises)
+        RepositoryRoutine.getMissedExercises(repositoryRoutine.exercises)
     }
 
     val numberOfExercises by lazy {
-        getNumberOfExercises(exercises)
+        RepositoryRoutine.getNumberOfExercises(exercises)
     }
 
     val numberOfCompletedExercises by lazy {
-        getNumberOfCompletedExercises(exercises)
+        RepositoryRoutine.getNumberOfCompletedExercises(exercises)
     }
 
     val routineCompletionRate by lazy {
-        getCompletionRateForRoutine(repositoryRoutine)
+        RepositoryRoutine.getCompletionRate(repositoryRoutine)
     }
 
     override fun updateView() {
@@ -321,7 +321,9 @@ class ProgressGeneralViewPresenter : AbstractPresenter() {
                 view.graph_completion_rate_title.text = it.dateTime.toString("dd MMMM, YYYY", Locale.ENGLISH)
 
                 if (it.repositoryRoutine != null) {
-                    view.graph_completion_rate_value.text = "${getCompletionRateForRoutine(repositoryRoutine).percentage}%"
+                    val completionRate = RepositoryRoutine.getCompletionRate(it.repositoryRoutine)
+
+                    view.graph_completion_rate_value.text = "${completionRate.label}"
                 } else {
                     view.graph_completion_rate_value.text = "Not Completed"
                 }
@@ -363,8 +365,10 @@ class ProgressGeneralViewPresenter : AbstractPresenter() {
     fun updateCompletionRateTitle() {
         val view = getView() as ProgressGeneralView
 
+        val completionRate = RepositoryRoutine.getCompletionRate(repositoryRoutine)
+
         view.graph_completion_rate_title.text = DateTime(repositoryRoutine.startTime).toString("dd MMMM, YYYY", Locale.ENGLISH)
-        view.graph_completion_rate_value.text = "${getCompletionRateForRoutine(repositoryRoutine).percentage}%"
+        view.graph_completion_rate_value.text = "${completionRate.label}"
     }
 
     fun updateCompletionRateGraph(adapter: CompletionRateAdapter, minusDays: Int = 7) {

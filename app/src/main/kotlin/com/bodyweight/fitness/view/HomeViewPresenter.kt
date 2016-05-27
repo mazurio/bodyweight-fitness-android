@@ -4,8 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.text.format.DateUtils
 import android.util.AttributeSet
-import com.bodyweight.fitness.*
 
+import com.bodyweight.fitness.*
+import com.bodyweight.fitness.model.RepositoryCategory
 import com.bodyweight.fitness.model.RepositoryRoutine
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.RoutineStream
@@ -44,19 +45,19 @@ class HomeViewPresenter : AbstractPresenter() {
             val repositoryRoutine = Repository.repositoryRoutineForToday
 
             repositoryRoutine.categories.getOrNull(0)?.let {
-                val completionRate = getCompletionRateForCategory(true, it)
+                val completionRate = RepositoryCategory.getCompletionRate(it)
 
                 view.setCategoryOne(it.title, completionRate.label, calculateLayoutWeight(completionRate.percentage))
             }
 
             repositoryRoutine.categories.getOrNull(1)?.let {
-                val completionRate = getCompletionRateForCategory(true, it)
+                val completionRate = RepositoryCategory.getCompletionRate(it)
 
                 view.setCategoryTwo(it.title, completionRate.label, calculateLayoutWeight(completionRate.percentage))
             }
 
             repositoryRoutine.categories.getOrNull(2)?.let {
-                val completionRate = getCompletionRateForCategory(true, it)
+                val completionRate = RepositoryCategory.getCompletionRate(it)
 
                 view.setCategoryThree(it.title, completionRate.label, calculateLayoutWeight(completionRate.percentage))
             }

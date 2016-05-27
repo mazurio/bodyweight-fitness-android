@@ -86,6 +86,12 @@ open class RepositoryRoutine(
             }.count()
         }
 
+        fun getMissedExercises(exercises: List<RepositoryExercise>): List<RepositoryExercise> {
+            return exercises.filter {
+                it.isVisible && !RepositoryExercise.isCompleted(it)
+            }
+        }
+
         fun getCompletionRate(repositoryRoutine: RepositoryRoutine): CompletionRate {
             val exercises = getVisibleAndCompletedExercises(repositoryRoutine.exercises)
 
