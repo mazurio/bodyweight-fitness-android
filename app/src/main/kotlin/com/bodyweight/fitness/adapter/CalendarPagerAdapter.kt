@@ -12,7 +12,7 @@ import com.bodyweight.fitness.view.widget.ViewPager
 import com.bodyweight.fitness.R
 import com.bodyweight.fitness.inflate
 
-class CalendarAdapter : PagerAdapter() {
+class CalendarPagerAdapter : PagerAdapter() {
     companion object {
         val DEFAULT_POSITION = 60
     }

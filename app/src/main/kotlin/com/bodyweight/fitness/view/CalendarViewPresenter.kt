@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import android.view.View
 
 import com.bodyweight.fitness.R
-import com.bodyweight.fitness.adapter.CalendarAdapter
+import com.bodyweight.fitness.adapter.CalendarPagerAdapter
 import com.bodyweight.fitness.adapter.CalendarListAdapter
 import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.isRoutineLoggedWithResults
@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.view_calendar.view.*
 
 class CalendarPresenter : AbstractPresenter() {
     @Transient
-    val calendarAdapter = CalendarAdapter()
+    val calendarAdapter = CalendarPagerAdapter()
 
     @Transient
     val calendarListAdapter = CalendarListAdapter()
@@ -99,6 +99,6 @@ open class CalendarView : AbstractView {
     }
 
     fun scrollToDefaultItem() {
-        view_calendar_pager.setCurrentItem(CalendarAdapter.DEFAULT_POSITION, false)
+        view_calendar_pager.setCurrentItem(CalendarPagerAdapter.DEFAULT_POSITION, false)
     }
 }

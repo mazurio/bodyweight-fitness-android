@@ -89,7 +89,7 @@ class ProgressPagerAdapter(private val repositoryRoutine: RepositoryRoutine) : P
         val repositoryCategory = repositoryRoutine.categories[position - 1]
 
         view.recycler_view.layoutManager = LinearLayoutManager(view.context)
-        view.recycler_view.adapter = ProgressAdapter(repositoryCategory)
+        view.recycler_view.adapter = ProgressListAdapter(repositoryCategory)
 
         viewWeakHashMap.put(position, view.recycler_view)
     }

@@ -21,7 +21,7 @@ import java.util.HashSet
 
 data class Tuple(val left: LinkedRoutine? = null, val right: LinkedRoutine? = null)
 
-class DashboardAdapter(private val routine: Routine, currentExercise: Exercise) : RecyclerView.Adapter<DashboardAbstractPresenter>() {
+class DashboardTreeAdapter(private val routine: Routine, currentExercise: Exercise) : RecyclerView.Adapter<DashboardAbstractPresenter>() {
     private val dashboardTree = HashMap<Int, Tuple>()
     private val exerciseSubject = PublishSubject.create<Exercise>()
 

@@ -33,7 +33,7 @@ enum class ProgressAdapterViewType {
     Exercise
 }
 
-class ProgressAdapter(private val repositoryCategory: RepositoryCategory) : RecyclerView.Adapter<ProgressPresenter>() {
+class ProgressListAdapter(private val repositoryCategory: RepositoryCategory) : RecyclerView.Adapter<ProgressPresenter>() {
     private val indexViewTypeHashMap = HashMap<Int, Int>()
     private val indexSectionHashMap = HashMap<Int, RepositorySection>()
     private val indexExerciseHashMap = HashMap<Int, RepositoryExercise>()
