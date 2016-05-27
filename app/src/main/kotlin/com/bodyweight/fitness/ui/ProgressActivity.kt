@@ -17,6 +17,7 @@ import java.util.Locale
 import com.bodyweight.fitness.R
 import com.bodyweight.fitness.dialog.LogWorkoutDialog
 import com.bodyweight.fitness.model.RepositoryRoutine
+import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.stream.UiEvent
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity
@@ -29,17 +30,20 @@ class ProgressActivity : RxAppCompatActivity() {
         intent.getStringExtra(Constants.primaryKeyRoutineId)
     }
 
+    val repositoryRoutine: RepositoryRoutine by lazy {
+        Repository.realm.where(RepositoryRoutine::class.java)
+                .equalTo("id", primaryKeyRoutineId)
+                .findFirst()
+    }
+
+    val progressPagerAdapter: ProgressPagerAdapter by lazy {
+        ProgressPagerAdapter(repositoryRoutine)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_progress)
-
-        val realm = Repository.realm
-        val repositoryRoutine = realm.where(RepositoryRoutine::class.java)
-                .equalTo("id", primaryKeyRoutineId)
-                .findFirst()
-
-        val progressPagerAdapter = ProgressPagerAdapter(repositoryRoutine)
 
         view_progress_pager.offscreenPageLimit = 4
         view_progress_pager.adapter = progressPagerAdapter
@@ -87,6 +91,12 @@ class ProgressActivity : RxAppCompatActivity() {
                     logWorkoutDialog.arguments = bundle
 
                     logWorkoutDialog.show(supportFragmentManager, "dialog")
+                }
+
+        Stream.repositoryObservable
+                .bindToLifecycle(this)
+                .subscribe {
+                    progressPagerAdapter.onRepositoryUpdated()
                 }
     }
 

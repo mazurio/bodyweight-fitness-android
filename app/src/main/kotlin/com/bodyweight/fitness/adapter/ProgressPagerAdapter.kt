@@ -23,6 +23,7 @@ class ProgressPagerAdapter(private val repositoryRoutine: RepositoryRoutine) : P
     private var numberOfExercises: Int = 0
     private var currentExerciseIndex: Int = 0
     private val viewWeakHashMap = WeakHashMap<Int, RecyclerView>()
+    private val adapterList = ArrayList<ProgressListAdapter>()
 
     init {
         for (repositoryExercise in repositoryRoutine.exercises) {
@@ -85,12 +86,20 @@ class ProgressPagerAdapter(private val repositoryRoutine: RepositoryRoutine) : P
         viewWeakHashMap[tabPosition]?.smoothScrollToPosition(0)
     }
 
+    fun onRepositoryUpdated() {
+        for (adapter in adapterList) {
+            adapter.notifyDataSetChanged()
+        }
+    }
+
     private fun createRecyclerView(view: View, position: Int) {
         val repositoryCategory = repositoryRoutine.categories[position - 1]
+        val adapter = ProgressListAdapter(repositoryCategory)
 
         view.recycler_view.layoutManager = LinearLayoutManager(view.context)
-        view.recycler_view.adapter = ProgressListAdapter(repositoryCategory)
+        view.recycler_view.adapter = adapter
 
         viewWeakHashMap.put(position, view.recycler_view)
+        adapterList.add(adapter)
     }
 }
