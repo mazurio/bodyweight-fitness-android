@@ -187,7 +187,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
                                 android:gravity="center"
-                                android:text="Start Workout"
+                                android:text="Start Working Out"
                                 android:textSize="16sp"
                                 style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
 

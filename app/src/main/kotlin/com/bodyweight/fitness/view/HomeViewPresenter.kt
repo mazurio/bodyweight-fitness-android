@@ -102,7 +102,7 @@ class HomeViewPresenter : AbstractPresenter() {
             return "Go to Workout"
         }
 
-        return "Start Workout"
+        return "Start Working Out"
     }
 
     fun getPreviousWorkoutLabel(): String {
