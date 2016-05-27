@@ -20,7 +20,9 @@ import com.bodyweight.fitness.view.listener.RepeatListener
 import kotlinx.android.synthetic.main.view_dialog_log_workout.view.*
 
 import org.joda.time.DateTime
+import org.joda.time.Days
 import org.joda.time.Duration
+import org.joda.time.Minutes
 
 import java.util.*
 
@@ -241,13 +243,20 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
     }
 
     fun setLastUpdatedTime() {
+        val now = DateTime.now()
+
         val startTime = DateTime(repositoryRoutine.startTime)
         val lastUpdatedTime = DateTime(repositoryRoutine.lastUpdatedTime)
-        val duration = Duration(startTime, lastUpdatedTime)
 
-        if (duration.toStandardMinutes().minutes < 120) {
-            Repository.realm.executeTransaction {
-                repositoryRoutine.lastUpdatedTime = DateTime().toDate()
+        /**
+         * Set last updated time only if it's the same day.
+         * Set last updated time only if the difference in minutes is less than 180.
+         */
+        if (Days.daysBetween(startTime.toLocalDate(), now.toLocalDate()).days == 0) {
+            if (Minutes.minutesBetween(startTime.toLocalDate(), lastUpdatedTime.toLocalDate()).minutes < 180) {
+                Repository.realm.executeTransaction {
+                    repositoryRoutine.lastUpdatedTime = DateTime().toDate()
+                }
             }
         }
     }

@@ -8,6 +8,7 @@ import android.view.View
 
 import com.bodyweight.fitness.*
 import com.bodyweight.fitness.model.*
+import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.RoutineStream
 
 import kotlinx.android.synthetic.main.view_dialog_progress.view.*
@@ -58,6 +59,20 @@ class ProgressDialog : BottomSheetDialogFragment() {
             val chosenExercise = exercise.section!!.exercises[chosenLevel]
 
             RoutineStream.setLevel(chosenExercise, chosenLevel)
+
+            if (Repository.repositoryRoutineForTodayExists()) {
+                val repositoryRoutine = Repository.repositoryRoutineForToday
+
+                Repository.realm.executeTransaction {
+                    repositoryRoutine.exercises.filter { it.exerciseId == exercise.exerciseId }.firstOrNull()?.let {
+                        it.isVisible == false
+                    }
+
+                    repositoryRoutine.exercises.filter { it.exerciseId == chosenExercise.exerciseId }.firstOrNull()?.let {
+                        it.isVisible == true
+                    }
+                }
+            }
 
             dialog?.dismiss()
         }
