@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:orientation="horizontal"
+    android:weightSum="2">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/left_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5 Reps"
+            android:textSize="20sp"
+            android:textColor="@color/value_text"
+            app:typeface="roboto_regular"/>
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/left_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:text="Set 1 - 26 May 2016"
+            android:textSize="15sp"
+            android:textColor="@color/label_text"
+            app:typeface="roboto_regular"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/right_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.0 kg"
+            android:textSize="20sp"
+            android:textColor="@color/value_text"
+            app:typeface="roboto_regular"/>
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/right_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:text="Weight"
+            android:textSize="15sp"
+            android:textColor="@color/label_text"
+            app:typeface="roboto_regular"/>
+    </LinearLayout>
+</LinearLayout>

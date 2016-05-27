@@ -3,6 +3,7 @@ package com.bodyweight.fitness.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import com.bodyweight.fitness.*
 
 import com.bodyweight.fitness.model.RepositoryExercise
 import com.bodyweight.fitness.model.RepositorySection
@@ -11,12 +12,11 @@ import com.bodyweight.fitness.stream.UiEvent
 
 import java.util.HashMap
 
-import com.bodyweight.fitness.R
 import com.bodyweight.fitness.dialog.LogWorkoutPresenter
-import com.bodyweight.fitness.inflate
 import com.bodyweight.fitness.model.*
 
 import kotlinx.android.synthetic.main.activity_progress_card.view.*
+import kotlinx.android.synthetic.main.activity_progress_card_set.view.*
 import kotlinx.android.synthetic.main.activity_progress_header.view.*
 import kotlinx.android.synthetic.main.activity_progress_title.view.*
 
@@ -125,11 +125,57 @@ class ProgressHeaderPresenter(itemView: View) : ProgressPresenter(itemView) {
 
 class ProgressCardPresenter(itemView: View) : ProgressPresenter(itemView) {
     fun bindView(repositoryExercise: RepositoryExercise) {
-        itemView.toolbar.title = repositoryExercise.title
-        itemView.toolbar.subtitle = LogWorkoutPresenter().getToolbarDescription(repositoryExercise)
+        itemView.exercise_title.text = repositoryExercise.title
+        itemView.exercise_summary.text = LogWorkoutPresenter().getToolbarDescription(repositoryExercise)
 
         itemView.view_button.setOnClickListener {
             UiEvent.showDialog(DialogType.ProgressActivityLogWorkout, repositoryExercise.exerciseId)
+        }
+
+        itemView.exercise_sets.removeAllViews()
+
+        for ((index, repositorySet) in repositoryExercise.sets.withIndex()) {
+            val view = itemView.exercise_sets.inflate(R.layout.activity_progress_card_set)
+
+            if (repositorySet.isTimed) {
+                val rawSeconds = repositoryExercise.sets.map { it.seconds }.sum()
+
+                val stringMinutes = rawSeconds.formatMinutes(format = false)
+                val numberOfMinutes = rawSeconds.formatMinutesAsNumber()
+                val stringSeconds = rawSeconds.formatSeconds(format = false)
+                val numberOfSeconds = rawSeconds.formatSecondsAsNumber()
+
+                val minutes = if (numberOfMinutes == 1) { "Minute" } else { "Minutes" }
+                val seconds = if (numberOfSeconds == 1) { "Second" } else { "Seconds" }
+
+                if (rawSeconds < 60) {
+                    view.left_value.text = "$stringSeconds $seconds"
+                } else if (numberOfSeconds == 0 || numberOfSeconds == 60) {
+                    view.left_value.text = "$stringMinutes $minutes"
+                } else {
+                    view.left_value.text = "$stringMinutes $minutes $stringSeconds $seconds"
+                }
+
+                view.left_label.text = "Set ${index + 1}"
+
+                view.right_value.text = ""
+                view.right_label.text = ""
+            } else {
+                val reps = if (repositorySet.reps == 1) { "Rep" } else { "Reps" }
+
+                view.left_value.text = "${repositorySet.reps} $reps"
+                view.left_label.text = "Set ${index + 1}"
+
+                if (repositorySet.weight > 0.0) {
+                    view.right_value.text = "${repositorySet.weight}"
+                    view.right_label.text = "Weight"
+                } else {
+                    view.right_value.text = ""
+                    view.right_label.text = ""
+                }
+            }
+
+            itemView.exercise_sets.addView(view)
         }
     }
 }
