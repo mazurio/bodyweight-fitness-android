@@ -32,7 +32,7 @@ class HomeViewPresenterSpec: Spek({
                     title = "title",
                     description = "description",
                     defaultSet = "weighted",
-                    isVisible = true,
+                    visible = true,
                     routine = null,
                     category = null,
                     section = null,
@@ -106,11 +106,11 @@ class HomeViewPresenterSpec: Spek({
                 val repositoryCategory = RepositoryCategory(
                         exercises = RealmList(
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList()
                                 ),
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList()
                                 )
                         )
@@ -126,7 +126,7 @@ class HomeViewPresenterSpec: Spek({
                 val repositoryCategory = RepositoryCategory(
                         exercises = RealmList(
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,
@@ -136,7 +136,7 @@ class HomeViewPresenterSpec: Spek({
                                         )
                                 ),
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList()
                                 )
                         )
@@ -152,7 +152,7 @@ class HomeViewPresenterSpec: Spek({
                 val repositoryCategory = RepositoryCategory(
                         exercises = RealmList(
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 10,
@@ -162,7 +162,7 @@ class HomeViewPresenterSpec: Spek({
                                         )
                                 ),
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList()
                                 )
                         )
@@ -178,7 +178,7 @@ class HomeViewPresenterSpec: Spek({
                 val repositoryCategory = RepositoryCategory(
                         exercises = RealmList(
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,
@@ -188,7 +188,7 @@ class HomeViewPresenterSpec: Spek({
                                         )
                                 ),
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,
@@ -210,7 +210,7 @@ class HomeViewPresenterSpec: Spek({
                 val repositoryCategory = RepositoryCategory(
                         exercises = RealmList(
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,
@@ -220,7 +220,7 @@ class HomeViewPresenterSpec: Spek({
                                         )
                                 ),
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,
@@ -230,7 +230,7 @@ class HomeViewPresenterSpec: Spek({
                                         )
                                 ),
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,
@@ -252,7 +252,7 @@ class HomeViewPresenterSpec: Spek({
                 val repositoryCategory = RepositoryCategory(
                         exercises = RealmList(
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,
@@ -262,7 +262,7 @@ class HomeViewPresenterSpec: Spek({
                                         )
                                 ),
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,
@@ -272,7 +272,7 @@ class HomeViewPresenterSpec: Spek({
                                         )
                                 ),
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,
@@ -282,7 +282,7 @@ class HomeViewPresenterSpec: Spek({
                                         )
                                 ),
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,
@@ -304,7 +304,7 @@ class HomeViewPresenterSpec: Spek({
                 val repositoryCategory = RepositoryCategory(
                         exercises = RealmList(
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,
@@ -314,7 +314,7 @@ class HomeViewPresenterSpec: Spek({
                                         )
                                 ),
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,
@@ -324,7 +324,7 @@ class HomeViewPresenterSpec: Spek({
                                         )
                                 ),
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,
@@ -334,7 +334,7 @@ class HomeViewPresenterSpec: Spek({
                                         )
                                 ),
                                 RepositoryExercise(
-                                        isVisible = false,
+                                        visible = false,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,
@@ -356,7 +356,7 @@ class HomeViewPresenterSpec: Spek({
                 val repositoryCategory = RepositoryCategory(
                         exercises = RealmList(
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,
@@ -366,7 +366,7 @@ class HomeViewPresenterSpec: Spek({
                                         )
                                 ),
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,
@@ -376,7 +376,7 @@ class HomeViewPresenterSpec: Spek({
                                         )
                                 ),
                                 RepositoryExercise(
-                                        isVisible = true,
+                                        visible = true,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,
@@ -386,7 +386,7 @@ class HomeViewPresenterSpec: Spek({
                                         )
                                 ),
                                 RepositoryExercise(
-                                        isVisible = false,
+                                        visible = false,
                                         sets = RealmList(
                                                 RepositorySet(
                                                         reps = 0,

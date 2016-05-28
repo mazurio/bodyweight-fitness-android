@@ -235,7 +235,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
         val mode = repositoryExercise.section!!.mode
         if (mode.equals(SectionMode.Levels.asString) || mode.equals(SectionMode.Pick.asString)) {
             Repository.realm.executeTransaction {
-                repositoryExercise.isVisible = RepositoryExercise.isCompleted(repositoryExercise)
+                repositoryExercise.visible = RepositoryExercise.isCompleted(repositoryExercise)
             }
         }
 

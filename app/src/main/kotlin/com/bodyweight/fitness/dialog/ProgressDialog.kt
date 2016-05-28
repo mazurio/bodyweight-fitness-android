@@ -65,11 +65,11 @@ class ProgressDialog : BottomSheetDialogFragment() {
 
                 Repository.realm.executeTransaction {
                     repositoryRoutine.exercises.filter { it.exerciseId == exercise.exerciseId }.firstOrNull()?.let {
-                        it.isVisible == false
+                        it.visible == false
                     }
 
                     repositoryRoutine.exercises.filter { it.exerciseId == chosenExercise.exerciseId }.firstOrNull()?.let {
-                        it.isVisible == true
+                        it.visible == true
                     }
                 }
             }

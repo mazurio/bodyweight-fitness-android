@@ -106,12 +106,12 @@ object Repository {
              */
             if (exercise.section!!.sectionMode == SectionMode.Levels || exercise.section!!.sectionMode == SectionMode.Pick) {
                 if (exercise == exercise.section!!.currentExercise) {
-                    repositoryExercise.isVisible = true
+                    repositoryExercise.visible = true
                 } else {
-                    repositoryExercise.isVisible = false
+                    repositoryExercise.visible = false
                 }
             } else {
-                repositoryExercise.isVisible = true
+                repositoryExercise.visible = true
             }
 
             repositoryRoutine.exercises.add(repositoryExercise)

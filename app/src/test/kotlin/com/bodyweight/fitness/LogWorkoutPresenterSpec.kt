@@ -19,7 +19,7 @@ class LogWorkoutPresenterSpec: Spek({
                     title = "title",
                     description = "description",
                     defaultSet = "weighted",
-                    isVisible = true,
+                    visible = true,
                     routine = null,
                     category = null,
                     section = null,

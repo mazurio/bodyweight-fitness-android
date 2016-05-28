@@ -27,7 +27,7 @@ class ProgressPagerAdapter(private val repositoryRoutine: RepositoryRoutine) : P
 
     init {
         for (repositoryExercise in repositoryRoutine.exercises) {
-            if (repositoryExercise.isVisible) {
+            if (repositoryExercise.visible) {
                 numberOfExercises++
 
                 if (RepositoryExercise.isCompleted(repositoryExercise)) {

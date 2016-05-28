@@ -12,25 +12,24 @@ import org.joda.time.format.PeriodFormatterBuilder
 import java.util.*
 
 open class RepositoryRoutine(
-    @PrimaryKey
-    @Required
-    open var id: String = "",
+        @PrimaryKey @Required
+        open var id: String = "",
 
-    @Index
-    open var routineId: String = "routine0",
+        @Index
+        open var routineId: String = "routine0",
 
-    open var title: String = "",
-    open var subtitle: String = "",
+        open var title: String = "",
+        open var subtitle: String = "",
 
-    @Index
-    open var startTime: Date = Date(),
+        @Index
+        open var startTime: Date = Date(),
 
-    @Index
-    open var lastUpdatedTime: Date = Date(),
+        @Index
+        open var lastUpdatedTime: Date = Date(),
 
-    open var categories: RealmList<RepositoryCategory> = RealmList(),
-    open var sections: RealmList<RepositorySection> = RealmList(),
-    open var exercises: RealmList<RepositoryExercise> = RealmList()
+        open var categories: RealmList<RepositoryCategory> = RealmList(),
+        open var sections: RealmList<RepositorySection> = RealmList(),
+        open var exercises: RealmList<RepositoryExercise> = RealmList()
 ) : RealmObject() {
     companion object {
         fun getStartTime(repositoryRoutine: RepositoryRoutine): String {
@@ -72,7 +71,7 @@ open class RepositoryRoutine(
 
         fun getVisibleAndCompletedExercises(exercises: List<RepositoryExercise>): List<RepositoryExercise> {
             return exercises.filter {
-                it.isVisible || RepositoryExercise.isCompleted(it)
+                it.visible || RepositoryExercise.isCompleted(it)
             }
         }
 
@@ -88,7 +87,7 @@ open class RepositoryRoutine(
 
         fun getMissedExercises(exercises: List<RepositoryExercise>): List<RepositoryExercise> {
             return exercises.filter {
-                it.isVisible && !RepositoryExercise.isCompleted(it)
+                it.visible && !RepositoryExercise.isCompleted(it)
             }
         }
 
@@ -110,19 +109,18 @@ open class RepositoryRoutine(
 }
 
 open class RepositoryCategory(
-    @PrimaryKey
-    @Required
-    open var id: String = "",
+        @PrimaryKey @Required
+        open var id: String = "",
 
-    @Index
-    open var categoryId: String = "",
+        @Index
+        open var categoryId: String = "",
 
-    open var title: String = "",
+        open var title: String = "",
 
-    open var routine: RepositoryRoutine? = null,
+        open var routine: RepositoryRoutine? = null,
 
-    open var sections: RealmList<RepositorySection> = RealmList(),
-    open var exercises: RealmList<RepositoryExercise> = RealmList()
+        open var sections: RealmList<RepositorySection> = RealmList(),
+        open var exercises: RealmList<RepositoryExercise> = RealmList()
 ) : RealmObject() {
     companion object {
         fun getCompletionRate(repositoryCategory: RepositoryCategory): CompletionRate {
@@ -143,40 +141,38 @@ open class RepositoryCategory(
 }
 
 open class RepositorySection(
-    @PrimaryKey
-    @Required
-    open var id: String = "",
+        @PrimaryKey @Required
+        open var id: String = "",
 
-    @Index
-    open var sectionId: String = "",
+        @Index
+        open var sectionId: String = "",
 
-    open var title: String = "",
-    open var mode: String = "",
+        open var title: String = "",
+        open var mode: String = "",
 
-    open var routine: RepositoryRoutine? = null,
-    open var category: RepositoryCategory? = null,
+        open var routine: RepositoryRoutine? = null,
+        open var category: RepositoryCategory? = null,
 
-    open var exercises: RealmList<RepositoryExercise> = RealmList()
+        open var exercises: RealmList<RepositoryExercise> = RealmList()
 ) : RealmObject() {}
 
 open class RepositoryExercise(
-    @PrimaryKey
-    @Required
-    open var id: String = "",
+        @PrimaryKey @Required
+        open var id: String = "",
 
-    @Index open var exerciseId: String = "",
+        @Index open var exerciseId: String = "",
 
-    open var title: String = "",
-    open var description: String = "",
-    open var defaultSet: String = "timed",
+        open var title: String = "",
+        open var description: String = "",
+        open var defaultSet: String = "timed",
 
-    open var isVisible: Boolean = false,
+        open var visible: Boolean = false,
 
-    open var routine: RepositoryRoutine? = null,
-    open var category: RepositoryCategory? = null,
-    open var section: RepositorySection? = null,
+        open var routine: RepositoryRoutine? = null,
+        open var category: RepositoryCategory? = null,
+        open var section: RepositorySection? = null,
 
-    open var sets: RealmList<RepositorySet> = RealmList()
+        open var sets: RealmList<RepositorySet> = RealmList()
 ) : RealmObject() {
     companion object {
         fun isCompleted(repositoryExercise: RepositoryExercise): Boolean {
@@ -198,15 +194,14 @@ open class RepositoryExercise(
 }
 
 open class RepositorySet(
-    @PrimaryKey
-    @Required
-    open var id: String = "",
+        @PrimaryKey @Required
+        open var id: String = "",
 
-    open var isTimed: Boolean = false,
+        open var isTimed: Boolean = false,
 
-    open var weight: Double = 0.0,
-    open var reps: Int = 0,
-    open var seconds: Int = 0,
+        open var weight: Double = 0.0,
+        open var reps: Int = 0,
+        open var seconds: Int = 0,
 
-    open var exercise: RepositoryExercise? = null
+        open var exercise: RepositoryExercise? = null
 ) : RealmObject() {}
