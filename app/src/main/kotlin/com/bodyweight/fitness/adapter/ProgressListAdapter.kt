@@ -258,6 +258,12 @@ class ProgressCardPresenter(itemView: View) : ProgressPresenter(itemView) {
 
         itemView.exercise_sets.removeAllViews()
 
+        if (RepositoryExercise.isCompleted(repositoryExercise)) {
+            itemView.exercise_sets.setVisible()
+        } else {
+            itemView.exercise_sets.setGone()
+        }
+
         for ((index, repositorySet) in repositoryExercise.sets.withIndex()) {
             val view = itemView.exercise_sets.inflate(R.layout.activity_progress_card_set)
 

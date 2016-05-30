@@ -22,8 +22,8 @@ import com.bodyweight.fitness.stream.UiEvent
 import com.bodyweight.fitness.utils.Preferences
 
 import com.kobakei.ratethisapp.RateThisApp
-import com.trello.rxlifecycle.ActivityEvent
 
+import com.trello.rxlifecycle.ActivityEvent
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle.kotlin.bindUntilEvent
 
