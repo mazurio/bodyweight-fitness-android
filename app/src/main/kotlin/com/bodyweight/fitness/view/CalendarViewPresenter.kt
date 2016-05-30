@@ -1,20 +1,36 @@
 package com.bodyweight.fitness.view
 
 import android.content.Context
+import android.content.Intent
+import android.support.v4.content.FileProvider
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.AttributeSet
 import android.view.View
+import android.widget.Toast
+import com.bodyweight.fitness.Constants
 
 import com.bodyweight.fitness.R
 import com.bodyweight.fitness.adapter.CalendarPagerAdapter
 import com.bodyweight.fitness.adapter.CalendarListAdapter
 import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.isRoutineLoggedWithResults
+import com.bodyweight.fitness.model.DateTimeCompletionRate
+import com.bodyweight.fitness.model.Exercise
+import com.bodyweight.fitness.model.RepositoryRoutine
+import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.Stream
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
+import io.realm.RealmResults
+import io.realm.Sort
 import kotlinx.android.synthetic.main.view_calendar.view.*
+import org.joda.time.DateTime
+import rx.Subscriber
+import rx.android.schedulers.AndroidSchedulers
+import java.io.File
+import java.io.FileOutputStream
+import java.util.*
 
 class CalendarPresenter : AbstractPresenter() {
     @Transient
@@ -44,7 +60,51 @@ class CalendarPresenter : AbstractPresenter() {
                 .bindToLifecycle(view)
                 .filter { it == R.id.action_export }
                 .subscribe {
-                    debug("Export")
+                    Repository.realm.where(RepositoryRoutine::class.java)
+                            .findAllAsync()
+                            .sort("startTime", Sort.DESCENDING)
+                            .asObservable()
+                            .filter { it.isLoaded }
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .bindToLifecycle(getView())
+                            .subscribe(object: Subscriber<RealmResults<RepositoryRoutine>>(){
+                                override fun onCompleted() {}
+
+                                override fun onError(e: Throwable) {
+                                    Toast.makeText(getView().context, "Error: Unable to export workout log", Toast.LENGTH_SHORT).show()
+                                }
+
+                                override fun onNext(it: RealmResults<RepositoryRoutine>) {
+                                    val context = getView().context
+
+                                    val path = File(context.filesDir, "csv");
+                                    val file = File(path, "LoggedWorkouts.csv").apply {
+                                        if (parentFile.mkdirs()) {
+                                            createNewFile()
+                                        }
+                                    }
+
+                                    var content = ""
+
+                                    for (repositoryRoutine: RepositoryRoutine in it) {
+                                        content += RepositoryRoutine.toCSV(repositoryRoutine)
+                                    }
+
+                                    FileOutputStream(file).apply {
+                                        write(content.toByteArray())
+                                        flush()
+                                        close()
+                                    }
+
+                                    context.startActivity(Intent().apply {
+                                        action = Intent.ACTION_SEND
+                                        type = "text/csv"
+                                        flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+
+                                        putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(context, Constants.fileProvider, file))
+                                    })
+                                }
+                            })
                 }
 
         Stream.calendarDayObservable()

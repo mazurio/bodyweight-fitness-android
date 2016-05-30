@@ -1,36 +1,37 @@
 package com.bodyweight.fitness.adapter
 
 import android.content.Intent
+import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import com.bodyweight.fitness.*
+import android.widget.Toast
 
+import com.bodyweight.fitness.*
 import com.bodyweight.fitness.model.RepositoryRoutine
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.ui.ProgressActivity
-import com.bodyweight.fitness.utils.Preferences
-
-import org.joda.time.DateTime
-import org.joda.time.Duration
-import org.joda.time.format.PeriodFormatterBuilder
 
 import io.realm.RealmResults
+
 import kotlinx.android.synthetic.main.view_calendar_card.view.*
 
+import java.io.File
+import java.io.FileOutputStream
+
 class CalendarListAdapter : RecyclerView.Adapter<CalendarRoutinePresenter>() {
-    private var mResults: RealmResults<RepositoryRoutine>? = null
+    private var repositoryRoutineList: RealmResults<RepositoryRoutine>? = null
 
     fun setItems(results: RealmResults<RepositoryRoutine>) {
-        mResults = results
+        repositoryRoutineList = results
 
         notifyDataSetChanged()
     }
 
     fun removeItems() {
-        mResults = null
+        repositoryRoutineList = null
 
         notifyDataSetChanged()
     }
@@ -42,13 +43,13 @@ class CalendarListAdapter : RecyclerView.Adapter<CalendarRoutinePresenter>() {
     }
 
     override fun onBindViewHolder(presenter: CalendarRoutinePresenter, position: Int) {
-        mResults?.let {
+        repositoryRoutineList?.let {
             presenter.calendarListAdapter = this
             presenter.onBindView(it[position])
         }
     }
 
-    override fun getItemCount(): Int = mResults?.size ?: 0
+    override fun getItemCount(): Int = repositoryRoutineList?.size ?: 0
     override fun getItemViewType(position: Int): Int = 0
 }
 
@@ -74,17 +75,36 @@ class CalendarRoutinePresenter(itemView: View) : RecyclerView.ViewHolder(itemVie
         }
 
         itemView.view_calendar_card_export_button.setOnClickListener {
-            val title = exportTitle(repositoryRoutine)
-            val content = exportHTML(repositoryRoutine)
+            val context = it.context
 
-            val sendIntent = Intent()
+            try {
+                val path = File(context.filesDir, "csv");
+                val file = File(path, "LoggedWorkout.csv").apply {
+                    if (parentFile.mkdirs()) {
+                        createNewFile()
+                    }
+                }
 
-            sendIntent.action = Intent.ACTION_SEND
-            sendIntent.putExtra(Intent.EXTRA_TITLE, title)
-            sendIntent.putExtra(Intent.EXTRA_TEXT, content)
-            sendIntent.type = "text/plain"
+                FileOutputStream(file).apply {
+                    write(RepositoryRoutine.toCSV(repositoryRoutine).toByteArray())
+                    flush()
+                    close()
+                }
 
-            it.context.startActivity(sendIntent)
+                context.startActivity(Intent().apply {
+                    action = Intent.ACTION_SEND
+                    type = "text/plain"
+                    flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+
+                    putExtra(Intent.EXTRA_TITLE, RepositoryRoutine.getTitleWithDate(repositoryRoutine))
+                    putExtra(Intent.EXTRA_TEXT, RepositoryRoutine.toText(repositoryRoutine))
+                    putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(context, Constants.fileProvider, file))
+                })
+            } catch (e: Exception) {
+                e.printStackTrace();
+
+                Toast.makeText(context, "Error: Unable to export workout log", Toast.LENGTH_SHORT).show()
+            }
         }
 
         itemView.view_calendar_card_remove_button.setOnClickListener {
@@ -104,50 +124,5 @@ class CalendarRoutinePresenter(itemView: View) : RecyclerView.ViewHolder(itemVie
                     .setNegativeButton("Cancel") { dialog, which ->  }
                     .show()
         }
-    }
-
-    private fun exportTitle(repositoryRoutine: RepositoryRoutine): String {
-        var title = ""
-
-        title += String.format("%s - %s - %s.",
-                repositoryRoutine.title,
-                repositoryRoutine.subtitle,
-                DateTime(repositoryRoutine.startTime).toString("EEEE, d MMMM YYYY - HH:mm"))
-
-        return title
-    }
-
-    private fun exportHTML(repositoryRoutine: RepositoryRoutine): String {
-        var content = ""
-
-        content += "Hello, The following is your workout in Text/HTML format."
-
-        content += String.format("\n\nWorkout on %s.", DateTime(repositoryRoutine.startTime).toString("EEEE, d MMMM YYYY - HH:mm"))
-        content += String.format("\nLast Updated at %s.", RepositoryRoutine.getLastUpdatedTime(repositoryRoutine))
-        content += String.format("\nWorkout length: %s.", RepositoryRoutine.getWorkoutLength(repositoryRoutine))
-        content += String.format("\n\n%s - %s", repositoryRoutine.title, repositoryRoutine.subtitle)
-
-        for (exercise in RepositoryRoutine.getVisibleAndCompletedExercises(repositoryRoutine.exercises)) {
-            content += String.format("\n\n%s", exercise.title)
-
-            val weightUnit = Preferences.weightMeasurementUnit.toString()
-
-            var index = 0
-            for (set in exercise.sets) {
-                index++
-
-                content += String.format("\nSet %s", index)
-
-                if (set.isTimed) {
-                    content += String.format("\nMinutes: %s", set.seconds.formatMinutes(false))
-                    content += String.format("\nSeconds: %s", set.seconds.formatSeconds(false))
-                } else {
-                    content += String.format("\nReps: %s", set.reps)
-                    content += String.format("\nWeight: %s %s", set.weight, weightUnit)
-                }
-            }
-        }
-
-        return content
     }
 }

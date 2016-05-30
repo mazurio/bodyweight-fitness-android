@@ -5,6 +5,7 @@ object Constants {
     val exerciseId = "exerciseId"
 
     val googlePlayUrl = "https://play.google.com/store/apps/details?id=com.bodyweight.fitness.pro"
+    val fileProvider = "com.bodyweight.fitness.fileprovider"
 
     val maximumNumberOfSets = 12
 

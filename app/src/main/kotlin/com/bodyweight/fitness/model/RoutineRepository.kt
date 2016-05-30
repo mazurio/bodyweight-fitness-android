@@ -1,5 +1,8 @@
 package com.bodyweight.fitness.model
 
+import com.bodyweight.fitness.formatMinutes
+import com.bodyweight.fitness.formatSeconds
+import com.bodyweight.fitness.utils.Preferences
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Index
@@ -104,6 +107,63 @@ open class RepositoryRoutine(
             val completionRate = numberOfCompletedExercises * 100 / numberOfExercises
 
             return CompletionRate(completionRate, "$completionRate%")
+        }
+
+        fun getTitleWithDate(repositoryRoutine: RepositoryRoutine): String {
+            val date = DateTime(repositoryRoutine.startTime).toString("EEEE, d MMMM YYYY - HH:mm")
+
+            return "${repositoryRoutine.title} - ${repositoryRoutine.subtitle} - $date."
+        }
+
+        fun toText(repositoryRoutine: RepositoryRoutine): String {
+            val startTime = DateTime(repositoryRoutine.startTime).toString("EEEE, d MMMM YYYY - HH:mm")
+            val lastUpdatedTime = RepositoryRoutine.getLastUpdatedTime(repositoryRoutine)
+            val workoutLength = RepositoryRoutine.getWorkoutLength(repositoryRoutine)
+            val weightUnit = Preferences.weightMeasurementUnit.toString()
+
+            var content = "Hello, The following is your workout in Text/HTML format (CSV attached)."
+
+            content += "\n\nWorkout on $startTime."
+            content += "\nLast Updated at $lastUpdatedTime."
+            content += "\nWorkout length: $workoutLength"
+            content += "\n\n${repositoryRoutine.title} - ${repositoryRoutine.subtitle}"
+
+            for (exercise in RepositoryRoutine.getVisibleAndCompletedExercises(repositoryRoutine.exercises)) {
+                content += "\n\n${exercise.title}"
+
+                for ((index, set) in exercise.sets.withIndex()) {
+                    content += "\nSet ${index + 1}"
+
+                    if (set.isTimed) {
+                        content += "\nMinutes: ${set.seconds.formatMinutes(false)}"
+                        content += "\nSeconds: ${set.seconds.formatSeconds(false)}"
+                    } else {
+                        content += "\nReps: ${set.reps}"
+                        content += "\nWeight: ${set.weight} $weightUnit"
+                    }
+                }
+            }
+
+            return content
+        }
+
+        fun toCSV(repositoryRoutine: RepositoryRoutine): String {
+            val date = DateTime(repositoryRoutine.startTime).toString("d MMMM YYYY")
+            val startTime = getStartTime(repositoryRoutine)
+            val lastUpdatedTime = getLastUpdatedTime(repositoryRoutine)
+            val workoutLength = getWorkoutLength(repositoryRoutine)
+            val routineTitle = "${repositoryRoutine.title} - ${repositoryRoutine.subtitle}"
+            val weightUnit = Preferences.weightMeasurementUnit.toString()
+
+            var content = "Date, Start Time, End Time, Workout Length, Routine, Exercise, Set Order, Reps, Weight, Minutes, Seconds\n"
+
+            for (exercise in getVisibleAndCompletedExercises(repositoryRoutine.exercises)) {
+                for ((index, set) in exercise.sets.withIndex()) {
+                    content += "$date,$startTime,$lastUpdatedTime,$workoutLength,$routineTitle,${exercise.title},${index + 1},${set.reps},${set.weight} $weightUnit,${set.seconds.formatMinutes(false)},${set.seconds.formatSeconds(false)}\n"
+                }
+            }
+
+            return content
         }
     }
 }

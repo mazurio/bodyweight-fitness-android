@@ -11,7 +11,7 @@
 	<string name="action_dashboard">Dashboard</string>
 	<string name="action_remove_files">Remove files</string>
 	<string name="action_today">Today</string>
-	<string name="action_export">Export</string>
+	<string name="action_export">Export All Workouts</string>
 	<string name="action_export_today">Export Today\'s Data</string>
 	<string name="action_export_last_week">Export Weekly Data</string>
 	<string name="action_export_last_month">Export Monthly Data</string>
