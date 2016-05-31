@@ -91,8 +91,6 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
                         }
                     }
                 }
-
-        RateThisApp.onStart(this)
     }
 
     override fun onResume() {
@@ -104,6 +102,7 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
     override fun onStart() {
         super.onStart()
 
+        RateThisApp.onStart(this)
         RateThisApp.showRateDialogIfNeeded(this)
     }
 

@@ -26,12 +26,12 @@ class App : Application() {
         Glacier.init(applicationContext)
         JodaTimeAndroid.init(applicationContext)
 
-        val config = RateThisApp.Config(3, 5)
+        val config = RateThisApp.Config(5, 45)
         RateThisApp.init(config)
 
-//        if (!BuildConfig.DEBUG) {
-//            Fabric.with(applicationContext, Crashlytics(), Answers())
-//        }
+        if (!BuildConfig.DEBUG) {
+            Fabric.with(applicationContext, Crashlytics(), Answers())
+        }
 
         context = applicationContext
 
