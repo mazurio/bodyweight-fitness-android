@@ -103,9 +103,9 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.0'
     compile 'io.reactivex:rxjava:1.1.5'
 
-    compile 'com.trello:rxlifecycle:0.5.0'
-    compile 'com.trello:rxlifecycle-components:0.5.0'
-    compile 'com.trello:rxlifecycle-kotlin:0.5.0'
+    compile 'com.trello:rxlifecycle:0.6.1'
+    compile 'com.trello:rxlifecycle-components:0.6.1'
+    compile 'com.trello:rxlifecycle-kotlin:0.6.1'
 
     compile 'com.robinhood.spark:spark:1.1.0'
 
@@ -121,7 +121,7 @@ dependencies {
 }
 
 buildscript {
-    ext.kotlin_version = '1.0.1'
+    ext.kotlin_version = '1.0.1-2'
     repositories {
         mavenCentral()
         maven {

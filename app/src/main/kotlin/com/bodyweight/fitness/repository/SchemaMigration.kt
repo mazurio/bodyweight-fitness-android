@@ -38,7 +38,7 @@ class SchemaMigration {
                     }
                 }
 
-                currentSchema.removeFromRealm()
+                currentSchema.deleteFromRealm()
 
                 realm.copyToRealmOrUpdate(newSchema)
             }

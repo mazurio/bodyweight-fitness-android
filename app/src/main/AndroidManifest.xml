@@ -62,6 +62,16 @@
         </activity>
 
         <activity
+            android:name=".ui.ProgressExerciseActivity"
+            android:parentActivityName=".ui.ProgressExerciseActivity"
+            android:theme="@style/AppTheme.Activity.Progress">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.ProgressExerciseActivity" />
+        </activity>
+
+        <activity
             android:name=".ui.SettingsActivity"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.Activity">

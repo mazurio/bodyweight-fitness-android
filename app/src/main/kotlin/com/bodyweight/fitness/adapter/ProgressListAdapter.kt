@@ -1,5 +1,6 @@
 package com.bodyweight.fitness.adapter
 
+import android.content.Intent
 import android.graphics.Color
 import android.support.design.widget.TabLayout
 import android.support.v7.widget.RecyclerView
@@ -14,6 +15,8 @@ import com.bodyweight.fitness.stream.UiEvent
 import com.bodyweight.fitness.dialog.LogWorkoutPresenter
 import com.bodyweight.fitness.model.*
 import com.bodyweight.fitness.repository.Repository
+import com.bodyweight.fitness.ui.ProgressActivity
+import com.bodyweight.fitness.ui.ProgressExerciseActivity
 import com.bodyweight.fitness.view.progress.CategoryCompletionRateAdapter
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
@@ -251,6 +254,13 @@ class ProgressCardPresenter(itemView: View) : ProgressPresenter(itemView) {
     fun bindView(repositoryExercise: RepositoryExercise) {
         itemView.exercise_title.text = repositoryExercise.title
         itemView.exercise_summary.text = LogWorkoutPresenter().getToolbarDescription(repositoryExercise)
+
+        itemView.full_report_button.setOnClickListener {
+            val intent = Intent(it.context, ProgressExerciseActivity::class.java)
+            intent.putExtra(Constants.exerciseId, repositoryExercise.exerciseId)
+
+            it.context.startActivity(intent)
+        }
 
         itemView.edit_button.setOnClickListener {
             UiEvent.showDialog(DialogType.ProgressActivityLogWorkout, repositoryExercise.exerciseId)

@@ -97,6 +97,11 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
         super.onResume()
 
         keepScreenOnWhenAppIsRunning()
+
+//        val intent = Intent(this, ProgressExerciseActivity::class.java)
+//        intent.putExtra(Constants.exerciseId, Repository.repositoryRoutineForToday.exercises.first().exerciseId)
+
+        startActivity(intent)
     }
 
     override fun onStart() {

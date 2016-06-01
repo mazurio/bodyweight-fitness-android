@@ -27,6 +27,9 @@ data class CalendarDay(var page: Int = 60, var day: Int = 3) {
     }
 }
 
+data class DateTimeRepositoryExercise(val dateTime: DateTime, val repositoryExercise: RepositoryExercise? = null)
+data class DateTimeRepositorySet(val dateTime: DateTime, val repositorySet: RepositorySet? = null)
+
 data class DateTimeWorkoutLength(val dateTime: DateTime, val repositoryRoutine: RepositoryRoutine? = null)
 data class DateTimeCompletionRate(val dateTime: DateTime, val repositoryRoutine: RepositoryRoutine? = null)
 data class CategoryDateTimeCompletionRate(val dateTime: DateTime, val repositoryCategory: RepositoryCategory? = null)
