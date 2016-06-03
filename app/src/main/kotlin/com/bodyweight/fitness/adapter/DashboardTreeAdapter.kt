@@ -177,7 +177,7 @@ class DashboardSingleItemPresenter(itemView: View) : DashboardAbstractPresenter(
         if (exercise.section!!.sectionMode == SectionMode.Levels) {
             itemView.exercise_title.text = exercise.title
 
-            itemView.exercise_level.text = String.format("%s/%s", exercise.level, exercise.section!!.exercises.size)
+            itemView.exercise_level.text = String.format("%s out of %s", exercise.level, exercise.section!!.exercises.size)
             itemView.exercise_level.visibility = View.VISIBLE
         } else {
             itemView.exercise_title.text = exercise.title
