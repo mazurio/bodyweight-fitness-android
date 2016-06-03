@@ -1,4 +1,4 @@
-package com.bodyweight.fitness.view.calendar
+package com.bodyweight.fitness.view
 
 import android.content.Context
 import android.graphics.Color

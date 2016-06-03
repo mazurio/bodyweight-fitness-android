@@ -1,4 +1,4 @@
-package com.bodyweight.fitness.view.workout
+package com.bodyweight.fitness.view
 
 import android.content.ActivityNotFoundException
 import android.content.Context
