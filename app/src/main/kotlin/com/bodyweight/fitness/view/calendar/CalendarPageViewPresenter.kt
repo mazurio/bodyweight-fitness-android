@@ -1,4 +1,4 @@
-package com.bodyweight.fitness.view
+package com.bodyweight.fitness.view.calendar
 
 import android.content.Context
 import android.graphics.Color
@@ -12,6 +12,8 @@ import com.bodyweight.fitness.isToday
 import com.bodyweight.fitness.model.CalendarDay
 import com.bodyweight.fitness.setBackgroundResourceWithPadding
 import com.bodyweight.fitness.stream.Stream
+import com.bodyweight.fitness.view.AbstractPresenter
+import com.bodyweight.fitness.view.AbstractView
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
 import kotlinx.android.synthetic.main.view_calendar_page.view.*

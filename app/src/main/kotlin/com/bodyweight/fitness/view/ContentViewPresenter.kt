@@ -2,7 +2,6 @@ package com.bodyweight.fitness.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 
 import com.bodyweight.fitness.R
 import com.bodyweight.fitness.setGone

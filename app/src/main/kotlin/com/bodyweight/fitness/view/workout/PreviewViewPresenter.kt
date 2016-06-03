@@ -1,9 +1,11 @@
-package com.bodyweight.fitness.view
+package com.bodyweight.fitness.view.workout
 
 import android.content.Context
 import android.util.AttributeSet
 import com.bodyweight.fitness.model.Exercise
 import com.bodyweight.fitness.stream.RoutineStream
+import com.bodyweight.fitness.view.AbstractPresenter
+import com.bodyweight.fitness.view.AbstractView
 
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget
@@ -32,7 +34,7 @@ class PreviewPresenter : AbstractPresenter() {
                         Glide.with(view.context)
                                 .load(identifier)
                                 .crossFade()
-                                .into(imageViewTarget)
+//                                .into(imageViewTarget)
                     }
                 })
     }

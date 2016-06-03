@@ -5,8 +5,8 @@ import android.support.v4.view.PagerAdapter
 import android.view.View
 import android.view.ViewGroup
 
-import com.bodyweight.fitness.view.CalendarPagePresenter
-import com.bodyweight.fitness.view.CalendarPageView
+import com.bodyweight.fitness.view.calendar.CalendarPagePresenter
+import com.bodyweight.fitness.view.calendar.CalendarPageView
 import com.bodyweight.fitness.view.widget.ViewPager
 
 import com.bodyweight.fitness.R

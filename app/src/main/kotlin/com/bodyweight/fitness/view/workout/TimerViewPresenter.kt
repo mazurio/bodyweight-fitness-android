@@ -1,4 +1,4 @@
-package com.bodyweight.fitness.view
+package com.bodyweight.fitness.view.workout
 
 import android.app.TimePickerDialog
 import android.content.Context
@@ -14,6 +14,8 @@ import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.utils.Preferences
+import com.bodyweight.fitness.view.AbstractPresenter
+import com.bodyweight.fitness.view.AbstractView
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_timer.view.*
