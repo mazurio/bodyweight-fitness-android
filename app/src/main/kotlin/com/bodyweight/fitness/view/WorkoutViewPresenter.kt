@@ -75,25 +75,24 @@ open class WorkoutView : AbstractView {
 
     fun showHideViewTabs(isTimed: Boolean) {
         if (isTimed) {
-            if (view_tabs.tabCount == 0 || view_tabs.getTabAt(0)!!.text != "Timer") {
+            if (view_tabs.tabCount != 1 || view_tabs.getTabAt(0)!!.text != "Timer") {
                 view_tabs.removeAllTabs()
 
                 addTab("Timer")
-                addTab("Rest Timer")
             }
 
             selectFirstTab()
 
             Stream.setWorkoutView(WorkoutViewType.Timer)
         } else {
-            if (view_tabs.tabCount == 0 || view_tabs.getTabAt(0)!!.text != "Reps Logger") {
+            if (view_tabs.tabCount != 2 || view_tabs.getTabAt(1)!!.text != "Reps Logger") {
                 view_tabs.removeAllTabs()
 
+                addTab("Timer")
                 addTab("Reps Logger")
-                addTab("Rest Timer")
             }
 
-            selectFirstTab()
+            selectSecondTab()
 
             Stream.setWorkoutView(WorkoutViewType.RepsLogger)
         }
@@ -101,6 +100,10 @@ open class WorkoutView : AbstractView {
 
     fun selectFirstTab() {
         view_tabs.getTabAt(0)?.select()
+    }
+
+    fun selectSecondTab() {
+        view_tabs.getTabAt(1)?.select()
     }
 
     fun addTab(title: String) {
