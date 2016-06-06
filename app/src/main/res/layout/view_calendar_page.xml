@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.bodyweight.fitness.view.calendar.CalendarPageView
+<com.bodyweight.fitness.view.CalendarPageView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -97,4 +97,4 @@
             android:textSize="15sp"
             app:typeface="roboto_regular"/>
     </LinearLayout>
-</com.bodyweight.fitness.view.calendar.CalendarPageView>
+</com.bodyweight.fitness.view.CalendarPageView>
