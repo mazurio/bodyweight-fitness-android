@@ -10,7 +10,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 
 import com.bodyweight.fitness.*
-import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.*
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.Stream
@@ -21,7 +20,6 @@ import kotlinx.android.synthetic.main.view_dialog_log_workout.view.*
 
 import org.joda.time.DateTime
 import org.joda.time.Days
-import org.joda.time.Duration
 import org.joda.time.Minutes
 
 import java.util.*

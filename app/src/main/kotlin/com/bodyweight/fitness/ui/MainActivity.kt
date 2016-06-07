@@ -97,8 +97,6 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
         super.onResume()
 
         keepScreenOnWhenAppIsRunning()
-
-        startActivity(intent)
     }
 
     override fun onStart() {

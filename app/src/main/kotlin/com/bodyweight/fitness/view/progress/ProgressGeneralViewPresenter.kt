@@ -2,12 +2,10 @@ package com.bodyweight.fitness.view.progress
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.RectF
 import android.support.design.widget.TabLayout
 import android.util.AttributeSet
 
 import com.bodyweight.fitness.*
-import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.*
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.view.AbstractPresenter
@@ -53,11 +51,7 @@ class WorkoutLengthAdapter : SparkAdapter() {
 
     override fun getY(index: Int): Float {
         data[index].repositoryRoutine?.let {
-            val y = RepositoryRoutine.getWorkoutLengthInMinutes(it).toFloat()
-
-            debug(y.toString())
-
-            return y
+            return RepositoryRoutine.getWorkoutLengthInMinutes(it).toFloat()
         }
 
         return 0f

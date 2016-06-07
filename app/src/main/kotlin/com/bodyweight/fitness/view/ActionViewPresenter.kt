@@ -11,14 +11,11 @@ import android.view.View
 
 import com.bodyweight.fitness.Constants
 import com.bodyweight.fitness.R
-import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.formatMinutes
 import com.bodyweight.fitness.formatSeconds
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.*
 import com.bodyweight.fitness.ui.ProgressActivity
-import com.bodyweight.fitness.view.AbstractPresenter
-import com.bodyweight.fitness.view.AbstractView
 import com.bodyweight.fitness.view.widget.ActionButton
 
 import com.gordonwong.materialsheetfab.MaterialSheetFab

@@ -6,7 +6,7 @@ import com.robinhood.spark.SparkAdapter
 import java.util.*
 
 class RepsAdapter : SparkAdapter() {
-    private var data = ArrayList<DateTimeRepositorySet>()
+    private var data: ArrayList<DateTimeRepositorySet>? = null
 
     fun changeData(data: ArrayList<DateTimeRepositorySet>) {
         this.data = data
@@ -15,11 +15,15 @@ class RepsAdapter : SparkAdapter() {
     }
 
     override fun getCount(): Int {
-        return data.size
+        data?.let {
+            return it.size
+        }
+
+        return 0
     }
 
     override fun getItem(index: Int): Any {
-        val item = data.getOrNull(index)
+        val item = data?.getOrNull(index)
 
         item?.let {
             return it
@@ -29,7 +33,7 @@ class RepsAdapter : SparkAdapter() {
     }
 
     override fun getY(index: Int): Float {
-        data[index].repositorySet?.let {
+        data?.getOrNull(index)?.repositorySet?.let {
             return it.reps.toFloat()
         }
 
@@ -50,7 +54,7 @@ class RepsAdapter : SparkAdapter() {
 }
 
 class TimeAdapter : SparkAdapter() {
-    private var data = ArrayList<DateTimeRepositorySet>()
+    private var data: ArrayList<DateTimeRepositorySet>? = ArrayList()
 
     fun changeData(data: ArrayList<DateTimeRepositorySet>) {
         this.data = data
@@ -59,11 +63,15 @@ class TimeAdapter : SparkAdapter() {
     }
 
     override fun getCount(): Int {
-        return data.size
+        data?.let {
+            return it.size
+        }
+
+        return 0
     }
 
     override fun getItem(index: Int): Any {
-        val item = data.getOrNull(index)
+        val item = data?.getOrNull(index)
 
         item?.let {
             return it
@@ -73,7 +81,7 @@ class TimeAdapter : SparkAdapter() {
     }
 
     override fun getY(index: Int): Float {
-        data[index].repositorySet?.let {
+        data?.getOrNull(index)?.repositorySet?.let {
             return it.seconds.toFloat()
         }
 

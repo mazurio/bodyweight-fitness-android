@@ -6,14 +6,11 @@ import android.util.AttributeSet
 import android.widget.TextView
 
 import com.bodyweight.fitness.R
-import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.isRoutineLogged
 import com.bodyweight.fitness.isToday
 import com.bodyweight.fitness.model.CalendarDay
 import com.bodyweight.fitness.setBackgroundResourceWithPadding
 import com.bodyweight.fitness.stream.Stream
-import com.bodyweight.fitness.view.AbstractPresenter
-import com.bodyweight.fitness.view.AbstractView
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
 import kotlinx.android.synthetic.main.view_calendar_page.view.*

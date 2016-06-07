@@ -7,6 +7,7 @@ import com.bodyweight.fitness.*
 
 import com.bodyweight.fitness.adapter.RepsAdapter
 import com.bodyweight.fitness.adapter.TimeAdapter
+import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.*
 import com.bodyweight.fitness.repository.Repository
 
@@ -146,11 +147,13 @@ class ProgressExerciseActivity : RxAppCompatActivity() {
 
                         adapter.changeData(list)
 
-                        if (list.isNotEmpty()) {
+                        if (list.size > 1) {
                             updateTitle(list.first())
                         } else {
                             graph_card_view.setGone()
                         }
+                    } else {
+                        graph_card_view.setGone()
                     }
                 }
     }
@@ -177,11 +180,13 @@ class ProgressExerciseActivity : RxAppCompatActivity() {
 
                         adapter.changeData(list)
 
-                        if (list.isNotEmpty()) {
+                        if (list.size > 1) {
                             updateTitle(list.first())
                         } else {
                             graph_card_view.setGone()
                         }
+                    } else {
+                        graph_card_view.setGone()
                     }
                 }
     }

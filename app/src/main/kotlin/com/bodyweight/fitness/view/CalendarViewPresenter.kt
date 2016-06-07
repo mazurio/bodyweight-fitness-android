@@ -13,24 +13,23 @@ import com.bodyweight.fitness.Constants
 import com.bodyweight.fitness.R
 import com.bodyweight.fitness.adapter.CalendarPagerAdapter
 import com.bodyweight.fitness.adapter.CalendarListAdapter
-import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.isRoutineLoggedWithResults
-import com.bodyweight.fitness.model.DateTimeCompletionRate
-import com.bodyweight.fitness.model.Exercise
 import com.bodyweight.fitness.model.RepositoryRoutine
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.Stream
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
+
 import io.realm.RealmResults
 import io.realm.Sort
+
 import kotlinx.android.synthetic.main.view_calendar.view.*
-import org.joda.time.DateTime
+
 import rx.Subscriber
 import rx.android.schedulers.AndroidSchedulers
+
 import java.io.File
 import java.io.FileOutputStream
-import java.util.*
 
 class CalendarPresenter : AbstractPresenter() {
     @Transient
