@@ -67,13 +67,12 @@ class WorkoutLengthAdapter : SparkAdapter() {
         return index.toFloat()
     }
 
-    override fun getDataBounds(): RectF? {
-        debug(super.getDataBounds().toString())
+    override fun hasBaseLine(): Boolean {
+        return true
+    }
 
-//        return super.getDataBounds()
-
-        // minX, minY, maxX, maxY)
-        return RectF(super.getDataBounds().left,  super.getDataBounds().top + 50.0f, super.getDataBounds().right, 10.0f)
+    override fun getBaseLine(): Float {
+        return 60.0f
     }
 }
 
@@ -111,6 +110,14 @@ class CategoryCompletionRateAdapter : SparkAdapter() {
     override fun getX(index: Int): Float {
         return index.toFloat()
     }
+
+    override fun hasBaseLine(): Boolean {
+        return true
+    }
+
+    override fun getBaseLine(): Float {
+        return 100.0f
+    }
 }
 
 class CompletionRateAdapter : SparkAdapter() {
@@ -146,6 +153,14 @@ class CompletionRateAdapter : SparkAdapter() {
 
     override fun getX(index: Int): Float {
         return index.toFloat()
+    }
+
+    override fun hasBaseLine(): Boolean {
+        return true
+    }
+
+    override fun getBaseLine(): Float {
+        return 100.0f
     }
 }
 
@@ -252,6 +267,7 @@ class ProgressGeneralViewPresenter : AbstractPresenter() {
         val workoutLengthAdapter = WorkoutLengthAdapter()
 
         workoutLengthGraphView.adapter = workoutLengthAdapter
+        workoutLengthGraphView.baseLineColor = Color.WHITE
         workoutLengthGraphView.scrubLineColor = Color.parseColor("#111111")
         workoutLengthGraphView.isScrubEnabled = true
         workoutLengthGraphView.animateChanges = true
@@ -358,6 +374,7 @@ class ProgressGeneralViewPresenter : AbstractPresenter() {
         val completionRateAdapter = CompletionRateAdapter()
 
         completionRateGraphView.adapter = completionRateAdapter
+        completionRateGraphView.baseLineColor = Color.WHITE
         completionRateGraphView.scrubLineColor = Color.parseColor("#111111")
         completionRateGraphView.isScrubEnabled = true
         completionRateGraphView.animateChanges = true

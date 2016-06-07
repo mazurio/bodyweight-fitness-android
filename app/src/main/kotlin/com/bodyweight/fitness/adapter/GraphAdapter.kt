@@ -39,6 +39,14 @@ class RepsAdapter : SparkAdapter() {
     override fun getX(index: Int): Float {
         return index.toFloat()
     }
+
+    override fun hasBaseLine(): Boolean {
+        return true
+    }
+
+    override fun getBaseLine(): Float {
+        return 15f
+    }
 }
 
 class TimeAdapter : SparkAdapter() {
@@ -74,5 +82,13 @@ class TimeAdapter : SparkAdapter() {
 
     override fun getX(index: Int): Float {
         return index.toFloat()
+    }
+
+    override fun hasBaseLine(): Boolean {
+        return true
+    }
+
+    override fun getBaseLine(): Float {
+        return 120f
     }
 }

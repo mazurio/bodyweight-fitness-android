@@ -129,6 +129,7 @@ class ProgressHeaderPresenter(itemView: View) : ProgressPresenter(itemView) {
         val completionRateTabLayout = itemView.graph_category_completion_rate_tablayout
 
         completionRateGraphView.scrubLineColor = Color.parseColor("#111111")
+        completionRateGraphView.baseLineColor = Color.WHITE
         completionRateGraphView.isScrubEnabled = true
         completionRateGraphView.animateChanges = true
 

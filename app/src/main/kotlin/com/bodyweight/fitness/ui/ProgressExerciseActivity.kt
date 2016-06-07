@@ -65,10 +65,11 @@ class ProgressExerciseActivity : RxAppCompatActivity() {
             it.setDisplayHomeAsUpEnabled(true)
         }
 
-        graph_reps_view.scrubLineColor = Color.parseColor("#111111")
-        graph_reps_view.isScrubEnabled = true
-        graph_reps_view.animateChanges = true
-        graph_reps_view.setScrubListener {
+        graph_view.baseLineColor = Color.WHITE
+        graph_view.scrubLineColor = Color.parseColor("#111111")
+        graph_view.isScrubEnabled = true
+        graph_view.animateChanges = true
+        graph_view.setScrubListener {
             val data = it as? DateTimeRepositorySet
 
             data?.let {
@@ -78,11 +79,11 @@ class ProgressExerciseActivity : RxAppCompatActivity() {
 
         repositoryExercise?.let {
             if (it.defaultSet == "timed") {
-                graph_reps_view.adapter = timeAdapter
+                graph_view.adapter = timeAdapter
 
                 updateGraph(timeAdapter)
             } else {
-                graph_reps_view.adapter = repsAdapter
+                graph_view.adapter = repsAdapter
 
                 updateGraph(repsAdapter)
             }
@@ -92,7 +93,7 @@ class ProgressExerciseActivity : RxAppCompatActivity() {
     }
 
     fun updateTitle(data: DateTimeRepositorySet) {
-        graph_reps_title.text = data.dateTime.toString("dd MMMM, YYYY", Locale.ENGLISH)
+        graph_title.text = data.dateTime.toString("dd MMMM, YYYY", Locale.ENGLISH)
 
         if (data.repositorySet != null) {
             if (data.repositorySet.isTimed) {
@@ -107,19 +108,19 @@ class ProgressExerciseActivity : RxAppCompatActivity() {
                 val seconds = if (numberOfSeconds == 1) { "Second" } else { "Seconds" }
 
                 if (rawSeconds < 60) {
-                    graph_reps_description.text = "$stringSeconds $seconds"
+                    graph_description.text = "$stringSeconds $seconds"
                 } else if (numberOfSeconds == 0 || numberOfSeconds == 60) {
-                    graph_reps_description.text = "$stringMinutes $minutes"
+                    graph_description.text = "$stringMinutes $minutes"
                 } else {
-                    graph_reps_description.text = "$stringMinutes $minutes $stringSeconds $seconds"
+                    graph_description.text = "$stringMinutes $minutes $stringSeconds $seconds"
                 }
             } else {
                 val reps = if (data.repositorySet.reps == 1) { "Rep" } else { "Reps" }
 
-                graph_reps_description.text = "${data.repositorySet.reps} $reps"
+                graph_description.text = "${data.repositorySet.reps} $reps"
             }
         } else {
-            graph_reps_description.text = "Not Completed"
+            graph_description.text = "Not Completed"
         }
     }
 
