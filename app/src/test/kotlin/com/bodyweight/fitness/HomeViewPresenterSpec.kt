@@ -77,26 +77,12 @@ class HomeViewPresenterSpec: Spek({
                 assertEquals(70f, layoutWeight)
             }
 
-            it("shows 0% if repository does not exist") {
-                val completionRate = homeViewPresenter.getCompletionRateForCategory(false)
-
-                assertEquals(0, completionRate.percentage)
-                assertEquals("0%", completionRate.label)
-            }
-
-            it("shows 0% if category does not exist") {
-                val completionRate = homeViewPresenter.getCompletionRateForCategory(true, null)
-
-                assertEquals(0, completionRate.percentage)
-                assertEquals("0%", completionRate.label)
-            }
-
             it("shows 0% completion rate for category of no exercises") {
                 val repositoryCategory = RepositoryCategory(
                         exercises = RealmList()
                 )
 
-                val completionRate = homeViewPresenter.getCompletionRateForCategory(true, repositoryCategory)
+                val completionRate = RepositoryCategory.getCompletionRate(repositoryCategory)
 
                 assertEquals(0, completionRate.percentage)
                 assertEquals("0%", completionRate.label)
@@ -116,7 +102,7 @@ class HomeViewPresenterSpec: Spek({
                         )
                 )
 
-                val completionRate = homeViewPresenter.getCompletionRateForCategory(true, repositoryCategory)
+                val completionRate = RepositoryCategory.getCompletionRate(repositoryCategory)
 
                 assertEquals(0, completionRate.percentage)
                 assertEquals("0%", completionRate.label)
@@ -142,7 +128,7 @@ class HomeViewPresenterSpec: Spek({
                         )
                 )
 
-                val completionRate = homeViewPresenter.getCompletionRateForCategory(true, repositoryCategory)
+                val completionRate = RepositoryCategory.getCompletionRate(repositoryCategory)
 
                 assertEquals(50, completionRate.percentage)
                 assertEquals("50%", completionRate.label)
@@ -168,7 +154,7 @@ class HomeViewPresenterSpec: Spek({
                         )
                 )
 
-                val completionRate = homeViewPresenter.getCompletionRateForCategory(true, repositoryCategory)
+                val completionRate = RepositoryCategory.getCompletionRate(repositoryCategory)
 
                 assertEquals(50, completionRate.percentage)
                 assertEquals("50%", completionRate.label)
@@ -200,7 +186,7 @@ class HomeViewPresenterSpec: Spek({
                         )
                 )
 
-                val completionRate = homeViewPresenter.getCompletionRateForCategory(true, repositoryCategory)
+                val completionRate = RepositoryCategory.getCompletionRate(repositoryCategory)
 
                 assertEquals(100, completionRate.percentage)
                 assertEquals("100%", completionRate.label)
@@ -242,7 +228,7 @@ class HomeViewPresenterSpec: Spek({
                         )
                 )
 
-                val completionRate = homeViewPresenter.getCompletionRateForCategory(true, repositoryCategory)
+                val completionRate = RepositoryCategory.getCompletionRate(repositoryCategory)
 
                 assertEquals(66, completionRate.percentage)
                 assertEquals("66%", completionRate.label)
@@ -294,7 +280,7 @@ class HomeViewPresenterSpec: Spek({
                         )
                 )
 
-                val completionRate = homeViewPresenter.getCompletionRateForCategory(true, repositoryCategory)
+                val completionRate = RepositoryCategory.getCompletionRate(repositoryCategory)
 
                 assertEquals(75, completionRate.percentage)
                 assertEquals("75%", completionRate.label)
@@ -346,7 +332,7 @@ class HomeViewPresenterSpec: Spek({
                         )
                 )
 
-                val completionRate = homeViewPresenter.getCompletionRateForCategory(true, repositoryCategory)
+                val completionRate = RepositoryCategory.getCompletionRate(repositoryCategory)
 
                 assertEquals(66, completionRate.percentage)
                 assertEquals("66%", completionRate.label)
@@ -398,7 +384,7 @@ class HomeViewPresenterSpec: Spek({
                         )
                 )
 
-                val completionRate = homeViewPresenter.getCompletionRateForCategory(true, repositoryCategory)
+                val completionRate = RepositoryCategory.getCompletionRate(repositoryCategory)
 
                 assertEquals(75, completionRate.percentage)
                 assertEquals("75%", completionRate.label)
