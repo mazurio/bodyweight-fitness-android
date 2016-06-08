@@ -474,7 +474,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
                 center.setGone()
 
                 secondsOnlyValue.text = repositorySet.seconds.formatSecondsPostfix()
-            } else if (repositorySet.seconds == 60) {
+            } else if (repositorySet.seconds >= 60 && repositorySet.seconds.formatSecondsAsNumber() == 0) {
                 secondsOnlyValue.setVisible()
 
                 minutes.setGone()

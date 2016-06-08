@@ -278,7 +278,7 @@ class ProgressCardPresenter(itemView: View) : ProgressPresenter(itemView) {
             val view = itemView.exercise_sets.inflate(R.layout.activity_progress_card_set)
 
             if (repositorySet.isTimed) {
-                val rawSeconds = repositoryExercise.sets.map { it.seconds }.sum()
+                val rawSeconds = repositorySet.seconds
 
                 val stringMinutes = rawSeconds.formatMinutes(format = false)
                 val numberOfMinutes = rawSeconds.formatMinutesAsNumber()
@@ -293,7 +293,7 @@ class ProgressCardPresenter(itemView: View) : ProgressPresenter(itemView) {
                 } else if (numberOfSeconds == 0 || numberOfSeconds == 60) {
                     view.left_value.text = "$stringMinutes $minutes"
                 } else {
-                    view.left_value.text = "$stringMinutes $minutes $stringSeconds $seconds"
+                    view.left_value.text = "$stringMinutes $minutes, $stringSeconds $seconds"
                 }
 
                 view.left_label.text = "Set ${index + 1}"
