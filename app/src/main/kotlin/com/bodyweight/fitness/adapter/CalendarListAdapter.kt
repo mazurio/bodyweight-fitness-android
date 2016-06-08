@@ -60,6 +60,11 @@ class CalendarRoutinePresenter(itemView: View) : RecyclerView.ViewHolder(itemVie
         itemView.view_calendar_routine_title.text = repositoryRoutine.title
         itemView.view_calendar_routine_subtitle.text = repositoryRoutine.subtitle
 
+        val completionRate = RepositoryRoutine.getCompletionRate(repositoryRoutine)
+
+        itemView.completion_rate_label.text = completionRate.label
+        itemView.completion_rate_value.setLayoutWeight(calculateLayoutWeight(completionRate.percentage))
+
         itemView.view_calendar_card_view_button.setOnClickListener {
             val intent = Intent(it.context, ProgressActivity::class.java)
             intent.putExtra(Constants.primaryKeyRoutineId, repositoryRoutine.id)

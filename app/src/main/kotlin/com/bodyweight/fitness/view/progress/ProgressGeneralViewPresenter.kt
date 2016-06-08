@@ -6,12 +6,13 @@ import android.support.design.widget.TabLayout
 import android.util.AttributeSet
 
 import com.bodyweight.fitness.*
+import com.bodyweight.fitness.adapter.CompletionRateAdapter
+import com.bodyweight.fitness.adapter.WorkoutLengthAdapter
 import com.bodyweight.fitness.model.*
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.view.AbstractPresenter
 import com.bodyweight.fitness.view.AbstractView
 
-import com.robinhood.spark.SparkAdapter
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
 import io.realm.Sort
@@ -25,138 +26,6 @@ import rx.android.schedulers.AndroidSchedulers
 import java.util.*
 
 import kotlin.properties.Delegates
-
-class WorkoutLengthAdapter : SparkAdapter() {
-    private var data = ArrayList<DateTimeWorkoutLength>()
-
-    fun changeData(data: ArrayList<DateTimeWorkoutLength>) {
-        this.data = data
-
-        notifyDataSetChanged()
-    }
-
-    override fun getCount(): Int {
-        return data.size
-    }
-
-    override fun getItem(index: Int): Any {
-        val item = data.getOrNull(index)
-
-        item?.let {
-            return it
-        }
-
-        return ""
-    }
-
-    override fun getY(index: Int): Float {
-        data[index].repositoryRoutine?.let {
-            return RepositoryRoutine.getWorkoutLengthInMinutes(it).toFloat()
-        }
-
-        return 0f
-    }
-
-    override fun getX(index: Int): Float {
-        return index.toFloat()
-    }
-
-    override fun hasBaseLine(): Boolean {
-        return true
-    }
-
-    override fun getBaseLine(): Float {
-        return 60.0f
-    }
-}
-
-class CategoryCompletionRateAdapter : SparkAdapter() {
-    private var data = ArrayList<CategoryDateTimeCompletionRate>()
-
-    fun changeData(data: ArrayList<CategoryDateTimeCompletionRate>) {
-        this.data = data
-
-        notifyDataSetChanged()
-    }
-
-    override fun getCount(): Int {
-        return data.size
-    }
-
-    override fun getItem(index: Int): Any {
-        val item = data.getOrNull(index)
-
-        item?.let {
-            return it
-        }
-
-        return ""
-    }
-
-    override fun getY(index: Int): Float {
-        data[index].repositoryCategory?.let {
-            return RepositoryCategory.getCompletionRate(it).percentage.toFloat()
-        }
-
-        return 0f
-    }
-
-    override fun getX(index: Int): Float {
-        return index.toFloat()
-    }
-
-    override fun hasBaseLine(): Boolean {
-        return true
-    }
-
-    override fun getBaseLine(): Float {
-        return 100.0f
-    }
-}
-
-class CompletionRateAdapter : SparkAdapter() {
-    private var data = ArrayList<DateTimeCompletionRate>()
-
-    fun changeData(data: ArrayList<DateTimeCompletionRate>) {
-        this.data = data
-
-        notifyDataSetChanged()
-    }
-
-    override fun getCount(): Int {
-        return data.size
-    }
-
-    override fun getItem(index: Int): Any {
-        val item = data.getOrNull(index)
-
-        item?.let {
-            return it
-        }
-
-        return ""
-    }
-
-    override fun getY(index: Int): Float {
-        data[index].repositoryRoutine?.let {
-            return RepositoryRoutine.getCompletionRate(it).percentage.toFloat()
-        }
-
-        return 0f
-    }
-
-    override fun getX(index: Int): Float {
-        return index.toFloat()
-    }
-
-    override fun hasBaseLine(): Boolean {
-        return true
-    }
-
-    override fun getBaseLine(): Float {
-        return 100.0f
-    }
-}
 
 class ProgressGeneralViewPresenter : AbstractPresenter() {
     var repositoryRoutine: RepositoryRoutine by Delegates.notNull()

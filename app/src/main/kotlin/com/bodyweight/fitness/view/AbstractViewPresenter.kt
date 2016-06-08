@@ -6,11 +6,6 @@ import android.os.Parcelable
 import android.util.AttributeSet
 import android.widget.RelativeLayout
 
-import com.bodyweight.fitness.model.CompletionRate
-import com.bodyweight.fitness.model.RepositoryCategory
-import com.bodyweight.fitness.model.RepositoryExercise
-import com.bodyweight.fitness.model.RepositoryRoutine
-
 import java.io.Serializable
 
 abstract class AbstractPresenter : Serializable {
@@ -35,20 +30,6 @@ abstract class AbstractPresenter : Serializable {
 
     open fun context(): Context {
         return mView!!.context
-    }
-
-    fun calculateLayoutWeight(completionRate: Int): Float {
-        if (completionRate <= 10) {
-            return 7f
-        }
-
-        val weight = completionRate * 0.7f;
-
-        if (weight > 70f) {
-            return 70f
-        }
-
-        return weight
     }
 }
 

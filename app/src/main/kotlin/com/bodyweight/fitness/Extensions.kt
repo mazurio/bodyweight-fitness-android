@@ -23,6 +23,20 @@ fun primaryDark(): Int {
     return Color.parseColor("#00453E")
 }
 
+fun calculateLayoutWeight(completionRate: Int): Float {
+    if (completionRate <= 10) {
+        return 7f
+    }
+
+    val weight = completionRate * 0.7f;
+
+    if (weight > 70f) {
+        return 70f
+    }
+
+    return weight
+}
+
 fun LinearLayout.setLayoutWeight(weight: Float) {
     val params = this.layoutParams as LinearLayout.LayoutParams
 
