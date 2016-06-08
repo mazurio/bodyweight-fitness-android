@@ -19,12 +19,10 @@ class WorkoutViewPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        val view = view as WorkoutView
-
         RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
                 .subscribe {
-                    view.showHideViewTabs(it.isTimedSet)
+                    (view as WorkoutView).showHideViewTabs(it.isTimedSet)
                 }
     }
 }

@@ -292,8 +292,6 @@ open class TimerView : AbstractView {
         restart_timer_button.setOnClickListener { presenter.onClickRestartTimeButton() }
     }
 
-    override fun onCreateView() { }
-
     fun setMinutes(text: String) {
         timer_minutes.text = text
     }

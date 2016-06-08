@@ -2,15 +2,15 @@ package com.bodyweight.fitness.view
 
 import android.content.Context
 import android.util.AttributeSet
+
 import com.bodyweight.fitness.Constants
 import com.bodyweight.fitness.model.*
-
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.utils.Preferences
-import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
+import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_timer.view.*
 import java.util.*
 
@@ -179,8 +179,6 @@ open class RepsLoggerView : AbstractView {
             repsLoggerPresenter.decreaseReps()
         }
     }
-
-    override fun onCreateView() {}
 
     fun setSets(sets: String) {
         reps_logger_sets.text = sets

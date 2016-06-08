@@ -104,8 +104,6 @@ class ToolbarView : AbstractView {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    override fun onCreateView() {}
-
     fun setSingleTitle(text: String) {
         toolbar_layout.setGone()
         toolbar.title = text
