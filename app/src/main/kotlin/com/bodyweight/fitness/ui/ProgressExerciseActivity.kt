@@ -230,7 +230,7 @@ class ProgressExerciseActivity : RxAppCompatActivity() {
                                     } else if (numberOfSeconds == 0 || numberOfSeconds == 60) {
                                         view.left_value.text = "$stringMinutes $minutes"
                                     } else {
-                                        view.left_value.text = "$stringMinutes $minutes $stringSeconds $seconds"
+                                        view.left_value.text = "$stringMinutes $minutes, $stringSeconds $seconds"
                                     }
 
                                     view.left_label.text = "$date - Set ${index + 1}"
