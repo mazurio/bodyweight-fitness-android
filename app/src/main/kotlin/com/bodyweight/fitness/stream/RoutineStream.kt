@@ -15,9 +15,7 @@ import com.bodyweight.fitness.R
 
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
-import rx.observables.ConnectableObservable
 import rx.subjects.PublishSubject
-import kotlin.properties.Delegates
 
 class JsonRoutineLoader {
     fun getRoutine(resource: Int): Routine {
@@ -29,8 +27,6 @@ class JsonRoutineLoader {
         } catch (e: IOException) {
             error(e.message.toString())
         }
-
-        return Routine(JSONRoutine())
     }
 }
 

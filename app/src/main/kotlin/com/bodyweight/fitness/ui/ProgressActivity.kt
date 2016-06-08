@@ -7,7 +7,6 @@ import android.view.MenuItem
 
 import com.bodyweight.fitness.Constants
 import com.bodyweight.fitness.adapter.ProgressPagerAdapter
-import com.bodyweight.fitness.stream.DialogType
 import com.bodyweight.fitness.repository.Repository
 
 import org.joda.time.DateTime
@@ -16,6 +15,7 @@ import java.util.Locale
 
 import com.bodyweight.fitness.R
 import com.bodyweight.fitness.dialog.LogWorkoutDialog
+import com.bodyweight.fitness.model.DialogType
 import com.bodyweight.fitness.model.RepositoryRoutine
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.stream.UiEvent

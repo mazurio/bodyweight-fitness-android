@@ -7,15 +7,11 @@ import com.bodyweight.fitness.model.*
 
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.RoutineStream
-import com.bodyweight.fitness.stream.SetReps
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.utils.Preferences
-import com.bodyweight.fitness.view.AbstractPresenter
-import com.bodyweight.fitness.view.AbstractView
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
 import kotlinx.android.synthetic.main.view_timer.view.*
-import org.joda.time.DateTime
 import java.util.*
 
 class RepsLoggerPresenter : AbstractPresenter() {

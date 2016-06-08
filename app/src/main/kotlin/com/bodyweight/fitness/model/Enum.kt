@@ -27,7 +27,6 @@ data class CalendarDay(var page: Int = 60, var day: Int = 3) {
     }
 }
 
-data class DateTimeRepositoryExercise(val dateTime: DateTime, val repositoryExercise: RepositoryExercise? = null)
 data class DateTimeRepositorySet(val dateTime: DateTime, val repositorySet: RepositorySet? = null)
 
 data class DateTimeWorkoutLength(val dateTime: DateTime, val repositoryRoutine: RepositoryRoutine? = null)
@@ -35,6 +34,15 @@ data class DateTimeCompletionRate(val dateTime: DateTime, val repositoryRoutine:
 data class CategoryDateTimeCompletionRate(val dateTime: DateTime, val repositoryCategory: RepositoryCategory? = null)
 
 data class CompletionRate(val percentage: Int, val label: String)
+
+data class SetReps(val set: Int, val reps: Int)
+data class Dialog(val dialogType: DialogType, val exerciseId: String)
+
+enum class DialogType { MainActivityLogWorkout, ProgressActivityLogWorkout, Progress }
+enum class WorkoutViewType {
+    Timer,
+    RepsLogger
+}
 
 enum class WeightMeasurementUnit constructor(val asString: String) {
     Kg("kg"), Lbs("lbs")

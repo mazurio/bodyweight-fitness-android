@@ -1,22 +1,13 @@
 package com.bodyweight.fitness.stream
 
 import com.bodyweight.fitness.R
-import com.bodyweight.fitness.model.CalendarDay
+import com.bodyweight.fitness.model.*
 
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.subjects.PublishSubject
+
 import kotlin.properties.Delegates
-
-data class SetReps(val set: Int, val reps: Int)
-
-enum class DialogType { MainActivityLogWorkout, ProgressActivityLogWorkout, Progress }
-enum class WorkoutViewType {
-    RestTimer,
-    Timer,
-    RepsLogger
-}
-data class Dialog(val dialogType: DialogType, val exerciseId: String)
 
 object UiEvent {
     private val dialogSubject = PublishSubject.create<Dialog>()

@@ -7,8 +7,6 @@ import com.bodyweight.fitness.setGone
 import com.bodyweight.fitness.setInvisible
 import com.bodyweight.fitness.setVisible
 import com.bodyweight.fitness.stream.RoutineStream
-import com.bodyweight.fitness.view.AbstractPresenter
-import com.bodyweight.fitness.view.AbstractView
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_timer.view.*
@@ -72,13 +70,9 @@ open class NavigationView : AbstractView {
         if (isTimed) {
             timer_view.setVisible()
             reps_logger_view.setGone()
-
-            rest_timer_view.setGone()
         } else {
             timer_view.setGone()
             reps_logger_view.setVisible()
-
-            rest_timer_view.setGone()
         }
     }
 

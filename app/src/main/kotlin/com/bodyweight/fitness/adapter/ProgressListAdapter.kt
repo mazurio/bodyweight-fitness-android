@@ -10,13 +10,11 @@ import com.bodyweight.fitness.*
 
 import com.bodyweight.fitness.model.RepositoryExercise
 import com.bodyweight.fitness.model.RepositorySection
-import com.bodyweight.fitness.stream.DialogType
 import com.bodyweight.fitness.stream.UiEvent
 import com.bodyweight.fitness.dialog.LogWorkoutPresenter
 import com.bodyweight.fitness.model.*
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.ui.ProgressExerciseActivity
-import com.bodyweight.fitness.view.progress.CategoryCompletionRateAdapter
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import io.realm.Sort

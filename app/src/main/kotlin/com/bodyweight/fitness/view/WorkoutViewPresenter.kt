@@ -4,11 +4,11 @@ import android.content.Context
 import android.support.design.widget.TabLayout
 import android.util.AttributeSet
 
+import com.bodyweight.fitness.model.WorkoutViewType
 import com.bodyweight.fitness.setGone
 import com.bodyweight.fitness.setVisible
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
-import com.bodyweight.fitness.stream.WorkoutViewType
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
@@ -42,26 +42,17 @@ open class WorkoutView : AbstractView {
         view_tabs.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.text) {
-                    "Timer" -> {
-                        Stream.setWorkoutView(WorkoutViewType.Timer)
-
-                        timer_view.setVisible()
-                        reps_logger_view.setGone()
-                        rest_timer_view.setGone()
-                    }
                     "Reps Logger" -> {
                         Stream.setWorkoutView(WorkoutViewType.RepsLogger)
 
                         timer_view.setGone()
                         reps_logger_view.setVisible()
-                        rest_timer_view.setGone()
                     }
                     else -> {
-                        Stream.setWorkoutView(WorkoutViewType.RestTimer)
+                        Stream.setWorkoutView(WorkoutViewType.Timer)
 
-                        timer_view.setGone()
+                        timer_view.setVisible()
                         reps_logger_view.setGone()
-                        rest_timer_view.setVisible()
                     }
                 }
             }
