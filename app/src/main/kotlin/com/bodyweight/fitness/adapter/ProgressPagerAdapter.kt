@@ -10,7 +10,6 @@ import android.view.ViewGroup
 
 import com.bodyweight.fitness.R
 import com.bodyweight.fitness.inflate
-import com.bodyweight.fitness.model.RepositoryExercise
 import com.bodyweight.fitness.model.RepositoryRoutine
 import com.bodyweight.fitness.view.progress.ProgressGeneralView
 import com.bodyweight.fitness.view.progress.ProgressGeneralViewPresenter
@@ -20,22 +19,8 @@ import kotlinx.android.synthetic.main.activity_progress_page.view.*
 import java.util.*
 
 class ProgressPagerAdapter(private val repositoryRoutine: RepositoryRoutine) : PagerAdapter() {
-    private var numberOfExercises: Int = 0
-    private var currentExerciseIndex: Int = 0
     private val viewWeakHashMap = WeakHashMap<Int, RecyclerView>()
     private val adapterList = ArrayList<ProgressListAdapter>()
-
-    init {
-        for (repositoryExercise in repositoryRoutine.exercises) {
-            if (repositoryExercise.visible) {
-                numberOfExercises++
-
-                if (RepositoryExercise.isCompleted(repositoryExercise)) {
-                    currentExerciseIndex++
-                }
-            }
-        }
-    }
 
     override fun instantiateItem(parent: ViewGroup, position: Int): Any {
         val viewPager = parent as ViewPager
@@ -47,7 +32,6 @@ class ProgressPagerAdapter(private val repositoryRoutine: RepositoryRoutine) : P
             presenter.repositoryRoutine = repositoryRoutine
 
             view.updateView()
-
             viewPager.addView(view)
 
             return view
