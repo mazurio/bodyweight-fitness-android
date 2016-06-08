@@ -7,19 +7,15 @@ import android.os.CountDownTimer
 import android.util.AttributeSet
 
 import com.bodyweight.fitness.*
-import com.bodyweight.fitness.extension.*
-import com.bodyweight.fitness.model.RepositoryExercise
+import com.bodyweight.fitness.model.RepositoryRoutine
 import com.bodyweight.fitness.model.RepositorySet
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.utils.Preferences
-import com.bodyweight.fitness.view.AbstractPresenter
-import com.bodyweight.fitness.view.AbstractView
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_timer.view.*
-import org.joda.time.DateTime
 import java.util.*
 
 object TimerShared {
@@ -267,7 +263,7 @@ class TimerPresenter : AbstractPresenter() {
                         it.sets.add(repositorySet)
                     }
 
-                    repositoryRoutine.lastUpdatedTime = DateTime().toDate()
+                    RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
 
                     isLogged = true
                 }

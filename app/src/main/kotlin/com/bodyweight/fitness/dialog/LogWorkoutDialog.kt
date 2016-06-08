@@ -18,10 +18,6 @@ import com.bodyweight.fitness.view.listener.RepeatListener
 
 import kotlinx.android.synthetic.main.view_dialog_log_workout.view.*
 
-import org.joda.time.DateTime
-import org.joda.time.Days
-import org.joda.time.Minutes
-
 import java.util.*
 
 import kotlin.properties.Delegates
@@ -240,25 +236,6 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
         Stream.setRepository()
     }
 
-    fun setLastUpdatedTime() {
-        val now = DateTime.now()
-
-        val startTime = DateTime(repositoryRoutine.startTime)
-        val lastUpdatedTime = DateTime(repositoryRoutine.lastUpdatedTime)
-
-        /**
-         * Set last updated time only if it's the same day.
-         * Set last updated time only if the difference in minutes is less than 180.
-         */
-        if (Days.daysBetween(startTime.toLocalDate(), now.toLocalDate()).days == 0) {
-            if (Minutes.minutesBetween(startTime.toLocalDate(), lastUpdatedTime.toLocalDate()).minutes < 180) {
-                Repository.realm.executeTransaction {
-                    repositoryRoutine.lastUpdatedTime = DateTime().toDate()
-                }
-            }
-        }
-    }
-
     fun updateToolbarMenu() {
         layout.toolbar.subtitle = logWorkoutPresenter.getToolbarDescription(repositoryExercise)
 
@@ -441,7 +418,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
 
         viewSets.add(view)
 
-        setLastUpdatedTime();
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
     }
 
     fun removeLastSet() {
@@ -578,7 +555,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
         layout.repsValue.text = repositorySet.seconds.formatMinutes(false)
         layout.weightValue.text = repositorySet.seconds.formatSeconds(false)
 
-        setLastUpdatedTime()
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
     }
 
     fun decreaseMinutes() {
@@ -593,7 +570,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
         layout.repsValue.text = repositorySet.seconds.formatMinutes(false)
         layout.weightValue.text = repositorySet.seconds.formatSeconds(false)
 
-        setLastUpdatedTime()
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
     }
 
     fun increaseSeconds() {
@@ -608,7 +585,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
         layout.repsValue.text = repositorySet.seconds.formatMinutes(false)
         layout.weightValue.text = repositorySet.seconds.formatSeconds(false)
 
-        setLastUpdatedTime()
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
     }
 
     fun decreaseSeconds() {
@@ -623,7 +600,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
         layout.repsValue.text = repositorySet.seconds.formatMinutes(false)
         layout.weightValue.text = repositorySet.seconds.formatSeconds(false)
 
-        setLastUpdatedTime()
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
     }
 
     fun increaseReps() {
@@ -637,7 +614,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
 
         layout.repsValue.text = repositorySet.reps.toString()
 
-        setLastUpdatedTime()
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
     }
 
     fun decreaseReps() {
@@ -651,7 +628,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
 
         layout.repsValue.text = repositorySet.reps.toString()
 
-        setLastUpdatedTime()
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
     }
 
     fun increaseWeight() {
@@ -669,7 +646,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
 
         layout.weightValue.text = repositorySet.weight.toString()
 
-        setLastUpdatedTime()
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
     }
 
     fun decreaseWeight() {
@@ -687,6 +664,6 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
 
         layout.weightValue.text = repositorySet.weight.toString()
 
-        setLastUpdatedTime()
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
     }
 }

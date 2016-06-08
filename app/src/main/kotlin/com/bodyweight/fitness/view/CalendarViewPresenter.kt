@@ -63,7 +63,7 @@ class CalendarPresenter : AbstractPresenter() {
                             .findAllAsync()
                             .sort("startTime", Sort.DESCENDING)
                             .asObservable()
-                            .filter { it.isLoaded }
+                            .filter { it.isLoaded && Stream.currentDrawerId == R.id.action_menu_workout_log }
                             .observeOn(AndroidSchedulers.mainThread())
                             .bindToLifecycle(getView())
                             .subscribe(object: Subscriber<RealmResults<RepositoryRoutine>>(){

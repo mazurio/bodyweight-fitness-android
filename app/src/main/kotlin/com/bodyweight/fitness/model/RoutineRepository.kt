@@ -2,6 +2,7 @@ package com.bodyweight.fitness.model
 
 import com.bodyweight.fitness.formatMinutes
 import com.bodyweight.fitness.formatSeconds
+import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.utils.Preferences
 import io.realm.RealmList
 import io.realm.RealmObject
@@ -9,7 +10,9 @@ import io.realm.annotations.Index
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.Required
 import org.joda.time.DateTime
+import org.joda.time.Days
 import org.joda.time.Duration
+import org.joda.time.Minutes
 import org.joda.time.format.PeriodFormatterBuilder
 
 import java.util.*
@@ -35,6 +38,25 @@ open class RepositoryRoutine(
         open var exercises: RealmList<RepositoryExercise> = RealmList()
 ) : RealmObject() {
     companion object {
+        fun setLastUpdatedTime(repositoryRoutine: RepositoryRoutine) {
+            val now = DateTime.now()
+
+            val startTime = DateTime(repositoryRoutine.startTime)
+            val lastUpdatedTime = DateTime(repositoryRoutine.lastUpdatedTime)
+
+            /**
+             * Set last updated time only if it's the same day.
+             * Set last updated time only if the difference in minutes is less than 180.
+             */
+            if (Days.daysBetween(startTime.toLocalDate(), now.toLocalDate()).days == 0) {
+                if (Minutes.minutesBetween(startTime.toLocalDate(), lastUpdatedTime.toLocalDate()).minutes < 180) {
+                    Repository.realm.executeTransaction {
+                        repositoryRoutine.lastUpdatedTime = DateTime().toDate()
+                    }
+                }
+            }
+        }
+
         fun getStartTime(repositoryRoutine: RepositoryRoutine): String {
             return DateTime(repositoryRoutine.startTime)
                     .toString("HH:mm", Locale.ENGLISH)

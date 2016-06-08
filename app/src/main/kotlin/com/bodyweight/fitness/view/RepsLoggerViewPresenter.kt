@@ -90,7 +90,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
                         Stream.setLoggedSetReps(SetReps(numberOfSets + 1, numberOfReps))
                     }
 
-                    repositoryRoutine.lastUpdatedTime = DateTime().toDate()
+                    RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
                 }
             }
         }
