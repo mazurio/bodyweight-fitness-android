@@ -38,7 +38,7 @@ open class RepositoryRoutine(
         open var exercises: RealmList<RepositoryExercise> = RealmList()
 ) : RealmObject() {
     companion object {
-        fun setLastUpdatedTime(repositoryRoutine: RepositoryRoutine) {
+        fun setLastUpdatedTime(repositoryRoutine: RepositoryRoutine, isNestedTransaction: Boolean) {
             val now = DateTime.now()
 
             val startTime = DateTime(repositoryRoutine.startTime)
@@ -50,8 +50,12 @@ open class RepositoryRoutine(
              */
             if (Days.daysBetween(startTime.toLocalDate(), now.toLocalDate()).days == 0) {
                 if (Minutes.minutesBetween(startTime.toLocalDate(), lastUpdatedTime.toLocalDate()).minutes < 180) {
-                    Repository.realm.executeTransaction {
+                    if (isNestedTransaction) {
                         repositoryRoutine.lastUpdatedTime = DateTime().toDate()
+                    } else {
+                        Repository.realm.executeTransaction {
+                            repositoryRoutine.lastUpdatedTime = DateTime().toDate()
+                        }
                     }
                 }
             }

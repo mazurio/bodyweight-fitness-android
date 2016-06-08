@@ -418,7 +418,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
 
         viewSets.add(view)
 
-        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine, isNestedTransaction = false)
     }
 
     fun removeLastSet() {
@@ -563,7 +563,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
         layout.repsValue.text = repositorySet.seconds.formatMinutes(false)
         layout.weightValue.text = repositorySet.seconds.formatSeconds(false)
 
-        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine, isNestedTransaction = false)
     }
 
     fun decreaseMinutes() {
@@ -578,7 +578,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
         layout.repsValue.text = repositorySet.seconds.formatMinutes(false)
         layout.weightValue.text = repositorySet.seconds.formatSeconds(false)
 
-        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine, isNestedTransaction = false)
     }
 
     fun increaseSeconds() {
@@ -593,7 +593,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
         layout.repsValue.text = repositorySet.seconds.formatMinutes(false)
         layout.weightValue.text = repositorySet.seconds.formatSeconds(false)
 
-        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine, isNestedTransaction = false)
     }
 
     fun decreaseSeconds() {
@@ -608,7 +608,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
         layout.repsValue.text = repositorySet.seconds.formatMinutes(false)
         layout.weightValue.text = repositorySet.seconds.formatSeconds(false)
 
-        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine, isNestedTransaction = false)
     }
 
     fun increaseReps() {
@@ -622,7 +622,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
 
         layout.repsValue.text = repositorySet.reps.toString()
 
-        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine, isNestedTransaction = false)
     }
 
     fun decreaseReps() {
@@ -636,7 +636,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
 
         layout.repsValue.text = repositorySet.reps.toString()
 
-        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine, isNestedTransaction = false)
     }
 
     fun increaseWeight() {
@@ -654,7 +654,7 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
 
         layout.weightValue.text = repositorySet.weight.toString()
 
-        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine, isNestedTransaction = false)
     }
 
     fun decreaseWeight() {
@@ -672,6 +672,6 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
 
         layout.weightValue.text = repositorySet.weight.toString()
 
-        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
+        RepositoryRoutine.setLastUpdatedTime(repositoryRoutine, isNestedTransaction = false)
     }
 }

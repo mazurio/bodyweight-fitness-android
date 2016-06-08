@@ -263,7 +263,7 @@ class TimerPresenter : AbstractPresenter() {
                         it.sets.add(repositorySet)
                     }
 
-                    RepositoryRoutine.setLastUpdatedTime(repositoryRoutine)
+                    RepositoryRoutine.setLastUpdatedTime(repositoryRoutine, isNestedTransaction = true)
 
                     isLogged = true
                 }
