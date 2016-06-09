@@ -17,34 +17,33 @@
     },
     {
       "exerciseId": "01379fb5-80af-474a-90b6-efcebed138d4",
-      "id": "shoulder_rolls",
       "title": "Shoulder Rolls",
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "H01oGIS1C_g",
+      "videoId": "shoulder_rolls",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise3",
-      "id": "scapular_shrugs",
       "title": "Scapular Shrugs",
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "akgQbxhrhOc",
+      "videoId": "scapular_shrugs",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise2",
-      "id": "cat_camel",
       "title": "Camel Bends",
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "K9bK0BwKFjs",
+      "videoId": "camel_bends",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "084e964d-875b-4fb2-81db-02de9820363c",
-      "id": "band_pull_downs",
       "title": "Straight Arm Overhead Pull Downs",
       "description": "1x(5-10)",
       "type": "exercise",
@@ -53,7 +52,6 @@
     },
     {
       "exerciseId": "2589e669-6bc6-4796-a3a5-0b4e32456e92",
-      "id": "band_chest_flies",
       "title": "Straight Arm Chest Flies",
       "description": "1x(5-10)",
       "type": "exercise",
@@ -62,7 +60,6 @@
     },
     {
       "exerciseId": "exercise1",
-      "id": "band_dislocates",
       "title": "Band Dislocates",
       "description": "1x(5-10)",
       "type": "exercise",
@@ -71,8 +68,15 @@
     },
     {
       "exerciseId": "exercise5",
-      "id": "leg_swings",
-      "title": "Front and Side Leg Swings",
+      "title": "Front Leg Swings",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "4aoUZEZFJF8",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "ee6adf81-5838-47fd-bfcc-c97ea63a7045",
+      "title": "Side Leg Swings",
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "4aoUZEZFJF8",
@@ -80,7 +84,6 @@
     },
     {
       "exerciseId": "exercise6",
-      "id": "wrist_progression",
       "title": "Wrist Mobility Exercises",
       "description": "1x(5-10)",
       "type": "exercise",
@@ -96,47 +99,47 @@
     },
     {
       "exerciseId": "exercise7",
-      "id": "plank",
       "title": "Plank",
       "description": "1x(10-60s) hold",
       "type": "exercise",
       "youTubeId": "PLu6k-uKOJ0",
+      "videoId": "plank",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise8",
-      "id": "side_plank",
       "title": "Side Plank (Both Sides)",
       "description": "1x(10-60s) hold",
       "type": "exercise",
       "youTubeId": "xIFWxQgFMiE",
+      "videoId": "side_plank",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise9",
-      "id": "reverse_plank",
       "title": "Reverse Plank",
       "description": "1x(10-60s) hold",
       "type": "exercise",
       "youTubeId": "1s1bPYBPERU",
+      "videoId": "reverse_plank",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise10",
-      "id": "hollow_hold",
       "title": "Hollow Hold",
       "description": "1x(10-60s) hold",
       "type": "exercise",
       "youTubeId": "wrzjVTK2brk",
+      "videoId": "hollow_hold",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise11",
-      "id": "arch",
       "title": "Arch",
       "description": "1x(10-60s) hold",
       "type": "exercise",
       "youTubeId": "wrzjVTK2brk",
+      "videoId": "arch",
       "defaultSet": "timed"
     },
     {
@@ -148,7 +151,6 @@
     },
     {
       "exerciseId": "exercise12",
-      "id": "squat_jumps",
       "title": "Squat Jumps",
       "description": "1x(10-20)",
       "type": "exercise",
@@ -157,7 +159,6 @@
     },
     {
       "exerciseId": "exercise13",
-      "id": "burpee",
       "title": "Burpees",
       "description": "1x(10-20)",
       "type": "exercise",
@@ -178,7 +179,6 @@
     },
     {
       "exerciseId": "exercise14",
-      "id": "wall_plank",
       "level": "Level 1",
       "title": "Wall Plank",
       "description": "5 min",
@@ -188,7 +188,6 @@
     },
     {
       "exerciseId": "exercise15",
-      "id": "wall_handstand",
       "level": "Level 2",
       "title": "Stomach-to-Wall Handstand",
       "description": "5 min",

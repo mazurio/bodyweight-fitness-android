@@ -54,25 +54,25 @@ class HomeViewPresenterSpec: Spek({
 
         given("today's progress") {
             it("calculates layout weight of 7f for 0% completion rate") {
-                val layoutWeight = homeViewPresenter.calculateLayoutWeight(0)
+                val layoutWeight = calculateLayoutWeight(0)
 
                 assertEquals(7f, layoutWeight)
             }
 
             it("calculates layout weight of 7f for 3% completion rate") {
-                val layoutWeight = homeViewPresenter.calculateLayoutWeight(3)
+                val layoutWeight = calculateLayoutWeight(3)
 
                 assertEquals(7f, layoutWeight)
             }
 
             it("calculates layout weight of 35f for 50% completion rate") {
-                val layoutWeight = homeViewPresenter.calculateLayoutWeight(50)
+                val layoutWeight = calculateLayoutWeight(50)
 
                 assertEquals(35f, layoutWeight)
             }
 
             it("calculates layout weight of 70f for 150% completion rate") {
-                val layoutWeight = homeViewPresenter.calculateLayoutWeight(150)
+                val layoutWeight = calculateLayoutWeight(150)
 
                 assertEquals(70f, layoutWeight)
             }

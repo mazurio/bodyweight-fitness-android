@@ -49,11 +49,11 @@ class Routine(JSONRoutine: JSONRoutine) : Serializable {
             } else if (JSONLinkedRoutine.routineType === RoutineType.Exercise) {
                 val exercise = Exercise(
                         JSONLinkedRoutine.exerciseId,
-                        JSONLinkedRoutine.id,
                         JSONLinkedRoutine.level,
                         JSONLinkedRoutine.title,
                         JSONLinkedRoutine.description,
                         JSONLinkedRoutine.youTubeId,
+                        JSONLinkedRoutine.videoId,
                         JSONLinkedRoutine.defaultSet)
 
                 currentSection!!.insertExercise(exercise)
@@ -216,11 +216,11 @@ class Section(
 
 class Exercise(
         val exerciseId: String,
-        val id: String,
         val level: String,
         val exerciseTitle: String,
         val description: String,
         val youTubeId: String,
+        val videoId: String,
         val defaultSet: String) : LinkedRoutine(), Serializable {
 
     var category: Category? = null

@@ -14,7 +14,6 @@ class JSONRoutine {
 }
 
 class JSONLinkedRoutine {
-    var id: String = ""
     var categoryId: String = ""
     var sectionId: String = ""
     var exerciseId: String = ""
@@ -22,6 +21,7 @@ class JSONLinkedRoutine {
     var title: String = ""
     var description: String = ""
     var youTubeId: String = ""
+    var videoId: String = ""
 
     private var type: String = ""
     private var mode: String = ""
