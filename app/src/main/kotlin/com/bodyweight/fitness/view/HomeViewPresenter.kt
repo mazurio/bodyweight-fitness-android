@@ -16,6 +16,8 @@ import com.bodyweight.fitness.ui.ProgressActivity
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
 import kotlinx.android.synthetic.main.view_home.view.*
+import kotlinx.android.synthetic.main.view_home_category.view.*
+
 import org.joda.time.DateTime
 
 class HomeViewPresenter : AbstractPresenter() {
@@ -36,47 +38,38 @@ class HomeViewPresenter : AbstractPresenter() {
                     updateTodaysProgress()
                     updateStatistics()
                 }
+
+        RoutineStream.routineObservable()
+                .bindToLifecycle(view)
+                .subscribe {
+                    updateTodaysProgress()
+                    updateStatistics()
+                }
     }
 
     fun updateTodaysProgress() {
         val view = (getView() as HomeView)
 
         if (Repository.repositoryRoutineForTodayExists()) {
+            view.clearCategories()
+
             val repositoryRoutine = Repository.repositoryRoutineForToday
 
-            repositoryRoutine.categories.getOrNull(0)?.let {
-                val completionRate = RepositoryCategory.getCompletionRate(it)
+            for (category in repositoryRoutine.categories) {
+                val completionRate = RepositoryCategory.getCompletionRate(category)
 
-                view.setCategoryOne(it.title, completionRate.label, calculateLayoutWeight(completionRate.percentage))
-            }
-
-            repositoryRoutine.categories.getOrNull(1)?.let {
-                val completionRate = RepositoryCategory.getCompletionRate(it)
-
-                view.setCategoryTwo(it.title, completionRate.label, calculateLayoutWeight(completionRate.percentage))
-            }
-
-            repositoryRoutine.categories.getOrNull(2)?.let {
-                val completionRate = RepositoryCategory.getCompletionRate(it)
-
-                view.setCategoryThree(it.title, completionRate.label, calculateLayoutWeight(completionRate.percentage))
+                view.createCategory(category.title, completionRate.label, calculateLayoutWeight(completionRate.percentage))
             }
 
             view.setStartWorkoutButtonTitle(title = getStartWorkoutButtonText(true))
             view.showTodaysWorkoutLogButton()
         } else {
+            view.clearCategories()
+
             val routine = RoutineStream.routine
 
-            routine.categories.getOrNull(0)?.let {
-                view.setCategoryOne(it.title, "0%", calculateLayoutWeight(0))
-            }
-
-            routine.categories.getOrNull(1)?.let {
-                view.setCategoryTwo(it.title, "0%", calculateLayoutWeight(0))
-            }
-
-            routine.categories.getOrNull(2)?.let {
-                view.setCategoryThree(it.title, "0%", calculateLayoutWeight(0))
+            for (category in routine.categories) {
+                view.createCategory(category.title, "0%", calculateLayoutWeight(0))
             }
 
             view.setStartWorkoutButtonTitle(title = getStartWorkoutButtonText(false))
@@ -200,22 +193,18 @@ open class HomeView : AbstractView {
         todays_workout_log.setGone()
     }
 
-    fun setCategoryOne(title: String, completionRateLabel: String, completionRateValue: Float) {
-        category_one_title.text = title
-        category_one_completion_rate_label.text = completionRateLabel
-        category_one_completion_rate_value.setLayoutWeight(completionRateValue)
+    fun clearCategories() {
+        category.removeAllViews()
     }
 
-    fun setCategoryTwo(title: String, completionRateLabel: String, completionRateValue: Float) {
-        category_two_title.text = title
-        category_two_completion_rate_label.text = completionRateLabel
-        category_two_completion_rate_value.setLayoutWeight(completionRateValue)
-    }
+    fun createCategory(title: String, completionRateLabel: String, completionRateValue: Float) {
+        val new_category = category.inflate(R.layout.view_home_category)
 
-    fun setCategoryThree(title: String, completionRateLabel: String, completionRateValue: Float) {
-        category_three_title.text = title
-        category_three_completion_rate_label.text = completionRateLabel
-        category_three_completion_rate_value.setLayoutWeight(completionRateValue)
+        new_category.title.text = title
+        new_category.completion_rate_label.text = completionRateLabel
+        new_category.completion_rate_value.setLayoutWeight(completionRateValue)
+
+        category.addView(new_category)
     }
 
     fun setNumberOfWorkouts(title: String) {

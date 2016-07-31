@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:text="--"
+        android:textSize="15sp"
+        android:textColor="@color/label_text"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="100"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/completion_rate_value"
+            android:layout_width="0dp"
+            android:layout_height="16dp"
+            android:layout_weight="70"
+            android:background="@drawable/action_welcome"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal"/>
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/completion_rate_label"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="30"
+            android:paddingLeft="8dp"
+            android:gravity="center|left"
+            android:text="70%"
+            android:textSize="20sp"
+            android:textColor="@color/label_text"/>
+    </LinearLayout>
+</LinearLayout>
