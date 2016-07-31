@@ -19,6 +19,7 @@ import io.realm.Sort
 
 import kotlinx.android.synthetic.main.activity_progress_general.view.*
 import kotlinx.android.synthetic.main.activity_progress_general_exercise.view.*
+import kotlinx.android.synthetic.main.view_home_category.view.*
 
 import org.joda.time.DateTime
 import rx.android.schedulers.AndroidSchedulers
@@ -77,25 +78,15 @@ class ProgressGeneralViewPresenter : AbstractPresenter() {
     fun renderTodaysProgress() {
         val view = getView() as ProgressGeneralView
 
-        view.completed_exercises_value.text = "$numberOfCompletedExercises out of $numberOfExercises"
-        view.completion_rate_value.text = "${routineCompletionRate.percentage}%"
+        view.general_completed_exercises_value.text = "$numberOfCompletedExercises out of $numberOfExercises"
+        view.general_completion_rate_value.text = "${routineCompletionRate.percentage}%"
 
-        repositoryRoutine.categories.getOrNull(0)?.let {
-            val completionRate = RepositoryCategory.getCompletionRate(it)
+        view.clearCategories()
 
-            view.setCategoryOne(it.title, completionRate.label, calculateLayoutWeight(completionRate.percentage))
-        }
+        for (category in repositoryRoutine.categories) {
+            val completionRate = RepositoryCategory.getCompletionRate(category)
 
-        repositoryRoutine.categories.getOrNull(1)?.let {
-            val completionRate = RepositoryCategory.getCompletionRate(it)
-
-            view.setCategoryTwo(it.title, completionRate.label, calculateLayoutWeight(completionRate.percentage))
-        }
-
-        repositoryRoutine.categories.getOrNull(2)?.let {
-            val completionRate = RepositoryCategory.getCompletionRate(it)
-
-            view.setCategoryThree(it.title, completionRate.label, calculateLayoutWeight(completionRate.percentage))
+            view.createCategory(category.title, completionRate.label, calculateLayoutWeight(completionRate.percentage))
         }
     }
 
@@ -351,23 +342,17 @@ open class ProgressGeneralView : AbstractView {
         super.onCreateView()
     }
 
-    fun setCategoryOne(title: String, completionRateLabel: String, completionRateValue: Float) {
-        category_one_title.text = title
-        category_one_completion_rate_label.text = completionRateLabel
-        category_one_completion_rate_value.setLayoutWeight(completionRateValue)
+    fun clearCategories() {
+        category.removeAllViews()
     }
 
-    fun setCategoryTwo(title: String, completionRateLabel: String, completionRateValue: Float) {
-        category_two_title.text = title
-        category_two_completion_rate_label.text = completionRateLabel
-        category_two_completion_rate_value.setLayoutWeight(completionRateValue)
+    fun createCategory(title: String, completionRateLabel: String, completionRateValue: Float) {
+        val new_category = category.inflate(R.layout.view_home_category)
+
+        new_category.title.text = title
+        new_category.completion_rate_label.text = completionRateLabel
+        new_category.completion_rate_value.setLayoutWeight(completionRateValue)
+
+        category.addView(new_category)
     }
-
-    fun setCategoryThree(title: String, completionRateLabel: String, completionRateValue: Float) {
-        category_three_title.text = title
-        category_three_completion_rate_label.text = completionRateLabel
-        category_three_completion_rate_value.setLayoutWeight(completionRateValue)
-    }
-
-
 }
