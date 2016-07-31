@@ -2,6 +2,7 @@ package com.bodyweight.fitness.view
 
 import android.content.Context
 import android.util.AttributeSet
+import com.bodyweight.fitness.extension.debug
 
 import com.bodyweight.fitness.model.Routine
 import com.bodyweight.fitness.stream.RoutineStream
@@ -13,15 +14,22 @@ open class HeaderPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
+        debug("HeaderPresenter = bindView")
+
+        /**
+         * We do not use bindView here as Navigation Drawer lifecycle is absolutely fucked.
+         */
         RoutineStream.routineObservable()
-                .bindToLifecycle(view)
                 .subscribe {
                     setText(it)
+                    debug("HeaderPresenter: Set title = " + it.title)
                 }
     }
 
     override fun restoreView(view: AbstractView) {
         super.restoreView(view)
+
+        debug("HeaderPresenter = restoreView")
 
         setText(RoutineStream.routine)
     }

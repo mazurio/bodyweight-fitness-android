@@ -24,6 +24,13 @@
 		<item name="actionMenuTextColor">@color/white</item>
 	</style>
 
+	<style name="Widget.MyApp.HeaderBar.Spinner" parent="Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
+		<item name="android:background">?android:selectableItemBackground</item>
+		<item name="android:dropDownSelector">?android:selectableItemBackground</item>
+		<item name="android:divider">@null</item>
+		<item name="android:overlapAnchor">true</item>
+	</style>
+
 	<!-- Transparent Toolbar -->
 	<style name="AppTheme.Dashboard.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
 		<item name="android:textColorPrimary">@color/primaryDark</item>

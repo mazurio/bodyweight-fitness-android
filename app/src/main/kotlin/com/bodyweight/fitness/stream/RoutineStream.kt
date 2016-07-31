@@ -12,6 +12,8 @@ import org.apache.commons.io.IOUtils
 import java.io.IOException
 
 import com.bodyweight.fitness.R
+import com.bodyweight.fitness.adapter.SpinnerRoutine
+import com.bodyweight.fitness.extension.debug
 
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
@@ -36,13 +38,19 @@ object RoutineStream {
 
     var routine: Routine = JsonRoutineLoader().getRoutine(R.raw.bodyweight_fitness_recommended_routine)
         set(value) {
-            Preferences.defaultRoutine = routine.routineId
+            if (value.routineId.equals(routine.routineId)) {
+                return
+            }
 
-            exercise = routine.linkedExercises.first()
+            Preferences.defaultRoutine = value.routineId
 
-            routineSubject.onNext(routine)
+            exercise = value.linkedExercises.first()
+
+            routineSubject.onNext(value)
 
             field = value
+
+            debug("set value of: " + routine.title)
         }
 
     var exercise: Exercise = routine.linkedExercises.first()
@@ -51,6 +59,21 @@ object RoutineStream {
 
             field = value
         }
+
+    fun setRoutine(spinnerRoutine: SpinnerRoutine) {
+        debug("setRoutine in Stream to " + spinnerRoutine.name)
+
+        when(spinnerRoutine.id) {
+            0 -> {
+                debug("Recommended Routine")
+                routine = JsonRoutineLoader().getRoutine(R.raw.bodyweight_fitness_recommended_routine)
+            }
+            1 -> {
+                debug("Test Routine")
+                routine = JsonRoutineLoader().getRoutine(R.raw.test_routine)
+            }
+        }
+    }
 
     fun routineObservable(): Observable<Routine> {
         return Observable.merge(Observable.just(routine).publish().refCount(), routineSubject)

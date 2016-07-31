@@ -13,6 +13,12 @@
         android:theme="@style/AppTheme.Home.Toolbar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
+        <Spinner
+            android:id="@+id/toolbar_spinner"
+            style="@style/Widget.MyApp.HeaderBar.Spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
         <LinearLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"

@@ -2,8 +2,14 @@ package com.bodyweight.fitness.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
+import android.widget.Adapter
+import android.widget.AdapterView
+import android.widget.Toast
 
 import com.bodyweight.fitness.R
+import com.bodyweight.fitness.adapter.ToolbarSpinnerAdapter
+import com.bodyweight.fitness.extension.debug
 import com.bodyweight.fitness.model.CalendarDay
 import com.bodyweight.fitness.model.Exercise
 import com.bodyweight.fitness.setGone
@@ -59,9 +65,11 @@ class ToolbarPresenter : AbstractPresenter() {
             R.id.action_menu_home -> {
                 setToolbarForHome()
             }
+
             R.id.action_menu_workout -> {
                 setToolbarForWorkout(RoutineStream.exercise)
             }
+
             R.id.action_menu_workout_log -> {
                 setToolbarForWorkoutLog(Stream.currentCalendarDay)
             }
@@ -71,7 +79,40 @@ class ToolbarPresenter : AbstractPresenter() {
     private fun setToolbarForHome() {
         val view: ToolbarView = (mView as ToolbarView)
 
-        view.setTitleSubtitle("Bodyweight Fitness", "Home")
+        view.setSpinner("", "")
+//        view.setTitleSubtitle("Bodyweight Fitness", "Home")
+
+
+        var isAdapterCreated = false
+
+        val spinnerAdapter = ToolbarSpinnerAdapter()
+
+        view.toolbar_spinner.adapter = spinnerAdapter
+
+        view.toolbar_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+                if (isAdapterCreated) {
+                    debug("FUCKING SELECTED")
+                    debug("Position = " + pos)
+
+
+                    val spinnerRoutine = spinnerAdapter.routines[pos]
+                    RoutineStream.setRoutine(spinnerRoutine)
+
+                    view?.let {
+                        Toast.makeText(it.context,
+                                "Switched routine to ${spinnerRoutine.name}",
+                                Toast.LENGTH_LONG).show()
+                    }
+                } else {
+                    isAdapterCreated = true
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
+
+            }
+        }
     }
 
     private fun setToolbarForWorkout(exercise: Exercise) {
@@ -104,29 +145,42 @@ class ToolbarView : AbstractView {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
+    fun setSpinner(title: String, subtitle: String) {
+        toolbar_spinner.setVisible()
+        toolbar_layout.setGone()
+
+        toolbar.title = title
+        toolbar.subtitle = subtitle
+    }
+
     fun setSingleTitle(text: String) {
+        toolbar_spinner.setGone()
         toolbar_layout.setGone()
         toolbar.title = text
         toolbar.subtitle = ""
     }
 
     fun setTitleSubtitle(title: String, subtitle: String) {
+        toolbar_spinner.setGone()
         toolbar_layout.setGone()
         toolbar.title = title
         toolbar.subtitle = subtitle
     }
 
     fun setTitle(text: String) {
+        toolbar_spinner.setGone()
         toolbar_layout.setVisible()
         toolbar_exercise_title.text = text
     }
 
     fun setSubtitle(text: String) {
+        toolbar_spinner.setGone()
         toolbar_layout.setVisible()
         toolbar_section_title.text = text
     }
 
     fun setDescription(text: String) {
+        toolbar_spinner.setGone()
         toolbar_layout.setVisible()
         toolbar_exercise_description.text = text
     }
