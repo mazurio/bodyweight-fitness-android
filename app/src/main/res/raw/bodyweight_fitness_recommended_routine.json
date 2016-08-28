@@ -300,7 +300,7 @@
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "saLtuweg8As",
-      "videoid": "bodyweight_fitness_pull_over",
+      "videoId": "bodyweight_fitness_pullover",
       "defaultSet": "weighted"
     },
     {
@@ -421,7 +421,6 @@
     },
     {
       "exerciseId": "exercise33",
-      "id": "l_sit",
       "level": "Level 4",
       "title": "L-sit",
       "description": "3x(10-30s)",
@@ -438,91 +437,92 @@
     },
     {
       "exerciseId": "exercise34",
-      "id": "wall_pushup",
       "level": "Level 1",
       "title": "Wall Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "a6YHbXD2XlU",
+      "videoId": "bodyweight_fitness_wall_pushup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise35",
-      "id": "incline_pushup",
       "level": "Level 2",
       "title": "Incline Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "4dF1DOWzf20",
+      "videoId": "bodyweight_fitness_incline_pushup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise36",
-      "id": "pushup",
       "level": "Level 3",
       "title": "Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "4dF1DOWzf20",
+      "videoId": "bodyweight_fitness_pushup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise37",
-      "id": "diamond_pushup",
       "level": "Level 4",
       "title": "Diamond Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "s8Ft6xyN5fw",
+      "videoId": "bodyweight_fitness_diamond_pushup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise38",
-      "id": "ring_wide_pushup",
       "level": "Level 5",
-      "title": "Rings Wide Pushups",
+      "title": "Rings Wide Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "jbQyi9xshOU",
+      "videoId": "bodyweight_fitness_rings_wide_pushup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise39",
-      "id": "ring_pushup",
       "level": "Level 6",
-      "title": "Rings Pushups",
+      "title": "Rings Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "jbQyi9xshOU",
+      "videoId": "bodyweight_fitness_rings_pushup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise40",
-      "id": "rings_turned_out_pushup",
       "level": "Level 7",
       "title": "Rings Turned Out Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "MrlyEIpe0LI",
+      "videoId": "bodyweight_fitness_rings_turned_out_pushup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise41",
-      "id": "pseudo_planche_pushup",
       "level": "Level 8",
       "title": "Rings Turned Out PPPU",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "-kwe1EOiWMY",
+      "videoId": "bodyweight_fitness_rings_turned_out_pppu",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise42",
       "level": "Level 5-8",
-      "title": "Pseudo Planche Push Ups",
+      "title": "Pseudo Planche Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "Cdmg0CfMZeo",
+      "videoId": "bodyweight_fitness_pseudo_planche_pushup",
       "defaultSet": "weighted"
     },
     {
