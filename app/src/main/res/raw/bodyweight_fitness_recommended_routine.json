@@ -518,7 +518,6 @@
     },
     {
       "exerciseId": "exercise42",
-      "id": "pseudo_planche",
       "level": "Level 5-8",
       "title": "Pseudo Planche Push Ups",
       "description": "3x(5-8)",
@@ -535,82 +534,82 @@
     },
     {
       "exerciseId": "exercise43",
-      "id": "vertical_row",
       "level": "Level 1",
       "title": "Vertical Row",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "e5fdh9_kH_Y",
+      "videoId": "bodyweight_fitness_vertical_row",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise44",
-      "id": "incline_row",
       "level": "Level 2",
       "title": "Incline Row",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "1G28qN9FCKE",
+      "videoId": "bodyweight_fitness_incline_row",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise45",
-      "id": "horizontal_row",
       "level": "Level 3",
       "title": "Horizontal Row",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "dvkIaarnf0g",
+      "videoId": "bodyweight_fitness_horizontal_row",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise46",
-      "id": "wide_row",
       "level": "Level 4",
       "title": "Wide Row",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "1yMRvsuk9Xg",
+      "videoId": "bodyweight_fitness_wide_row",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise47",
-      "id": "tuck_front_lever",
       "level": "Level 5",
       "title": "Tuck Front Lever",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "tiST0765Sfo",
+      "videoId": "bodyweight_fitness_tuck_front_lever",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise48",
-      "id": "tuck_ice_cream_maker",
       "level": "Level 6",
       "title": "Tuck Ice Cream Maker",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "AszLwoAvLKg",
+      "videoId": "bodyweight_fitness_tuck_ice_cream_maker",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise49",
-      "id": "tuck_front_lever_row",
       "level": "Level 7",
       "title": "Tuck Front Lever Row",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "F-xEL0Ot0HA",
+      "videoId": "bodyweight_fitness_tuck_front_lever_row",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise50",
-      "id": "advanced_tuck_front_lever_row",
       "level": "Level 8",
       "title": "Advanced Tuck Front Lever Row",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "cVdb8oUGKAw",
+      "videoId": "bodyweight_fitness_advanced_tuck_front_lever_row",
       "defaultSet": "weighted"
     }
   ]
