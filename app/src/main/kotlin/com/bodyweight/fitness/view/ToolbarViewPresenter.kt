@@ -144,6 +144,7 @@ class ToolbarView : AbstractView {
 
     fun setSpinner(title: String, subtitle: String) {
         toolbar_spinner_layout.setVisible()
+        toolbar_layout.setGone()
 
         toolbar_spinner_title.text = title
         toolbar_spinner_subtitle.text = subtitle
@@ -154,6 +155,7 @@ class ToolbarView : AbstractView {
 
     fun setSingleTitle(text: String) {
         toolbar_spinner_layout.setGone()
+        toolbar_layout.setGone()
 
         toolbar.title = text
         toolbar.subtitle = ""
@@ -162,18 +164,21 @@ class ToolbarView : AbstractView {
     fun setTitle(text: String) {
         toolbar_spinner_layout.setGone()
         toolbar_layout.setVisible()
+
         toolbar_exercise_title.text = text
     }
 
     fun setSubtitle(text: String) {
         toolbar_spinner_layout.setGone()
         toolbar_layout.setVisible()
+
         toolbar_section_title.text = text
     }
 
     fun setDescription(text: String) {
         toolbar_spinner_layout.setGone()
         toolbar_layout.setVisible()
+
         toolbar_exercise_description.text = text
     }
 }
