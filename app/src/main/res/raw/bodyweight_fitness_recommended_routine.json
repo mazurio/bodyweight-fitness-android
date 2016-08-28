@@ -201,7 +201,6 @@
     },
     {
       "exerciseId": "exercise16",
-      "id": "freestanding_handstand",
       "level": "Level 3",
       "title": "Freestanding Handstand",
       "description": "5 min",
@@ -219,7 +218,6 @@
     },
     {
       "exerciseId": "exercise17",
-      "id": "parallel_bar_hold",
       "level": "Level 1",
       "title": "Parallel Bar Support",
       "description": "2-3 min",
@@ -230,7 +228,6 @@
     },
     {
       "exerciseId": "exercise18",
-      "id": "ring_support",
       "level": "Level 2",
       "title": "Ring Support",
       "description": "2-3 min",
@@ -241,7 +238,6 @@
     },
     {
       "exerciseId": "exercise19",
-      "id": "rings_turned_out_support",
       "level": "Level 3",
       "title": "Rings Turned Out Support Hold",
       "description": "2-3 min",
@@ -322,7 +318,6 @@
     },
     {
       "exerciseId": "exercise25",
-      "id": "ring_dips",
       "level": "Level 2",
       "title": "Ring Dips",
       "description": "3x(5-8)",
@@ -333,7 +328,6 @@
     },
     {
       "exerciseId": "exercise26",
-      "id": "l_ring_dips",
       "level": "Level 3",
       "title": "Ring Dips in L-sit",
       "description": "3x(5-8)",
@@ -351,7 +345,6 @@
     },
     {
       "exerciseId": "exercise27",
-      "id": "assisted_squat",
       "level": "Level 1",
       "title": "Assisted Bodyweight Squat",
       "description": "3x(5-8)",
@@ -362,7 +355,6 @@
     },
     {
       "exerciseId": "exercise28",
-      "id": "bodyweight_squat",
       "level": "Level 2",
       "title": "Bodyweight Squat",
       "description": "3x(5-8)",
@@ -373,7 +365,6 @@
     },
     {
       "exerciseId": "exercise29",
-      "id": "deep_stepup",
       "level": "Level 3",
       "title": "Deep Step-up",
       "description": "3x(5-8)",
@@ -391,7 +382,6 @@
     },
     {
       "exerciseId": "exercise30",
-      "id": "floor_l_sit",
       "level": "Level 1",
       "title": "Foot-supported L-sit",
       "description": "3x(10-30s)",
@@ -401,7 +391,6 @@
     },
     {
       "exerciseId": "exercise31",
-      "id": "one_foot_l_sit",
       "level": "Level 2",
       "title": "One-Leg Foot Supported L-sit",
       "description": "3x(10-30s)",
@@ -411,7 +400,6 @@
     },
     {
       "exerciseId": "exercise32",
-      "id": "tuck_l_sit",
       "level": "Level 3",
       "title": "Tuck L-sit",
       "description": "3x(10-30s)",
