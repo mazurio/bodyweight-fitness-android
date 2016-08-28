@@ -32,7 +32,7 @@ class HomeViewPresenter : AbstractPresenter() {
                     updateStatistics()
                 }
 
-        Stream.repositoryObservable
+        Stream.repositoryObservable()
                 .bindToLifecycle(view)
                 .subscribe {
                     updateTodaysProgress()

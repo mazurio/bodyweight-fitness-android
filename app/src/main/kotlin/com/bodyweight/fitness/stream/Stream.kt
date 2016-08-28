@@ -53,7 +53,6 @@ object Stream {
     val menuObservable: Observable<Int> get() = menuSubject
     val loggedSecondsObservable: Observable<Int> get() = loggedSecondsSubject
     val loggedSetRepsObservable: Observable<SetReps> get() = loggedSetRepsSubject
-    val repositoryObservable: Observable<Boolean> get() = repositorySubject
 
     fun drawerObservable(): Observable<Int> {
         return Observable.merge(Observable.just(currentDrawerId).publish().refCount(), drawerSubject)
@@ -76,11 +75,8 @@ object Stream {
                 .refCount()
     }
 
-    fun currentWorkoutViewObservable(): Observable<WorkoutViewType> {
-        return Observable.merge(Observable.just(currentWorkoutViewType).publish().refCount(), currentWorkoutViewSubject)
-                .observeOn(AndroidSchedulers.mainThread())
-                .publish()
-                .refCount()
+    fun repositoryObservable(): Observable<Boolean> {
+        return repositorySubject.observeOn(AndroidSchedulers.mainThread()).publish().refCount()
     }
 
     fun setMenu(toolbarMenuItemId: Int) {

@@ -30,8 +30,8 @@ class CalendarListAdapter : RecyclerView.Adapter<CalendarRoutinePresenter>() {
         notifyDataSetChanged()
     }
 
-    fun removeItems() {
-        repositoryRoutineList = null
+    fun removeItem(repositoryRoutine: RepositoryRoutine) {
+        repositoryRoutineList?.remove(repositoryRoutine)
 
         notifyDataSetChanged()
     }
@@ -106,7 +106,7 @@ class CalendarRoutinePresenter(itemView: View) : RecyclerView.ViewHolder(itemVie
                     putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(context, Constants.fileProvider, file))
                 })
             } catch (e: Exception) {
-                e.printStackTrace();
+                e.printStackTrace()
 
                 Toast.makeText(context, "Error: Unable to export workout log", Toast.LENGTH_SHORT).show()
             }
@@ -121,8 +121,6 @@ class CalendarRoutinePresenter(itemView: View) : RecyclerView.ViewHolder(itemVie
                         realm.executeTransaction {
                             repositoryRoutine.deleteFromRealm()
                         }
-
-                        calendarListAdapter?.removeItems()
 
                         Stream.setRepository()
                     }

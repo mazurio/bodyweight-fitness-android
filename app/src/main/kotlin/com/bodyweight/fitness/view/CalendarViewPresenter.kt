@@ -106,6 +106,22 @@ class CalendarPresenter : AbstractPresenter() {
                             })
                 }
 
+        Stream.repositoryObservable()
+                .bindToLifecycle(view)
+                .subscribe {
+                    val results = Stream.currentCalendarDay
+                            .getDate()
+                            .isRoutineLoggedWithResults()
+
+                    if (results.isNotEmpty()) {
+                        calendarListAdapter.setItems(results)
+
+                        view.showCardView()
+                    } else {
+                        view.hideCardView()
+                    }
+                }
+
         Stream.calendarDayObservable()
                 .bindToLifecycle(view)
                 .subscribe {

@@ -28,7 +28,7 @@ class RepsLoggerPresenter : AbstractPresenter() {
                     updateLabels()
                 }
 
-        Stream.repositoryObservable
+        Stream.repositoryObservable()
                 .bindToLifecycle(view)
                 .subscribe {
                     updateLabels()

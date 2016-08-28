@@ -93,7 +93,7 @@ class ProgressActivity : RxAppCompatActivity() {
                     logWorkoutDialog.show(supportFragmentManager, "dialog")
                 }
 
-        Stream.repositoryObservable
+        Stream.repositoryObservable()
                 .bindToLifecycle(this)
                 .subscribe {
                     progressPagerAdapter.onRepositoryUpdated()

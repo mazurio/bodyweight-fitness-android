@@ -23,6 +23,15 @@
       "youTubeId": "H01oGIS1C_g",
       "videoId": "shoulder_rolls",
       "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "adasdsad-80af-474a-90b6-efcebed138d4",
+      "title": "Stretch shitloads",
+      "description": "1x(30s-60s)",
+      "type": "exercise",
+      "youTubeId": "H01oGIS1C_g",
+      "videoId": "shoulder_rolls",
+      "defaultSet": "timed"
     }
   ]
 }
