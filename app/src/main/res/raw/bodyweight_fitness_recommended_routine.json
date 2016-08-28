@@ -257,7 +257,7 @@
     },
     {
       "sectionId": "section5",
-      "title": "Pullup Progression",
+      "title": "Pull Up Progression",
       "description": "3x(5-8)",
       "type": "section",
       "mode": "levels",
@@ -265,42 +265,42 @@
     },
     {
       "exerciseId": "exercise20",
-      "id": "negative_pullup",
       "level": "Level 1",
-      "title": "Negative Pullups",
+      "title": "Negative Pull Up",
       "description": "3x(5-8)",
       "type": "exercise",
-      "youTubeId": "y5sqSwcRZzo",
+      "youTubeId": "hszVesZ0VmA",
+      "videoId": "bodyweight_fitness_negative_pullup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise21",
-      "id": "pullup",
       "level": "Level 2",
       "title": "Pull Up",
       "description": "3x(5-8)",
       "type": "exercise",
-      "youTubeId": "RsnbDcsZbpk",
+      "youTubeId": "hszVesZ0VmA",
+      "videoId": "bodyweight_fitness_pullup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise22",
-      "id": "lsit_pullup",
       "level": "Level 3",
-      "title": "L-sit Pull Up",
+      "title": "L-Sit Pull Up",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "quFBLtkxMRM",
+      "videoId": "bodyweight_fitness_l_sit_pullup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise23",
-      "id": "pullover",
       "level": "Level 4",
       "title": "Pull Over",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "saLtuweg8As",
+      "videoid": "bodyweight_fitness_pull_over",
       "defaultSet": "weighted"
     },
     {
@@ -312,12 +312,12 @@
     },
     {
       "exerciseId": "exercise24",
-      "id": "parallel_bar_dips",
       "level": "Level 1",
       "title": "Parallel Bar Dips",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "_3RaUMKcGQI",
+      "videoId": "bodyweight_fitness_parallel_bar_dips",
       "defaultSet": "weighted"
     },
     {
@@ -328,6 +328,7 @@
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "cPFmMwC62d8",
+      "videoId": "bodyweight_fitness_ring_dips",
       "defaultSet": "weighted"
     },
     {
@@ -338,6 +339,7 @@
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "K-fNLVAstcw",
+      "videoId": "bodyweight_fitness_ring_dips_l_sit",
       "defaultSet": "weighted"
     },
     {
@@ -355,6 +357,7 @@
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "OuR_Fp7AB0c",
+      "videoId": "bodyweight_fitness_assisted_squat",
       "defaultSet": "weighted"
     },
     {
@@ -365,6 +368,7 @@
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "AkQbbDGMzJk",
+      "videoId": "bodyweight_fitness_squat",
       "defaultSet": "weighted"
     },
     {
@@ -374,7 +378,8 @@
       "title": "Deep Step-up",
       "description": "3x(5-8)",
       "type": "exercise",
-      "youTubeId": "487aR3A7HvM",
+      "youTubeId": "cQC9OMF3-AE",
+      "videoId": "bodyweight_fitness_deep_step_up",
       "defaultSet": "weighted"
     },
     {
