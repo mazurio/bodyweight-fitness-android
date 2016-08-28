@@ -185,7 +185,8 @@
       "title": "Wall Plank",
       "description": "5 min",
       "type": "exercise",
-      "youTubeId": "6jm4R3K4sJA",
+      "youTubeId": "fOy7sE1_vI0",
+      "videoId": "bodyweight_fitness_wall_plank",
       "defaultSet": "timed"
     },
     {
@@ -194,7 +195,8 @@
       "title": "Stomach-to-Wall Handstand",
       "description": "5 min",
       "type": "exercise",
-      "youTubeId": "dRycbwdcz7Y",
+      "youTubeId": "fOy7sE1_vI0",
+      "videoId": "bodyweight_fitness_stomach_to_wall_handstand",
       "defaultSet": "timed"
     },
     {
@@ -204,7 +206,8 @@
       "title": "Freestanding Handstand",
       "description": "5 min",
       "type": "exercise",
-      "youTubeId": "Y3FSeSecjKA",
+      "youTubeId": "z8MOQiSEWnU",
+      "videoId": "bodyweight_fitness_freestanding_handstand",
       "defaultSet": "timed"
     },
     {
