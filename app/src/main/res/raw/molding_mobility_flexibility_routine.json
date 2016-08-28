@@ -22,7 +22,7 @@
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_3_plane_neck_movement_1",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "e34e89a9-587b-462b-8429-00cf9d733428",
@@ -31,7 +31,7 @@
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_3_plane_neck_movement_2",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "c1bd3f51-ac6e-4182-8896-dc2e193da703",
@@ -40,7 +40,7 @@
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_3_plane_neck_movement_3",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "d695834c-4136-4aab-88aa-f3d96a643f62",
@@ -49,7 +49,7 @@
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_finger_flexion_extension",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "267617b8-63ab-4910-9d0b-589d49a5616b",
@@ -58,7 +58,7 @@
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_wrist_circles",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "a6524b33-3db6-4386-ac13-a8e29ac09d89",
@@ -67,7 +67,7 @@
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_elbow_circles",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "57ed9df8-d647-41c6-8099-507d198d4cf9",
@@ -76,7 +76,7 @@
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_large_arm_circles",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "da5aa28f-18c9-4f1c-813e-496688982e4f",
@@ -85,7 +85,7 @@
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_circular_shrugs",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "c138c2aa-278b-47c5-9fca-134be13db8b5",
@@ -94,7 +94,7 @@
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_torso_twists",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "6ed6b3d5-d3eb-49a1-92e3-240b601611ee",
@@ -103,7 +103,7 @@
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_side_bends",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "75e4db38-c419-4af5-88dc-4fba5ef06104",
@@ -112,16 +112,16 @@
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_forward_back_bends",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "06824cc0-9a67-41ab-8b07-42f0eaee75f6",
-      "title": "pelvic Tilts",
+      "title": "Pelvic Tilts",
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_pelvic_tilts",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "3735f61f-9dc2-4f52-91e7-0f7635630355",
@@ -130,7 +130,7 @@
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_hip_circles",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "a66d8d1a-bb7d-4d78-a5e3-8fabeaecb155",
@@ -139,7 +139,7 @@
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_knee_rotations",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "58f8db3b-82fe-4c93-8ba9-9b9f61650a41",
@@ -148,16 +148,16 @@
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_ankle_circles",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "d0493496-5b32-4bc0-bc96-4f8a72523f25",
-      "title": "Ankle Pronations/Supinations",
+      "title": "Ankle Tilts",
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
-      "videoId": "molding_mobility_ankle_pronations_supinations",
-      "defaultSet": "timed"
+      "videoId": "molding_mobility_ankle_tilts",
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "5479ed53-dde5-4029-aa44-bd36c6e9cc5e",
@@ -166,7 +166,7 @@
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_toe_flexion_extension",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "d420995b-d9c5-423f-bbc0-a8468112c4ad",
@@ -175,7 +175,7 @@
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_butt_kicks",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     },
     {
       "exerciseId": "35c93edc-1e22-468d-b1e4-8bae11dce7ae",
@@ -184,7 +184,7 @@
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
       "videoId": "molding_mobility_knee_raises",
-      "defaultSet": "timed"
+      "defaultSet": "weighted"
     }
   ]
 }
