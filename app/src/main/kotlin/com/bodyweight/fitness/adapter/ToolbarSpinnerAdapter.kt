@@ -8,9 +8,8 @@ import android.widget.TextView
 
 import com.bodyweight.fitness.R
 import com.bodyweight.fitness.stream.RoutineStream
-import kotlin.properties.Delegates
 
-data class SpinnerRoutine(val id: Int, val name: String)
+data class SpinnerRoutine(val id: Int, val title: String, val subtitle: String)
 
 class ToolbarSpinnerAdapter : BaseAdapter() {
     val routines: List<SpinnerRoutine>
@@ -18,12 +17,12 @@ class ToolbarSpinnerAdapter : BaseAdapter() {
     init {
         if (RoutineStream.routine.routineId == "routine0") {
             routines = listOf(
-                    SpinnerRoutine(0, "Recommended Routine"),
-                    SpinnerRoutine(1, "Molding Mobility"))
+                    SpinnerRoutine(0, "Bodyweight Fitness", "Recommended Routine"),
+                    SpinnerRoutine(1, "Molding Mobility", "Flexibility Routine"))
         } else {
             routines = listOf(
-                    SpinnerRoutine(1, "Molding Mobility"),
-                    SpinnerRoutine(0, "Recommended Routine"))
+                    SpinnerRoutine(1, "Molding Mobility", "Flexibility Routine"),
+                    SpinnerRoutine(0, "Bodyweight Fitness", "Recommended Routine"))
         }
     }
 
@@ -55,16 +54,16 @@ class ToolbarSpinnerAdapter : BaseAdapter() {
 
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
         var view = view
+
         if (view == null || view.tag.toString() != "NON_DROPDOWN") {
             view = LayoutInflater.from(parent.context).inflate(R.layout.toolbar_spinner_item_actionbar, parent, false)
             view.tag = "NON_DROPDOWN"
         }
-        val textView = view!!.findViewById(android.R.id.text1) as TextView
-        textView.text = getTitle(position)
-        return view
+
+        return view!!
     }
 
     private fun getTitle(position: Int): String {
-        return routines[position].name
+        return routines[position].title
     }
 }

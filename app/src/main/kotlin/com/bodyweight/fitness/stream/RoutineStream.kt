@@ -61,15 +61,11 @@ object RoutineStream {
         }
 
     fun setRoutine(spinnerRoutine: SpinnerRoutine) {
-        debug("setRoutine in Stream to " + spinnerRoutine.name)
-
         when(spinnerRoutine.id) {
             0 -> {
-                debug("Recommended Routine")
                 routine = JsonRoutineLoader().getRoutine(R.raw.bodyweight_fitness_recommended_routine)
             }
             1 -> {
-                debug("Test Routine")
                 routine = JsonRoutineLoader().getRoutine(R.raw.molding_mobility_flexibility_routine)
             }
         }

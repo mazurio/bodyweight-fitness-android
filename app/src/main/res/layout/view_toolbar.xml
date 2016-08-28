@@ -13,11 +13,59 @@
         android:theme="@style/AppTheme.Home.Toolbar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-        <Spinner
-            android:id="@+id/toolbar_spinner"
-            style="@style/Widget.MyApp.HeaderBar.Spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+        <FrameLayout
+            android:id="@+id/toolbar_spinner_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/toolbar_spinner"
+                style="@style/Widget.MyApp.HeaderBar.Spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/toolbar_spinner_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight=".50"
+                        android:gravity="bottom"
+                        android:layout_gravity="bottom"
+                        app:typeface="roboto_regular"
+                        android:textColor="@color/primaryDark"
+                        android:textSize="18sp"/>
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/toolbar_spinner_subtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight=".50"
+                        android:gravity="top"
+                        app:typeface="roboto_regular"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/action_drop_down"/>
+            </LinearLayout>
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/toolbar_layout"
