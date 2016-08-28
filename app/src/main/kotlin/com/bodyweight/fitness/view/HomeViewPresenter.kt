@@ -61,7 +61,9 @@ class HomeViewPresenter : AbstractPresenter() {
                 view.createCategory(category.title, completionRate.label, calculateLayoutWeight(completionRate.percentage))
             }
 
-            view.setStartWorkoutButtonTitle(title = getStartWorkoutButtonText(true))
+            val isRoutineCompleted = (RepositoryRoutine.getCompletionRate(repositoryRoutine).percentage == 100)
+
+            view.setStartWorkoutButtonTitle(title = getStartWorkoutButtonText(true, isRoutineCompleted))
             view.showTodaysWorkoutLogButton()
         } else {
             view.clearCategories()
@@ -72,7 +74,7 @@ class HomeViewPresenter : AbstractPresenter() {
                 view.createCategory(category.title, "0%", calculateLayoutWeight(0))
             }
 
-            view.setStartWorkoutButtonTitle(title = getStartWorkoutButtonText(false))
+            view.setStartWorkoutButtonTitle(title = getStartWorkoutButtonText(false, false))
             view.hideTodaysWorkoutLogButton()
         }
     }
@@ -91,8 +93,12 @@ class HomeViewPresenter : AbstractPresenter() {
         view.setNumberOfWorkoutsLast30Days("$last30Days ${getNumberOfWorkoutsPostfix(last30Days)}")
     }
 
-    fun getStartWorkoutButtonText(repositoryRoutineForTodayExists: Boolean): String {
+    fun getStartWorkoutButtonText(repositoryRoutineForTodayExists: Boolean, isRoutineCompleted: Boolean): String {
         if (repositoryRoutineForTodayExists) {
+            if (isRoutineCompleted) {
+                return "Review Workout"
+            }
+
             return "Go to Workout"
         }
 

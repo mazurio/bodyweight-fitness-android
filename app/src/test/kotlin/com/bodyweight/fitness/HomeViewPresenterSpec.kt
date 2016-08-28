@@ -44,11 +44,15 @@ class HomeViewPresenterSpec: Spek({
 
         given("start working out button") {
             it("says 'Start Working Out' if repository routine does not exist") {
-                assertEquals("Start Working Out", homeViewPresenter.getStartWorkoutButtonText(false))
+                assertEquals("Start Working Out", homeViewPresenter.getStartWorkoutButtonText(false, false))
             }
 
             it("says 'Workout' if repository routine does not exist") {
-                assertEquals("Go to Workout", homeViewPresenter.getStartWorkoutButtonText(true))
+                assertEquals("Go to Workout", homeViewPresenter.getStartWorkoutButtonText(true, false))
+            }
+
+            it("says 'Review Workout' if repository routine is finished") {
+                assertEquals("Review Workout", homeViewPresenter.getStartWorkoutButtonText(true, true))
             }
         }
 
