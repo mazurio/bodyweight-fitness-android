@@ -70,7 +70,7 @@ object RoutineStream {
             }
             1 -> {
                 debug("Test Routine")
-                routine = JsonRoutineLoader().getRoutine(R.raw.test_routine)
+                routine = JsonRoutineLoader().getRoutine(R.raw.molding_mobility_flexibility_routine)
             }
         }
     }
