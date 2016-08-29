@@ -36,7 +36,13 @@ object RoutineStream {
     private val routineSubject = PublishSubject.create<Routine>()
     private val exerciseSubject = PublishSubject.create<Exercise>()
 
-    var routine: Routine = JsonRoutineLoader().getRoutine(R.raw.bodyweight_fitness_recommended_routine)
+    var routine: Routine =
+            if (Preferences.defaultRoutine == "routine0") {
+                JsonRoutineLoader().getRoutine(R.raw.bodyweight_fitness_recommended_routine)
+            } else {
+                JsonRoutineLoader().getRoutine(R.raw.molding_mobility_flexibility_routine)
+            }
+    
         set(value) {
             if (value.routineId.equals(routine.routineId)) {
                 return
