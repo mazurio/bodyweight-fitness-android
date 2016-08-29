@@ -16,4 +16,5 @@ object Constants {
     val preferencesKeepScreenOnKey = "PREFERENCE_KEEP_SCREEN_ON"
     val preferencesTimerKey = "PREFERENCE_TIMER_KEY_"
     val preferencesNumberOfRepsKey = "PREFERENCE_NUMBER_OF_REPS_KEY_"
+    val preferencesIntroductionShown = "PREFERENCE_INTRODUCTION_SHOWN"
 }

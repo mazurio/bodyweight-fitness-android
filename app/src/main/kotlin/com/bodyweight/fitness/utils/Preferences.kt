@@ -14,15 +14,29 @@ object Preferences {
         PreferenceManager.setDefaultValues(App.context, R.xml.settings, false)
     }
 
-    var defaultRoutine: String
+    var introductionShown: Boolean
         get() {
-            return getSharedPreferences().getString(Constants.preferencesDefaultRoutineKey, "routine0")
+            return getSharedPreferences()
+                    .getBoolean(Constants.preferencesIntroductionShown, false)
         }
 
-        set(defaultRoutine) {
+        set(value) {
             getSharedPreferences()
                     .edit()
-                    .putString(Constants.preferencesDefaultRoutineKey, defaultRoutine)
+                    .putBoolean(Constants.preferencesIntroductionShown, value)
+                    .commit()
+        }
+
+    var defaultRoutine: String
+        get() {
+            return getSharedPreferences()
+                    .getString(Constants.preferencesDefaultRoutineKey, "routine0")
+        }
+
+        set(value) {
+            getSharedPreferences()
+                    .edit()
+                    .putString(Constants.preferencesDefaultRoutineKey, value)
                     .commit()
         }
 

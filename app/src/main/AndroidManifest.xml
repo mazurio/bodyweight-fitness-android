@@ -30,6 +30,10 @@
         </provider>
 
         <activity
+            android:name=".ui.IntroductionActivity"
+            android:theme="@style/FullscreenTheme" />
+
+        <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name">
 

@@ -91,6 +91,12 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
                         }
                     }
                 }
+
+        if (!Preferences.introductionShown) {
+            Preferences.introductionShown = true
+
+            startActivity(Intent(this, IntroductionActivity::class.java))
+        }
     }
 
     override fun onResume() {

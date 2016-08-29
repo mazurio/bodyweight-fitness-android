@@ -1,4 +1,8 @@
 <resources>
+	<style name="FullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+		<item name="android:windowTranslucentStatus">true</item>
+	</style>
+
 	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 		<item name="colorAccent">@color/primaryDark</item>
 		<item name="colorPrimary">@color/primary</item>

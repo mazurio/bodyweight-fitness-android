@@ -111,6 +111,8 @@ dependencies {
     compile 'com.github.johnkil.android-robototextview:robototextview:2.5.0'
     compile 'com.gordonwong:material-sheet-fab:1.2.1'
     compile 'io.github.kobakei:ratethisapp:1.0.3'
+    compile 'com.github.paolorotolo:appintro:4.0.0'
+
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
