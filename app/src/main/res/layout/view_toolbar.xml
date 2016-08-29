@@ -54,7 +54,7 @@
                         android:layout_weight=".50"
                         android:gravity="top"
                         app:typeface="roboto_regular"
-                        android:textColor="@color/white"
+                        android:textColor="@color/primaryDark"
                         android:textSize="16sp"/>
                 </LinearLayout>
 
