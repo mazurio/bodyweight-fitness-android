@@ -2,7 +2,7 @@
 	<string name="transition_dashboard">transition:DASHBOARD</string>
 
 	<string name="app_name">Bodyweight Fitness</string>
-	<string name="app_version">1.2.2</string>
+	<string name="app_version">1.3.0</string>
 	<string name="action_progression">Choose Exercise Progression</string>
 	<string name="action_about">About</string>
 	<string name="action_faq">FAQ</string>
@@ -11,6 +11,7 @@
 	<string name="action_dashboard">Dashboard</string>
 	<string name="action_remove_files">Remove files</string>
 	<string name="action_today">Today</string>
+	<string name="action_export">Export All Workouts</string>
 	<string name="action_export_today">Export Today\'s Data</string>
 	<string name="action_export_last_week">Export Weekly Data</string>
 	<string name="action_export_last_month">Export Monthly Data</string>

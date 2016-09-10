@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 
 import com.bodyweight.fitness.R
-import com.bodyweight.fitness.adapter.DashboardAdapter
+import com.bodyweight.fitness.adapter.DashboardTreeAdapter
 import com.bodyweight.fitness.stream.RoutineStream
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
@@ -14,11 +14,11 @@ import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_dashboard.*
 
 class DashboardActivity : RxAppCompatActivity() {
-    val dashboardAdapter: DashboardAdapter by lazy {
-        val routine = RoutineStream.getInstance().routine
-        val exercise = RoutineStream.getInstance().exercise
+    val dashboardTreeAdapter: DashboardTreeAdapter by lazy {
+        val routine = RoutineStream.routine
+        val exercise = RoutineStream.exercise
 
-        DashboardAdapter(routine, exercise)
+        DashboardTreeAdapter(routine, exercise)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,20 +37,20 @@ class DashboardActivity : RxAppCompatActivity() {
             it.setDisplayHomeAsUpEnabled(true)
         }
 
-        dashboardAdapter.asObservable().bindToLifecycle(this).subscribe {
-            RoutineStream.getInstance().exercise = it
+        dashboardTreeAdapter.asObservable().bindToLifecycle(this).subscribe {
+            RoutineStream.exercise = it
 
             supportFinishAfterTransition()
         }
 
         view_dashboard_list.layoutManager = LinearLayoutManager(this)
-        view_dashboard_list.adapter = dashboardAdapter
+        view_dashboard_list.adapter = dashboardTreeAdapter
     }
 
     override fun onResume() {
         super.onResume()
 
-        view_dashboard_list.scrollToPosition(dashboardAdapter.scrollPosition)
+        view_dashboard_list.scrollToPosition(dashboardTreeAdapter.scrollPosition)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

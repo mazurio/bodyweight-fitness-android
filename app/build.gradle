@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -9,7 +8,7 @@ apply plugin: 'io.fabric'
 
 android {
     dexOptions {
-        incremental true
+        incremental false
         maxProcessCount 4
     }
 
@@ -17,12 +16,13 @@ android {
     buildToolsVersion '23.0.3'
     defaultConfig {
         applicationId 'com.bodyweight.fitness'
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 23
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_6
+        targetCompatibility JavaVersion.VERSION_1_6
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'
@@ -40,14 +40,14 @@ android {
     productFlavors {
         pro {
             applicationId 'com.bodyweight.fitness.pro'
-            versionCode 122
-            versionName "1.2.2"
+            versionCode 133
+            versionName "1.3.0"
         }
 
         free {
             applicationId 'com.bodyweight.fitness.free'
-            versionCode 122
-            versionName "1.2.2"
+            versionCode 133
+            versionName "1.3.0"
         }
     }
     buildTypes {
@@ -64,6 +64,7 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/java'
         main.java.srcDirs += 'src/main/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
     }
 }
@@ -80,8 +81,12 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
     testCompile 'org.jetbrains.spek:spek:1.0.9'
-//    testCompile "com.nhaarman:mockito-kotlin:0.3.0"
     testCompile 'org.mockito:mockito-all:2.0.2-beta'
+
+    androidTestCompile 'com.android.support:support-annotations:23.3.0'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.2"
 
     compile 'com.android.support:support-v4:23.3.0'
     compile 'com.android.support:recyclerview-v7:23.3.0'
@@ -92,23 +97,22 @@ dependencies {
 
     compile 'commons-io:commons-io:2.4'
     compile 'net.danlew:android.joda:2.9.3'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-
-    compile 'com.jakewharton:butterknife:6.1.0'
-    kapt 'com.jakewharton:butterknife:6.1.0'
 
     compile 'com.netflix.rxjava:rxjava-core:0.20.7'
     compile 'io.reactivex:rxandroid:1.2.0'
     compile 'io.reactivex:rxjava:1.1.5'
 
-    compile 'com.trello:rxlifecycle:0.5.0'
-    compile 'com.trello:rxlifecycle-components:0.5.0'
-    compile 'com.trello:rxlifecycle-kotlin:0.5.0'
+    compile 'com.trello:rxlifecycle:0.6.1'
+    compile 'com.trello:rxlifecycle-components:0.6.1'
+    compile 'com.trello:rxlifecycle-kotlin:0.6.1'
+
+    compile 'com.robinhood.spark:spark:1.1.0'
 
     compile 'com.github.johnkil.android-robototextview:robototextview:2.5.0'
     compile 'com.gordonwong:material-sheet-fab:1.2.1'
-    compile 'com.github.bmarrdev:android-DecoView-charting:v1.0.1'
     compile 'io.github.kobakei:ratethisapp:1.0.3'
+    compile 'com.github.paolorotolo:appintro:4.0.0'
+
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
@@ -118,7 +122,7 @@ dependencies {
 }
 
 buildscript {
-    ext.kotlin_version = '1.0.1'
+    ext.kotlin_version = '1.0.1-2'
     repositories {
         mavenCentral()
         maven {

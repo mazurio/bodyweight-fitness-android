@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bodyweight.fitness.view.WorkoutView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view_workout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/view_timer"
+        android:id="@+id/view_timer" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/view_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_timer"
+        app:tabMode="fixed"
+        app:tabGravity="fill" />
+
+    <com.bodyweight.fitness.view.PreviewView
+        android:id="@+id/preview_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_tabs"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black">
+
+        <VideoView
+            android:id="@+id/video_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"/>
+    </com.bodyweight.fitness.view.PreviewView>
+</com.bodyweight.fitness.view.WorkoutView>

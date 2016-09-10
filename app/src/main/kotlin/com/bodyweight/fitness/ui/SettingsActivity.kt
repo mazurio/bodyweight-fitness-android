@@ -47,7 +47,7 @@ class SettingsFragment : PreferenceFragment(), SharedPreferences.OnSharedPrefere
 
         addPreferencesFromResource(R.xml.settings)
 
-        updatePreferenceSummaryForKey(Constants.PREFERENCE_WEIGHT_MEASUREMENT_UNITS)
+        updatePreferenceSummaryForKey(Constants.preferencesWeightMeasurementUnitsKey)
     }
 
     override fun onResume() {
@@ -67,7 +67,7 @@ class SettingsFragment : PreferenceFragment(), SharedPreferences.OnSharedPrefere
     }
 
     fun updatePreferenceSummaryForKey(key: String) {
-        if (key.matches(Constants.PREFERENCE_WEIGHT_MEASUREMENT_UNITS.toRegex())) {
+        if (key.matches(Constants.preferencesWeightMeasurementUnitsKey.toRegex())) {
             val listPreference = findPreference(key) as ListPreference
 
             listPreference.summary = listPreference.entry

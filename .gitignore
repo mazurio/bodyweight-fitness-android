@@ -4,6 +4,7 @@ api.xml
 api.properties
 fabric.properties
 gradle.properties
+google-services.json
 
 # Built application files
 *.apk

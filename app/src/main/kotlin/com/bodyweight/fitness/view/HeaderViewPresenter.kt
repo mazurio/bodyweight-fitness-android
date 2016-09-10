@@ -2,35 +2,36 @@ package com.bodyweight.fitness.view
 
 import android.content.Context
 import android.util.AttributeSet
+import com.bodyweight.fitness.extension.debug
 
 import com.bodyweight.fitness.model.Routine
 import com.bodyweight.fitness.stream.RoutineStream
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_main_header.view.*
-import rx.Observable
 
 open class HeaderPresenter : AbstractPresenter() {
-    open fun getCurrentRoutine(): Routine =
-            RoutineStream.getInstance().routine
-
-    open fun getRoutineObservable(): Observable<Routine> =
-            RoutineStream.getInstance().routineObservable
-
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        getRoutineObservable()
-                .bindToLifecycle(view)
+        debug("HeaderPresenter = bindView")
+
+        /**
+         * We do not use bindView here as Navigation Drawer lifecycle is absolutely fucked.
+         */
+        RoutineStream.routineObservable()
                 .subscribe {
                     setText(it)
+                    debug("HeaderPresenter: Set title = " + it.title)
                 }
     }
 
     override fun restoreView(view: AbstractView) {
         super.restoreView(view)
 
-        setText(getCurrentRoutine())
+        debug("HeaderPresenter = restoreView")
+
+        setText(RoutineStream.routine)
     }
 
     override fun getView(): HeaderView {
@@ -43,7 +44,7 @@ open class HeaderPresenter : AbstractPresenter() {
 }
 
 open class HeaderView : AbstractView {
-    override var mPresenter: AbstractPresenter = HeaderPresenter()
+    override var presenter: AbstractPresenter = HeaderPresenter()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)

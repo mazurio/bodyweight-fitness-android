@@ -17,74 +17,83 @@
     },
     {
       "exerciseId": "01379fb5-80af-474a-90b6-efcebed138d4",
-      "id": "shoulder_rolls",
       "title": "Shoulder Rolls",
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "H01oGIS1C_g",
+      "videoId": "bodyweight_fitness_shoulder_rolls",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise3",
-      "id": "scapular_shrugs",
       "title": "Scapular Shrugs",
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "akgQbxhrhOc",
+      "videoId": "bodyweight_fitness_scapular_shrugs",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise2",
-      "id": "cat_camel",
       "title": "Camel Bends",
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "K9bK0BwKFjs",
+      "videoId": "bodyweight_fitness_camel_bends",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "084e964d-875b-4fb2-81db-02de9820363c",
-      "id": "band_pull_downs",
       "title": "Straight Arm Overhead Pull Downs",
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "8lDC4Ri9zAQ&feature=youtu.be&t=4m22s",
+      "videoId": "bodyweight_fitness_straight_arm_overhead_pull_downs",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "2589e669-6bc6-4796-a3a5-0b4e32456e92",
-      "id": "band_chest_flies",
       "title": "Straight Arm Chest Flies",
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "8lDC4Ri9zAQ&feature=youtu.be&t=5m12s",
+      "videoId": "bodyweight_fitness_straight_arm_chest_flies",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise1",
-      "id": "band_dislocates",
       "title": "Band Dislocates",
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "WyW5jGGxoZk",
+      "videoId": "bodyweight_fitness_band_dislocates",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise5",
-      "id": "leg_swings",
-      "title": "Front and Side Leg Swings",
+      "title": "Front Leg Swings",
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "4aoUZEZFJF8",
+      "videoId": "bodyweight_fitness_front_leg_swings",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "ee6adf81-5838-47fd-bfcc-c97ea63a7045",
+      "title": "Side Leg Swings",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "4aoUZEZFJF8",
+      "videoId": "bodyweight_fitness_side_leg_swings",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise6",
-      "id": "wrist_progression",
       "title": "Wrist Mobility Exercises",
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "HU5UCh_E6Ns",
+      "videoId": "bodyweight_fitness_wrist_mobility",
       "defaultSet": "weighted"
     },
     {
@@ -96,47 +105,47 @@
     },
     {
       "exerciseId": "exercise7",
-      "id": "plank",
       "title": "Plank",
       "description": "1x(10-60s) hold",
       "type": "exercise",
       "youTubeId": "PLu6k-uKOJ0",
+      "videoId": "bodyweight_fitness_plank",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise8",
-      "id": "side_plank",
       "title": "Side Plank (Both Sides)",
       "description": "1x(10-60s) hold",
       "type": "exercise",
       "youTubeId": "xIFWxQgFMiE",
+      "videoId": "bodyweight_fitness_side_plank",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise9",
-      "id": "reverse_plank",
       "title": "Reverse Plank",
       "description": "1x(10-60s) hold",
       "type": "exercise",
       "youTubeId": "1s1bPYBPERU",
+      "videoId": "bodyweight_fitness_reverse_plank",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise10",
-      "id": "hollow_hold",
       "title": "Hollow Hold",
       "description": "1x(10-60s) hold",
       "type": "exercise",
       "youTubeId": "wrzjVTK2brk",
+      "videoId": "bodyweight_fitness_hollow_hold",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise11",
-      "id": "arch",
       "title": "Arch",
       "description": "1x(10-60s) hold",
       "type": "exercise",
       "youTubeId": "wrzjVTK2brk",
+      "videoId": "bodyweight_fitness_arch",
       "defaultSet": "timed"
     },
     {
@@ -148,20 +157,20 @@
     },
     {
       "exerciseId": "exercise12",
-      "id": "squat_jumps",
       "title": "Squat Jumps",
       "description": "1x(10-20)",
       "type": "exercise",
       "youTubeId": "CVaEhXotL7M",
+      "videoId": "bodyweight_fitness_squat_jumps",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise13",
-      "id": "burpee",
       "title": "Burpees",
       "description": "1x(10-20)",
       "type": "exercise",
       "youTubeId": "41knz-ZUiBU",
+      "videoId": "bodyweight_fitness_burpees",
       "defaultSet": "weighted"
     },
     {
@@ -178,32 +187,32 @@
     },
     {
       "exerciseId": "exercise14",
-      "id": "wall_plank",
       "level": "Level 1",
       "title": "Wall Plank",
       "description": "5 min",
       "type": "exercise",
-      "youTubeId": "6jm4R3K4sJA",
+      "youTubeId": "fOy7sE1_vI0",
+      "videoId": "bodyweight_fitness_wall_plank",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise15",
-      "id": "wall_handstand",
       "level": "Level 2",
       "title": "Stomach-to-Wall Handstand",
       "description": "5 min",
       "type": "exercise",
-      "youTubeId": "dRycbwdcz7Y",
+      "youTubeId": "fOy7sE1_vI0",
+      "videoId": "bodyweight_fitness_stomach_to_wall_handstand",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise16",
-      "id": "freestanding_handstand",
       "level": "Level 3",
       "title": "Freestanding Handstand",
       "description": "5 min",
       "type": "exercise",
-      "youTubeId": "Y3FSeSecjKA",
+      "youTubeId": "z8MOQiSEWnU",
+      "videoId": "bodyweight_fitness_freestanding_handstand",
       "defaultSet": "timed"
     },
     {
@@ -215,32 +224,32 @@
     },
     {
       "exerciseId": "exercise17",
-      "id": "parallel_bar_hold",
       "level": "Level 1",
       "title": "Parallel Bar Support",
       "description": "2-3 min",
       "type": "exercise",
       "youTubeId": "Zv87Teu51tQ",
+      "videoId": "bodyweight_fitness_parallel_bar_support",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise18",
-      "id": "ring_support",
       "level": "Level 2",
       "title": "Ring Support",
       "description": "2-3 min",
       "type": "exercise",
       "youTubeId": "V3IkFK5lvRw",
+      "videoId": "bodyweight_fitness_ring_support",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise19",
-      "id": "rings_turned_out_support",
       "level": "Level 3",
       "title": "Rings Turned Out Support Hold",
       "description": "2-3 min",
       "type": "exercise",
       "youTubeId": "8gmyhBScTLk",
+      "videoId": "bodyweight_fitness_rings_turned_out_support_hold",
       "defaultSet": "timed"
     },
     {
@@ -250,7 +259,7 @@
     },
     {
       "sectionId": "section5",
-      "title": "Pullup Progression",
+      "title": "Pull Up Progression",
       "description": "3x(5-8)",
       "type": "section",
       "mode": "levels",
@@ -258,42 +267,42 @@
     },
     {
       "exerciseId": "exercise20",
-      "id": "negative_pullup",
       "level": "Level 1",
-      "title": "Negative Pullups",
+      "title": "Negative Pull Up",
       "description": "3x(5-8)",
       "type": "exercise",
-      "youTubeId": "y5sqSwcRZzo",
+      "youTubeId": "hszVesZ0VmA",
+      "videoId": "bodyweight_fitness_negative_pullup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise21",
-      "id": "pullup",
       "level": "Level 2",
       "title": "Pull Up",
       "description": "3x(5-8)",
       "type": "exercise",
-      "youTubeId": "RsnbDcsZbpk",
+      "youTubeId": "hszVesZ0VmA",
+      "videoId": "bodyweight_fitness_pullup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise22",
-      "id": "lsit_pullup",
       "level": "Level 3",
-      "title": "L-sit Pull Up",
+      "title": "L-Sit Pull Up",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "quFBLtkxMRM",
+      "videoId": "bodyweight_fitness_l_sit_pullup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise23",
-      "id": "pullover",
       "level": "Level 4",
       "title": "Pull Over",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "saLtuweg8As",
+      "videoId": "bodyweight_fitness_pullover",
       "defaultSet": "weighted"
     },
     {
@@ -305,32 +314,32 @@
     },
     {
       "exerciseId": "exercise24",
-      "id": "parallel_bar_dips",
       "level": "Level 1",
       "title": "Parallel Bar Dips",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "_3RaUMKcGQI",
+      "videoId": "bodyweight_fitness_parallel_bar_dips",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise25",
-      "id": "ring_dips",
       "level": "Level 2",
       "title": "Ring Dips",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "cPFmMwC62d8",
+      "videoId": "bodyweight_fitness_ring_dips",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise26",
-      "id": "l_ring_dips",
       "level": "Level 3",
-      "title": "Ring Dips in L-sit",
+      "title": "Ring Dips in L-Sit",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "K-fNLVAstcw",
+      "videoId": "bodyweight_fitness_ring_dips_l_sit",
       "defaultSet": "weighted"
     },
     {
@@ -342,79 +351,79 @@
     },
     {
       "exerciseId": "exercise27",
-      "id": "assisted_squat",
       "level": "Level 1",
       "title": "Assisted Bodyweight Squat",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "OuR_Fp7AB0c",
+      "videoId": "bodyweight_fitness_assisted_squat",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise28",
-      "id": "bodyweight_squat",
       "level": "Level 2",
       "title": "Bodyweight Squat",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "AkQbbDGMzJk",
+      "videoId": "bodyweight_fitness_squat",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise29",
-      "id": "deep_stepup",
       "level": "Level 3",
       "title": "Deep Step-up",
       "description": "3x(5-8)",
       "type": "exercise",
-      "youTubeId": "487aR3A7HvM",
+      "youTubeId": "cQC9OMF3-AE",
+      "videoId": "bodyweight_fitness_deep_step_up",
       "defaultSet": "weighted"
     },
     {
       "sectionId": "section8",
-      "title": "L-sit Progression",
+      "title": "L-Sit Progression",
       "description": "3x(10-30s)",
       "type": "section",
       "mode": "levels"
     },
     {
       "exerciseId": "exercise30",
-      "id": "floor_l_sit",
       "level": "Level 1",
-      "title": "Foot-supported L-sit",
+      "title": "Foot-supported L-Sit",
       "description": "3x(10-30s)",
       "type": "exercise",
       "youTubeId": "IUZJoSP66HI",
+      "videoId": "bodyweight_fitness_foot_supported_l_sit",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise31",
-      "id": "one_foot_l_sit",
       "level": "Level 2",
-      "title": "One-Leg Foot Supported L-sit",
+      "title": "One-Leg Foot Supported L-Sit",
       "description": "3x(10-30s)",
       "type": "exercise",
       "youTubeId": "IUZJoSP66HI",
+      "videoId": "bodyweight_fitness_one_leg_foot_supported_l_sit",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise32",
-      "id": "tuck_l_sit",
       "level": "Level 3",
-      "title": "Tuck L-sit",
+      "title": "Tuck L-Sit",
       "description": "3x(10-30s)",
       "type": "exercise",
       "youTubeId": "IUZJoSP66HI",
+      "videoId": "bodyweight_fitness_tuck_l_sit",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise33",
-      "id": "l_sit",
       "level": "Level 4",
-      "title": "L-sit",
+      "title": "L-Sit",
       "description": "3x(10-30s)",
       "type": "exercise",
       "youTubeId": "ek76IXnE9tE",
+      "videoId": "bodyweight_fitness_l_sit",
       "defaultSet": "timed"
     },
     {
@@ -426,92 +435,92 @@
     },
     {
       "exerciseId": "exercise34",
-      "id": "wall_pushup",
       "level": "Level 1",
       "title": "Wall Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "a6YHbXD2XlU",
+      "videoId": "bodyweight_fitness_wall_pushup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise35",
-      "id": "incline_pushup",
       "level": "Level 2",
       "title": "Incline Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "4dF1DOWzf20",
+      "videoId": "bodyweight_fitness_incline_pushup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise36",
-      "id": "pushup",
       "level": "Level 3",
       "title": "Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "4dF1DOWzf20",
+      "videoId": "bodyweight_fitness_pushup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise37",
-      "id": "diamond_pushup",
       "level": "Level 4",
       "title": "Diamond Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "s8Ft6xyN5fw",
+      "videoId": "bodyweight_fitness_diamond_pushup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise38",
-      "id": "ring_wide_pushup",
       "level": "Level 5",
-      "title": "Rings Wide Pushups",
+      "title": "Rings Wide Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "jbQyi9xshOU",
+      "videoId": "bodyweight_fitness_rings_wide_pushup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise39",
-      "id": "ring_pushup",
       "level": "Level 6",
-      "title": "Rings Pushups",
+      "title": "Rings Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "jbQyi9xshOU",
+      "videoId": "bodyweight_fitness_rings_pushup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise40",
-      "id": "rings_turned_out_pushup",
       "level": "Level 7",
       "title": "Rings Turned Out Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "MrlyEIpe0LI",
+      "videoId": "bodyweight_fitness_rings_turned_out_pushup",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise41",
-      "id": "pseudo_planche_pushup",
       "level": "Level 8",
       "title": "Rings Turned Out PPPU",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "-kwe1EOiWMY",
+      "videoId": "bodyweight_fitness_rings_turned_out_pppu",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise42",
-      "id": "pseudo_planche",
       "level": "Level 5-8",
-      "title": "Pseudo Planche Push Ups",
+      "title": "Pseudo Planche Pushup",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "Cdmg0CfMZeo",
+      "videoId": "bodyweight_fitness_pseudo_planche_pushup",
       "defaultSet": "weighted"
     },
     {
@@ -523,82 +532,82 @@
     },
     {
       "exerciseId": "exercise43",
-      "id": "vertical_row",
       "level": "Level 1",
       "title": "Vertical Row",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "e5fdh9_kH_Y",
+      "videoId": "bodyweight_fitness_vertical_row",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise44",
-      "id": "incline_row",
       "level": "Level 2",
       "title": "Incline Row",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "1G28qN9FCKE",
+      "videoId": "bodyweight_fitness_incline_row",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise45",
-      "id": "horizontal_row",
       "level": "Level 3",
       "title": "Horizontal Row",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "dvkIaarnf0g",
+      "videoId": "bodyweight_fitness_horizontal_row",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise46",
-      "id": "wide_row",
       "level": "Level 4",
       "title": "Wide Row",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "1yMRvsuk9Xg",
+      "videoId": "bodyweight_fitness_wide_row",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise47",
-      "id": "tuck_front_lever",
       "level": "Level 5",
       "title": "Tuck Front Lever",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "tiST0765Sfo",
+      "videoId": "bodyweight_fitness_tuck_front_lever",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise48",
-      "id": "tuck_ice_cream_maker",
       "level": "Level 6",
       "title": "Tuck Ice Cream Maker",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "AszLwoAvLKg",
+      "videoId": "bodyweight_fitness_tuck_ice_cream_maker",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise49",
-      "id": "tuck_front_lever_row",
       "level": "Level 7",
       "title": "Tuck Front Lever Row",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "F-xEL0Ot0HA",
+      "videoId": "bodyweight_fitness_tuck_front_lever_row",
       "defaultSet": "weighted"
     },
     {
       "exerciseId": "exercise50",
-      "id": "advanced_tuck_front_lever_row",
       "level": "Level 8",
       "title": "Advanced Tuck Front Lever Row",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "cVdb8oUGKAw",
+      "videoId": "bodyweight_fitness_advanced_tuck_front_lever_row",
       "defaultSet": "weighted"
     }
   ]

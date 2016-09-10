@@ -110,7 +110,7 @@
                             android:textColor="#fff"
                             android:drawablePadding="24dp"
                             app:drawableStart="@drawable/action_log_workout_white"
-                            android:text="Today's Workout" />
+                            android:text="Today's Workout Log" />
                     </RelativeLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>

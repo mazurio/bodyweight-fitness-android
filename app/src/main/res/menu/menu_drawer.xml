@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/action_group_general" android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_menu_home"
+            android:checked="true"
+            android:icon="@drawable/action_home"
+            android:title="Home" />
+
+        <item
+            android:id="@+id/action_menu_workout"
+            android:checked="false"
+            android:icon="@drawable/action_workout"
+            android:title="Workout" />
+
+        <item
+            android:id="@+id/action_menu_workout_log"
+            android:checked="false"
+            android:icon="@drawable/action_calendar"
+            android:title="Workout Log" />
+    </group>
+
+    <group android:id="@+id/action_group_settings" android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_menu_support_developer"
+            android:checked="false"
+            android:title="Support Developer" />
+
+        <item
+            android:id="@+id/action_menu_settings"
+            android:checked="false"
+            android:title="Settings" />
+    </group>
+</menu>

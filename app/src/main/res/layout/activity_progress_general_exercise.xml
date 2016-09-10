@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="16dp">
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/exercise_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pullup"
+        android:textSize="20sp"
+        android:textColor="@color/value_text"/>
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/category_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:text="Strength Work"
+        android:textSize="15sp"
+        android:textColor="@color/label_text"/>
+</LinearLayout>

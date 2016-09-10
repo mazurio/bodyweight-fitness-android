@@ -7,54 +7,51 @@ import android.os.CountDownTimer
 import android.util.AttributeSet
 
 import com.bodyweight.fitness.*
-import com.bodyweight.fitness.extension.*
-import com.bodyweight.fitness.model.repository.RepositoryExercise
-import com.bodyweight.fitness.model.repository.RepositorySet
-import com.bodyweight.fitness.stream.RepositoryStream
+import com.bodyweight.fitness.model.RepositoryRoutine
+import com.bodyweight.fitness.model.RepositorySet
+import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
-import com.bodyweight.fitness.utils.PreferenceUtils
+import com.bodyweight.fitness.utils.Preferences
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_timer.view.*
-import org.joda.time.DateTime
 import java.util.*
 
 object TimerShared {
-    var mSeconds = 60
-    var mCurrentSeconds = mSeconds
-    var mStartedLoggingSeconds = mSeconds
-    var mLoggedSeconds = 0
+    var seconds = 60
+    var currentSeconds = seconds
+    var startedLoggingSeconds = seconds
+    var loggedSeconds = 0
 
-    var mPlaying = false
-    var mRestored = false
+    var isPlaying = false
+    var restored = false
 
-    var mCountDownTimer: CountDownTimer? = null
+    var countDownTimer: CountDownTimer? = null
 }
 
 class TimerPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        Stream.drawerObservable
+        Stream.drawerObservable()
                 .bindToLifecycle(view)
+                .filter { !it.equals(R.id.action_menu_workout) }
                 .subscribe {
                     pauseTimer()
                 }
 
-        getExerciseObservable()
+        RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
-                    TimerShared.mCountDownTimer?.cancel()
+                    TimerShared.countDownTimer?.cancel()
 
-                    if (TimerShared.mRestored) {
-                        TimerShared.mRestored = false
+                    if (TimerShared.restored) {
+                        TimerShared.restored = false
 
-                        restartTimer(TimerShared.mCurrentSeconds, true, TimerShared.mPlaying)
+                        restartTimer(TimerShared.currentSeconds, true, TimerShared.isPlaying)
 
-                        if (TimerShared.mPlaying) {
+                        if (TimerShared.isPlaying) {
                             startTimer()
                         }
                     } else {
@@ -64,7 +61,7 @@ class TimerPresenter : AbstractPresenter() {
     }
 
     override fun saveView() {
-        TimerShared.mRestored = true
+        TimerShared.restored = true
 
         super.saveView()
     }
@@ -72,52 +69,52 @@ class TimerPresenter : AbstractPresenter() {
     fun increaseTimer(extraSeconds: Int) {
         val view = (mView as TimerView)
 
-        if (TimerShared.mPlaying) {
-            TimerShared.mCountDownTimer?.cancel()
+        if (TimerShared.isPlaying) {
+            TimerShared.countDownTimer?.cancel()
 
-            TimerShared.mCurrentSeconds += extraSeconds
-            TimerShared.mCountDownTimer = buildCountDownTimer(TimerShared.mCurrentSeconds, false, true)
+            TimerShared.currentSeconds += extraSeconds
+            TimerShared.countDownTimer = buildCountDownTimer(TimerShared.currentSeconds, false, true)
 
-            view.setMinutes(TimerShared.mCurrentSeconds.formatMinutes())
-            view.setSeconds(TimerShared.mCurrentSeconds.formatSeconds())
+            view.setMinutes(TimerShared.currentSeconds.formatMinutes())
+            view.setSeconds(TimerShared.currentSeconds.formatSeconds())
 
-            TimerShared.mCountDownTimer?.start()
+            TimerShared.countDownTimer?.start()
         } else {
-            TimerShared.mCurrentSeconds += extraSeconds
-            TimerShared.mCountDownTimer = buildCountDownTimer(TimerShared.mCurrentSeconds, false, true)
+            TimerShared.currentSeconds += extraSeconds
+            TimerShared.countDownTimer = buildCountDownTimer(TimerShared.currentSeconds, false, true)
 
-            view.setMinutes(TimerShared.mCurrentSeconds.formatMinutes())
-            view.setSeconds(TimerShared.mCurrentSeconds.formatSeconds())
+            view.setMinutes(TimerShared.currentSeconds.formatMinutes())
+            view.setSeconds(TimerShared.currentSeconds.formatSeconds())
         }
     }
 
     fun pauseTimer() {
         val view = (mView as TimerView)
 
-        TimerShared.mCountDownTimer?.cancel()
+        TimerShared.countDownTimer?.cancel()
 
-        TimerShared.mPlaying = false
-        TimerShared.mCountDownTimer = buildCountDownTimer(TimerShared.mCurrentSeconds, false, false)
+        TimerShared.isPlaying = false
+        TimerShared.countDownTimer = buildCountDownTimer(TimerShared.currentSeconds, false, false)
 
-        view.setMinutes(TimerShared.mCurrentSeconds.formatMinutes())
-        view.setSeconds(TimerShared.mCurrentSeconds.formatSeconds())
+        view.setMinutes(TimerShared.currentSeconds.formatMinutes())
+        view.setSeconds(TimerShared.currentSeconds.formatSeconds())
 
         view.showPaused()
     }
 
     fun startTimer() {
-        TimerShared.mCountDownTimer?.start()
+        TimerShared.countDownTimer?.start()
     }
 
     fun restartTimer(seconds: Int, restored: Boolean, isPlaying: Boolean) {
         val view = (mView as TimerView)
 
-        TimerShared.mCountDownTimer?.cancel()
+        TimerShared.countDownTimer?.cancel()
 
-        TimerShared.mPlaying = isPlaying
-        TimerShared.mCurrentSeconds = seconds
+        TimerShared.isPlaying = isPlaying
+        TimerShared.currentSeconds = seconds
 
-        TimerShared.mCountDownTimer = buildCountDownTimer(seconds, restored, false)
+        TimerShared.countDownTimer = buildCountDownTimer(seconds, restored, false)
 
         view.setMinutes(seconds.formatMinutes())
         view.setSeconds(seconds.formatSeconds())
@@ -128,7 +125,7 @@ class TimerPresenter : AbstractPresenter() {
     fun playSound() {
         val view = (mView as TimerView)
 
-        if (PreferenceUtils.getInstance().playSoundWhenTimerStops()) {
+        if (Preferences.playSoundWhenTimerStops()) {
             val mediaPlayer = MediaPlayer.create(view.context, R.raw.finished)
 
             mediaPlayer.isLooping = false
@@ -142,20 +139,20 @@ class TimerPresenter : AbstractPresenter() {
         pauseTimer()
 
         val timePickerDialog = TimePickerDialog(view.context, { view, minutes, seconds ->
-            TimerShared.mCurrentSeconds = seconds + minutes * 60
+            TimerShared.currentSeconds = seconds + minutes * 60
 
-            if (TimerShared.mCurrentSeconds < 10) {
-                TimerShared.mCurrentSeconds = 10
+            if (TimerShared.currentSeconds < 10) {
+                TimerShared.currentSeconds = 10
             }
 
-            restartTimer(TimerShared.mCurrentSeconds, false, false)
+            restartTimer(TimerShared.currentSeconds, false, false)
 
-            TimerShared.mSeconds = TimerShared.mCurrentSeconds
+            TimerShared.seconds = TimerShared.currentSeconds
 
-            val save = (TimerShared.mSeconds * 1000).toLong()
+            val save = (TimerShared.seconds * 1000).toLong()
 
-            PreferenceUtils.getInstance().setTimerValue(getCurrentExercise().exerciseId, save)
-        }, TimerShared.mCurrentSeconds.formatMinutesAsNumber(), TimerShared.mCurrentSeconds.formatSecondsAsNumber(), true)
+            Preferences.setTimerValue(RoutineStream.exercise.exerciseId, save)
+        }, TimerShared.currentSeconds.formatMinutesAsNumber(), TimerShared.currentSeconds.formatSecondsAsNumber(), true)
 
         timePickerDialog.show()
     }
@@ -165,7 +162,7 @@ class TimerPresenter : AbstractPresenter() {
     }
 
     fun onClickStartStopTimeButton() {
-        if (TimerShared.mPlaying) {
+        if (TimerShared.isPlaying) {
             logTime()
 
             pauseTimer()
@@ -184,13 +181,13 @@ class TimerPresenter : AbstractPresenter() {
         val view = (mView as TimerView)
 
         if (increaseTimer) {
-            TimerShared.mLoggedSeconds += 5
+            TimerShared.loggedSeconds += 5
         } else {
             if (restored) {
-                TimerShared.mLoggedSeconds = TimerShared.mStartedLoggingSeconds
+                TimerShared.loggedSeconds = TimerShared.startedLoggingSeconds
             } else {
-                TimerShared.mStartedLoggingSeconds = seconds
-                TimerShared.mLoggedSeconds = seconds
+                TimerShared.startedLoggingSeconds = seconds
+                TimerShared.loggedSeconds = seconds
             }
         }
 
@@ -198,8 +195,8 @@ class TimerPresenter : AbstractPresenter() {
             override fun onTick(millisUntilFinished: Long) {
                 val timerSeconds = millisUntilFinished.toInt() / 1000
 
-                TimerShared.mPlaying = true
-                TimerShared.mCurrentSeconds = timerSeconds
+                TimerShared.isPlaying = true
+                TimerShared.currentSeconds = timerSeconds
 
                 view.setMinutes(timerSeconds.formatMinutes())
                 view.setSeconds(timerSeconds.formatSeconds())
@@ -218,14 +215,12 @@ class TimerPresenter : AbstractPresenter() {
     }
 
     fun getSeconds(): Int {
-        return (PreferenceUtils.getInstance()
-                .getTimerValueForExercise(getCurrentExercise().exerciseId, 60 * 1000) / 1000
-                ).toInt()
+        return (Preferences.getTimerValueForExercise(RoutineStream.exercise.exerciseId, 60 * 1000) / 1000).toInt()
     }
 
     fun logTime() {
-        if (PreferenceUtils.getInstance().automaticallyLogWorkoutTime() && getCurrentExercise().isTimedSet) {
-            val loggedSeconds = TimerShared.mLoggedSeconds - TimerShared.mCurrentSeconds
+        if (Preferences.automaticallyLogWorkoutTime() && RoutineStream.exercise.isTimedSet) {
+            val loggedSeconds = TimerShared.loggedSeconds - TimerShared.currentSeconds
 
             if (loggedSeconds > 0) {
                 if (logIntoRealm(loggedSeconds)) {
@@ -236,71 +231,51 @@ class TimerPresenter : AbstractPresenter() {
     }
 
     private fun logIntoRealm(logSeconds: Int): Boolean {
-        // getRepositoryRoutineForToday method - begins realm transaction.
-        val repositoryRoutine = RepositoryStream.getInstance().repositoryRoutineForToday
-        var mRepositoryExercise: RepositoryExercise? = null
+        val realm = Repository.realm
+        val repositoryRoutine = Repository.repositoryRoutineForToday
 
-        val realm = RepositoryStream.getInstance().realm
-        val exercise = RoutineStream.getInstance().exercise
+        var isLogged: Boolean = false
 
-        realm.beginTransaction()
-        for (repositoryExercise in repositoryRoutine.exercises) {
-            if (repositoryExercise.title == exercise.title) {
-                mRepositoryExercise = repositoryExercise
+        realm.executeTransaction {
+            repositoryRoutine.exercises
+                    .filter { it.exerciseId == RoutineStream.exercise.exerciseId }
+                    .firstOrNull()?.let {
 
-                break
-            }
-        }
+                val numberOfSets = it.sets.size
+                if (numberOfSets < Constants.maximumNumberOfSets) {
+                    val firstSet = it.sets.first()
 
-        if (mRepositoryExercise != null) {
-            // if there is already a set which is timed and has 0 seconds then overwrite the values.
-            // otherwise create new one.
+                    if (numberOfSets == 1 && firstSet.isTimed && firstSet.seconds == 0) {
+                        if (firstSet.isTimed && firstSet.seconds == 0) {
+                            firstSet.seconds = logSeconds
+                        }
+                    } else {
+                        val repositorySet = realm.createObject(RepositorySet::class.java)
 
-            val numberOfSets = mRepositoryExercise.sets.size
+                        repositorySet.id = "Set-" + UUID.randomUUID().toString()
+                        repositorySet.isTimed = true
+                        repositorySet.seconds = logSeconds
+                        repositorySet.weight = 0.0
+                        repositorySet.reps = 0
 
-            if (numberOfSets >= Constants.MAXIMUM_NUMBER_OF_SETS) {
-                realm.cancelTransaction()
+                        repositorySet.exercise = it
 
-                return false
-            }
+                        it.sets.add(repositorySet)
+                    }
 
-            if (numberOfSets == 1 && mRepositoryExercise.sets[0].isTimed && mRepositoryExercise.sets[0].seconds == 0) {
-                val firstSet = mRepositoryExercise.sets[0]
+                    RepositoryRoutine.setLastUpdatedTime(repositoryRoutine, isNestedTransaction = true)
 
-                if (firstSet.isTimed && firstSet.seconds == 0) {
-                    firstSet.seconds = logSeconds
+                    isLogged = true
                 }
-            } else {
-                val repositorySet = realm.createObject(RepositorySet::class.java)
-
-                repositorySet.id = "Set-" + UUID.randomUUID().toString()
-                repositorySet.setIsTimed(true)
-                repositorySet.seconds = logSeconds
-                repositorySet.weight = 0.0
-                repositorySet.reps = 0
-
-                repositorySet.exercise = mRepositoryExercise
-
-                mRepositoryExercise.sets.add(repositorySet)
             }
-
-            // TODO: Unit test the fact that lastUpdatedTime is changed when logging sets from main UI.
-            repositoryRoutine.lastUpdatedTime = DateTime().toDate()
-
-            realm.copyToRealmOrUpdate(repositoryRoutine)
-            realm.commitTransaction()
-
-            return true
-        } else {
-            realm.cancelTransaction()
-
-            return false
         }
+
+        return isLogged
     }
 }
 
 open class TimerView : AbstractView {
-    override var mPresenter: AbstractPresenter = TimerPresenter()
+    override var presenter: AbstractPresenter = TimerPresenter()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -309,15 +284,13 @@ open class TimerView : AbstractView {
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        val presenter = (mPresenter as TimerPresenter)
+        val presenter = (presenter as TimerPresenter)
 
         timer_layout.setOnClickListener { presenter.onClickTimeLayout() }
         increase_timer_button.setOnClickListener { presenter.onClickIncreaseTimeButton() }
         start_stop_timer_button.setOnClickListener { presenter.onClickStartStopTimeButton() }
         restart_timer_button.setOnClickListener { presenter.onClickRestartTimeButton() }
     }
-
-    override fun onCreateView() { }
 
     fun setMinutes(text: String) {
         timer_minutes.text = text

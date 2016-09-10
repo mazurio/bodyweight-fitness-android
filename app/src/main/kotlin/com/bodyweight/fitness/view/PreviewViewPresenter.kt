@@ -1,51 +1,45 @@
 package com.bodyweight.fitness.view
 
 import android.content.Context
+import android.net.Uri
 import android.util.AttributeSet
-import com.bodyweight.fitness.extension.debug
-import com.bodyweight.fitness.model.Exercise
 
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget
+import com.bodyweight.fitness.setInvisible
+import com.bodyweight.fitness.setVisible
+
+import com.bodyweight.fitness.stream.RoutineStream
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
-import kotlinx.android.synthetic.main.view_preview.view.*
-import rx.Subscriber
+import kotlinx.android.synthetic.main.view_workout.view.*
 
 class PreviewPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        getExerciseObservable()
-                .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
-                .subscribe(object: Subscriber<Exercise>(){
-                    override fun onCompleted() {}
+        RoutineStream.exerciseObservable().bindToLifecycle(view).subscribe {
+            if (it.videoId != "") {
+                view.video_view.setVisible()
 
-                    override fun onError(e: Throwable) {
-                        error("Glide Exception = " + e.message)
-                    }
+                val identifier = view.context.resources.getIdentifier(it.videoId, "raw", view.context.packageName)
+                val videoUri = Uri.parse("android.resource://" + view.context.packageName + "/" + identifier);
 
-                    override fun onNext(it: Exercise) {
-                        val imageViewTarget = GlideDrawableImageViewTarget(view.image_view)
-                        val identifier = view.context.resources.getIdentifier(it.id, "drawable", view.context.packageName)
+                view.video_view.setVideoURI(videoUri);
+                view.video_view.setOnPreparedListener {
+                    it.isLooping = true
 
-                        Glide.with(view.context)
-                                .load(identifier)
-                                .crossFade()
-                                .into(imageViewTarget)
-                    }
-                })
+                    view.video_view.start()
+                }
+            } else {
+                view.video_view.setInvisible()
+            }
+        }
     }
 }
 
 open class PreviewView : AbstractView {
-    override var mPresenter: AbstractPresenter = PreviewPresenter()
+    override var presenter: AbstractPresenter = PreviewPresenter()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-
-    override fun onCreateView() {}
 }

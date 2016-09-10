@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <item android:id="@+id/action_add_set"
-        android:title="Add Set"
+    <item android:id="@+id/action_today"
+        android:title="@string/action_today"
+        android:icon="@drawable/action_today"
         android:orderInCategory="10"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/action_add_timed_set"
-        android:title="Add Timed Set"
+    <item android:id="@+id/action_export"
+        android:title="@string/action_export"
         android:orderInCategory="20"
-        app:showAsAction="never" />
-
-    <item android:id="@+id/action_remove_last_set"
-        android:title="Remove Last Set"
-        android:orderInCategory="30"
         app:showAsAction="never" />
 </menu>

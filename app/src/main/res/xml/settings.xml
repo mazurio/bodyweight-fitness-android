@@ -36,7 +36,9 @@
             android:title="Frequently Asked Questions"
             android:summary="/r/bodyweightfitness">
 
-            <intent android:action="android.intent.action.VIEW" android:data="http://www.reddit.com/r/bodyweightfitness/wiki/faq" />
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://www.reddit.com/r/bodyweightfitness/wiki/faq" />
         </Preference>
     </PreferenceCategory>
 
@@ -47,7 +49,31 @@
             android:title="Damian Mazurkiewicz"
             android:summary="github.com/mazurio">
 
-            <intent android:action="android.intent.action.VIEW" android:data="https://github.com/mazurio" />
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/mazurio" />
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Videos by">
+
+        <Preference
+            android:title="Nick"
+            android:summary="www.nick-e.com">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://www.nick-e.com/contact/" />
+        </Preference>
+
+        <Preference
+            android:title="Antranik"
+            android:summary="www.antranik.org">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://antranik.org/" />
         </Preference>
     </PreferenceCategory>
 

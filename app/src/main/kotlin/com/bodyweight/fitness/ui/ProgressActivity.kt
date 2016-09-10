@@ -7,17 +7,18 @@ import android.view.MenuItem
 
 import com.bodyweight.fitness.Constants
 import com.bodyweight.fitness.adapter.ProgressPagerAdapter
-import com.bodyweight.fitness.stream.DialogType
-import com.bodyweight.fitness.stream.RepositoryStream
+import com.bodyweight.fitness.repository.Repository
 
 import org.joda.time.DateTime
 
 import java.util.Locale
 
 import com.bodyweight.fitness.R
-import com.bodyweight.fitness.model.repository.RepositoryRoutine
+import com.bodyweight.fitness.dialog.LogWorkoutDialog
+import com.bodyweight.fitness.model.DialogType
+import com.bodyweight.fitness.model.RepositoryRoutine
+import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.stream.UiEvent
-import com.bodyweight.fitness.view.dialog.LogWorkoutDialog
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
@@ -26,20 +27,23 @@ import kotlinx.android.synthetic.main.activity_progress.*
 
 class ProgressActivity : RxAppCompatActivity() {
     val primaryKeyRoutineId: String by lazy {
-        intent.getStringExtra(Constants.PRIMARY_KEY_ROUTINE_ID)
+        intent.getStringExtra(Constants.primaryKeyRoutineId)
+    }
+
+    val repositoryRoutine: RepositoryRoutine by lazy {
+        Repository.realm.where(RepositoryRoutine::class.java)
+                .equalTo("id", primaryKeyRoutineId)
+                .findFirst()
+    }
+
+    val progressPagerAdapter: ProgressPagerAdapter by lazy {
+        ProgressPagerAdapter(repositoryRoutine)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_progress)
-
-        val realm = RepositoryStream.getInstance().realm
-        val repositoryRoutine = realm.where(RepositoryRoutine::class.java)
-                .equalTo("id", primaryKeyRoutineId)
-                .findFirst()
-
-        val progressPagerAdapter = ProgressPagerAdapter(repositoryRoutine)
 
         view_progress_pager.offscreenPageLimit = 4
         view_progress_pager.adapter = progressPagerAdapter
@@ -77,7 +81,7 @@ class ProgressActivity : RxAppCompatActivity() {
 
         UiEvent.dialogObservable
                 .bindToLifecycle(this)
-                .filter { it.dialogType == DialogType.LogWorkout }
+                .filter { it.dialogType == DialogType.ProgressActivityLogWorkout }
                 .subscribe { dialog ->
                     val bundle = Bundle()
                     bundle.putString(Constants.primaryKeyRoutineId, primaryKeyRoutineId)
@@ -87,6 +91,12 @@ class ProgressActivity : RxAppCompatActivity() {
                     logWorkoutDialog.arguments = bundle
 
                     logWorkoutDialog.show(supportFragmentManager, "dialog")
+                }
+
+        Stream.repositoryObservable()
+                .bindToLifecycle(this)
+                .subscribe {
+                    progressPagerAdapter.onRepositoryUpdated()
                 }
     }
 

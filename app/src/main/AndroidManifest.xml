@@ -18,6 +18,21 @@
         android:theme="@style/AppTheme"
         android:name=".App">
 
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.bodyweight.fitness.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+
+        <activity
+            android:name=".ui.IntroductionActivity"
+            android:theme="@style/FullscreenTheme" />
+
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name">
@@ -48,6 +63,16 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".ui.ProgressExerciseActivity"
+            android:parentActivityName=".ui.ProgressExerciseActivity"
+            android:theme="@style/AppTheme.Activity.Progress">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.ProgressExerciseActivity" />
         </activity>
 
         <activity

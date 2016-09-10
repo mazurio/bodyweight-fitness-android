@@ -2,11 +2,17 @@ package com.bodyweight.fitness.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
+import android.widget.Adapter
+import android.widget.AdapterView
+import android.widget.Toast
 
 import com.bodyweight.fitness.R
-import com.bodyweight.fitness.extension.debug
+import com.bodyweight.fitness.adapter.ToolbarSpinnerAdapter
 import com.bodyweight.fitness.model.CalendarDay
 import com.bodyweight.fitness.model.Exercise
+import com.bodyweight.fitness.setGone
+import com.bodyweight.fitness.setVisible
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
 
@@ -17,42 +23,32 @@ import org.joda.time.DateTime
 
 import java.util.*
 
-object ToolbarPresenterState {
-    var id: Int = R.id.action_menu_home
-}
-
 class ToolbarPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        getExerciseObservable()
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
+        RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
-                .filter { ToolbarPresenterState.id.equals(R.id.action_menu_home) }
+                .filter { Stream.currentDrawerId.equals(R.id.action_menu_workout) }
                 .subscribe {
-                    setToolbarForHome(it)
+                    setToolbarForWorkout(it)
                 }
 
-        Stream.calendarDayObservable
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
+        Stream.calendarDayObservable()
                 .bindToLifecycle(view)
-                .filter { ToolbarPresenterState.id.equals(R.id.action_menu_workout_log) }
+                .filter { Stream.currentDrawerId.equals(R.id.action_menu_workout_log) }
                 .subscribe {
                     setToolbarForWorkoutLog(it)
                 }
 
-        Stream.drawerObservable
+        Stream.drawerObservable()
                 .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .filter {
-                    it.equals(R.id.action_menu_home) || it.equals(R.id.action_menu_workout_log)
+                    it.equals(R.id.action_menu_home)
+                            || it.equals(R.id.action_menu_workout)
+                            || it.equals(R.id.action_menu_workout_log)
                 }
                 .subscribe {
-                    ToolbarPresenterState.id = it
-
                     setToolbar()
                 }
     }
@@ -64,25 +60,67 @@ class ToolbarPresenter : AbstractPresenter() {
     }
 
     fun setToolbar() {
-        when (ToolbarPresenterState.id) {
-            R.id.action_menu_home ->
-                setToolbarForHome(RoutineStream.getInstance().exercise)
-            R.id.action_menu_workout_log ->
+        when (Stream.currentDrawerId) {
+            R.id.action_menu_home -> {
+                setToolbarForHome()
+            }
+
+            R.id.action_menu_workout -> {
+                setToolbarForWorkout(RoutineStream.exercise)
+            }
+
+            R.id.action_menu_workout_log -> {
                 setToolbarForWorkoutLog(Stream.currentCalendarDay)
+            }
         }
     }
 
-    fun setToolbarForHome(exercise: Exercise) {
+    private fun setToolbarForHome() {
+        val toolbarView: ToolbarView = (mView as ToolbarView)
+
+        val routine = RoutineStream.routine
+
+        toolbarView.setSpinner(routine.title, routine.subtitle)
+
+        var isAdapterCreated = false
+        val spinnerAdapter = ToolbarSpinnerAdapter()
+
+        toolbarView.toolbar_spinner.adapter = spinnerAdapter
+        toolbarView.toolbar_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+                if (isAdapterCreated) {
+                    val spinnerRoutine = spinnerAdapter.routines[pos]
+
+                    RoutineStream.setRoutine(spinnerRoutine)
+
+                    toolbarView.setSpinner(spinnerRoutine.title, spinnerRoutine.subtitle)
+
+                    view?.let {
+                        Toast.makeText(it.context,
+                                "Switched routine to ${spinnerRoutine.title}",
+                                Toast.LENGTH_LONG
+                        ).show()
+                    }
+                } else {
+                    isAdapterCreated = true
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
+
+            }
+        }
+    }
+
+    private fun setToolbarForWorkout(exercise: Exercise) {
         val view: ToolbarView = (mView as ToolbarView)
 
-        view.inflateHomeMenu()
-
         view.setTitle(exercise.title)
-        view.setSubtitle(exercise.section.title)
+        view.setSubtitle(exercise.section!!.title)
         view.setDescription(exercise.description)
     }
 
-    fun setToolbarForWorkoutLog(calendarDay: CalendarDay?) {
+    private fun setToolbarForWorkoutLog(calendarDay: CalendarDay?) {
         if (calendarDay == null) {
             setDateTimeSingleTitle(DateTime())
         } else {
@@ -93,47 +131,54 @@ class ToolbarPresenter : AbstractPresenter() {
     private fun setDateTimeSingleTitle(dateTime: DateTime) {
         val view: ToolbarView = (mView as ToolbarView)
 
-        view.inflateWorkoutLogMenu()
         view.setSingleTitle(dateTime.toString("dd MMMM, YYYY", Locale.ENGLISH))
     }
 }
 
 class ToolbarView : AbstractView {
-    override var mPresenter: AbstractPresenter = ToolbarPresenter()
+    override var presenter: AbstractPresenter = ToolbarPresenter()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    override fun onCreateView() {}
+    fun setSpinner(title: String, subtitle: String) {
+        toolbar_spinner_layout.setVisible()
+        toolbar_layout.setGone()
 
-    fun inflateHomeMenu() {
-        toolbar.menu.clear()
-        toolbar.inflateMenu(R.menu.home)
-    }
+        toolbar_spinner_title.text = title
+        toolbar_spinner_subtitle.text = subtitle
 
-    fun inflateWorkoutLogMenu() {
-        toolbar.menu.clear()
-        toolbar.inflateMenu(R.menu.calendar)
+        toolbar.title = ""
+        toolbar.subtitle = ""
     }
 
     fun setSingleTitle(text: String) {
-        toolbar_layout.visibility = GONE
+        toolbar_spinner_layout.setGone()
+        toolbar_layout.setGone()
+
         toolbar.title = text
+        toolbar.subtitle = ""
     }
 
     fun setTitle(text: String) {
-        toolbar_layout.visibility = VISIBLE
+        toolbar_spinner_layout.setGone()
+        toolbar_layout.setVisible()
+
         toolbar_exercise_title.text = text
     }
 
     fun setSubtitle(text: String) {
-        toolbar_layout.visibility = VISIBLE
+        toolbar_spinner_layout.setGone()
+        toolbar_layout.setVisible()
+
         toolbar_section_title.text = text
     }
 
     fun setDescription(text: String) {
-        toolbar_layout.visibility = VISIBLE
+        toolbar_spinner_layout.setGone()
+        toolbar_layout.setVisible()
+
         toolbar_exercise_description.text = text
     }
 }

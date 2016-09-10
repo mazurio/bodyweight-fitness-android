@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -10,42 +12,69 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        app:cardBackgroundColor="#FFFFFF"
-        app:contentPadding="0dp"
-        app:contentPaddingTop="0dp"
-        app:contentPaddingBottom="0dp"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="4dp">
+        android:layout_margin="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:theme="@style/AppTheme.Progress.Card.Toolbar"/>
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="8dp"
+                android:orientation="vertical">
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/exercise_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pullup"
+                    android:textSize="20sp"
+                    android:textColor="@color/value_text"
+                    app:typeface="roboto_regular"/>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/exercise_summary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="4dp"
+                    android:text="39 Sets, 945 Reps"
+                    android:textSize="15sp"
+                    android:textColor="@color/label_text"
+                    app:typeface="roboto_regular"/>
+
+                <LinearLayout
+                    android:id="@+id/exercise_sets"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:orientation="vertical" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:paddingLeft="8dp"
+                android:paddingBottom="8dp">
 
                 <Button
-                    android:id="@+id/view_button"
+                    android:id="@+id/full_report_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Full Report"
                     style="@style/Widget.AppCompat.Button.Borderless"/>
+
+                <Button
+                    android:id="@+id/edit_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edit"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

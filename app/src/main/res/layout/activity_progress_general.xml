@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bodyweight.fitness.view.progress.ProgressGeneralView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/activity_background">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@color/primary" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="@color/card_background">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:id="@+id/start_time_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="10:20"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/value_text"/>
+
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:id="@+id/start_time_label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="4dp"
+                                    android:text="Start Time"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/label_text"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:id="@+id/end_time_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="11:25"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/value_text"/>
+
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:id="@+id/end_time_label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="4dp"
+                                    android:text="End Time"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/label_text"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:orientation="vertical">
+
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:id="@+id/workout_length_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="1h 5m"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/value_text"/>
+
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:id="@+id/workout_length_label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="4dp"
+                                    android:text="Workout Length"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/label_text"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingBottom="8dp"
+                    android:textColor="@color/label_text"
+                    android:textSize="16sp"
+                    android:text="Today's Progress"
+                    app:typeface="roboto_regular"/>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="@color/card_background">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:id="@+id/general_completed_exercises_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="10 out of 20"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/value_text"/>
+
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:id="@+id/general_completed_exercises_label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="4dp"
+                                    android:text="Completed Exercises"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/label_text"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:orientation="vertical">
+
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:id="@+id/general_completion_rate_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="50%"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/value_text"/>
+
+                                <com.devspark.robototextview.widget.RobotoTextView
+                                    android:id="@+id/general_completion_rate_label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="4dp"
+                                    android:text="Completion Rate"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/label_text"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/category"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="16dp" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingBottom="8dp"
+                    android:textSize="16sp"
+                    android:text="Workout Length History"
+                    android:textColor="@color/label_text"
+                    app:typeface="roboto_regular"/>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="@color/card_background">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.devspark.robototextview.widget.RobotoTextView
+                            android:id="@+id/graph_workout_length_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="Tuesday, 24 May 2016"
+                            android:textSize="20sp"
+                            android:textColor="@color/label_text"
+                            app:typeface="roboto_light"/>
+
+                        <com.devspark.robototextview.widget.RobotoTextView
+                            android:id="@+id/graph_workout_length_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="8dp"
+                            android:text="1h 20m"
+                            android:textSize="18sp"
+                            android:textColor="@color/primary"/>
+
+                        <com.robinhood.spark.SparkView
+                            android:id="@+id/graph_workout_length_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            app:spark_lineColor="@color/primary"/>
+
+                        <android.support.design.widget.TabLayout
+                            android:id="@+id/graph_workout_length_tablayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:tabTextColor="@color/primary"
+                            app:tabIndicatorColor="@color/primary"
+                            app:tabSelectedTextColor="@color/primary"
+                            app:tabMinWidth="50dp"
+                            app:tabMode="fixed"/>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingBottom="8dp"
+                    android:textColor="@color/label_text"
+                    android:textSize="16sp"
+                    android:text="Completion Rate History"
+                    app:typeface="roboto_regular"/>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="@color/card_background">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.devspark.robototextview.widget.RobotoTextView
+                            android:id="@+id/graph_completion_rate_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="Tuesday, 24 May 2016"
+                            android:textSize="20sp"
+                            android:textColor="@color/label_text"
+                            app:typeface="roboto_light"/>
+
+                        <com.devspark.robototextview.widget.RobotoTextView
+                            android:id="@+id/graph_completion_rate_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="8dp"
+                            android:text="85%"
+                            android:textSize="18sp"
+                            android:textColor="@color/primary"/>
+
+                        <com.robinhood.spark.SparkView
+                            android:id="@+id/graph_completion_rate_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            app:spark_lineColor="@color/primary"/>
+
+                        <android.support.design.widget.TabLayout
+                            android:id="@+id/graph_completion_rate_tablayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:tabTextColor="@color/primary"
+                            app:tabIndicatorColor="@color/primary"
+                            app:tabSelectedTextColor="@color/primary"
+                            app:tabMinWidth="50dp"
+                            app:tabMode="fixed"/>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/missed_exercises_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingBottom="8dp"
+                    android:textColor="@color/label_text"
+                    android:textSize="16sp"
+                    android:text="Missed Exercises"
+                    app:typeface="roboto_regular"/>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/missed_exercises_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="@color/card_background">
+
+                    <LinearLayout
+                        android:id="@+id/missed_exercises_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:paddingTop="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp" />
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+        </FrameLayout>
+    </ScrollView>
+</com.bodyweight.fitness.view.progress.ProgressGeneralView>

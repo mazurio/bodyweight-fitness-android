@@ -1,4 +1,8 @@
 <resources>
+	<style name="FullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+		<item name="android:windowTranslucentStatus">true</item>
+	</style>
+
 	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 		<item name="colorAccent">@color/primaryDark</item>
 		<item name="colorPrimary">@color/primary</item>
@@ -22,6 +26,13 @@
 		<item name="android:textColorSecondary">@color/primaryDark</item>
 
 		<item name="actionMenuTextColor">@color/white</item>
+	</style>
+
+	<style name="Widget.MyApp.HeaderBar.Spinner" parent="Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
+		<item name="android:background">?android:selectableItemBackground</item>
+		<item name="android:dropDownSelector">?android:selectableItemBackground</item>
+		<item name="android:divider">@null</item>
+		<item name="android:overlapAnchor">true</item>
 	</style>
 
 	<!-- Transparent Toolbar -->

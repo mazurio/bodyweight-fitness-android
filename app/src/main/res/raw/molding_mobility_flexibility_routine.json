@@ -1,0 +1,190 @@
+{
+  "routineId": "e73593f4-ee17-4b9b-912a-87fa3625f63d",
+  "title": "Molding Mobility",
+  "subtitle": "Flexibility Routine",
+  "routine": [
+    {
+      "categoryId": "30956f1b-c53f-41e0-9ba8-bd5750cb6b2e",
+      "title": "Joint Mobility",
+      "type": "category"
+    },
+    {
+      "sectionId": "3b9d7dcd-dab7-463e-9ca8-521e05214605",
+      "title": "Joint Mobility",
+      "description": "Do all, 5-10 reps each direction",
+      "type": "section",
+      "mode": "all"
+    },
+    {
+      "exerciseId": "d01477a3-4c0b-4dd4-903d-452636545ccf",
+      "title": "3 Plane Neck Movement - 1a",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_3_plane_neck_movement_1",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "e34e89a9-587b-462b-8429-00cf9d733428",
+      "title": "3 Plane Neck Movement - 1b",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_3_plane_neck_movement_2",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "c1bd3f51-ac6e-4182-8896-dc2e193da703",
+      "title": "3 Plane Neck Movement - 1c",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_3_plane_neck_movement_3",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "d695834c-4136-4aab-88aa-f3d96a643f62",
+      "title": "Finger Flexion/Extension",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_finger_flexion_extension",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "267617b8-63ab-4910-9d0b-589d49a5616b",
+      "title": "Wrist Circles",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_wrist_circles",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "a6524b33-3db6-4386-ac13-a8e29ac09d89",
+      "title": "Elbow Circles",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_elbow_circles",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "57ed9df8-d647-41c6-8099-507d198d4cf9",
+      "title": "Large Arm Circles",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_large_arm_circles",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "da5aa28f-18c9-4f1c-813e-496688982e4f",
+      "title": "Circular Shrugs",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_circular_shrugs",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "c138c2aa-278b-47c5-9fca-134be13db8b5",
+      "title": "Torso Twists",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_torso_twists",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "6ed6b3d5-d3eb-49a1-92e3-240b601611ee",
+      "title": "Side Bends",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_side_bends",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "75e4db38-c419-4af5-88dc-4fba5ef06104",
+      "title": "Forward/Back Bends",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_forward_back_bends",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "06824cc0-9a67-41ab-8b07-42f0eaee75f6",
+      "title": "Pelvic Tilts",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_pelvic_tilts",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "3735f61f-9dc2-4f52-91e7-0f7635630355",
+      "title": "Hip Circles",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_hip_circles",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "a66d8d1a-bb7d-4d78-a5e3-8fabeaecb155",
+      "title": "Knee Rotations",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_knee_rotations",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "58f8db3b-82fe-4c93-8ba9-9b9f61650a41",
+      "title": "Ankle Circles",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_ankle_circles",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "d0493496-5b32-4bc0-bc96-4f8a72523f25",
+      "title": "Ankle Tilts",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_ankle_tilts",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "5479ed53-dde5-4029-aa44-bd36c6e9cc5e",
+      "title": "Toe Flexion/Extension",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_toe_flexion_extension",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "d420995b-d9c5-423f-bbc0-a8468112c4ad",
+      "title": "Butt Kicks",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_butt_kicks",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "35c93edc-1e22-468d-b1e4-8bae11dce7ae",
+      "title": "Knee Raises",
+      "description": "1x(5-10)",
+      "type": "exercise",
+      "youTubeId": "RaCkkjEG824",
+      "videoId": "molding_mobility_knee_raises",
+      "defaultSet": "weighted"
+    }
+  ]
+}

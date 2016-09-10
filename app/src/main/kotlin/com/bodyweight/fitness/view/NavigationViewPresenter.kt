@@ -2,9 +2,10 @@ package com.bodyweight.fitness.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 
-import com.bodyweight.fitness.extension.debug
+import com.bodyweight.fitness.setGone
+import com.bodyweight.fitness.setInvisible
+import com.bodyweight.fitness.setVisible
 import com.bodyweight.fitness.stream.RoutineStream
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
@@ -14,35 +15,42 @@ class NavigationPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        getExerciseObservable()
+        RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
-                .doOnSubscribe { debug(this.javaClass.simpleName + " = doOnSubscribe") }
-                .doOnUnsubscribe { debug(this.javaClass.simpleName + " = doOnUnsubscribe") }
                 .subscribe {
                     val view = (view as NavigationView)
 
-                    view.showOrHideButtons(it.isPrevious, it.isNext)
                     view.showTimerOrRepsLogger(it.isTimedSet)
+                    view.showPreviousNextButtons(it.isPrevious, it.isNext)
                 }
     }
 
     override fun restoreView(view: AbstractView) {
         super.restoreView(view)
 
-        (view as NavigationView).showOrHideButtons(getCurrentExercise().isPrevious, getCurrentExercise().isNext)
+        val view = (view as NavigationView)
+
+        val exercise = RoutineStream.exercise
+
+        view.showTimerOrRepsLogger(exercise.isTimedSet)
+        view.showPreviousNextButtons(exercise.isPrevious, exercise.isNext)
     }
 
     fun previousExercise() {
-        RoutineStream.getInstance().setExercise(getCurrentExercise().previous)
+        if (RoutineStream.exercise.isPrevious) {
+            RoutineStream.exercise = RoutineStream.exercise.previous!!
+        }
     }
 
     fun nextExercise() {
-        RoutineStream.getInstance().setExercise(getCurrentExercise().next)
+        if (RoutineStream.exercise.isNext) {
+            RoutineStream.exercise = RoutineStream.exercise.next!!
+        }
     }
 }
 
 open class NavigationView : AbstractView {
-    override var mPresenter: AbstractPresenter = NavigationPresenter()
+    override var presenter: AbstractPresenter = NavigationPresenter()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -50,35 +58,35 @@ open class NavigationView : AbstractView {
 
     override fun onCreateView() {
         prev_exercise_button.setOnClickListener {
-            (mPresenter as NavigationPresenter).previousExercise()
+            (presenter as NavigationPresenter).previousExercise()
         }
 
         next_exercise_button.setOnClickListener {
-            (mPresenter as NavigationPresenter).nextExercise()
-        }
-    }
-
-    fun showOrHideButtons(isPrevious: Boolean, isNext: Boolean) {
-        if (isPrevious) {
-            prev_exercise_button.visibility = View.VISIBLE
-        } else {
-            prev_exercise_button.visibility = View.INVISIBLE
-        }
-
-        if (isNext) {
-            next_exercise_button.visibility = View.VISIBLE
-        } else {
-            next_exercise_button.visibility = View.INVISIBLE
+            (presenter as NavigationPresenter).nextExercise()
         }
     }
 
     fun showTimerOrRepsLogger(isTimed: Boolean) {
         if (isTimed) {
-            timer_view.visibility = View.VISIBLE
-            reps_logger_view.visibility = View.GONE
+            timer_view.setVisible()
+            reps_logger_view.setGone()
         } else {
-            timer_view.visibility = View.GONE
-            reps_logger_view.visibility = View.VISIBLE
+            timer_view.setGone()
+            reps_logger_view.setVisible()
+        }
+    }
+
+    fun showPreviousNextButtons(hasPrevious: Boolean, hasNext: Boolean) {
+        if (hasPrevious) {
+            prev_exercise_button.setVisible()
+        } else {
+            prev_exercise_button.setInvisible()
+        }
+
+        if (hasNext) {
+            next_exercise_button.setVisible()
+        } else {
+            next_exercise_button.setInvisible()
         }
     }
 }
