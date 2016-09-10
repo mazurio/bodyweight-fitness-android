@@ -43,26 +43,6 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
 
         val event = ActivityEvent.DESTROY
 
-        UiEvent.dialogObservable
-                .bindUntilEvent(this, event)
-                .subscribe {
-                    if (it.dialogType === DialogType.MainActivityLogWorkout) {
-                        val bundle = Bundle()
-                        bundle.putString(Constants.exerciseId, it.exerciseId)
-
-                        val logWorkoutDialog = LogWorkoutDialog()
-                        logWorkoutDialog.arguments = bundle
-                        logWorkoutDialog.show(supportFragmentManager, "logWorkoutDialog")
-                    } else if (it.dialogType === DialogType.Progress) {
-                        val bundle = Bundle()
-                        bundle.putString(Constants.exerciseId, it.exerciseId)
-
-                        val progressDialog = ProgressDialog()
-                        progressDialog.arguments = bundle
-                        progressDialog.show(supportFragmentManager, "progressDialog")
-                    }
-                }
-
         Stream.menuObservable
                 .bindUntilEvent(this, event)
                 .filter { it == R.id.action_dashboard }
@@ -103,6 +83,26 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
         super.onResume()
 
         keepScreenOnWhenAppIsRunning()
+
+        UiEvent.dialogObservable
+                .bindUntilEvent(this, ActivityEvent.PAUSE)
+                .subscribe {
+                    if (it.dialogType === DialogType.MainActivityLogWorkout) {
+                        val bundle = Bundle()
+                        bundle.putString(Constants.exerciseId, it.exerciseId)
+
+                        val logWorkoutDialog = LogWorkoutDialog()
+                        logWorkoutDialog.arguments = bundle
+                        logWorkoutDialog.show(supportFragmentManager, "logWorkoutDialog")
+                    } else if (it.dialogType === DialogType.Progress) {
+                        val bundle = Bundle()
+                        bundle.putString(Constants.exerciseId, it.exerciseId)
+
+                        val progressDialog = ProgressDialog()
+                        progressDialog.arguments = bundle
+                        progressDialog.show(supportFragmentManager, "progressDialog")
+                    }
+                }
     }
 
     override fun onStart() {

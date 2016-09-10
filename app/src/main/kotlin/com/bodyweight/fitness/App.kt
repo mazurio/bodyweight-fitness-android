@@ -26,7 +26,7 @@ class App : Application() {
         Glacier.init(applicationContext)
         JodaTimeAndroid.init(applicationContext)
 
-        val config = RateThisApp.Config(5, 45)
+        val config = RateThisApp.Config(3, 15)
         RateThisApp.init(config)
 
         if (!BuildConfig.DEBUG) {
