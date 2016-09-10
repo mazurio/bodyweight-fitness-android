@@ -93,7 +93,7 @@ class HomeViewPresenter : AbstractPresenter() {
         view.setNumberOfWorkoutsLast30Days("$last30Days ${getNumberOfWorkoutsPostfix(last30Days)}")
     }
 
-    fun getStartWorkoutButtonText(repositoryRoutineForTodayExists: Boolean, isRoutineCompleted: Boolean): String {
+    private fun getStartWorkoutButtonText(repositoryRoutineForTodayExists: Boolean, isRoutineCompleted: Boolean): String {
         if (repositoryRoutineForTodayExists) {
             if (isRoutineCompleted) {
                 return "Review Workout"
@@ -105,7 +105,7 @@ class HomeViewPresenter : AbstractPresenter() {
         return "Start Working Out"
     }
 
-    fun getPreviousWorkoutLabel(): String {
+    private fun getPreviousWorkoutLabel(): String {
         val startTime = DateTime().withTimeAtStartOfDay()
 
         val results = Repository.realm.where(RepositoryRoutine::class.java)
@@ -121,20 +121,20 @@ class HomeViewPresenter : AbstractPresenter() {
         return "Never"
     }
 
-    fun getRelativeTime(time: DateTime, currentTime: Long): String {
+    private fun getRelativeTime(time: DateTime, currentTime: Long): String {
         return DateUtils.getRelativeTimeSpanString(
                 time.millis,
                 currentTime,
                 DateUtils.MINUTE_IN_MILLIS).toString()
     }
 
-    fun getNumberOfWorkouts(): Int {
+    private fun getNumberOfWorkouts(): Int {
         return Repository.realm.where(RepositoryRoutine::class.java)
                 .count()
                 .toInt()
     }
 
-    fun getNumberOfWorkouts(days: Int = 7): Int {
+    private fun getNumberOfWorkouts(days: Int = 7): Int {
         val start = DateTime()
                 .withTimeAtStartOfDay()
                 .plusDays(1)
@@ -148,7 +148,7 @@ class HomeViewPresenter : AbstractPresenter() {
                 .toInt()
     }
 
-    fun getNumberOfWorkoutsPostfix(count: Int): String {
+    private fun getNumberOfWorkoutsPostfix(count: Int): String {
         if (count == 1) {
             return "Workout"
         } else {

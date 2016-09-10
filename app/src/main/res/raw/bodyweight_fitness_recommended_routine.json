@@ -334,7 +334,7 @@
     {
       "exerciseId": "exercise26",
       "level": "Level 3",
-      "title": "Ring Dips in L-sit",
+      "title": "Ring Dips in L-Sit",
       "description": "3x(5-8)",
       "type": "exercise",
       "youTubeId": "K-fNLVAstcw",
@@ -380,7 +380,7 @@
     },
     {
       "sectionId": "section8",
-      "title": "L-sit Progression",
+      "title": "L-Sit Progression",
       "description": "3x(10-30s)",
       "type": "section",
       "mode": "levels"
@@ -388,37 +388,41 @@
     {
       "exerciseId": "exercise30",
       "level": "Level 1",
-      "title": "Foot-supported L-sit",
+      "title": "Foot-supported L-Sit",
       "description": "3x(10-30s)",
       "type": "exercise",
       "youTubeId": "IUZJoSP66HI",
+      "videoId": "bodyweight_fitness_foot_supported_l_sit",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise31",
       "level": "Level 2",
-      "title": "One-Leg Foot Supported L-sit",
+      "title": "One-Leg Foot Supported L-Sit",
       "description": "3x(10-30s)",
       "type": "exercise",
       "youTubeId": "IUZJoSP66HI",
+      "videoId": "bodyweight_fitness_one_leg_foot_supported_l_sit",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise32",
       "level": "Level 3",
-      "title": "Tuck L-sit",
+      "title": "Tuck L-Sit",
       "description": "3x(10-30s)",
       "type": "exercise",
       "youTubeId": "IUZJoSP66HI",
+      "videoId": "bodyweight_fitness_tuck_l_sit",
       "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise33",
       "level": "Level 4",
-      "title": "L-sit",
+      "title": "L-Sit",
       "description": "3x(10-30s)",
       "type": "exercise",
       "youTubeId": "ek76IXnE9tE",
+      "videoId": "bodyweight_fitness_l_sit",
       "defaultSet": "timed"
     },
     {
