@@ -29,9 +29,6 @@ object Stream {
     var currentCalendarDay: CalendarDay = CalendarDay()
         private set
 
-    var currentWorkoutViewType: WorkoutViewType by Delegates.notNull()
-        private set
-
     private val menuSubject = PublishSubject.create<Int>()
     private val drawerSubject = PublishSubject.create<Int>()
     private val loggedSecondsSubject = PublishSubject.create<Int>()
@@ -39,8 +36,6 @@ object Stream {
 
     private val calendarPageSubject = PublishSubject.create<Int>()
     private val calendarDaySubject = PublishSubject.create<CalendarDay>()
-
-    private val currentWorkoutViewSubject = PublishSubject.create<WorkoutViewType>()
 
     /**
      * Emits when changes to repository have been made.
@@ -90,11 +85,6 @@ object Stream {
         }
 
         drawerSubject.onNext(drawerMenuItemId)
-    }
-
-    fun setWorkoutView(workoutViewType: WorkoutViewType) {
-        currentWorkoutViewType = workoutViewType
-        currentWorkoutViewSubject.onNext(workoutViewType)
     }
 
     fun setLoggedSeconds(loggedSeconds: Int) {

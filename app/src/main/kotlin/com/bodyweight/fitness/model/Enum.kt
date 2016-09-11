@@ -39,10 +39,6 @@ data class SetReps(val set: Int, val reps: Int)
 data class Dialog(val dialogType: DialogType, val exerciseId: String)
 
 enum class DialogType { MainActivityLogWorkout, ProgressActivityLogWorkout, Progress }
-enum class WorkoutViewType {
-    Timer,
-    RepsLogger
-}
 
 enum class WeightMeasurementUnit constructor(val asString: String) {
     Kg("kg"), Lbs("lbs")
