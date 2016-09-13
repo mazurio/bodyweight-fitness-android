@@ -17,29 +17,11 @@
     },
     {
       "exerciseId": "d01477a3-4c0b-4dd4-903d-452636545ccf",
-      "title": "3 Plane Neck Movement - 1a",
+      "title": "3 Plane Neck Movement",
       "description": "1x(5-10)",
       "type": "exercise",
       "youTubeId": "RaCkkjEG824",
-      "videoId": "molding_mobility_3_plane_neck_movement_1",
-      "defaultSet": "weighted"
-    },
-    {
-      "exerciseId": "e34e89a9-587b-462b-8429-00cf9d733428",
-      "title": "3 Plane Neck Movement - 1b",
-      "description": "1x(5-10)",
-      "type": "exercise",
-      "youTubeId": "RaCkkjEG824",
-      "videoId": "molding_mobility_3_plane_neck_movement_2",
-      "defaultSet": "weighted"
-    },
-    {
-      "exerciseId": "c1bd3f51-ac6e-4182-8896-dc2e193da703",
-      "title": "3 Plane Neck Movement - 1c",
-      "description": "1x(5-10)",
-      "type": "exercise",
-      "youTubeId": "RaCkkjEG824",
-      "videoId": "molding_mobility_3_plane_neck_movement_3",
+      "videoId": "molding_mobility_3_plane_neck_movement",
       "defaultSet": "weighted"
     },
     {
