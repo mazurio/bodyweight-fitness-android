@@ -1,4 +1,4 @@
-package com.bodyweight.fitness.view
+package com.bodyweight.fitness.view.workout
 
 import android.content.Context
 import android.net.Uri
@@ -8,6 +8,8 @@ import com.bodyweight.fitness.setInvisible
 import com.bodyweight.fitness.setVisible
 
 import com.bodyweight.fitness.stream.RoutineStream
+import com.bodyweight.fitness.view.AbstractPresenter
+import com.bodyweight.fitness.view.AbstractView
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_workout.view.*

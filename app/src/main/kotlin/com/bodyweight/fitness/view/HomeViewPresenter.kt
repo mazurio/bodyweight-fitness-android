@@ -193,7 +193,7 @@ open class HomeView : AbstractView {
     }
 
     fun showTodaysWorkoutLogButton() {
-        todays_workout_log.setVisible()
+        todays_workout_log.setGone()
     }
 
     fun hideTodaysWorkoutLogButton() {

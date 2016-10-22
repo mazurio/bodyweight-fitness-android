@@ -63,36 +63,8 @@ class ToolbarPresenter : AbstractPresenter() {
 
         val routine = RoutineStream.routine
 
-        toolbarView.setSpinner(routine.title, routine.subtitle)
-
-        var isAdapterCreated = false
-        val spinnerAdapter = ToolbarSpinnerAdapter()
-
-        toolbarView.toolbar_spinner.adapter = spinnerAdapter
-        toolbarView.toolbar_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
-                if (isAdapterCreated) {
-                    val spinnerRoutine = spinnerAdapter.routines[pos]
-
-                    RoutineStream.setRoutine(spinnerRoutine)
-
-                    toolbarView.setSpinner(spinnerRoutine.title, spinnerRoutine.subtitle)
-
-                    view?.let {
-                        Toast.makeText(it.context,
-                                "Switched routine to ${spinnerRoutine.title}",
-                                Toast.LENGTH_LONG
-                        ).show()
-                    }
-                } else {
-                    isAdapterCreated = true
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
-
-            }
-        }
+        toolbarView.toolbar.title = routine.title
+        toolbarView.toolbar.subtitle = routine.subtitle
     }
 
     private fun setToolbarForWorkoutLog(calendarDay: CalendarDay?) {
@@ -117,19 +89,7 @@ class ToolbarView : AbstractView {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    fun setSpinner(title: String, subtitle: String) {
-        toolbar_spinner_layout.setVisible()
-
-        toolbar_spinner_title.text = title
-        toolbar_spinner_subtitle.text = subtitle
-
-        toolbar.title = ""
-        toolbar.subtitle = ""
-    }
-
     fun setSingleTitle(text: String) {
-        toolbar_spinner_layout.setGone()
-
         toolbar.title = text
         toolbar.subtitle = ""
     }

@@ -15,6 +15,7 @@ import com.bodyweight.fitness.dialog.LogWorkoutDialog
 import com.bodyweight.fitness.dialog.ProgressDialog
 import com.bodyweight.fitness.model.DialogType
 import com.bodyweight.fitness.repository.Repository
+import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.stream.UiEvent
 import com.bodyweight.fitness.utils.Preferences
@@ -48,6 +49,13 @@ class WorkoutActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPrefere
                 .subscribe {
                     startActivity(Intent(this, DashboardActivity::class.java))
                 }
+
+        RoutineStream.exerciseObservable().bindUntilEvent(this, event).subscribe { exercise ->
+            supportActionBar?.let {
+                it.title = exercise.title
+                it.subtitle = exercise.description
+            }
+        }
     }
 
     override fun onResume() {

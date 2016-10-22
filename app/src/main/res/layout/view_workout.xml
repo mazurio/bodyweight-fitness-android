@@ -7,7 +7,7 @@
     <include layout="@layout/view_timer"
         android:id="@+id/view_timer" />
 
-    <com.bodyweight.fitness.view.PreviewView
+    <com.bodyweight.fitness.view.workout.PreviewView
         android:id="@+id/preview_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,5 +20,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"/>
-    </com.bodyweight.fitness.view.PreviewView>
+    </com.bodyweight.fitness.view.workout.PreviewView>
 </RelativeLayout>
