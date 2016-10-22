@@ -45,14 +45,24 @@
         </activity>
 
         <activity
-            android:name=".ui.DashboardActivity"
+            android:name=".ui.WorkoutActivity"
             android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme.Activity.Dashboard"
             android:launchMode="singleTask">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".ui.DashboardActivity"
+            android:parentActivityName=".ui.WorkoutActivity"
+            android:theme="@style/AppTheme.Activity.Dashboard"
+            android:launchMode="singleTask">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.WorkoutActivity" />
         </activity>
 
         <activity

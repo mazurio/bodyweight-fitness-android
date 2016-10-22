@@ -17,11 +17,6 @@ class ContentPresenter : AbstractPresenter() {
 
         Stream.drawerObservable()
                 .bindToLifecycle(view)
-                .filter {
-                    it.equals(R.id.action_menu_home)
-//                            || it.equals(R.id.action_menu_workout)
-                            || it.equals(R.id.action_menu_workout_log)
-                }
                 .subscribe {
                     setContent(it)
                 }
@@ -38,7 +33,6 @@ class ContentPresenter : AbstractPresenter() {
 
         when (id) {
             R.id.action_menu_home -> view.showHome()
-//            R.id.action_menu_workout -> view.showWorkout()
             R.id.action_menu_workout_log -> view.showCalendar()
         }
     }
@@ -53,19 +47,11 @@ open class ContentView : AbstractView {
 
     fun showHome() {
         view_home.setVisible()
-        view_workout.setGone()
-        view_calendar.setGone()
-    }
-
-    fun showWorkout() {
-        view_home.setGone()
-        view_workout.setVisible()
         view_calendar.setGone()
     }
 
     fun showCalendar() {
         view_home.setGone()
-        view_workout.setGone()
         view_calendar.setVisible()
     }
 }

@@ -36,7 +36,6 @@ class TimerPresenter : AbstractPresenter() {
 
         Stream.drawerObservable()
                 .bindToLifecycle(view)
-//                .filter { !it.equals(R.id.action_menu_workout) }
                 .subscribe {
                     pauseTimer()
                 }

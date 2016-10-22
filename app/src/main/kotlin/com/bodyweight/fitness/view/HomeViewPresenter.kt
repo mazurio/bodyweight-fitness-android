@@ -12,6 +12,7 @@ import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.ui.ProgressActivity
+import com.bodyweight.fitness.ui.WorkoutActivity
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
@@ -157,7 +158,7 @@ class HomeViewPresenter : AbstractPresenter() {
     }
 
     fun startWorkout() {
-//        Stream.setDrawer(R.id.action_menu_workout)
+        WorkoutActivity.start(context())
     }
 
     fun todaysWorkoutLog() {

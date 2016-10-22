@@ -24,19 +24,11 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/view_toolbar" />
 
-        <include layout="@layout/view_workout"
-            android:id="@+id/view_workout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/view_toolbar" />
-
         <include layout="@layout/view_calendar"
             android:id="@+id/view_calendar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/view_toolbar"/>
-
-        <include layout="@layout/view_action" />
     </com.bodyweight.fitness.view.ContentView>
 
     <RelativeLayout
