@@ -56,18 +56,18 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
                     invalidateOptionsMenu();
 
                     when (it) {
-                        R.id.action_menu_support_developer -> {
-                            startActivity(Intent(Intent.ACTION_VIEW).apply {
-                                data = Uri.parse(Constants.googlePlayUrl)
-                            })
-                        }
-
-                        R.id.action_menu_settings -> {
-                            startActivity(Intent(applicationContext, SettingsActivity::class.java))
-                        }
+//                        R.id.action_menu_support_developer -> {
+//                            startActivity(Intent(Intent.ACTION_VIEW).apply {
+//                                data = Uri.parse(Constants.googlePlayUrl)
+//                            })
+//                        }
+//
+//                        R.id.action_menu_settings -> {
+//                            startActivity(Intent(applicationContext, SettingsActivity::class.java))
+//                        }
 
                         else -> {
-                            navigation_view.setCheckedItem(it)
+//                            navigation_view.setCheckedItem(it)
                         }
                     }
                 }
@@ -130,7 +130,7 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
         menu?.clear()
 
         when (Stream.currentDrawerId) {
-            R.id.action_menu_workout -> menuInflater.inflate(R.menu.menu_workout, menu)
+//            R.id.action_menu_workout -> menuInflater.inflate(R.menu.menu_workout, menu)
             R.id.action_menu_workout_log -> menuInflater.inflate(R.menu.menu_log_workout, menu)
         }
 
@@ -145,33 +145,8 @@ class MainActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreference
         setSupportActionBar(toolbar)
 
         supportActionBar?.let {
+            it.title = "Bodyweight Fitness"
             it.elevation = 0f
-            it.setHomeButtonEnabled(true)
-            it.setDisplayHomeAsUpEnabled(true)
-        }
-
-        val actionBarDrawerToggle = ActionBarDrawerToggle(
-                this,
-                drawer_layout,
-                toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close)
-
-        drawer_layout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
-        drawer_layout.addDrawerListener(actionBarDrawerToggle)
-
-        actionBarDrawerToggle.syncState()
-
-        navigation_view.setNavigationItemSelectedListener { item ->
-            drawer_layout.closeDrawers()
-
-            Stream.setDrawer(item.itemId)
-
-            if (item.itemId == R.id.action_menu_support_developer || item.itemId == R.id.action_menu_settings) {
-                return@setNavigationItemSelectedListener false
-            } else {
-                return@setNavigationItemSelectedListener true
-            }
         }
     }
 

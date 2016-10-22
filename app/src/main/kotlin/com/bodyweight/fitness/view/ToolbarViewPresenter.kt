@@ -29,7 +29,7 @@ class ToolbarPresenter : AbstractPresenter() {
 
         RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
-                .filter { Stream.currentDrawerId.equals(R.id.action_menu_workout) }
+//                .filter { Stream.currentDrawerId.equals(R.id.action_menu_workout) }
                 .subscribe {
                     setToolbarForWorkout(it)
                 }
@@ -45,7 +45,7 @@ class ToolbarPresenter : AbstractPresenter() {
                 .bindToLifecycle(view)
                 .filter {
                     it.equals(R.id.action_menu_home)
-                            || it.equals(R.id.action_menu_workout)
+//                            || it.equals(R.id.action_menu_workout)
                             || it.equals(R.id.action_menu_workout_log)
                 }
                 .subscribe {
@@ -65,9 +65,9 @@ class ToolbarPresenter : AbstractPresenter() {
                 setToolbarForHome()
             }
 
-            R.id.action_menu_workout -> {
-                setToolbarForWorkout(RoutineStream.exercise)
-            }
+//            R.id.action_menu_workout -> {
+//                setToolbarForWorkout(RoutineStream.exercise)
+//            }
 
             R.id.action_menu_workout_log -> {
                 setToolbarForWorkoutLog(Stream.currentCalendarDay)

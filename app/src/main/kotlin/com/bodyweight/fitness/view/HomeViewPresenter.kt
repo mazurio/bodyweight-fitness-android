@@ -157,7 +157,7 @@ class HomeViewPresenter : AbstractPresenter() {
     }
 
     fun startWorkout() {
-        Stream.setDrawer(R.id.action_menu_workout)
+//        Stream.setDrawer(R.id.action_menu_workout)
     }
 
     fun todaysWorkoutLog() {

@@ -47,15 +47,15 @@ class ActionPresenter : AbstractPresenter() {
                 .bindToLifecycle(view)
                 .filter {
                     it.equals(R.id.action_menu_home)
-                            || it.equals(R.id.action_menu_workout)
+//                            || it.equals(R.id.action_menu_workout)
                             || it.equals(R.id.action_menu_workout_log)
                 }
                 .subscribe {
-                    if (it == R.id.action_menu_workout) {
-                        view.showActionButtons()
-                    } else {
+//                    if (it == R.id.action_menu_workout) {
+//                        view.showActionButtons()
+//                    } else {
                         view.hideActionButtons()
-                    }
+//                    }
                 }
 
         Stream.loggedSecondsObservable
@@ -80,11 +80,11 @@ class ActionPresenter : AbstractPresenter() {
 
         val view = (mView as ActionView)
 
-        if (Stream.currentDrawerId == R.id.action_menu_workout) {
-            view.showActionButtons()
-        } else {
+//        if (Stream.currentDrawerId == R.id.action_menu_workout) {
+//            view.showActionButtons()
+//        } else {
             view.hideActionButtons()
-        }
+//        }
     }
 
     fun logWorkout() {

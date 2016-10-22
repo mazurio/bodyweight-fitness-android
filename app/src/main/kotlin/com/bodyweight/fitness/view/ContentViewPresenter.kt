@@ -19,7 +19,7 @@ class ContentPresenter : AbstractPresenter() {
                 .bindToLifecycle(view)
                 .filter {
                     it.equals(R.id.action_menu_home)
-                            || it.equals(R.id.action_menu_workout)
+//                            || it.equals(R.id.action_menu_workout)
                             || it.equals(R.id.action_menu_workout_log)
                 }
                 .subscribe {
@@ -38,7 +38,7 @@ class ContentPresenter : AbstractPresenter() {
 
         when (id) {
             R.id.action_menu_home -> view.showHome()
-            R.id.action_menu_workout -> view.showWorkout()
+//            R.id.action_menu_workout -> view.showWorkout()
             R.id.action_menu_workout_log -> view.showCalendar()
         }
     }
