@@ -19,6 +19,7 @@ import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
 import kotlinx.android.synthetic.main.view_home.view.*
 import kotlinx.android.synthetic.main.view_home_category.view.*
+import kotlinx.android.synthetic.main.view_home_support.view.*
 
 import org.joda.time.DateTime
 
