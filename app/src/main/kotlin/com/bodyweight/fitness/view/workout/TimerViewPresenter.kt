@@ -36,12 +36,6 @@ class TimerPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        Stream.drawerObservable()
-                .bindToLifecycle(view)
-                .subscribe {
-                    pauseTimer()
-                }
-
         RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)
                 .subscribe {
