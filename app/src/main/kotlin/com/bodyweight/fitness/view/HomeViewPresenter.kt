@@ -181,7 +181,7 @@ class HomeViewPresenter : AbstractPresenter() {
                 Intent.ACTION_SENDTO,
                 Uri.fromParts("mailto", "damian@mazur.io", null)
         ).apply {
-            putExtra(Intent.EXTRA_SUBJECT, "Bodyweight Fitness App - Feedback")
+            putExtra(Intent.EXTRA_SUBJECT, "Bodyweight Fitness App for Android - Feedback")
             putExtra(Intent.EXTRA_TEXT, "")
             putExtra(Intent.EXTRA_EMAIL, "damian@mazur.io")
         }, "Send Email"))
