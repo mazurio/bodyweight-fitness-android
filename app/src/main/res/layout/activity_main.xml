@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/drawer_layout"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="false">
@@ -10,6 +10,8 @@
         android:id="@+id/content_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/bottomBar"
         android:background="@color/primary"
         android:fitsSystemWindows="true">
 
@@ -22,26 +24,27 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/view_toolbar" />
 
-        <include layout="@layout/view_workout"
-            android:id="@+id/view_workout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/view_toolbar" />
-
         <include layout="@layout/view_calendar"
             android:id="@+id/view_calendar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/view_toolbar"/>
 
-        <include layout="@layout/view_action" />
+        <FrameLayout
+            android:id="@+id/view_settings"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/view_toolbar"
+            android:background="@color/activity_background"/>
     </com.bodyweight.fitness.view.ContentView>
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/navigation_view"
-        android:layout_width="300dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/activity_main_header"
-        app:menu="@menu/menu_drawer" />
-</android.support.v4.widget.DrawerLayout>
+    <com.roughike.bottombar.BottomBar
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        app:bb_tabXmlResource="@xml/tabs"
+        app:bb_inActiveTabColor="#BFBFBF"
+        app:bb_activeTabColor="@color/primary"
+        app:bb_showShadow="true" />
+</RelativeLayout>

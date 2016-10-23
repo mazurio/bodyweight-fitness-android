@@ -47,12 +47,12 @@ class ProgressDialog : BottomSheetDialogFragment() {
 
         layout.level_previous_button.setOnClickListener {
             chosenLevel -= 1
-            updateDialog();
+            updateDialog()
         }
 
         layout.level_next_button.setOnClickListener {
             chosenLevel += 1
-            updateDialog();
+            updateDialog()
         }
 
         layout.level_confirm_button.setOnClickListener {
@@ -64,12 +64,12 @@ class ProgressDialog : BottomSheetDialogFragment() {
                 val repositoryRoutine = Repository.repositoryRoutineForToday
 
                 Repository.realm.executeTransaction {
-                    repositoryRoutine.exercises.filter { it.exerciseId == exercise.exerciseId }.firstOrNull()?.let {
-                        it.visible == false
+                    repositoryRoutine.exercises.find { it.exerciseId == exercise.exerciseId }?.let {
+                        it.visible = false
                     }
 
-                    repositoryRoutine.exercises.filter { it.exerciseId == chosenExercise.exerciseId }.firstOrNull()?.let {
-                        it.visible == true
+                    repositoryRoutine.exercises.find { it.exerciseId == chosenExercise.exerciseId }?.let {
+                        it.visible = true
                     }
                 }
             }

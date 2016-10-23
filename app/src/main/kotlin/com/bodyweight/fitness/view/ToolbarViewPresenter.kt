@@ -10,7 +10,6 @@ import android.widget.Toast
 import com.bodyweight.fitness.R
 import com.bodyweight.fitness.adapter.ToolbarSpinnerAdapter
 import com.bodyweight.fitness.model.CalendarDay
-import com.bodyweight.fitness.model.Exercise
 import com.bodyweight.fitness.setGone
 import com.bodyweight.fitness.setVisible
 import com.bodyweight.fitness.stream.RoutineStream
@@ -27,13 +26,6 @@ class ToolbarPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        RoutineStream.exerciseObservable()
-                .bindToLifecycle(view)
-                .filter { Stream.currentDrawerId.equals(R.id.action_menu_workout) }
-                .subscribe {
-                    setToolbarForWorkout(it)
-                }
-
         Stream.calendarDayObservable()
                 .bindToLifecycle(view)
                 .filter { Stream.currentDrawerId.equals(R.id.action_menu_workout_log) }
@@ -43,11 +35,6 @@ class ToolbarPresenter : AbstractPresenter() {
 
         Stream.drawerObservable()
                 .bindToLifecycle(view)
-                .filter {
-                    it.equals(R.id.action_menu_home)
-                            || it.equals(R.id.action_menu_workout)
-                            || it.equals(R.id.action_menu_workout_log)
-                }
                 .subscribe {
                     setToolbar()
                 }
@@ -65,12 +52,12 @@ class ToolbarPresenter : AbstractPresenter() {
                 setToolbarForHome()
             }
 
-            R.id.action_menu_workout -> {
-                setToolbarForWorkout(RoutineStream.exercise)
-            }
-
             R.id.action_menu_workout_log -> {
                 setToolbarForWorkoutLog(Stream.currentCalendarDay)
+            }
+
+            R.id.action_menu_settings -> {
+                setToolbarForSettings()
             }
         }
     }
@@ -112,20 +99,17 @@ class ToolbarPresenter : AbstractPresenter() {
         }
     }
 
-    private fun setToolbarForWorkout(exercise: Exercise) {
-        val view: ToolbarView = (mView as ToolbarView)
-
-        view.setTitle(exercise.title)
-        view.setSubtitle(exercise.section!!.title)
-        view.setDescription(exercise.description)
-    }
-
     private fun setToolbarForWorkoutLog(calendarDay: CalendarDay?) {
         if (calendarDay == null) {
             setDateTimeSingleTitle(DateTime())
         } else {
             setDateTimeSingleTitle(calendarDay.getDate())
         }
+    }
+
+    private fun setToolbarForSettings() {
+        val view: ToolbarView = (mView as ToolbarView)
+        view.setSingleTitle("Settings")
     }
 
     private fun setDateTimeSingleTitle(dateTime: DateTime) {
@@ -144,7 +128,6 @@ class ToolbarView : AbstractView {
 
     fun setSpinner(title: String, subtitle: String) {
         toolbar_spinner_layout.setVisible()
-        toolbar_layout.setGone()
 
         toolbar_spinner_title.text = title
         toolbar_spinner_subtitle.text = subtitle
@@ -155,30 +138,8 @@ class ToolbarView : AbstractView {
 
     fun setSingleTitle(text: String) {
         toolbar_spinner_layout.setGone()
-        toolbar_layout.setGone()
 
         toolbar.title = text
         toolbar.subtitle = ""
-    }
-
-    fun setTitle(text: String) {
-        toolbar_spinner_layout.setGone()
-        toolbar_layout.setVisible()
-
-        toolbar_exercise_title.text = text
-    }
-
-    fun setSubtitle(text: String) {
-        toolbar_spinner_layout.setGone()
-        toolbar_layout.setVisible()
-
-        toolbar_section_title.text = text
-    }
-
-    fun setDescription(text: String) {
-        toolbar_spinner_layout.setGone()
-        toolbar_layout.setVisible()
-
-        toolbar_exercise_description.text = text
     }
 }

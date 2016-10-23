@@ -79,10 +79,7 @@ object Stream {
     }
 
     fun setDrawer(drawerMenuItemId: Int) {
-        if (!drawerMenuItemId.equals(R.id.action_menu_support_developer)
-                && !drawerMenuItemId.equals(R.id.action_menu_settings)) {
-            currentDrawerId = drawerMenuItemId
-        }
+        currentDrawerId = drawerMenuItemId
 
         drawerSubject.onNext(drawerMenuItemId)
     }

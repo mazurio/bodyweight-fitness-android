@@ -45,9 +45,8 @@
         </activity>
 
         <activity
-            android:name=".ui.DashboardActivity"
+            android:name=".ui.WorkoutActivity"
             android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme.Activity.Dashboard"
             android:launchMode="singleTask">
 
             <meta-data
@@ -56,9 +55,18 @@
         </activity>
 
         <activity
+            android:name=".ui.DashboardActivity"
+            android:parentActivityName=".ui.WorkoutActivity"
+            android:launchMode="singleTask">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.WorkoutActivity" />
+        </activity>
+
+        <activity
             android:name=".ui.ProgressActivity"
-            android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme.Activity.Progress">
+            android:parentActivityName=".ui.MainActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -67,22 +75,11 @@
 
         <activity
             android:name=".ui.ProgressExerciseActivity"
-            android:parentActivityName=".ui.ProgressExerciseActivity"
-            android:theme="@style/AppTheme.Activity.Progress">
+            android:parentActivityName=".ui.ProgressExerciseActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.ProgressExerciseActivity" />
-        </activity>
-
-        <activity
-            android:name=".ui.SettingsActivity"
-            android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme.Activity">
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" />
         </activity>
 
         <meta-data

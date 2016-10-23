@@ -2,6 +2,7 @@ package com.bodyweight.fitness.view
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.text.format.DateUtils
 import android.util.AttributeSet
 
@@ -12,11 +13,13 @@ import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.ui.ProgressActivity
+import com.bodyweight.fitness.ui.WorkoutActivity
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 
 import kotlinx.android.synthetic.main.view_home.view.*
 import kotlinx.android.synthetic.main.view_home_category.view.*
+import kotlinx.android.synthetic.main.view_home_support.view.*
 
 import org.joda.time.DateTime
 
@@ -102,7 +105,7 @@ class HomeViewPresenter : AbstractPresenter() {
             return "Go to Workout"
         }
 
-        return "Start Working Out"
+        return "Start Workout"
     }
 
     private fun getPreviousWorkoutLabel(): String {
@@ -157,7 +160,7 @@ class HomeViewPresenter : AbstractPresenter() {
     }
 
     fun startWorkout() {
-        Stream.setDrawer(R.id.action_menu_workout)
+        WorkoutActivity.start(context())
     }
 
     fun todaysWorkoutLog() {
@@ -165,6 +168,23 @@ class HomeViewPresenter : AbstractPresenter() {
 
         context().startActivity(Intent(context(), ProgressActivity::class.java)
                 .putExtra(Constants.primaryKeyRoutineId, routineId))
+    }
+
+    fun supportDeveloper() {
+        context().startActivity(Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(Constants.googlePlayUrl)
+        })
+    }
+
+    fun sendEmail() {
+        context().startActivity(Intent.createChooser(Intent(
+                Intent.ACTION_SENDTO,
+                Uri.fromParts("mailto", "damian@mazur.io", null)
+        ).apply {
+            putExtra(Intent.EXTRA_SUBJECT, "Bodyweight Fitness App for Android - Feedback")
+            putExtra(Intent.EXTRA_TEXT, "")
+            putExtra(Intent.EXTRA_EMAIL, "damian@mazur.io")
+        }, "Send Email"))
     }
 }
 
@@ -184,6 +204,14 @@ open class HomeView : AbstractView {
 
         todays_workout_log.setOnClickListener {
             (presenter as HomeViewPresenter).todaysWorkoutLog()
+        }
+
+        support_developer.setOnClickListener {
+            (presenter as HomeViewPresenter).supportDeveloper()
+        }
+
+        send_email.setOnClickListener {
+            (presenter as HomeViewPresenter).sendEmail()
         }
     }
 

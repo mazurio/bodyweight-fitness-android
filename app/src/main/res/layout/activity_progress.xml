@@ -1,37 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/progress_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F7">
+    android:fitsSystemWindows="false"
+    android:background="@color/primary">
 
-    <android.support.design.widget.AppBarLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:elevation="0dp">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:fitsSystemWindows="true">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/AppTheme.Progress.Toolbar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tablayout"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/barlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabTextColor="@color/primaryDark"
-            app:tabIndicatorColor="@color/primaryDark"
-            app:tabSelectedTextColor="@color/primaryDark"
-            app:tabMinWidth="100dp"
-            app:tabMode="scrollable"/>
-    </android.support.design.widget.AppBarLayout>
+            android:layout_alignParentTop="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:elevation="0dp">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_progress_pager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/AppTheme.Toolbar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tablayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabTextColor="@color/primaryDark"
+                app:tabIndicatorColor="@color/primaryDark"
+                app:tabSelectedTextColor="@color/primaryDark"
+                app:tabMinWidth="100dp"
+                app:tabMode="scrollable"/>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_progress_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/barlayout"
+            android:layout_alignParentBottom="true"
+            android:background="#F5F5F7"/>
+    </RelativeLayout>
+</RelativeLayout>

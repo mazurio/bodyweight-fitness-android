@@ -9,90 +9,20 @@
 		<item name="colorPrimaryDark">@color/primaryDark</item>
 
 		<item name="android:windowBackground">@color/window_background</item>
-		<item name="android:windowDrawsSystemBarBackgrounds">false</item>
 		<item name="android:windowContentOverlay">@null</item>
+
+		<item name="android:windowAnimationStyle">@style/AppTheme.Window</item>
+
+		<item name="android:windowDrawsSystemBarBackgrounds">false</item>
 		<item name="android:windowTranslucentStatus">true</item>
-
-		<!-- enable window content transitions -->
 		<item name="android:windowContentTransitions">true</item>
-
-		<!-- enable overlapping of exiting and entering activities-->
 		<item name="android:windowAllowEnterTransitionOverlap">true</item>
 		<item name="android:windowAllowReturnTransitionOverlap">true</item>
 	</style>
 
-	<style name="AppTheme.Home.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="android:textColorPrimary">@color/primaryDark</item>
-		<item name="android:textColorSecondary">@color/primaryDark</item>
-
-		<item name="actionMenuTextColor">@color/white</item>
-	</style>
-
-	<style name="Widget.MyApp.HeaderBar.Spinner" parent="Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
+	<style name="AppTheme.Toolbar.Spinner" parent="Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
 		<item name="android:background">?android:selectableItemBackground</item>
 		<item name="android:dropDownSelector">?android:selectableItemBackground</item>
 		<item name="android:divider">@null</item>
-		<item name="android:overlapAnchor">true</item>
-	</style>
-
-	<!-- Transparent Toolbar -->
-	<style name="AppTheme.Dashboard.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="android:textColorPrimary">@color/primaryDark</item>
-		<item name="android:textColorSecondary">@color/primaryDark</item>
-
-		<item name="actionMenuTextColor">@color/white</item>
-	</style>
-
-	<style name="AppTheme.Progress.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="android:textColorPrimary">@color/primaryDark</item>
-		<item name="android:textColorSecondary">@color/primaryDark</item>
-
-		<item name="actionMenuTextColor">@color/white</item>
-	</style>
-
-	<style name="AppTheme.Progress.Card.Toolbar" parent="Theme.AppCompat.NoActionBar">
-		<item name="android:textColorPrimary">@color/black</item>
-		<item name="android:textColorSecondary">@color/black</item>
-
-		<item name="android:background">@color/white</item>
-	</style>
-
-	<style name="AppTheme.Activity" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="colorAccent">@color/primaryDark</item>
-		<item name="colorPrimary">@color/primary</item>
-		<item name="colorPrimaryDark">@color/primaryDark</item>
-
-		<item name="android:windowContentOverlay">@null</item>
-
-		<!-- enable window content transitions -->
-		<item name="android:windowContentTransitions">true</item>
-
-		<!-- enable overlapping of exiting and entering activities-->
-		<item name="android:windowAllowEnterTransitionOverlap">true</item>
-		<item name="android:windowAllowReturnTransitionOverlap">true</item>
-	</style>
-
-	<style name="AppTheme.Activity.Dashboard" parent="Theme.AppCompat.Light.NoActionBar">
-		<item name="colorAccent">@color/primaryDark</item>
-		<item name="colorPrimary">@color/primary</item>
-		<item name="colorPrimaryDark">@color/primaryDark</item>
-
-		<item name="android:windowContentOverlay">@null</item>
-
-		<!-- enable window content transitions -->
-		<item name="android:windowContentTransitions">true</item>
-
-		<!-- enable overlapping of exiting and entering activities-->
-		<item name="android:windowAllowEnterTransitionOverlap">true</item>
-		<item name="android:windowAllowReturnTransitionOverlap">true</item>
-	</style>
-
-	<style name="AppTheme.Activity.Progress" parent="Theme.AppCompat.Light.NoActionBar">
-		<item name="colorAccent">@color/primaryDark</item>
-		<item name="colorPrimary">@color/primary</item>
-		<item name="colorPrimaryDark">@color/primaryDark</item>
-
-		<item name="android:windowContentOverlay">@null</item>
-		<item name="android:windowContentTransitions">true</item>
 	</style>
 </resources>

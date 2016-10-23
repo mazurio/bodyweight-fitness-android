@@ -1,4 +1,4 @@
-package com.bodyweight.fitness.view
+package com.bodyweight.fitness.view.workout
 
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -17,6 +17,8 @@ import com.bodyweight.fitness.model.DialogType
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.*
 import com.bodyweight.fitness.ui.ProgressActivity
+import com.bodyweight.fitness.view.AbstractPresenter
+import com.bodyweight.fitness.view.AbstractView
 import com.bodyweight.fitness.view.widget.ActionButton
 
 import com.gordonwong.materialsheetfab.MaterialSheetFab
@@ -43,21 +45,6 @@ class ActionPresenter : AbstractPresenter() {
                     }
                 }
 
-        Stream.drawerObservable()
-                .bindToLifecycle(view)
-                .filter {
-                    it.equals(R.id.action_menu_home)
-                            || it.equals(R.id.action_menu_workout)
-                            || it.equals(R.id.action_menu_workout_log)
-                }
-                .subscribe {
-                    if (it == R.id.action_menu_workout) {
-                        view.showActionButtons()
-                    } else {
-                        view.hideActionButtons()
-                    }
-                }
-
         Stream.loggedSecondsObservable
                 .bindToLifecycle(view)
                 .subscribe {
@@ -73,18 +60,6 @@ class ActionPresenter : AbstractPresenter() {
 
                     Snackbar.make(view.action_view_coordinator_layout, format, Snackbar.LENGTH_LONG).show()
                 }
-    }
-
-    override fun restoreView(view: AbstractView) {
-        super.restoreView(view)
-
-        val view = (mView as ActionView)
-
-        if (Stream.currentDrawerId == R.id.action_menu_workout) {
-            view.showActionButtons()
-        } else {
-            view.hideActionButtons()
-        }
     }
 
     fun logWorkout() {
@@ -174,16 +149,6 @@ open class ActionView : AbstractView {
             mMaterialSheet?.hideSheet()
             presenter.todaysWorkout()
         }
-    }
-
-    fun showActionButtons() {
-        action_view_log_workout_button.visibility = View.VISIBLE
-        action_view_action_button.visibility = View.VISIBLE
-    }
-
-    fun hideActionButtons() {
-        action_view_log_workout_button.visibility = View.GONE
-        action_view_action_button.visibility = View.GONE
     }
 
     fun showActionSheetChooseProgression() {

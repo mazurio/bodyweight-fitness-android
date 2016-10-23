@@ -1,4 +1,4 @@
-package com.bodyweight.fitness.view
+package com.bodyweight.fitness.view.workout
 
 import android.app.TimePickerDialog
 import android.content.Context
@@ -13,6 +13,8 @@ import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.utils.Preferences
+import com.bodyweight.fitness.view.AbstractPresenter
+import com.bodyweight.fitness.view.AbstractView
 
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_timer.view.*
@@ -33,13 +35,6 @@ object TimerShared {
 class TimerPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
-
-        Stream.drawerObservable()
-                .bindToLifecycle(view)
-                .filter { !it.equals(R.id.action_menu_workout) }
-                .subscribe {
-                    pauseTimer()
-                }
 
         RoutineStream.exerciseObservable()
                 .bindToLifecycle(view)

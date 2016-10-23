@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/action_menu_home"
+        icon="@drawable/action_home"
+        title="Home" />
+
+    <tab
+        id="@+id/action_menu_workout_log"
+        icon="@drawable/action_calendar"
+        title="Workout Log"/>
+
+    <tab
+        id="@+id/action_menu_settings"
+        icon="@drawable/action_settings"
+        title="Settings" />
+</tabs>
