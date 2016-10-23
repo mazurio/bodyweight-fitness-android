@@ -1,69 +1,36 @@
 <resources>
 	<style name="FullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
-
 	</style>
+
+    <style name="AppTheme.Window" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:activityOpenExitAnimation">@android:anim/fade_out</item>
+
+        <item name="android:activityCloseEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@android:anim/fade_out</item>
+    </style>
 
 	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-		<item name="colorAccent">@color/accent</item>
-		<item name="colorPrimary">@color/primary</item>
-		<item name="colorPrimaryDark">@color/primaryDark</item>
-
-		<item name="android:windowContentOverlay">@null</item>
-	</style>
-
-	<style name="AppTheme.Home.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="android:textColorPrimary">@color/primaryDark</item>
-		<item name="android:textColorSecondary">@color/primaryDark</item>
-
-		<item name="actionMenuTextColor">@color/white</item>
-	</style>
-
-	<style name="Widget.MyApp.HeaderBar.Spinner" parent="Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
-		<item name="android:background">?android:selectableItemBackground</item>
-		<item name="android:dropDownSelector">?android:selectableItemBackground</item>
-		<item name="android:divider">@null</item>
-	</style>
-
-	<!-- Transparent Toolbar -->
-	<style name="AppTheme.Dashboard.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="android:windowActionBarOverlay">true</item>
-	</style>
-
-	<style name="AppTheme.Progress.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="android:textColorPrimary">@color/primaryDark</item>
-		<item name="android:textColorSecondary">@color/primaryDark</item>
-
-		<item name="actionMenuTextColor">@color/white</item>
-	</style>
-
-	<style name="AppTheme.Progress.Card.Toolbar" parent="Theme.AppCompat.NoActionBar">
-		<item name="android:textColorPrimary">@color/black</item>
-		<item name="android:textColorSecondary">@color/black</item>
-
-		<item name="android:background">@color/white</item>
-	</style>
-
-	<style name="AppTheme.Activity" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="colorAccent">@color/primaryDark</item>
-		<item name="colorPrimary">@color/primary</item>
-		<item name="colorPrimaryDark">@color/primaryDark</item>
-
-		<item name="android:windowContentOverlay">@null</item>
-	</style>
-
-	<style name="AppTheme.Activity.Dashboard" parent="Theme.AppCompat.Light.NoActionBar">
-		<item name="android:windowContentOverlay">@null</item>
-
-		<item name="windowActionBar">false</item>
-		<item name="windowActionBarOverlay">true</item>
-		<item name="android:windowActionBarOverlay">true</item>
-	</style>
-
-    <style name="AppTheme.Activity.Progress" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorAccent">@color/primaryDark</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primaryDark</item>
 
+        <item name="android:windowBackground">@color/window_background</item>
         <item name="android:windowContentOverlay">@null</item>
-    </style>
+
+        <item name="android:windowAnimationStyle">@style/AppTheme.Window</item>
+	</style>
+
+	<style name="AppTheme.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
+		<item name="android:textColorPrimary">@color/primaryDark</item>
+		<item name="android:textColorSecondary">@color/primaryDark</item>
+
+		<item name="actionMenuTextColor">@color/white</item>
+	</style>
+
+	<style name="AppTheme.Toolbar.Spinner" parent="Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
+		<item name="android:background">?android:selectableItemBackground</item>
+		<item name="android:dropDownSelector">?android:selectableItemBackground</item>
+		<item name="android:divider">@null</item>
+	</style>
 </resources>

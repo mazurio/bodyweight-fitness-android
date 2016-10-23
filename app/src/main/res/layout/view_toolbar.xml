@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:theme="@style/AppTheme.Home.Toolbar"
+        android:theme="@style/AppTheme.Toolbar"
         android:background="@color/primary"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -22,7 +22,7 @@
 
             <Spinner
                 android:id="@+id/toolbar_spinner"
-                style="@style/Widget.MyApp.HeaderBar.Spinner"
+                style="@style/AppTheme.Toolbar.Spinner"
                 android:layout_width="225dp"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"/>
