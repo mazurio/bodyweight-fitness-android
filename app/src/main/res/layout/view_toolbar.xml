@@ -37,7 +37,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <com.devspark.robototextview.widget.RobotoTextView
+                    <TextView
                         android:id="@+id/toolbar_spinner_title"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
@@ -45,7 +45,7 @@
                         android:text="Bodyweight Fitness"
                         style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
 
-                    <com.devspark.robototextview.widget.RobotoTextView
+                    <TextView
                         android:id="@+id/toolbar_spinner_subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
