@@ -2,6 +2,7 @@ package com.bodyweight.fitness.view
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.text.format.DateUtils
 import android.util.AttributeSet
 
@@ -167,6 +168,23 @@ class HomeViewPresenter : AbstractPresenter() {
         context().startActivity(Intent(context(), ProgressActivity::class.java)
                 .putExtra(Constants.primaryKeyRoutineId, routineId))
     }
+
+    fun supportDeveloper() {
+        context().startActivity(Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(Constants.googlePlayUrl)
+        })
+    }
+
+    fun sendEmail() {
+        context().startActivity(Intent.createChooser(Intent(
+                Intent.ACTION_SENDTO,
+                Uri.fromParts("mailto", "damian@mazur.io", null)
+        ).apply {
+            putExtra(Intent.EXTRA_SUBJECT, "Bodyweight Fitness App - Feedback")
+            putExtra(Intent.EXTRA_TEXT, "")
+            putExtra(Intent.EXTRA_EMAIL, "damian@mazur.io")
+        }, "Send Email"))
+    }
 }
 
 open class HomeView : AbstractView {
@@ -185,6 +203,14 @@ open class HomeView : AbstractView {
 
         todays_workout_log.setOnClickListener {
             (presenter as HomeViewPresenter).todaysWorkoutLog()
+        }
+
+        support_developer.setOnClickListener {
+            (presenter as HomeViewPresenter).supportDeveloper()
+        }
+
+        send_email.setOnClickListener {
+            (presenter as HomeViewPresenter).sendEmail()
         }
     }
 

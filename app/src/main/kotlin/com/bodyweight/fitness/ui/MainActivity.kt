@@ -34,27 +34,6 @@ class MainActivity : RxAppCompatActivity() {
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
 
-        val event = ActivityEvent.DESTROY
-
-        Stream.drawerObservable()
-                .bindUntilEvent(this, event)
-                .subscribe {
-                    invalidateOptionsMenu()
-
-                    when (it) {
-//                        R.id.action_menu_support_developer -> {
-//                            startActivity(Intent(Intent.ACTION_VIEW).apply {
-//                                data = Uri.parse(Constants.googlePlayUrl)
-//                            })
-//                        }
-
-
-                        else -> {
-//                            navigation_view.setCheckedItem(it)
-                        }
-                    }
-                }
-
         if (!Preferences.introductionShown) {
             Preferences.introductionShown = true
 

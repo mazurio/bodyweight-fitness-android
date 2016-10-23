@@ -306,7 +306,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="8dp"
-                                android:text="Found a bug? Would like to request a feature? Let me know!"
+                                android:text="Found a bug? Would like to request a new feature? Let me know!"
                                 android:textSize="15sp"
                                 android:textColor="@color/label_text"/>
                         </LinearLayout>
