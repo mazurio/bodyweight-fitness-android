@@ -40,16 +40,14 @@ class WorkoutActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPrefere
 
         keepScreenOnWhenAppIsRunning()
 
-        val event = ActivityEvent.DESTROY
-
         Stream.menuObservable
-                .bindUntilEvent(this, event)
+                .bindUntilEvent(this, ActivityEvent.DESTROY)
                 .filter { it == R.id.action_dashboard }
                 .subscribe {
                     startActivity(Intent(this, DashboardActivity::class.java))
                 }
 
-        RoutineStream.exerciseObservable().bindUntilEvent(this, event).subscribe { exercise ->
+        RoutineStream.exerciseObservable().bindUntilEvent(this, ActivityEvent.DESTROY).subscribe { exercise ->
             supportActionBar?.let { toolbar ->
                 toolbar.title = exercise.title
 

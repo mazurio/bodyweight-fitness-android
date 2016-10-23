@@ -11,8 +11,10 @@ import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.utils.Preferences
 
 import com.kobakei.ratethisapp.RateThisApp
+import com.trello.rxlifecycle.android.ActivityEvent
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity
+import com.trello.rxlifecycle.kotlin.bindUntilEvent
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_toolbar.*
@@ -30,6 +32,12 @@ class MainActivity : RxAppCompatActivity() {
         fragmentTransaction.replace(R.id.view_settings, SettingsFragment(), "SettingsFragment")
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
+
+        Stream.drawerObservable()
+                .bindUntilEvent(this, ActivityEvent.DESTROY)
+                .subscribe {
+                    invalidateOptionsMenu()
+                }
 
         if (!Preferences.introductionShown) {
             Preferences.introductionShown = true
