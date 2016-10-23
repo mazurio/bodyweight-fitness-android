@@ -34,6 +34,7 @@ class ContentPresenter : AbstractPresenter() {
         when (id) {
             R.id.action_menu_home -> view.showHome()
             R.id.action_menu_workout_log -> view.showCalendar()
+            R.id.action_menu_settings -> view.showSettings()
         }
     }
 }
@@ -48,10 +49,18 @@ open class ContentView : AbstractView {
     fun showHome() {
         view_home.setVisible()
         view_calendar.setGone()
+        view_settings.setGone()
     }
 
     fun showCalendar() {
         view_home.setGone()
         view_calendar.setVisible()
+        view_settings.setGone()
+    }
+
+    fun showSettings() {
+        view_home.setGone()
+        view_calendar.setGone()
+        view_settings.setVisible()
     }
 }

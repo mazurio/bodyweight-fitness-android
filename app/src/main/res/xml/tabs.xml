@@ -10,12 +10,6 @@
         icon="@drawable/action_calendar"
         title="Workout Log"/>
 
-
-    <tab
-        id="@+id/action_menu_support_developer"
-        icon="@drawable/action_support_developer"
-        title="Get Pro"/>
-
     <tab
         id="@+id/action_menu_settings"
         icon="@drawable/action_settings"

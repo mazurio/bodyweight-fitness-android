@@ -35,10 +35,6 @@ class ToolbarPresenter : AbstractPresenter() {
 
         Stream.drawerObservable()
                 .bindToLifecycle(view)
-                .filter {
-                    it.equals(R.id.action_menu_home)
-                            || it.equals(R.id.action_menu_workout_log)
-                }
                 .subscribe {
                     setToolbar()
                 }
@@ -58,6 +54,10 @@ class ToolbarPresenter : AbstractPresenter() {
 
             R.id.action_menu_workout_log -> {
                 setToolbarForWorkoutLog(Stream.currentCalendarDay)
+            }
+
+            R.id.action_menu_settings -> {
+                setToolbarForSettings()
             }
         }
     }
@@ -105,6 +105,11 @@ class ToolbarPresenter : AbstractPresenter() {
         } else {
             setDateTimeSingleTitle(calendarDay.getDate())
         }
+    }
+
+    private fun setToolbarForSettings() {
+        val view: ToolbarView = (mView as ToolbarView)
+        view.setSingleTitle("Settings")
     }
 
     private fun setDateTimeSingleTitle(dateTime: DateTime) {

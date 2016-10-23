@@ -2,6 +2,7 @@ package com.bodyweight.fitness.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.Menu
 
 import android.view.MenuItem
@@ -26,6 +27,13 @@ class MainActivity : RxAppCompatActivity() {
         setContentView(R.layout.activity_main)
         setToolbar()
 
+        val fragmentManager = fragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        fragmentTransaction.replace(R.id.view_settings, SettingsFragment(), "SettingsFragment")
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+
         val event = ActivityEvent.DESTROY
 
         Stream.drawerObservable()
@@ -39,10 +47,7 @@ class MainActivity : RxAppCompatActivity() {
 //                                data = Uri.parse(Constants.googlePlayUrl)
 //                            })
 //                        }
-//
-//                        R.id.action_menu_settings -> {
-//                            startActivity(Intent(applicationContext, SettingsActivity::class.java))
-//                        }
+
 
                         else -> {
 //                            navigation_view.setCheckedItem(it)
