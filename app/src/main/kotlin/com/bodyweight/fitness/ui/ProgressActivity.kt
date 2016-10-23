@@ -59,7 +59,7 @@ class ProgressActivity : RxAppCompatActivity() {
         }
 
         tablayout.setupWithViewPager(view_progress_pager)
-        tablayout.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        tablayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 view_progress_pager.setCurrentItem(tab.position, true)
             }

@@ -36,5 +36,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        app:bb_tabXmlResource="@xml/tabs"/>
+        app:bb_tabXmlResource="@xml/tabs"
+        app:bb_inActiveTabColor="#BFBFBF"
+        app:bb_activeTabColor="@color/primary"
+        app:bb_showShadow="true" />
 </RelativeLayout>
