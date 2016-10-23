@@ -104,7 +104,7 @@ class HomeViewPresenter : AbstractPresenter() {
             return "Go to Workout"
         }
 
-        return "Start Working Out"
+        return "Start Workout"
     }
 
     private fun getPreviousWorkoutLabel(): String {
@@ -219,7 +219,7 @@ open class HomeView : AbstractView {
     }
 
     fun showTodaysWorkoutLogButton() {
-        todays_workout_log.setGone()
+        todays_workout_log.setVisible()
     }
 
     fun hideTodaysWorkoutLogButton() {
