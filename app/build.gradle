@@ -98,20 +98,20 @@ dependencies {
     compile 'net.danlew:android.joda:2.9.3'
 
     compile 'com.netflix.rxjava:rxjava-core:0.20.7'
-    compile 'io.reactivex:rxandroid:1.2.0'
-    compile 'io.reactivex:rxjava:1.1.5'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.2.1'
 
-    compile 'com.trello:rxlifecycle:0.6.1'
-    compile 'com.trello:rxlifecycle-components:0.6.1'
-    compile 'com.trello:rxlifecycle-kotlin:0.6.1'
+    compile 'com.trello:rxlifecycle:0.8.0'
+    compile 'com.trello:rxlifecycle-components:0.8.0'
+    compile 'com.trello:rxlifecycle-kotlin:0.8.0'
 
-    compile 'com.robinhood.spark:spark:1.1.0'
+    compile 'com.robinhood.spark:spark:1.1.2'
 
     compile 'com.roughike:bottom-bar:2.0.2'
-    compile 'com.github.johnkil.android-robototextview:robototextview:2.5.0'
+    compile 'com.github.johnkil.android-robototextview:robototextview:2.5.1'
     compile 'com.gordonwong:material-sheet-fab:1.2.1'
     compile 'io.github.kobakei:ratethisapp:1.0.3'
-    compile 'com.github.paolorotolo:appintro:4.0.0'
+    compile 'com.github.paolorotolo:appintro:4.1.0'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;

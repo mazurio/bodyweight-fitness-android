@@ -19,7 +19,7 @@ import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.stream.UiEvent
 import com.bodyweight.fitness.utils.Preferences
 
-import com.trello.rxlifecycle.ActivityEvent
+import com.trello.rxlifecycle.android.ActivityEvent
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle.kotlin.bindUntilEvent
 
@@ -120,8 +120,6 @@ class WorkoutActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPrefere
         setSupportActionBar(toolbar)
 
         supportActionBar?.let {
-            it.title = "Title"
-            it.subtitle = "Subtitle"
             it.elevation = 0f
             it.displayOptions = ActionBar.DISPLAY_SHOW_HOME or ActionBar.DISPLAY_HOME_AS_UP or ActionBar.DISPLAY_SHOW_TITLE
             it.setHomeButtonEnabled(true)

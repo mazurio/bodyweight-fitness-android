@@ -2,7 +2,6 @@ package com.bodyweight.fitness.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.Menu
 
 import android.view.MenuItem
@@ -13,9 +12,7 @@ import com.bodyweight.fitness.utils.Preferences
 
 import com.kobakei.ratethisapp.RateThisApp
 
-import com.trello.rxlifecycle.ActivityEvent
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity
-import com.trello.rxlifecycle.kotlin.bindUntilEvent
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_toolbar.*
