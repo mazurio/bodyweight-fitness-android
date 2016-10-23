@@ -10,9 +10,9 @@
         android:id="@+id/content_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primary"
         android:layout_alignParentTop="true"
-        android:layout_above="@+id/bottom_navigation_border"
+        android:layout_above="@+id/bottomBar"
+        android:background="@color/primary"
         android:fitsSystemWindows="true">
 
         <include layout="@layout/view_toolbar"
@@ -31,20 +31,10 @@
             android:layout_below="@+id/view_toolbar"/>
     </com.bodyweight.fitness.view.ContentView>
 
-    <RelativeLayout
-        android:id="@+id/bottom_navigation_border"
+    <com.roughike.bottombar.BottomBar
+        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#E7E7E7"
-        android:layout_above="@+id/bottom_navigation"/>
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        app:itemBackground="@color/white"
-        app:itemIconTint="@drawable/action_bottom_state"
-        app:itemTextColor="@drawable/action_bottom_state"
-        app:menu="@menu/menu_bottom_navigation" />
+        app:bb_tabXmlResource="@xml/tabs"/>
 </RelativeLayout>

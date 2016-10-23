@@ -80,7 +80,6 @@ class MainActivity : RxAppCompatActivity() {
         menu?.clear()
 
         when (Stream.currentDrawerId) {
-            R.id.action_menu_home -> menuInflater.inflate(R.menu.menu_home, menu)
             R.id.action_menu_workout_log -> menuInflater.inflate(R.menu.menu_log_workout, menu)
         }
 
@@ -94,10 +93,8 @@ class MainActivity : RxAppCompatActivity() {
             it.elevation = 0f
         }
 
-        bottom_navigation.setOnNavigationItemSelectedListener {
-            Stream.setDrawer(it.itemId)
-
-            return@setOnNavigationItemSelectedListener true
+        bottomBar.setOnTabSelectListener {
+            Stream.setDrawer(it)
         }
     }
 }
