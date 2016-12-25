@@ -22,5 +22,6 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/toolbar"
-        android:background="#E0E0E0" />
+        android:background="#E0E0E0"
+        android:scrollbars="vertical" />
 </RelativeLayout>
