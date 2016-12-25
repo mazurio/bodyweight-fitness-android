@@ -38,6 +38,12 @@
             android:background="@color/activity_background"/>
     </com.bodyweight.fitness.view.ContentView>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomBar"
+        android:background="@drawable/shadow" />
+
     <com.roughike.bottombar.BottomBar
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
@@ -46,5 +52,5 @@
         app:bb_tabXmlResource="@xml/tabs"
         app:bb_inActiveTabColor="#BFBFBF"
         app:bb_activeTabColor="@color/primary"
-        app:bb_showShadow="true" />
+        app:bb_showShadow="false" />
 </RelativeLayout>
