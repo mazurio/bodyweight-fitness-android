@@ -30,7 +30,6 @@ class MainActivity : RxAppCompatActivity() {
         val fragmentTransaction = fragmentManager.beginTransaction()
 
         fragmentTransaction.replace(R.id.view_settings, SettingsFragment(), "SettingsFragment")
-        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
 
         Stream.drawerObservable()
