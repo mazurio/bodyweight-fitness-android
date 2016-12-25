@@ -39,6 +39,8 @@ object RoutineStream {
     var routine: Routine =
             if (Preferences.defaultRoutine == "routine0") {
                 JsonRoutineLoader().getRoutine(R.raw.bodyweight_fitness_recommended_routine)
+            } else if(Preferences.defaultRoutine == "d8a722a0-fae2-4e7e-a751-430348c659fe") {
+                JsonRoutineLoader().getRoutine(R.raw.starting_stretching_flexibility_routine)
             } else {
                 JsonRoutineLoader().getRoutine(R.raw.molding_mobility_flexibility_routine)
             }
@@ -72,6 +74,9 @@ object RoutineStream {
                 routine = JsonRoutineLoader().getRoutine(R.raw.bodyweight_fitness_recommended_routine)
             }
             1 -> {
+                routine = JsonRoutineLoader().getRoutine(R.raw.starting_stretching_flexibility_routine)
+            }
+            2 -> {
                 routine = JsonRoutineLoader().getRoutine(R.raw.molding_mobility_flexibility_routine)
             }
         }

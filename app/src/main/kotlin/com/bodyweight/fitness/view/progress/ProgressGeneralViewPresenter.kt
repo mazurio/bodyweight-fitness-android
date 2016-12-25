@@ -102,7 +102,7 @@ class ProgressGeneralViewPresenter : AbstractPresenter() {
                 val layout = parent.inflate(R.layout.activity_progress_general_exercise)
 
                 layout.exercise_title.text = exercise.title
-                layout.category_title.text = exercise.category?.title
+                layout.category_title.text = exercise.category?.title + " - " + exercise.section?.title
 
                 parent.addView(layout)
             }

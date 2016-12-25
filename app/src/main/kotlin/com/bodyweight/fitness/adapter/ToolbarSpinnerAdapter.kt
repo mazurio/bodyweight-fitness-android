@@ -15,14 +15,32 @@ class ToolbarSpinnerAdapter : BaseAdapter() {
     val routines: List<SpinnerRoutine>
 
     init {
-        if (RoutineStream.routine.routineId == "routine0") {
+        val routineId = RoutineStream.routine.routineId
+
+        if (routineId == "routine0") {
             routines = listOf(
                     SpinnerRoutine(0, "Bodyweight Fitness", "Recommended Routine"),
-                    SpinnerRoutine(1, "Molding Mobility", "Flexibility Routine"))
+                    SpinnerRoutine(1, "Starting Stretching", "Flexibility Routine"),
+                    SpinnerRoutine(2, "Molding Mobility", "Flexibility Routine")
+            )
+        } else if (routineId == "e73593f4-ee17-4b9b-912a-87fa3625f63d") {
+            routines = listOf(
+                    SpinnerRoutine(2, "Molding Mobility", "Flexibility Routine"),
+                    SpinnerRoutine(0, "Bodyweight Fitness", "Recommended Routine"),
+                    SpinnerRoutine(1, "Starting Stretching", "Flexibility Routine")
+            )
+        } else if (routineId == "d8a722a0-fae2-4e7e-a751-430348c659fe") {
+            routines = listOf(
+                    SpinnerRoutine(1, "Starting Stretching", "Flexibility Routine"),
+                    SpinnerRoutine(0, "Bodyweight Fitness", "Recommended Routine"),
+                    SpinnerRoutine(2, "Molding Mobility", "Flexibility Routine")
+            )
         } else {
             routines = listOf(
-                    SpinnerRoutine(1, "Molding Mobility", "Flexibility Routine"),
-                    SpinnerRoutine(0, "Bodyweight Fitness", "Recommended Routine"))
+                    SpinnerRoutine(0, "Bodyweight Fitness", "Recommended Routine"),
+                    SpinnerRoutine(1, "Starting Stretching", "Flexibility Routine"),
+                    SpinnerRoutine(2, "Molding Mobility", "Flexibility Routine")
+            )
         }
     }
 
