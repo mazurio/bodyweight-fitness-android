@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
+
 	<color name="accent">#00453E</color>
 	<color name="primary">#009688</color>
 	<color name="primaryDark">#00453E</color>
@@ -8,6 +10,7 @@
 
 	<color name="white">#FFFFFF</color>
 	<color name="black">#000000</color>
+	<color name="shadow">#33000000</color>
 	<color name="spacing">#EDEDED</color>
 
 	<!-- Dark = #212124 -->
@@ -22,4 +25,5 @@
 	<!-- Light = #111 -->
 	<color name="value_text">#111</color>
 	<color name="label_text">#111</color>
+
 </resources>
