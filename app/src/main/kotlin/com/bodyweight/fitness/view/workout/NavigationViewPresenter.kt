@@ -2,6 +2,7 @@ package com.bodyweight.fitness.view.workout
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 
 import com.bodyweight.fitness.setGone
 import com.bodyweight.fitness.setInvisible
@@ -28,9 +29,11 @@ class NavigationPresenter : AbstractPresenter() {
                 }
 
 
-        Stream.restTimerObservable.bindToLifecycle(view).subscribe {
-            restoreView(view)
-        }
+        Stream.restTimerObservable
+                .bindToLifecycle(view)
+                .subscribe {
+                    restoreView(view)
+                }
 
         Stream.loggedSetRepsObservable
                 .bindToLifecycle(view)
@@ -97,14 +100,16 @@ open class NavigationView : AbstractView {
     }
 
     fun showTimerOrRepsLogger(isTimed: Boolean) {
-        if (isTimed) {
-            rest_timer_view.setGone()
-            timer_view.setVisible()
-            reps_logger_view.setGone()
-        } else {
-            rest_timer_view.setGone()
-            timer_view.setGone()
-            reps_logger_view.setVisible()
+        if (!RestTimerShared.isPlaying) {
+            if (isTimed) {
+                rest_timer_view.setGone()
+                timer_view.setVisible()
+                reps_logger_view.setGone()
+            } else {
+                rest_timer_view.setGone()
+                timer_view.setGone()
+                reps_logger_view.setVisible()
+            }
         }
     }
 

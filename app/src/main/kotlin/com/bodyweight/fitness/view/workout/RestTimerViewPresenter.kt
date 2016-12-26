@@ -31,6 +31,8 @@ class RestTimerPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
+        restartTimer(seconds = 60, restored = false, isPlaying = false)
+
         Stream.loggedSetRepsObservable
                 .bindToLifecycle(view)
                 .subscribe {
@@ -41,24 +43,6 @@ class RestTimerPresenter : AbstractPresenter() {
                 .bindToLifecycle(view)
                 .subscribe {
                     startTimer()
-                }
-
-        RoutineStream.exerciseObservable()
-                .bindToLifecycle(view)
-                .subscribe {
-                    RestTimerShared.countDownTimer?.cancel()
-
-                    if (RestTimerShared.restored) {
-                        RestTimerShared.restored = false
-
-                        restartTimer(RestTimerShared.currentSeconds, true, RestTimerShared.isPlaying)
-
-                        if (RestTimerShared.isPlaying) {
-                            startTimer()
-                        }
-                    } else {
-                        restartTimer(getSeconds(), false, false)
-                    }
                 }
     }
 
@@ -98,9 +82,9 @@ class RestTimerPresenter : AbstractPresenter() {
     }
 
     fun onClickStartStopTimeButton() {
-        Stream.setRestTimer()
-
         restartTimer(seconds = 60, restored = false, isPlaying = false)
+
+        Stream.setRestTimer()
     }
 
     fun buildCountDownTimer(seconds: Int, restored: Boolean, increaseTimer: Boolean): CountDownTimer? {
@@ -129,7 +113,7 @@ class RestTimerPresenter : AbstractPresenter() {
             }
 
             override fun onFinish() {
-//                logTime()
+                Stream.setRestTimer()
 
                 restartTimer(getSeconds(), false, false)
 
