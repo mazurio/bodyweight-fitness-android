@@ -31,6 +31,7 @@ object Stream {
 
     private val menuSubject = PublishSubject.create<Int>()
     private val drawerSubject = PublishSubject.create<Int>()
+    private val restTimerSubject = PublishSubject.create<Int>()
     private val loggedSecondsSubject = PublishSubject.create<Int>()
     private val loggedSetRepsSubject = PublishSubject.create<SetReps>()
 
@@ -46,6 +47,7 @@ object Stream {
      * Observables that should be re-emitted should be functions rather than values.
      */
     val menuObservable: Observable<Int> get() = menuSubject
+    val restTimerObservable: Observable<Int> get() = restTimerSubject
     val loggedSecondsObservable: Observable<Int> get() = loggedSecondsSubject
     val loggedSetRepsObservable: Observable<SetReps> get() = loggedSetRepsSubject
 
@@ -76,6 +78,10 @@ object Stream {
 
     fun setMenu(toolbarMenuItemId: Int) {
         menuSubject.onNext(toolbarMenuItemId)
+    }
+
+    fun setRestTimer() {
+        restTimerSubject.onNext(0)
     }
 
     fun setDrawer(drawerMenuItemId: Int) {
