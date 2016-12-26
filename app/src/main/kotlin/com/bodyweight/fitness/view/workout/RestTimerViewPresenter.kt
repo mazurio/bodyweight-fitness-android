@@ -16,7 +16,7 @@ import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_timer.view.*
 
 object RestTimerShared {
-    var seconds = 60
+    var seconds = 5
     var currentSeconds = seconds
     var startedLoggingSeconds = seconds
     var loggedSeconds = 0
@@ -94,7 +94,7 @@ class RestTimerPresenter : AbstractPresenter() {
     }
 
     fun onClickStartStopTimeButton() {
-        restartTimer(seconds = 60, restored = false, isPlaying = false)
+        restartTimer(seconds = 5, restored = false, isPlaying = false)
 
         Stream.setRestTimer()
     }
@@ -125,17 +125,17 @@ class RestTimerPresenter : AbstractPresenter() {
             }
 
             override fun onFinish() {
-                Stream.setRestTimer()
-
                 restartTimer(getSeconds(), false, false)
 
                 playSound()
+
+                Stream.setRestTimer()
             }
         }
     }
 
     fun getSeconds(): Int {
-        return 60
+        return 5
     }
 }
 
