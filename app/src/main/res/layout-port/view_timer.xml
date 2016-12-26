@@ -200,37 +200,51 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <RelativeLayout
-                    android:id="@+id/rest_timer_layout"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight=".50"
-                    android:clickable="true">
+                    android:orientation="vertical">
 
                     <com.devspark.robototextview.widget.RobotoTextView
-                        android:id="@+id/rest_timer_minutes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_toLeftOf="@+id/rest_timer_spacing"
-                        android:gravity="center"
-                        android:textSize="60sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|bottom"
+                        android:textSize="16sp"
+                        android:text="Rest"
                         app:typeface="roboto_bold" />
 
                     <RelativeLayout
-                        android:id="@+id/rest_timer_spacing"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/rest_timer_layout"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_centerInParent="true"/>
+                        android:clickable="true">
 
-                    <com.devspark.robototextview.widget.RobotoTextView
-                        android:id="@+id/rest_timer_seconds"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_toRightOf="@+id/rest_timer_spacing"
-                        android:gravity="center"
-                        android:textSize="60sp"
-                        app:typeface="roboto_light" />
-                </RelativeLayout>
+                        <com.devspark.robototextview.widget.RobotoTextView
+                            android:id="@+id/rest_timer_minutes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_toLeftOf="@+id/rest_timer_spacing"
+                            android:gravity="center"
+                            android:textSize="60sp"
+                            app:typeface="roboto_bold" />
+
+                        <RelativeLayout
+                            android:id="@+id/rest_timer_spacing"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"/>
+
+                        <com.devspark.robototextview.widget.RobotoTextView
+                            android:id="@+id/rest_timer_seconds"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_toRightOf="@+id/rest_timer_spacing"
+                            android:gravity="center"
+                            android:textSize="60sp"
+                            app:typeface="roboto_light" />
+                    </RelativeLayout>
+                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
