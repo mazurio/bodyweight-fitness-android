@@ -6,7 +6,6 @@ import android.os.CountDownTimer
 import android.util.AttributeSet
 
 import com.bodyweight.fitness.*
-import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.utils.Preferences
 import com.bodyweight.fitness.view.AbstractPresenter
@@ -16,7 +15,7 @@ import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_timer.view.*
 
 object RestTimerShared {
-    var seconds = 5
+    var seconds = 60
     var currentSeconds = seconds
     var startedLoggingSeconds = seconds
     var loggedSeconds = 0
@@ -76,7 +75,7 @@ class RestTimerPresenter : AbstractPresenter() {
         RestTimerShared.isPlaying = isPlaying
         RestTimerShared.currentSeconds = seconds
 
-        RestTimerShared.countDownTimer = buildCountDownTimer(seconds, restored, false)
+        RestTimerShared.countDownTimer = buildCountDownTimer(seconds, restored)
 
         view.setMinutes(seconds.formatMinutes())
         view.setSeconds(seconds.formatSeconds())
@@ -94,23 +93,19 @@ class RestTimerPresenter : AbstractPresenter() {
     }
 
     fun onClickStartStopTimeButton() {
-        restartTimer(seconds = 5, restored = false, isPlaying = false)
+        restartTimer(seconds = getSeconds(), restored = false, isPlaying = false)
 
         Stream.setRestTimer()
     }
 
-    fun buildCountDownTimer(seconds: Int, restored: Boolean, increaseTimer: Boolean): CountDownTimer? {
+    fun buildCountDownTimer(seconds: Int, restored: Boolean): CountDownTimer? {
         val view = (mView as RestTimerView)
 
-        if (increaseTimer) {
-            RestTimerShared.loggedSeconds += 5
+        if (restored) {
+            RestTimerShared.loggedSeconds = RestTimerShared.startedLoggingSeconds
         } else {
-            if (restored) {
-                RestTimerShared.loggedSeconds = RestTimerShared.startedLoggingSeconds
-            } else {
-                RestTimerShared.startedLoggingSeconds = seconds
-                RestTimerShared.loggedSeconds = seconds
-            }
+            RestTimerShared.startedLoggingSeconds = seconds
+            RestTimerShared.loggedSeconds = seconds
         }
 
         return object : CountDownTimer((seconds * 1000).toLong(), 100) {
@@ -135,7 +130,7 @@ class RestTimerPresenter : AbstractPresenter() {
     }
 
     fun getSeconds(): Int {
-        return 5
+        return 60
     }
 }
 
