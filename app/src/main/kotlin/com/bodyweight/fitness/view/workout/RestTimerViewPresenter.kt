@@ -15,7 +15,7 @@ import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_timer.view.*
 
 object RestTimerShared {
-    var seconds = 60
+    var seconds = Preferences.restTimerDefaultSeconds
     var currentSeconds = seconds
     var startedLoggingSeconds = seconds
     var loggedSeconds = 0
@@ -130,7 +130,7 @@ class RestTimerPresenter : AbstractPresenter() {
     }
 
     fun getSeconds(): Int {
-        return 60
+        return Preferences.restTimerDefaultSeconds
     }
 }
 

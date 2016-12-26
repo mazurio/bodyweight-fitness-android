@@ -40,6 +40,32 @@ object Preferences {
                     .commit()
         }
 
+    var showRestTimer: Boolean
+        get() {
+            return getSharedPreferences()
+                    .getBoolean(Constants.preferencesShowRestTimer, true)
+        }
+
+        set(value) {
+            getSharedPreferences()
+                    .edit()
+                    .putBoolean(Constants.preferencesShowRestTimer, value)
+                    .commit()
+        }
+
+    var restTimerDefaultSeconds: Int
+        get() {
+            return getSharedPreferences()
+                    .getString(Constants.preferencesRestTimerDefaultSeconds, "60").toInt()
+        }
+
+        set(value) {
+            getSharedPreferences()
+                    .edit()
+                    .putString(Constants.preferencesRestTimerDefaultSeconds, value.toString())
+                    .commit()
+        }
+
     val weightMeasurementUnit: WeightMeasurementUnit
         get() {
             val value = getSharedPreferences().getString(Constants.preferencesWeightMeasurementUnitsKey, "kg")

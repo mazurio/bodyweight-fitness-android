@@ -31,4 +31,20 @@
 		<item>kg</item>
 		<item>lbs</item>
 	</string-array>
+
+	<string-array name="rest_time">
+		<item>30 Seconds</item>
+		<item>1 Minute</item>
+		<item>1 Minute 30 Seconds</item>
+		<item>2 Minutes</item>
+		<item>2 Minutes 30 Seconds</item>
+	</string-array>
+
+	<string-array name="rest_time_values">
+		<item>30</item>
+		<item>60</item>
+		<item>90</item>
+		<item>120</item>
+		<item>150</item>
+	</string-array>
 </resources>

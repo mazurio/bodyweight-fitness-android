@@ -12,7 +12,7 @@
 
         <CheckBoxPreference
             android:key="PREFERENCE_PLAY_SOUND_WHEN_TIMER_STOPS"
-            android:title="Play Audio"
+            android:title="Play audio"
             android:summary="Plays audio when timer stops"
             android:defaultValue="true" />
 
@@ -27,6 +27,23 @@
             android:title="Automatically log time"
             android:summary="Logs workout time automatically for timed exercises"
             android:defaultValue="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Rest Timer">
+
+        <CheckBoxPreference
+            android:key="PREFERENCE_SHOW_REST_TIMER"
+            android:title="Show rest timer"
+            android:summary="Shows rest timer after logging sets"
+            android:defaultValue="true" />
+
+        <ListPreference
+            android:key="PREFERENCE_REST_TIMER_DEFAULT_SECONDS"
+            android:title="Rest Time"
+            android:summary="Rest time between sets"
+            android:entries="@array/rest_time"
+            android:entryValues="@array/rest_time_values"/>
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -9,6 +9,7 @@ import com.bodyweight.fitness.setInvisible
 import com.bodyweight.fitness.setVisible
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
+import com.bodyweight.fitness.utils.Preferences
 import com.bodyweight.fitness.view.AbstractPresenter
 import com.bodyweight.fitness.view.AbstractView
 
@@ -40,7 +41,9 @@ class NavigationPresenter : AbstractPresenter() {
                 .subscribe {
                     val view = (view as NavigationView)
 
-                    view.showRestTimer()
+                    if (Preferences.showRestTimer) {
+                        view.showRestTimer()
+                    }
                 }
 
         Stream.loggedSecondsObservable
@@ -48,7 +51,9 @@ class NavigationPresenter : AbstractPresenter() {
                 .subscribe {
                     val view = (view as NavigationView)
 
-                    view.showRestTimer()
+                    if (Preferences.showRestTimer) {
+                        view.showRestTimer()
+                    }
                 }
     }
 
