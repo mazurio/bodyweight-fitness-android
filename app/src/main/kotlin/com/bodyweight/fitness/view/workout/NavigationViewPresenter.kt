@@ -110,6 +110,8 @@ open class NavigationView : AbstractView {
                 timer_view.setGone()
                 reps_logger_view.setVisible()
             }
+        } else {
+            showRestTimer()
         }
     }
 

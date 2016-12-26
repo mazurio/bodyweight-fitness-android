@@ -189,6 +189,67 @@
             </LinearLayout>
         </com.bodyweight.fitness.view.workout.TimerView>
 
+        <com.bodyweight.fitness.view.workout.RestTimerView
+            android:id="@+id/rest_timer_view"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".80">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/rest_timer_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".50"
+                    android:clickable="true">
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/rest_timer_minutes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toLeftOf="@+id/rest_timer_spacing"
+                        android:gravity="center"
+                        android:textSize="60sp"
+                        app:typeface="roboto_bold" />
+
+                    <RelativeLayout
+                        android:id="@+id/rest_timer_spacing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true" />
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/rest_timer_seconds"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/rest_timer_spacing"
+                        android:gravity="center"
+                        android:textSize="60sp"
+                        app:typeface="roboto_light" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".50">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/stop_rest_timer_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/action_close_light"
+                        android:layout_centerInParent="true"
+                        app:borderWidth="0dp"
+                        app:elevation="0dp"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </com.bodyweight.fitness.view.workout.RestTimerView>
+
         <ImageButton
             android:id="@+id/next_exercise_button"
             android:layout_width="0dp"

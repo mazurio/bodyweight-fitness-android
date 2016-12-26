@@ -31,7 +31,19 @@ class RestTimerPresenter : AbstractPresenter() {
     override fun bindView(view: AbstractView) {
         super.bindView(view)
 
-        restartTimer(seconds = 60, restored = false, isPlaying = false)
+        RestTimerShared.countDownTimer?.cancel()
+
+        if (RestTimerShared.restored) {
+            RestTimerShared.restored = false
+
+            restartTimer(RestTimerShared.currentSeconds, true, RestTimerShared.isPlaying)
+
+            if (RestTimerShared.isPlaying) {
+                startTimer()
+            }
+        } else {
+            restartTimer(getSeconds(), false, false)
+        }
 
         Stream.loggedSetRepsObservable
                 .bindToLifecycle(view)
