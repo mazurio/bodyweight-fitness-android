@@ -140,7 +140,7 @@
       "description": "1x(30-60s)",
       "type": "exercise",
       "youTubeId": "",
-      "videoId": "id",
+      "videoId": "starting_stretching_full_squat_beginner",
       "defaultSet": "timed"
     },
     {
@@ -150,7 +150,7 @@
       "description": "1x(30-60s)",
       "type": "exercise",
       "youTubeId": "",
-      "videoId": "starting_stretching_full_squat_beginner",
+      "videoId": "starting_stretching_full_squat_intermediate",
       "defaultSet": "timed"
     },
     {
@@ -160,7 +160,7 @@
       "description": "1x(30-60s)",
       "type": "exercise",
       "youTubeId": "",
-      "videoId": "id",
+      "videoId": "starting_stretching_full_squat_intermediate",
       "defaultSet": "timed"
     },
     {
@@ -177,7 +177,7 @@
       "description": "1x(30-60s)",
       "type": "exercise",
       "youTubeId": "",
-      "videoId": "id",
+      "videoId": "starting_stretching_standing_pike_beginner",
       "defaultSet": "timed"
     },
     {
@@ -187,17 +187,7 @@
       "description": "1x(30-60s)",
       "type": "exercise",
       "youTubeId": "",
-      "videoId": "id",
-      "defaultSet": "timed"
-    },
-    {
-      "exerciseId": "5f96b45d-3551-48bf-84d1-1a361b053169",
-      "level": "Level 3",
-      "title": "Advanced - Standing Pike",
-      "description": "1x(30-60s)",
-      "type": "exercise",
-      "youTubeId": "",
-      "videoId": "id",
+      "videoId": "starting_stretching_standing_pike_intermediate",
       "defaultSet": "timed"
     },
     {
@@ -214,7 +204,7 @@
       "description": "1x(30-60s)",
       "type": "exercise",
       "youTubeId": "",
-      "videoId": "id",
+      "videoId": "starting_stretching_kneeling_lunge_beginner",
       "defaultSet": "timed"
     },
     {
@@ -224,17 +214,7 @@
       "description": "1x(30-60s)",
       "type": "exercise",
       "youTubeId": "",
-      "videoId": "id",
-      "defaultSet": "timed"
-    },
-    {
-      "exerciseId": "c312f2ef-3403-4292-9790-417a6632d61b",
-      "level": "Level 3",
-      "title": "Advanced - Kneeling Lunge",
-      "description": "1x(30-60s)",
-      "type": "exercise",
-      "youTubeId": "",
-      "videoId": "id",
+      "videoId": "starting_stretching_kneeling_lunge_intermediate",
       "defaultSet": "timed"
     },
     {
@@ -251,7 +231,7 @@
       "description": "1x(30-60s)",
       "type": "exercise",
       "youTubeId": "",
-      "videoId": "id",
+      "videoId": "starting_stretching_butterfly_beginner",
       "defaultSet": "timed"
     },
     {
@@ -261,17 +241,7 @@
       "description": "1x(30-60s)",
       "type": "exercise",
       "youTubeId": "",
-      "videoId": "id",
-      "defaultSet": "timed"
-    },
-    {
-      "exerciseId": "cb95284d-8f94-45fd-839f-124e5ac86a7e",
-      "level": "Level 3",
-      "title": "Advanced - Butterfly",
-      "description": "1x(30-60s)",
-      "type": "exercise",
-      "youTubeId": "",
-      "videoId": "id",
+      "videoId": "starting_stretching_butterfly_intermediate",
       "defaultSet": "timed"
     },
     {
@@ -293,7 +263,7 @@
       "description": "1x(30-60s)",
       "type": "exercise",
       "youTubeId": "",
-      "videoId": "id",
+      "videoId": "starting_stretching_glute_bridge",
       "defaultSet": "timed"
     },
     {
@@ -303,17 +273,7 @@
       "description": "1x(30-60s)",
       "type": "exercise",
       "youTubeId": "",
-      "videoId": "id",
-      "defaultSet": "timed"
-    },
-    {
-      "exerciseId": "08c594b3-e268-4a46-a4f0-7c39056b087f",
-      "level": "Level 3",
-      "title": "Advanced - Bridge",
-      "description": "1x(30-60s)",
-      "type": "exercise",
-      "youTubeId": "",
-      "videoId": "id",
+      "videoId": "starting_stretching_camel",
       "defaultSet": "timed"
     },
     {
@@ -330,7 +290,7 @@
       "description": "1x(30-60s)",
       "type": "exercise",
       "youTubeId": "",
-      "videoId": "id",
+      "videoId": "starting_stretching_lying_twist_beginner",
       "defaultSet": "timed"
     },
     {
@@ -340,17 +300,7 @@
       "description": "1x(30-60s)",
       "type": "exercise",
       "youTubeId": "",
-      "videoId": "id",
-      "defaultSet": "timed"
-    },
-    {
-      "exerciseId": "b14916b1-00aa-45f9-a047-904e0d62b1af",
-      "level": "Level 3",
-      "title": "Advanced - Lying Twist",
-      "description": "1x(30-60s)",
-      "type": "exercise",
-      "youTubeId": "",
-      "videoId": "id",
+      "videoId": "starting_stretching_lying_twist_intermediate",
       "defaultSet": "timed"
     }
   ]
