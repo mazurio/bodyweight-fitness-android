@@ -102,26 +102,6 @@
       "defaultSet": "timed"
     },
     {
-      "exerciseId": "c1a6fd86-462a-468a-9fb5-f59be263bce8",
-      "level": "Level 2",
-      "title": "Intermediate - Rear Hand Clasp",
-      "description": "1x(30-60s)",
-      "type": "exercise",
-      "youTubeId": "",
-      "videoId": "starting_stretching_rear_hand_clasp_beginner",
-      "defaultSet": "timed"
-    },
-    {
-      "exerciseId": "3f1cb712-3f26-4777-a081-38eb72b3e4d3",
-      "level": "Level 3",
-      "title": "Advanced - Rear Hand Clasp",
-      "description": "1x(30-60s)",
-      "type": "exercise",
-      "youTubeId": "",
-      "videoId": "starting_stretching_rear_hand_clasp_beginner",
-      "defaultSet": "timed"
-    },
-    {
       "categoryId": "3e5e56a7-74c4-4ee4-82ea-e3e7134deed2",
       "title": "Lower Body",
       "type": "category"
@@ -147,16 +127,6 @@
       "exerciseId": "c28ce7ce-cccf-493d-933b-8ecdfc2f59a4",
       "level": "Level 2",
       "title": "Intermediate - Full Squat",
-      "description": "1x(30-60s)",
-      "type": "exercise",
-      "youTubeId": "",
-      "videoId": "starting_stretching_full_squat_intermediate",
-      "defaultSet": "timed"
-    },
-    {
-      "exerciseId": "7cf4e776-7104-4ab8-a6c2-4fafad412c02",
-      "level": "Level 3",
-      "title": "Advanced - Full Squat",
       "description": "1x(30-60s)",
       "type": "exercise",
       "youTubeId": "",
