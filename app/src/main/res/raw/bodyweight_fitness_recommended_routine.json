@@ -2,6 +2,8 @@
   "routineId": "routine0",
   "title": "Bodyweight Fitness",
   "subtitle": "Recommended Routine",
+  "shortDescription": "This program is split into three categories:\nWarmup, Skills Work and Strength Work.\n\nEach exercise in Skills Work and Strength Work categories has a progression. Progression exercises are there to help you be able to do exercises you cannot currently do because they are too difficult. For example, if you cannot do a push up, you will be doing wall push ups or incline push ups.\n\nDo the whole routine 3 times a week, with at least one rest day in between workout days.",
+  "url": "https://www.reddit.com/r/bodyweightfitness/wiki/kb/recommended_routine",
   "routine": [
     {
       "categoryId": "category0",
