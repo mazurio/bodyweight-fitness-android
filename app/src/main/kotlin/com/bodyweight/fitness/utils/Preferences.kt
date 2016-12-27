@@ -53,6 +53,45 @@ object Preferences {
                     .commit()
         }
 
+    var showRestTimerAfterWarmup: Boolean
+        get() {
+            return getSharedPreferences()
+                    .getBoolean(Constants.preferencesShowRestTimerAfterWarmup, false)
+        }
+
+        set(value) {
+            getSharedPreferences()
+                    .edit()
+                    .putBoolean(Constants.preferencesShowRestTimerAfterWarmup, value)
+                    .commit()
+        }
+
+    var showRestTimerAfterBodylineDrills: Boolean
+        get() {
+            return getSharedPreferences()
+                    .getBoolean(Constants.preferencesShowRestTimerAfterBodylineDrills, true)
+        }
+
+        set(value) {
+            getSharedPreferences()
+                    .edit()
+                    .putBoolean(Constants.preferencesShowRestTimerAfterBodylineDrills, value)
+                    .commit()
+        }
+
+    var showRestTimerAfterFlexibilityExercises: Boolean
+        get() {
+            return getSharedPreferences()
+                    .getBoolean(Constants.preferencesShowRestTimerAfterFlexibilityExercises, false)
+        }
+
+        set(value) {
+            getSharedPreferences()
+                    .edit()
+                    .putBoolean(Constants.preferencesShowRestTimerAfterFlexibilityExercises, value)
+                    .commit()
+        }
+
     var restTimerDefaultSeconds: Int
         get() {
             return getSharedPreferences()

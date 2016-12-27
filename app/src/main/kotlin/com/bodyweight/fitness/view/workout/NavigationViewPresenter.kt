@@ -41,9 +41,7 @@ class NavigationPresenter : AbstractPresenter() {
                 .subscribe {
                     val view = (view as NavigationView)
 
-                    if (Preferences.showRestTimer) {
-                        view.showRestTimer()
-                    }
+                    showRestTimer(view)
                 }
 
         Stream.loggedSecondsObservable
@@ -51,9 +49,7 @@ class NavigationPresenter : AbstractPresenter() {
                 .subscribe {
                     val view = (view as NavigationView)
 
-                    if (Preferences.showRestTimer) {
-                        view.showRestTimer()
-                    }
+                    showRestTimer(view)
                 }
     }
 
@@ -66,6 +62,30 @@ class NavigationPresenter : AbstractPresenter() {
 
         view.showTimerOrRepsLogger(exercise.isTimedSet)
         view.showPreviousNextButtons(exercise.isPrevious, exercise.isNext)
+    }
+
+    fun showRestTimer(view: NavigationView) {
+        if (Preferences.showRestTimer) {
+            val section = RoutineStream.exercise.section!!
+
+            if (section.sectionId == "section0") {
+                if (Preferences.showRestTimerAfterWarmup) {
+                    view.showRestTimer()
+                }
+            } else if (section.sectionId == "section1") {
+                if (Preferences.showRestTimerAfterBodylineDrills) {
+                    view.showRestTimer()
+                }
+            } else {
+                if (RoutineStream.routine.routineId != "routine0") {
+                    if (Preferences.showRestTimerAfterFlexibilityExercises) {
+                        view.showRestTimer()
+                    }
+                } else {
+                    view.showRestTimer()
+                }
+            }
+        }
     }
 
     fun previousExercise() {

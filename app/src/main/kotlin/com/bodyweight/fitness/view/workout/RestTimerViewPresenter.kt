@@ -6,6 +6,7 @@ import android.os.CountDownTimer
 import android.util.AttributeSet
 
 import com.bodyweight.fitness.*
+import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
 import com.bodyweight.fitness.utils.Preferences
 import com.bodyweight.fitness.view.AbstractPresenter
@@ -64,7 +65,27 @@ class RestTimerPresenter : AbstractPresenter() {
     }
 
     fun startTimer() {
-        RestTimerShared.countDownTimer?.start()
+        if (Preferences.showRestTimer) {
+            val section = RoutineStream.exercise.section!!
+
+            if (section.sectionId == "section0") {
+                if (Preferences.showRestTimerAfterWarmup) {
+                    RestTimerShared.countDownTimer?.start()
+                }
+            } else if (section.sectionId == "section1") {
+                if (Preferences.showRestTimerAfterBodylineDrills) {
+                    RestTimerShared.countDownTimer?.start()
+                }
+            } else {
+                if (RoutineStream.routine.routineId != "routine0") {
+                    if (Preferences.showRestTimerAfterFlexibilityExercises) {
+                        RestTimerShared.countDownTimer?.start()
+                    }
+                } else {
+                    RestTimerShared.countDownTimer?.start()
+                }
+            }
+        }
     }
 
     fun restartTimer(seconds: Int, restored: Boolean, isPlaying: Boolean) {
