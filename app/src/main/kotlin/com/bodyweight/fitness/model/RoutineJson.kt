@@ -6,6 +6,8 @@ class JSONRoutine {
     var routineId: String = ""
     var title: String = ""
     var subtitle: String = ""
+    var shortDescription: String = ""
+    var url: String = ""
     var routine = ArrayList<JSONLinkedRoutine>()
 
     val size: Int by lazy {

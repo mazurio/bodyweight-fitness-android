@@ -12,7 +12,7 @@
 
         <CheckBoxPreference
             android:key="PREFERENCE_PLAY_SOUND_WHEN_TIMER_STOPS"
-            android:title="Play Audio"
+            android:title="Play audio"
             android:summary="Plays audio when timer stops"
             android:defaultValue="true" />
 
@@ -27,6 +27,45 @@
             android:title="Automatically log time"
             android:summary="Logs workout time automatically for timed exercises"
             android:defaultValue="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Rest Timer">
+
+        <CheckBoxPreference
+            android:key="PREFERENCE_SHOW_REST_TIMER"
+            android:title="Show rest timer"
+            android:summary="Shows rest timer after logging any exercise"
+            android:defaultValue="true" />
+
+        <ListPreference
+            android:key="PREFERENCE_REST_TIMER_DEFAULT_SECONDS"
+            android:title="Default Rest Time"
+            android:summary="Default rest time between sets e.g. 30 seconds"
+            android:entries="@array/rest_time"
+            android:entryValues="@array/rest_time_values"
+            android:dependency="PREFERENCE_SHOW_REST_TIMER" />
+
+        <CheckBoxPreference
+            android:key="PREFERENCE_SHOW_REST_TIMER_WARMUP_EXERCISES"
+            android:title="Show rest timer after Warmup"
+            android:summary="Shows rest timer after logging warmup exercises"
+            android:dependency="PREFERENCE_SHOW_REST_TIMER"
+            android:defaultValue="false" />
+
+        <CheckBoxPreference
+            android:key="PREFERENCE_SHOW_REST_TIMER_BODYLINE_DRILLS"
+            android:title="Show rest timer after Bodyline Drills"
+            android:summary="Shows rest timer after logging bodyline drills"
+            android:dependency="PREFERENCE_SHOW_REST_TIMER"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="PREFERENCE_SHOW_REST_TIMER_FLEXIBILITY_ROUTINES"
+            android:title="Show rest timer after Flexibility Exercises"
+            android:summary="Shows rest timer after logging flexibility exercises e.g. Starting Stretching or Molding Mobility"
+            android:dependency="PREFERENCE_SHOW_REST_TIMER"
+            android:defaultValue="false" />
     </PreferenceCategory>
 
     <PreferenceCategory

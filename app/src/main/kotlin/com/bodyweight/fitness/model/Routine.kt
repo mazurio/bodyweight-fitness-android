@@ -13,6 +13,8 @@ class Routine(JSONRoutine: JSONRoutine) : Serializable {
     var routineId: String = "routine0"
     var title: String = ""
     var subtitle: String = ""
+    var shortDescription: String = ""
+    var url: String = ""
 
     val categories = ArrayList<Category>()
     val sections = ArrayList<Section>()
@@ -24,6 +26,8 @@ class Routine(JSONRoutine: JSONRoutine) : Serializable {
         routineId = JSONRoutine.routineId
         title = JSONRoutine.title
         subtitle = JSONRoutine.subtitle
+        shortDescription = JSONRoutine.shortDescription
+        url = JSONRoutine.url
 
         var currentCategory: Category? = null
         var currentSection: Section? = null

@@ -2,11 +2,14 @@ package com.bodyweight.fitness.view.workout
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 
 import com.bodyweight.fitness.setGone
 import com.bodyweight.fitness.setInvisible
 import com.bodyweight.fitness.setVisible
 import com.bodyweight.fitness.stream.RoutineStream
+import com.bodyweight.fitness.stream.Stream
+import com.bodyweight.fitness.utils.Preferences
 import com.bodyweight.fitness.view.AbstractPresenter
 import com.bodyweight.fitness.view.AbstractView
 
@@ -25,6 +28,29 @@ class NavigationPresenter : AbstractPresenter() {
                     view.showTimerOrRepsLogger(it.isTimedSet)
                     view.showPreviousNextButtons(it.isPrevious, it.isNext)
                 }
+
+
+        Stream.restTimerObservable
+                .bindToLifecycle(view)
+                .subscribe {
+                    restoreView(view)
+                }
+
+        Stream.loggedSetRepsObservable
+                .bindToLifecycle(view)
+                .subscribe {
+                    val view = (view as NavigationView)
+
+                    showRestTimer(view)
+                }
+
+        Stream.loggedSecondsObservable
+                .bindToLifecycle(view)
+                .subscribe {
+                    val view = (view as NavigationView)
+
+                    showRestTimer(view)
+                }
     }
 
     override fun restoreView(view: AbstractView) {
@@ -36,6 +62,30 @@ class NavigationPresenter : AbstractPresenter() {
 
         view.showTimerOrRepsLogger(exercise.isTimedSet)
         view.showPreviousNextButtons(exercise.isPrevious, exercise.isNext)
+    }
+
+    fun showRestTimer(view: NavigationView) {
+        if (Preferences.showRestTimer) {
+            val section = RoutineStream.exercise.section!!
+
+            if (section.sectionId == "section0") {
+                if (Preferences.showRestTimerAfterWarmup) {
+                    view.showRestTimer()
+                }
+            } else if (section.sectionId == "section1") {
+                if (Preferences.showRestTimerAfterBodylineDrills) {
+                    view.showRestTimer()
+                }
+            } else {
+                if (RoutineStream.routine.routineId != "routine0") {
+                    if (Preferences.showRestTimerAfterFlexibilityExercises) {
+                        view.showRestTimer()
+                    }
+                } else {
+                    view.showRestTimer()
+                }
+            }
+        }
     }
 
     fun previousExercise() {
@@ -68,13 +118,25 @@ open class NavigationView : AbstractView {
         }
     }
 
+    fun showRestTimer() {
+        rest_timer_view.setVisible()
+        timer_view.setGone()
+        reps_logger_view.setGone()
+    }
+
     fun showTimerOrRepsLogger(isTimed: Boolean) {
-        if (isTimed) {
-            timer_view.setVisible()
-            reps_logger_view.setGone()
+        if (!RestTimerShared.isPlaying) {
+            if (isTimed) {
+                rest_timer_view.setGone()
+                timer_view.setVisible()
+                reps_logger_view.setGone()
+            } else {
+                rest_timer_view.setGone()
+                timer_view.setGone()
+                reps_logger_view.setVisible()
+            }
         } else {
-            timer_view.setGone()
-            reps_logger_view.setVisible()
+            showRestTimer()
         }
     }
 

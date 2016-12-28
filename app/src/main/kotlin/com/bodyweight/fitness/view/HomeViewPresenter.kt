@@ -9,6 +9,7 @@ import android.util.AttributeSet
 import com.bodyweight.fitness.*
 import com.bodyweight.fitness.model.RepositoryCategory
 import com.bodyweight.fitness.model.RepositoryRoutine
+import com.bodyweight.fitness.model.Routine
 import com.bodyweight.fitness.repository.Repository
 import com.bodyweight.fitness.stream.RoutineStream
 import com.bodyweight.fitness.stream.Stream
@@ -45,9 +46,19 @@ class HomeViewPresenter : AbstractPresenter() {
         RoutineStream.routineObservable()
                 .bindToLifecycle(view)
                 .subscribe {
+                    updateShortDescription(it)
                     updateTodaysProgress()
                     updateStatistics()
                 }
+    }
+
+    fun updateShortDescription(routine: Routine) {
+        val view = (getView() as HomeView)
+
+        view.setShortDescription(
+                title = routine.title,
+                shortDescription = routine.shortDescription,
+                url = routine.url)
     }
 
     fun updateTodaysProgress() {
@@ -186,6 +197,14 @@ class HomeViewPresenter : AbstractPresenter() {
             putExtra(Intent.EXTRA_EMAIL, "damian@mazur.io")
         }, "Send Email"))
     }
+
+    fun readMoreAboutRoutine() {
+        val routine = RoutineStream.routine
+
+        context().startActivity(Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(routine.url)
+        })
+    }
 }
 
 open class HomeView : AbstractView {
@@ -213,6 +232,15 @@ open class HomeView : AbstractView {
         send_email.setOnClickListener {
             (presenter as HomeViewPresenter).sendEmail()
         }
+
+        read_more_about_routine.setOnClickListener {
+            (presenter as HomeViewPresenter).readMoreAboutRoutine()
+        }
+    }
+
+    fun setShortDescription(title: String, shortDescription: String, url: String) {
+        routine_title.text = title
+        short_description.text = shortDescription
     }
 
     fun setStartWorkoutButtonTitle(title: String) {

@@ -17,4 +17,9 @@ object Constants {
     val preferencesTimerKey = "PREFERENCE_TIMER_KEY_"
     val preferencesNumberOfRepsKey = "PREFERENCE_NUMBER_OF_REPS_KEY_"
     val preferencesIntroductionShown = "PREFERENCE_INTRODUCTION_SHOWN"
+    val preferencesShowRestTimer = "PREFERENCE_SHOW_REST_TIMER"
+    val preferencesRestTimerDefaultSeconds = "PREFERENCE_REST_TIMER_DEFAULT_SECONDS"
+    val preferencesShowRestTimerAfterWarmup = "PREFERENCE_SHOW_REST_TIMER_WARMUP_EXERCISES"
+    val preferencesShowRestTimerAfterBodylineDrills = "PREFERENCE_SHOW_REST_TIMER_BODYLINE_DRILLS"
+    val preferencesShowRestTimerAfterFlexibilityExercises = "PREFERENCE_SHOW_REST_TIMER_FLEXIBILITY_ROUTINES"
 }

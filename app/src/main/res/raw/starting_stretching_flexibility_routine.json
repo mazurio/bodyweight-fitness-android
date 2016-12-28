@@ -1,0 +1,277 @@
+{
+  "routineId": "d8a722a0-fae2-4e7e-a751-430348c659fe",
+  "title": "Starting Stretching",
+  "subtitle": "Flexibility Routine",
+  "shortDescription": "Many people want to improve overall flexibility, but do not know where to begin. This routine should serve as a general jumping-off point for beginners.\n\nThis program is intended to go hand-in-hand with Molding Mobility.\n\nThis program covers a series of 9 stretches - 3 upper body, 4 lower body, and 2 torso. Each is to be done for a total of 60 seconds. Doing this in one stretch is the best, but if you need to stretch for 30s, relax, and finish 30s, that is fine too. Try not to go lower than 20s intervals - if you can't do a stretch for at least 20s, lessen the intensity.\n\nThese stretches are to be performed in succession after every single workout. This should take only 20-30 minutes. It is recommended, however to do them every single day. If you have time, repeating the stretches 2-3 times is also recommended.",
+  "url": "http://phraktured.net/starting-stretching.html",
+  "routine": [
+    {
+      "categoryId": "f94a9c8c-9a45-43d6-8cf4-345216437be5",
+      "title": "Upper Body",
+      "type": "category"
+    },
+    {
+      "sectionId": "78f26516-b1b7-4670-a12c-f1e19abd5bc7",
+      "title": "Shoulder Extension",
+      "description": "1x(30s-60s)",
+      "type": "section",
+      "mode": "levels"
+    },
+    {
+      "exerciseId": "20d42eb4-4c36-42f1-bae5-67624582731a",
+      "level": "Level 1",
+      "title": "Beginner - Shoulder Extension",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_shoulder_extension_beginner",
+      "defaultSet": "timed"
+    },
+    {
+      "exerciseId": "2d789ebb-83c3-4b88-8399-35ee3daf8b12",
+      "level": "Level 2",
+      "title": "Intermediate - Shoulder Extension",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_shoulder_extension_intermediate",
+      "defaultSet": "timed"
+    },
+    {
+      "exerciseId": "a73c66af-26a6-4fc2-9f45-60a70cf0565d",
+      "level": "Level 3",
+      "title": "Advanced - Shoulder Extension",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_shoulder_extension_advanced",
+      "defaultSet": "timed"
+    },
+    {
+      "sectionId": "d4bfa7b3-8e58-4bba-9fd4-921093d385d3",
+      "title": "Underarm Shoulder Stretch",
+      "description": "1x(30s-60s)",
+      "type": "section",
+      "mode": "levels"
+    },
+    {
+      "exerciseId": "09d8678e-f8d7-4d6d-bbe2-15ad6c8ef1b0",
+      "level": "Level 1",
+      "title": "Beginner - Underarm Shoulder Stretch",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_underarm_shoulder_stretch_beginner",
+      "defaultSet": "timed"
+    },
+    {
+      "exerciseId": "e751750c-46d2-4d4f-a5a2-698df6edd108",
+      "level": "Level 2",
+      "title": "Intermediate - Underarm Shoulder Stretch",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_underarm_shoulder_stretch_intermediate",
+      "defaultSet": "timed"
+    },
+    {
+      "exerciseId": "538875ad-7762-459b-9024-fa1dbc668fa0",
+      "level": "Level 3",
+      "title": "Advanced - Underarm Shoulder Stretch",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_underarm_shoulder_stretch_advanced",
+      "defaultSet": "timed"
+    },
+    {
+      "sectionId": "4185dde5-0525-4127-9f2d-c242caa9f42b",
+      "title": "Rear Hand Clasp",
+      "description": "1x(30-60s)",
+      "type": "section",
+      "mode": "levels"
+    },
+    {
+      "exerciseId": "71475ee8-787a-4448-8752-fd2673756d89",
+      "level": "Level 1",
+      "title": "Beginner - Rear Hand Clasp",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_rear_hand_clasp_beginner",
+      "defaultSet": "timed"
+    },
+    {
+      "categoryId": "3e5e56a7-74c4-4ee4-82ea-e3e7134deed2",
+      "title": "Lower Body",
+      "type": "category"
+    },
+    {
+      "sectionId": "4a14594d-a26e-47e7-9429-70412cef3de9",
+      "title": "Full Squat",
+      "description": "1x(30s-60s)",
+      "type": "section",
+      "mode": "levels"
+    },
+    {
+      "exerciseId": "5d24b8bc-c2af-4a7b-a8fd-eaac27823a32",
+      "level": "Level 1",
+      "title": "Beginner - Full Squat",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_full_squat_beginner",
+      "defaultSet": "timed"
+    },
+    {
+      "exerciseId": "c28ce7ce-cccf-493d-933b-8ecdfc2f59a4",
+      "level": "Level 2",
+      "title": "Intermediate - Full Squat",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_full_squat_intermediate",
+      "defaultSet": "timed"
+    },
+    {
+      "sectionId": "3e0e14c1-8cb7-4a14-8c03-959004482f2b",
+      "title": "Standing Pike",
+      "description": "1x(30s-60s)",
+      "type": "section",
+      "mode": "levels"
+    },
+    {
+      "exerciseId": "74701880-cd14-4229-b220-2c919e7beaeb",
+      "level": "Level 1",
+      "title": "Beginner - Standing Pike",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_standing_pike_beginner",
+      "defaultSet": "timed"
+    },
+    {
+      "exerciseId": "d5cad3cc-5a4f-4a78-8495-2028a16130af",
+      "level": "Level 2",
+      "title": "Intermediate - Standing Pike",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_standing_pike_intermediate",
+      "defaultSet": "timed"
+    },
+    {
+      "sectionId": "9c6a52a9-163e-4c81-af54-c86e40300100",
+      "title": "Kneeling Lunge",
+      "description": "1x(30s-60s)",
+      "type": "section",
+      "mode": "levels"
+    },
+    {
+      "exerciseId": "f5647590-8952-4b93-852c-b53ee3f2d790",
+      "level": "Level 1",
+      "title": "Beginner - Kneeling Lunge",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_kneeling_lunge_beginner",
+      "defaultSet": "timed"
+    },
+    {
+      "exerciseId": "afa2bacb-0220-4232-9b97-75fe47c76db5",
+      "level": "Level 2",
+      "title": "Intermediate - Kneeling Lunge",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_kneeling_lunge_intermediate",
+      "defaultSet": "timed"
+    },
+    {
+      "sectionId": "50103afb-d834-4c32-92e5-8856bf4a9fb8",
+      "title": "Butterfly",
+      "description": "1x(30s-60s)",
+      "type": "section",
+      "mode": "levels"
+    },
+    {
+      "exerciseId": "39fece34-9751-42da-b38b-36cf0253c9f1",
+      "level": "Level 1",
+      "title": "Beginner - Butterfly",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_butterfly_beginner",
+      "defaultSet": "timed"
+    },
+    {
+      "exerciseId": "70b23071-c37c-4567-8922-b8966ef989dd",
+      "level": "Level 2",
+      "title": "Intermediate - Butterfly",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_butterfly_intermediate",
+      "defaultSet": "timed"
+    },
+    {
+      "categoryId": "e85fd852-7b66-4312-8355-f717c0209c63",
+      "title": "Torso",
+      "type": "category"
+    },
+    {
+      "sectionId": "893b8ba3-eea6-4eac-bc3e-071bf1307991",
+      "title": "Backbend",
+      "description": "1x(30s-60s)",
+      "type": "section",
+      "mode": "levels"
+    },
+    {
+      "exerciseId": "926b97af-7988-4126-ac50-16bf40098f99",
+      "level": "Level 1",
+      "title": "Beginner - Glute Bridge",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_glute_bridge",
+      "defaultSet": "timed"
+    },
+    {
+      "exerciseId": "41f4bf3e-519b-49de-9d62-02d6b0e0afa6",
+      "level": "Level 2",
+      "title": "Intermediate - Camel",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_camel",
+      "defaultSet": "timed"
+    },
+    {
+      "sectionId": "c426db23-168a-4219-bbda-a2fd3e7db316",
+      "title": "Lying Twist",
+      "description": "1x(30s-60s)",
+      "type": "section",
+      "mode": "levels"
+    },
+    {
+      "exerciseId": "3d585910-0719-45d0-9527-a7a79a867f02",
+      "level": "Level 1",
+      "title": "Beginner - Lying Twist",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_lying_twist_beginner",
+      "defaultSet": "timed"
+    },
+    {
+      "exerciseId": "829c48f6-c501-40fe-a80e-a586db91a9a1",
+      "level": "Level 2",
+      "title": "Intermediate - Lying Twist",
+      "description": "1x(30-60s)",
+      "type": "exercise",
+      "youTubeId": "",
+      "videoId": "starting_stretching_lying_twist_intermediate",
+      "defaultSet": "timed"
+    }
+  ]
+}
