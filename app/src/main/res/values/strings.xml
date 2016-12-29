@@ -2,7 +2,7 @@
 	<string name="transition_dashboard">transition:DASHBOARD</string>
 
 	<string name="app_name">Bodyweight Fitness</string>
-	<string name="app_version">1.4.0</string>
+	<string name="app_version">1.4.1</string>
 	<string name="action_progression">Choose Exercise Progression</string>
 	<string name="action_about">About</string>
 	<string name="action_faq">FAQ</string>
