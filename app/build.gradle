@@ -39,14 +39,14 @@ android {
     productFlavors {
         pro {
             applicationId 'com.bodyweight.fitness.pro'
-            versionCode 136
-            versionName "1.3.6"
+            versionCode 140
+            versionName "1.4.0"
         }
 
         free {
             applicationId 'com.bodyweight.fitness.free'
-            versionCode 136
-            versionName "1.3.6"
+            versionCode 140
+            versionName "1.4.0"
         }
     }
     buildTypes {
