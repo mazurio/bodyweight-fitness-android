@@ -30,12 +30,6 @@ class CalendarListAdapter : RecyclerView.Adapter<CalendarRoutinePresenter>() {
         notifyDataSetChanged()
     }
 
-    fun removeItem(repositoryRoutine: RepositoryRoutine) {
-        repositoryRoutineList?.remove(repositoryRoutine)
-
-        notifyDataSetChanged()
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarRoutinePresenter {
         val view = parent.inflate(R.layout.view_calendar_card)
 

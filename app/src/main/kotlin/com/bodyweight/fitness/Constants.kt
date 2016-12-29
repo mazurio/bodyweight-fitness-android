@@ -5,7 +5,9 @@ object Constants {
     val exerciseId = "exerciseId"
 
     val googlePlayUrl = "https://play.google.com/store/apps/details?id=com.bodyweight.fitness.pro"
-    val fileProvider = "com.bodyweight.fitness.fileprovider"
+    val fileProvider: String by lazy {
+        App.context!!.getString(R.string.file_provider)
+    }
 
     val maximumNumberOfSets = 12
 

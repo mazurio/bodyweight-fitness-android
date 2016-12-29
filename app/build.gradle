@@ -38,15 +38,19 @@ android {
     }
     productFlavors {
         pro {
+            resValue "string", "file_provider", "com.bodyweight.fitness.pro.fileprovider"
+
             applicationId 'com.bodyweight.fitness.pro'
-            versionCode 140
-            versionName "1.4.0"
+            versionCode 141
+            versionName "1.4.1"
         }
 
         free {
+            resValue "string", "file_provider", "com.bodyweight.fitness.free.fileprovider"
+
             applicationId 'com.bodyweight.fitness.free'
-            versionCode 140
-            versionName "1.4.0"
+            versionCode 141
+            versionName "1.4.1"
         }
     }
     buildTypes {
@@ -122,7 +126,7 @@ dependencies {
 }
 
 buildscript {
-    ext.support_version = '25.0.0'
+    ext.support_version = '25.1.0'
     ext.kotlin_version = '1.0.4'
     repositories {
         mavenCentral()
