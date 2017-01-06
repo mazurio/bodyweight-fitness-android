@@ -115,8 +115,17 @@
       "defaultSet": "timed"
     },
     {
-      "exerciseId": "exercise8",
-      "title": "Side Plank (Both Sides)",
+      "exerciseId": "exercise8left",
+      "title": "Left Side Plank",
+      "description": "1x(10-60s) hold",
+      "type": "exercise",
+      "youTubeId": "xIFWxQgFMiE",
+      "videoId": "bodyweight_fitness_side_plank",
+      "defaultSet": "timed"
+    },
+    {
+      "exerciseId": "exercise8right",
+      "title": "Right Side Plank",
       "description": "1x(10-60s) hold",
       "type": "exercise",
       "youTubeId": "xIFWxQgFMiE",
