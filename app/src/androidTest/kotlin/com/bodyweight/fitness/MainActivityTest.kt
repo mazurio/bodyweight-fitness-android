@@ -17,11 +17,9 @@ class MainActivityTest : ActivityInstrumentationTestCase2<MainActivity>(MainActi
     }
 
     fun testExerciseSetup() {
-        onView(withId(R.id.toolbar_exercise_title))
+        onView(withId(R.id.title))
                 .check(matches(withText("Shoulder Rolls")))
-        onView(withId(R.id.toolbar_section_title))
-                .check(matches(withText("Dynamic Stretches")))
-        onView(withId(R.id.toolbar_exercise_description))
+        onView(withId(R.id.description))
                 .check(matches(withText("1x(5-10)")))
 
         onView(withId(R.id.prev_exercise_button))
@@ -31,11 +29,9 @@ class MainActivityTest : ActivityInstrumentationTestCase2<MainActivity>(MainActi
 
         onView(withId(R.id.next_exercise_button)).perform(click())
 
-        onView(withId(R.id.toolbar_exercise_title))
+        onView(withId(R.id.title))
                 .check(matches(withText("Scapular Shrugs")))
-        onView(withId(R.id.toolbar_section_title))
-                .check(matches(withText("Dynamic Stretches")))
-        onView(withId(R.id.toolbar_exercise_description))
+        onView(withId(R.id.description))
                 .check(matches(withText("1x(5-10)")))
 
         onView(withId(R.id.prev_exercise_button))
@@ -49,11 +45,9 @@ class MainActivityTest : ActivityInstrumentationTestCase2<MainActivity>(MainActi
         onView(withId(R.id.next_exercise_button)).perform(click())
         onView(withId(R.id.next_exercise_button)).perform(click())
 
-        onView(withId(R.id.toolbar_exercise_title))
-                .check(matches(withText("Front and Side Leg Swings")))
-        onView(withId(R.id.toolbar_section_title))
-                .check(matches(withText("Dynamic Stretches")))
-        onView(withId(R.id.toolbar_exercise_description))
+        onView(withId(R.id.title))
+                .check(matches(withText("Front Leg Swings")))
+        onView(withId(R.id.description))
                 .check(matches(withText("1x(5-10)")))
 
         onView(withId(R.id.prev_exercise_button))

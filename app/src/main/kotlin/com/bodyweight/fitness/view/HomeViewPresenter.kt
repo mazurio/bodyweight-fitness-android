@@ -107,7 +107,7 @@ class HomeViewPresenter : AbstractPresenter() {
         view.setNumberOfWorkoutsLast30Days("$last30Days ${getNumberOfWorkoutsPostfix(last30Days)}")
     }
 
-    private fun getStartWorkoutButtonText(repositoryRoutineForTodayExists: Boolean, isRoutineCompleted: Boolean): String {
+    public fun getStartWorkoutButtonText(repositoryRoutineForTodayExists: Boolean, isRoutineCompleted: Boolean): String {
         if (repositoryRoutineForTodayExists) {
             if (isRoutineCompleted) {
                 return "Review Workout"
