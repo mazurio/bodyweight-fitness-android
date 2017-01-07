@@ -115,7 +115,7 @@
       "defaultSet": "timed"
     },
     {
-      "exerciseId": "exercise8left",
+      "exerciseId": "exercise8",
       "title": "Left Side Plank",
       "description": "1x(10-60s) hold",
       "type": "exercise",
@@ -124,7 +124,7 @@
       "defaultSet": "timed"
     },
     {
-      "exerciseId": "exercise8right",
+      "exerciseId": "f4f27acd-fd69-40f8-a459-a9f02c56ed03",
       "title": "Right Side Plank",
       "description": "1x(10-60s) hold",
       "type": "exercise",
