@@ -81,7 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        app:srcCompat="@drawable/action_log"
+                        app:srcCompat="@drawable/action_done_white"
                         android:layout_centerInParent="true"
                         app:borderWidth="0dp"
                         app:elevation="@dimen/view_action_elevation"/>
