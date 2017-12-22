@@ -17,32 +17,37 @@ object Repository {
     private val realmName = "bodyweight.fitness.realm"
 
     val realm: Realm
-        get() = Realm.getInstance(RealmConfiguration.Builder(App.context)
-                .name(realmName)
-                .schemaVersion(2)
-                .migration { realm: DynamicRealm, oldVersion: Long, newVersion: Long ->
-                    val schema = realm.schema
-                    val routineSchema = schema.get("RepositoryRoutine")
+        get() {
+            Realm.init(App.context)
 
-                    if (oldVersion.toInt() == 1) {
-                        routineSchema
-                                .addField("title", String::class.java)
-                                .addField("subtitle", String::class.java)
-                                .transform { obj: DynamicRealmObject ->
-                                    obj.set("title", "Bodyweight Fitness")
-                                    obj.set("subtitle", "Recommended Routine")
-                                }
+            val configuration = RealmConfiguration.Builder()
+                    .name(realmName)
+                    .schemaVersion(2)
+                    .migration { realm: DynamicRealm, oldVersion: Long, newVersion: Long ->
+                        val schema = realm.schema
+                        val routineSchema = schema.get("RepositoryRoutine")
+
+                        if (oldVersion.toInt() == 1) {
+                            routineSchema
+                                    .addField("title", String::class.java)
+                                    .addField("subtitle", String::class.java)
+                                    .transform { obj: DynamicRealmObject ->
+                                        obj.set("title", "Bodyweight Fitness")
+                                        obj.set("subtitle", "Recommended Routine")
+                                    }
+                        }
                     }
-                }
-                .build())
+                    .build()
+
+            return Realm.getInstance(configuration)
+        }
 
     fun buildRealmRoutine(routine: Routine): RepositoryRoutine {
         var repositoryRoutine: RepositoryRoutine? = null
 
         realm.executeTransaction {
-            repositoryRoutine = realm.createObject(RepositoryRoutine::class.java)
+            repositoryRoutine = realm.createObject(RepositoryRoutine::class.java, "Routine-" + UUID.randomUUID().toString())
             repositoryRoutine?.let {
-                it.id = "Routine-" + UUID.randomUUID().toString()
                 it.routineId = routine.routineId
                 it.title = routine.title
                 it.subtitle = routine.subtitle
@@ -53,15 +58,14 @@ object Repository {
                 var repositorySection: RepositorySection? = null
 
                 for (exercise in routine.exercises) {
-                    val repositoryExercise = realm.createObject(RepositoryExercise::class.java)
-                    repositoryExercise.id = "Exercise-" + UUID.randomUUID().toString()
+                    val repositoryExercise = realm.createObject(RepositoryExercise::class.java, "Exercise-" + UUID.randomUUID().toString())
                     repositoryExercise.exerciseId = exercise.exerciseId
                     repositoryExercise.title = exercise.title
                     repositoryExercise.description = exercise.description
                     repositoryExercise.defaultSet = exercise.defaultSet
 
-                    val repositorySet = realm.createObject(RepositorySet::class.java)
-                    repositorySet.id = "Set-" + UUID.randomUUID().toString()
+                    val repositorySetId = "Set-" + UUID.randomUUID().toString()
+                    val repositorySet = realm.createObject(RepositorySet::class.java, repositorySetId)
 
                     if (exercise.defaultSet == "weighted") {
                         repositorySet.isTimed = false
@@ -77,8 +81,7 @@ object Repository {
                     repositoryExercise.sets.add(repositorySet)
 
                     if (repositoryCategory == null || !repositoryCategory.title.equals(exercise.category!!.title, ignoreCase = true)) {
-                        repositoryCategory = realm.createObject(RepositoryCategory::class.java)
-                        repositoryCategory!!.id = "Category-" + UUID.randomUUID().toString()
+                        repositoryCategory = realm.createObject(RepositoryCategory::class.java, "Category-" + UUID.randomUUID().toString())
                         repositoryCategory.categoryId = exercise.category!!.categoryId
                         repositoryCategory.title = exercise.category!!.title
                         repositoryCategory.routine = repositoryRoutine
@@ -87,8 +90,7 @@ object Repository {
                     }
 
                     if (repositorySection == null || !repositorySection.title.equals(exercise.section!!.title, ignoreCase = true)) {
-                        repositorySection = realm.createObject(RepositorySection::class.java)
-                        repositorySection!!.id = "Section-" + UUID.randomUUID().toString()
+                        repositorySection = realm.createObject(RepositorySection::class.java, "Section-" + UUID.randomUUID().toString())
                         repositorySection.sectionId = exercise.section!!.sectionId
                         repositorySection.title = exercise.section!!.title
                         repositorySection.mode = exercise.section!!.sectionMode.toString()
@@ -96,7 +98,7 @@ object Repository {
                         repositorySection.category = repositoryCategory
 
                         it.sections.add(repositorySection)
-                        repositoryCategory.sections.add(repositorySection)
+                        repositoryCategory!!.sections.add(repositorySection)
                     }
 
                     repositoryExercise.routine = repositoryRoutine
@@ -117,8 +119,8 @@ object Repository {
                     }
 
                     it.exercises.add(repositoryExercise)
-                    repositoryCategory.exercises.add(repositoryExercise)
-                    repositorySection.exercises.add(repositoryExercise)
+                    repositoryCategory!!.exercises.add(repositoryExercise)
+                    repositorySection!!.exercises.add(repositoryExercise)
                 }
             }
         }

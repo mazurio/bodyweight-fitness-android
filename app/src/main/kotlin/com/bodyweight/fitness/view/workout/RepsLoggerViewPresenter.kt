@@ -72,9 +72,8 @@ class RepsLoggerPresenter : AbstractPresenter() {
 
                         Stream.setLoggedSetReps(SetReps(numberOfSets, numberOfReps))
                     } else {
-                        val repositorySet = realm.createObject(RepositorySet::class.java)
+                        val repositorySet = realm.createObject(RepositorySet::class.java, "Set-" + UUID.randomUUID().toString())
 
-                        repositorySet.id = "Set-" + UUID.randomUUID().toString()
                         repositorySet.isTimed = false
                         repositorySet.seconds = 0
                         repositorySet.weight = 0.0
