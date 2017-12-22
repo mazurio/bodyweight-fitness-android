@@ -1,5 +1,6 @@
 package com.bodyweight.fitness.model
 
+import com.bodyweight.fitness.utils.Preferences
 import java.io.Serializable
 import java.util.*
 
