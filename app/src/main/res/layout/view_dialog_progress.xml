@@ -61,7 +61,7 @@
                         android:layout_alignLeft="@+id/level_progress_bar"
                         android:layout_alignRight="@+id/level_progress_bar"
                         android:layout_alignBottom="@+id/level_progress_bar"
-                        app:typeface="roboto_bold"/>
+                        app:robotoTypeface="roboto_bold"/>
 
                     <com.bodyweight.fitness.view.widget.CircularProgressBar
                         android:id="@+id/level_progress_bar"

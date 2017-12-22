@@ -16,7 +16,7 @@
         android:textColor="@color/black"
         android:textSize="15dp"
         android:visibility="gone"
-        app:typeface="roboto_medium"/>
+        app:robotoTypeface="roboto_medium"/>
 
     <com.devspark.robototextview.widget.RobotoTextView
         android:id="@+id/repsValue"
@@ -27,7 +27,7 @@
         android:background="@null"
         android:textColor="@color/black"
         android:textSize="15dp"
-        app:typeface="roboto_medium"/>
+        app:robotoTypeface="roboto_medium"/>
 
     <RelativeLayout
         android:id="@+id/center"
@@ -43,5 +43,5 @@
         android:layout_centerInParent="true"
         android:textColor="@color/black"
         android:textSize="13dp"
-        app:typeface="roboto_medium"/>
+        app:robotoTypeface="roboto_medium"/>
 </RelativeLayout>

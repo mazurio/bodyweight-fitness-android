@@ -15,5 +15,5 @@
         android:textColor="@color/label_text"
         android:textSize="16sp"
         android:text="Dynamic Stretches"
-        app:typeface="roboto_regular"/>
+        app:robotoTypeface="roboto_regular"/>
 </LinearLayout>

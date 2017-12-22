@@ -200,7 +200,7 @@
                     android:textColor="#111"
                     android:textSize="18sp"
                     android:text="Previous Workout"
-                    app:typeface="roboto_regular"/>
+                    app:robotoTypeface="roboto_regular"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
                     android:id="@+id/previous_workout_value"
@@ -209,7 +209,7 @@
                     android:gravity="center"
                     android:textSize="16sp"
                     android:text="5-5-5-5"
-                    app:typeface="roboto_regular"/>
+                    app:robotoTypeface="roboto_regular"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
                     android:id="@+id/this_workout_label"
@@ -221,7 +221,7 @@
                     android:textColor="#111"
                     android:textSize="18sp"
                     android:text="This Workout"
-                    app:typeface="roboto_regular"/>
+                    app:robotoTypeface="roboto_regular"/>
             </LinearLayout>
 
             <com.devspark.robototextview.widget.RobotoButton

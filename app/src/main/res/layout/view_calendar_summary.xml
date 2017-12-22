@@ -39,7 +39,7 @@
                 android:textSize="65sp"
                 android:textColor="#F3F3F3"
                 android:text="3"
-                app:typeface="roboto_regular"/>
+                app:robotoTypeface="roboto_regular"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
                 android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
                 android:gravity="center"
                 android:textColor="#F3F3F3"
                 android:text="days"
-                app:typeface="roboto_regular"/>
+                app:robotoTypeface="roboto_regular"/>
         </LinearLayout>
 
         <com.devspark.robototextview.widget.RobotoTextView
@@ -58,7 +58,7 @@
             android:textSize="15sp"
             android:textColor="#656565"
             android:text="Current Streak"
-            app:typeface="roboto_regular"/>
+            app:robotoTypeface="roboto_regular"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -98,7 +98,7 @@
                     android:textSize="25sp"
                     android:textColor="#3E3E3E"
                     android:text="14 days"
-                    app:typeface="roboto_bold"/>
+                    app:robotoTypeface="roboto_bold"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
                     android:layout_width="match_parent"
@@ -107,7 +107,7 @@
                     android:textSize="15sp"
                     android:textColor="#898989"
                     android:text="Longest Streak"
-                    app:typeface="roboto_regular"/>
+                    app:robotoTypeface="roboto_regular"/>
             </LinearLayout>
 
             <LinearLayout
@@ -122,7 +122,7 @@
                     android:textSize="25sp"
                     android:textColor="#3E3E3E"
                     android:text="Today"
-                    app:typeface="roboto_regular"/>
+                    app:robotoTypeface="roboto_regular"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
                     android:layout_width="match_parent"
@@ -131,7 +131,7 @@
                     android:textSize="15sp"
                     android:textColor="#898989"
                     android:text="Last Workout"
-                    app:typeface="roboto_regular"/>
+                    app:robotoTypeface="roboto_regular"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -155,7 +155,7 @@
                     android:textSize="25sp"
                     android:textColor="#3E3E3E"
                     android:text="5 workouts"
-                    app:typeface="roboto_regular"/>
+                    app:robotoTypeface="roboto_regular"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
                     android:layout_width="match_parent"
@@ -164,7 +164,7 @@
                     android:textSize="15sp"
                     android:textColor="#898989"
                     android:text="In last 30 Days"
-                    app:typeface="roboto_regular"/>
+                    app:robotoTypeface="roboto_regular"/>
             </LinearLayout>
 
             <LinearLayout
@@ -179,7 +179,7 @@
                     android:textSize="25sp"
                     android:textColor="#3E3E3E"
                     android:text="2 workouts"
-                    app:typeface="roboto_regular"/>
+                    app:robotoTypeface="roboto_regular"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
                     android:layout_width="match_parent"
@@ -188,7 +188,7 @@
                     android:textSize="15sp"
                     android:textColor="#898989"
                     android:text="In last 7 Days"
-                    app:typeface="roboto_regular"/>
+                    app:robotoTypeface="roboto_regular"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

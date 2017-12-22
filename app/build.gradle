@@ -1,11 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'realm-android'
-
 apply plugin: 'io.fabric'
 
 android {
@@ -112,10 +108,10 @@ dependencies {
     implementation 'com.trello:rxlifecycle-components:0.8.0'
     implementation 'com.trello:rxlifecycle-kotlin:0.8.0'
 
-    implementation 'com.robinhood.spark:spark:1.1.2'
+    implementation 'com.robinhood.spark:spark:1.2.0'
 
     implementation 'com.roughike:bottom-bar:2.0.2'
-    implementation 'com.github.johnkil.android-robototextview:robototextview:2.5.1'
+    implementation 'com.github.johnkil.android-robototextview:robototextview:4.0.0'
     implementation 'com.gordonwong:material-sheet-fab:1.2.1'
     implementation 'io.github.kobakei:ratethisapp:1.0.3'
     implementation 'com.github.paolorotolo:appintro:4.1.0'
@@ -124,11 +120,3 @@ dependencies {
         transitive = true
     }
 }
-
-//junitPlatform {
-//    filters {
-//        engines {
-//            include 'spek'
-//        }
-//    }
-//}

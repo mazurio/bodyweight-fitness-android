@@ -20,6 +20,6 @@
             android:background="@color/primary"
             android:textColor="@color/white"
             android:textSize="18sp"
-            app:typeface="roboto_regular"/>
+            app:robotoTypeface="roboto_regular"/>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

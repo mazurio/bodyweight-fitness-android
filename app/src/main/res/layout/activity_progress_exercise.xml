@@ -71,7 +71,7 @@
                                 android:text="Tuesday, 24 May 2016"
                                 android:textSize="20sp"
                                 android:textColor="@color/label_text"
-                                app:typeface="roboto_regular"/>
+                                app:robotoTypeface="roboto_regular"/>
 
                             <com.devspark.robototextview.widget.RobotoTextView
                                 android:id="@+id/graph_description"
@@ -84,7 +84,7 @@
                                 android:text="Set 1, 10 Reps"
                                 android:textSize="18sp"
                                 android:textColor="@color/value_text"
-                                app:typeface="roboto_regular"/>
+                                app:robotoTypeface="roboto_regular"/>
 
                             <com.robinhood.spark.SparkView
                                 android:id="@+id/graph_view"
@@ -122,7 +122,7 @@
                                     android:layout_height="wrap_content"
                                     android:textSize="20sp"
                                     android:textColor="@color/value_text"
-                                    app:typeface="roboto_regular"/>
+                                    app:robotoTypeface="roboto_regular"/>
 
                                 <com.devspark.robototextview.widget.RobotoTextView
                                     android:id="@+id/exercise_description"
@@ -131,7 +131,7 @@
                                     android:paddingTop="4dp"
                                     android:textSize="15sp"
                                     android:textColor="@color/label_text"
-                                    app:typeface="roboto_regular"/>
+                                    app:robotoTypeface="roboto_regular"/>
                             </LinearLayout>
 
                             <LinearLayout

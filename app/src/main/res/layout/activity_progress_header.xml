@@ -102,7 +102,7 @@
                 android:textColor="@color/label_text"
                 android:textSize="16sp"
                 android:text="Category Completion Rate"
-                app:typeface="roboto_regular"/>
+                app:robotoTypeface="roboto_regular"/>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -125,7 +125,7 @@
                         android:text="Tuesday, 24 May 2016"
                         android:textSize="20sp"
                         android:textColor="@color/label_text"
-                        app:typeface="roboto_regular"/>
+                        app:robotoTypeface="roboto_regular"/>
 
                     <com.devspark.robototextview.widget.RobotoTextView
                         android:id="@+id/graph_category_completion_rate_description"
@@ -137,7 +137,7 @@
                         android:text="85%"
                         android:textSize="18sp"
                         android:textColor="@color/value_text"
-                        app:typeface="roboto_regular"/>
+                        app:robotoTypeface="roboto_regular"/>
 
                     <com.robinhood.spark.SparkView
                         android:id="@+id/graph_category_completion_rate_view"

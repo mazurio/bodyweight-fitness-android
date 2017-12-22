@@ -35,7 +35,7 @@
                     android:text="Pullup"
                     android:textSize="20sp"
                     android:textColor="@color/value_text"
-                    app:typeface="roboto_regular"/>
+                    app:robotoTypeface="roboto_regular"/>
 
                 <com.devspark.robototextview.widget.RobotoTextView
                     android:id="@+id/exercise_summary"
@@ -45,7 +45,7 @@
                     android:text="39 Sets, 945 Reps"
                     android:textSize="15sp"
                     android:textColor="@color/label_text"
-                    app:typeface="roboto_regular"/>
+                    app:robotoTypeface="roboto_regular"/>
 
                 <LinearLayout
                     android:id="@+id/exercise_sets"
