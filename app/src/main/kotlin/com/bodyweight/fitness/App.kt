@@ -3,7 +3,6 @@ package com.bodyweight.fitness
 import android.app.Application
 import android.content.Context
 
-import com.bodyweight.fitness.persistence.Glacier
 import com.bodyweight.fitness.repository.SchemaMigration
 
 import com.crashlytics.android.Crashlytics
@@ -23,7 +22,6 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Glacier.init(applicationContext)
         JodaTimeAndroid.init(applicationContext)
 
         val config = RateThisApp.Config(2, 7)

@@ -2,7 +2,6 @@ package com.bodyweight.fitness.stream
 
 import com.bodyweight.fitness.App
 import com.bodyweight.fitness.model.*
-import com.bodyweight.fitness.persistence.Glacier
 import com.bodyweight.fitness.utils.Preferences
 
 import com.google.gson.Gson
