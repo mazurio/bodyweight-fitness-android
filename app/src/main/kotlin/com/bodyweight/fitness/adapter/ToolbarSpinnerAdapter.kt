@@ -64,7 +64,7 @@ class ToolbarSpinnerAdapter : BaseAdapter() {
             view.tag = "DROPDOWN"
         }
 
-        val textView = view!!.findViewById(android.R.id.text1) as TextView
+        val textView: TextView = view!!.findViewById(android.R.id.text1)
         textView.text = getTitle(position)
 
         return view

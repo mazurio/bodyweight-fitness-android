@@ -30,7 +30,7 @@
                 android:textSize="18dp"
                 android:textColor="#111"
                 android:layout_gravity="center"
-                app:typeface="roboto_regular"/>
+                app:robotoTypeface="roboto_regular"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

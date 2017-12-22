@@ -129,7 +129,6 @@ class ProgressHeaderPresenter(itemView: View) : ProgressPresenter(itemView) {
         completionRateGraphView.scrubLineColor = Color.parseColor("#111111")
         completionRateGraphView.baseLineColor = Color.WHITE
         completionRateGraphView.isScrubEnabled = true
-        completionRateGraphView.animateChanges = true
 
         completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("1W"))
         completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("1M"))

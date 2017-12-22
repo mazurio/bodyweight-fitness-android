@@ -35,7 +35,7 @@
                 android:textSize="15sp"
                 android:textColor="@color/label_text"
                 android:text="Recommended Routine"
-                app:typeface="roboto_regular" />
+                app:robotoTypeface="roboto_regular" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,7 +86,7 @@
                 android:textColor="#000000"
                 android:textSize="14sp"
                 android:text="View"
-                app:typeface="roboto_medium" />
+                app:robotoTypeface="roboto_medium" />
 
             <com.devspark.robototextview.widget.RobotoButton
                 android:id="@+id/view_calendar_card_export_button"
@@ -98,7 +98,7 @@
                 android:textColor="@color/primaryDark"
                 android:textSize="14sp"
                 android:text="Export"
-                app:typeface="roboto_medium" />
+                app:robotoTypeface="roboto_medium" />
 
             <com.devspark.robototextview.widget.RobotoButton
                 android:id="@+id/view_calendar_card_remove_button"
@@ -110,7 +110,7 @@
                 android:textColor="#B71C1C"
                 android:textSize="14sp"
                 android:text="Remove"
-                app:typeface="roboto_medium" />
+                app:robotoTypeface="roboto_medium" />
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

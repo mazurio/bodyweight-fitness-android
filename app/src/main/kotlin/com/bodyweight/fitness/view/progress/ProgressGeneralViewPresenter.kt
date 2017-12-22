@@ -124,7 +124,7 @@ class ProgressGeneralViewPresenter : AbstractPresenter() {
         workoutLengthGraphView.baseLineColor = Color.WHITE
         workoutLengthGraphView.scrubLineColor = Color.parseColor("#111111")
         workoutLengthGraphView.isScrubEnabled = true
-        workoutLengthGraphView.animateChanges = true
+//        workoutLengthGraphView.animateChanges = true
 
         workoutLengthGraphView.setScrubListener {
             val dateTimeWorkoutLength = it as? DateTimeWorkoutLength
@@ -231,7 +231,6 @@ class ProgressGeneralViewPresenter : AbstractPresenter() {
         completionRateGraphView.baseLineColor = Color.WHITE
         completionRateGraphView.scrubLineColor = Color.parseColor("#111111")
         completionRateGraphView.isScrubEnabled = true
-        completionRateGraphView.animateChanges = true
 
         completionRateGraphView.setScrubListener {
             val dateTimeCompletionRate = it as? DateTimeCompletionRate

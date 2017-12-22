@@ -47,7 +47,7 @@
                         android:gravity="center|bottom"
                         android:textSize="16sp"
                         android:text="5-5-X"
-                        app:typeface="roboto_bold" />
+                        app:robotoTypeface="roboto_bold" />
 
                     <com.devspark.robototextview.widget.RobotoTextView
                         android:id="@+id/reps_logger_reps"
@@ -55,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textSize="60sp"
-                        app:typeface="roboto_light" />
+                        app:robotoTypeface="roboto_light" />
                 </LinearLayout>
 
                 <RelativeLayout
@@ -127,7 +127,7 @@
                         android:layout_toLeftOf="@+id/timer_spacing"
                         android:gravity="center"
                         android:textSize="60sp"
-                        app:typeface="roboto_bold" />
+                        app:robotoTypeface="roboto_bold" />
 
                     <RelativeLayout
                         android:id="@+id/timer_spacing"
@@ -142,7 +142,7 @@
                         android:layout_toRightOf="@+id/timer_spacing"
                         android:gravity="center"
                         android:textSize="60sp"
-                        app:typeface="roboto_light" />
+                        app:robotoTypeface="roboto_light" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -212,7 +212,7 @@
                         android:gravity="center|bottom"
                         android:textSize="16sp"
                         android:text="Rest"
-                        app:typeface="roboto_bold" />
+                        app:robotoTypeface="roboto_bold" />
 
                     <RelativeLayout
                         android:id="@+id/rest_timer_layout"
@@ -227,7 +227,7 @@
                             android:layout_toLeftOf="@+id/rest_timer_spacing"
                             android:gravity="center"
                             android:textSize="60sp"
-                            app:typeface="roboto_bold" />
+                            app:robotoTypeface="roboto_bold" />
 
                         <RelativeLayout
                             android:id="@+id/rest_timer_spacing"
@@ -242,7 +242,7 @@
                             android:layout_toRightOf="@+id/rest_timer_spacing"
                             android:gravity="center"
                             android:textSize="60sp"
-                            app:typeface="roboto_light" />
+                            app:robotoTypeface="roboto_light" />
                     </RelativeLayout>
                 </LinearLayout>
 

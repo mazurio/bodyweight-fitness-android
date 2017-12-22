@@ -245,9 +245,8 @@ class TimerPresenter : AbstractPresenter() {
                             firstSet.seconds = logSeconds
                         }
                     } else {
-                        val repositorySet = realm.createObject(RepositorySet::class.java)
+                        val repositorySet = realm.createObject(RepositorySet::class.java, "Set-" + UUID.randomUUID().toString())
 
-                        repositorySet.id = "Set-" + UUID.randomUUID().toString()
                         repositorySet.isTimed = true
                         repositorySet.seconds = logSeconds
                         repositorySet.weight = 0.0

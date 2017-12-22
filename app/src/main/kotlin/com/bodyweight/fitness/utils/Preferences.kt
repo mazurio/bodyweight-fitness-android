@@ -24,7 +24,7 @@ object Preferences {
             getSharedPreferences()
                     .edit()
                     .putBoolean(Constants.preferencesIntroductionShown, value)
-                    .commit()
+                    .apply()
         }
 
     var defaultRoutine: String
@@ -37,7 +37,7 @@ object Preferences {
             getSharedPreferences()
                     .edit()
                     .putString(Constants.preferencesDefaultRoutineKey, value)
-                    .commit()
+                    .apply()
         }
 
     var showRestTimer: Boolean
@@ -50,7 +50,7 @@ object Preferences {
             getSharedPreferences()
                     .edit()
                     .putBoolean(Constants.preferencesShowRestTimer, value)
-                    .commit()
+                    .apply()
         }
 
     var showRestTimerAfterWarmup: Boolean
@@ -63,7 +63,7 @@ object Preferences {
             getSharedPreferences()
                     .edit()
                     .putBoolean(Constants.preferencesShowRestTimerAfterWarmup, value)
-                    .commit()
+                    .apply()
         }
 
     var showRestTimerAfterBodylineDrills: Boolean
@@ -76,7 +76,7 @@ object Preferences {
             getSharedPreferences()
                     .edit()
                     .putBoolean(Constants.preferencesShowRestTimerAfterBodylineDrills, value)
-                    .commit()
+                    .apply()
         }
 
     var showRestTimerAfterFlexibilityExercises: Boolean
@@ -89,7 +89,7 @@ object Preferences {
             getSharedPreferences()
                     .edit()
                     .putBoolean(Constants.preferencesShowRestTimerAfterFlexibilityExercises, value)
-                    .commit()
+                    .apply()
         }
 
     var restTimerDefaultSeconds: Int
@@ -102,7 +102,7 @@ object Preferences {
             getSharedPreferences()
                     .edit()
                     .putString(Constants.preferencesRestTimerDefaultSeconds, value.toString())
-                    .commit()
+                    .apply()
         }
 
     val weightMeasurementUnit: WeightMeasurementUnit
@@ -129,19 +129,52 @@ object Preferences {
     }
 
     fun setTimerValue(exerciseId: String, value: Long) {
-        getSharedPreferences().edit().putLong(String.format("%s%s", Constants.preferencesTimerKey, exerciseId), value).commit()
+        getSharedPreferences().edit().putLong(
+                String.format("%s%s", Constants.preferencesTimerKey, exerciseId),
+                value
+        ).apply()
     }
 
     fun setNumberOfReps(exerciseId: String, value: Int) {
-        getSharedPreferences().edit().putInt(String.format("%s%s", Constants.preferencesNumberOfRepsKey, exerciseId), value).commit()
+        getSharedPreferences().edit().putInt(
+                String.format("%s%s", Constants.preferencesNumberOfRepsKey, exerciseId),
+                value
+        ).apply()
     }
 
     fun getTimerValueForExercise(exerciseId: String, defaultValue: Long): Long {
-        return getSharedPreferences().getLong(String.format("%s%s", Constants.preferencesTimerKey, exerciseId), defaultValue)
+        return getSharedPreferences().getLong(
+                String.format("%s%s", Constants.preferencesTimerKey, exerciseId),
+                defaultValue
+        )
     }
 
     fun getNumberOfRepsForExercise(exerciseId: String, defaultValue: Int): Int {
-        return getSharedPreferences().getInt(String.format("%s%s", Constants.preferencesNumberOfRepsKey, exerciseId), defaultValue)
+        return getSharedPreferences().getInt(
+                String.format("%s%s", Constants.preferencesNumberOfRepsKey, exerciseId),
+                defaultValue
+        )
+    }
+
+    fun setExerciseIdForSection(sectionId: String, exerciseId: String) {
+        getSharedPreferences().edit().putString(
+                String.format("%s%s", Constants.preferencesExerciseIdForSection, sectionId),
+                exerciseId
+        ).apply()
+    }
+
+    fun getExerciseIdForSection(sectionId: String): String? {
+        val emptyId = "NULL"
+        val exerciseId = getSharedPreferences().getString(
+                String.format("%s%s", Constants.preferencesExerciseIdForSection, sectionId),
+                emptyId
+        )
+
+        return if (exerciseId == emptyId) {
+            null
+        } else {
+            exerciseId
+        }
     }
 
     private fun getSharedPreferences(): SharedPreferences {

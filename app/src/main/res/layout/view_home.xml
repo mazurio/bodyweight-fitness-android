@@ -160,7 +160,7 @@
                     android:textColor="@color/label_text"
                     android:textSize="16sp"
                     android:text="Statistics"
-                    app:typeface="roboto_regular"/>
+                    app:robotoTypeface="roboto_regular"/>
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"

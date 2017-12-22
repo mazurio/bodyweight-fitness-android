@@ -306,10 +306,9 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
             var set: RepositorySet? = null
 
             Repository.realm.executeTransaction {
-                set = Repository.realm.createObject(RepositorySet::class.java)
+                set = Repository.realm.createObject(RepositorySet::class.java, "Set-" + UUID.randomUUID().toString())
 
                 set?.let {
-                    it.id = "Set-" + UUID.randomUUID().toString()
                     it.isTimed = isTimed
                     it.seconds = lastSet.seconds
                     it.weight = lastSet.weight
@@ -461,9 +460,9 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
 
     fun updateSet(repositorySet: RepositorySet, view: View, isTimed: Boolean = false) {
         if (isTimed) {
-            val secondsOnlyValue: TextView = view.findViewById(R.id.secondsOnlyValue) as TextView
-            val minutes: TextView = view.findViewById(R.id.minutesValue) as TextView
-            val seconds: TextView = view.findViewById(R.id.secondsValue) as TextView
+            val secondsOnlyValue: TextView = view.findViewById(R.id.secondsOnlyValue)
+            val minutes: TextView = view.findViewById(R.id.minutesValue)
+            val seconds: TextView = view.findViewById(R.id.secondsValue)
             val center: View = view.findViewById(R.id.center)
 
             if (repositorySet.seconds < 60) {
@@ -493,9 +492,9 @@ class LogWorkoutDialog : BottomSheetDialogFragment() {
                 seconds.text = repositorySet.seconds.formatSecondsPostfix()
             }
         } else {
-            val repsOnlyValue: TextView = view.findViewById(R.id.repsOnlyValue) as TextView
-            val reps: TextView = view.findViewById(R.id.repsValue) as TextView
-            val weight: TextView = view.findViewById(R.id.weightValue) as TextView
+            val repsOnlyValue: TextView = view.findViewById(R.id.repsOnlyValue)
+            val reps: TextView = view.findViewById(R.id.repsValue)
+            val weight: TextView = view.findViewById(R.id.weightValue)
             val center: View = view.findViewById(R.id.center)
 
             if (repositorySet.weight == 0.0) {

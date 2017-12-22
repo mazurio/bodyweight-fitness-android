@@ -38,7 +38,7 @@
                         android:textColor="@color/primaryDark"
                         android:textSize="11sp"
                         android:textAllCaps="true"
-                        app:typeface="roboto_light"
+                        app:robotoTypeface="roboto_light"
                         android:text="Mon"/>
 
                     <com.devspark.robototextview.widget.RobotoTextView
@@ -49,7 +49,7 @@
                         android:textColor="@color/primaryDark"
                         android:textSize="11sp"
                         android:textAllCaps="true"
-                        app:typeface="roboto_light"
+                        app:robotoTypeface="roboto_light"
                         android:text="Tue"/>
 
                     <com.devspark.robototextview.widget.RobotoTextView
@@ -60,7 +60,7 @@
                         android:textColor="@color/primaryDark"
                         android:textSize="11sp"
                         android:textAllCaps="true"
-                        app:typeface="roboto_light"
+                        app:robotoTypeface="roboto_light"
                         android:text="Wed"/>
 
                     <com.devspark.robototextview.widget.RobotoTextView
@@ -71,7 +71,7 @@
                         android:textColor="@color/primaryDark"
                         android:textSize="11sp"
                         android:textAllCaps="true"
-                        app:typeface="roboto_light"
+                        app:robotoTypeface="roboto_light"
                         android:text="Thu"/>
 
                     <com.devspark.robototextview.widget.RobotoTextView
@@ -82,7 +82,7 @@
                         android:textColor="@color/primaryDark"
                         android:textSize="11sp"
                         android:textAllCaps="true"
-                        app:typeface="roboto_light"
+                        app:robotoTypeface="roboto_light"
                         android:text="Fri"/>
 
                     <com.devspark.robototextview.widget.RobotoTextView
@@ -93,7 +93,7 @@
                         android:textColor="@color/primaryDark"
                         android:textSize="11sp"
                         android:textAllCaps="true"
-                        app:typeface="roboto_light"
+                        app:robotoTypeface="roboto_light"
                         android:text="Sat"/>
 
                     <com.devspark.robototextview.widget.RobotoTextView
@@ -104,7 +104,7 @@
                         android:textColor="@color/primaryDark"
                         android:textSize="11sp"
                         android:textAllCaps="true"
-                        app:typeface="roboto_light"
+                        app:robotoTypeface="roboto_light"
                         android:text="Sun"/>
                 </LinearLayout>
 
@@ -133,7 +133,7 @@
                 android:textColor="#676767"
                 android:textSize="14sp"
                 android:text="When you log a workout, you'll see it here."
-                app:typeface="roboto_regular" />
+                app:robotoTypeface="roboto_regular" />
         </RelativeLayout>
     </LinearLayout>
 </com.bodyweight.fitness.view.CalendarView>

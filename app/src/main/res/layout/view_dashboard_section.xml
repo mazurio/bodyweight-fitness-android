@@ -30,7 +30,7 @@
                 android:textSize="18dp"
                 android:textColor="#999999"
                 android:layout_gravity="center"
-                app:typeface="roboto_regular"/>
+                app:robotoTypeface="roboto_regular"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
                 android:id="@+id/section_description"
@@ -42,7 +42,7 @@
                 android:textSize="14dp"
                 android:textColor="#999999"
                 android:layout_gravity="center"
-                app:typeface="roboto_light"/>
+                app:robotoTypeface="roboto_light"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

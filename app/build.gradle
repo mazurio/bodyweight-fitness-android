@@ -1,26 +1,25 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'realm-android'
 apply plugin: 'io.fabric'
 
 android {
+    defaultConfig {
+        vectorDrawables.useSupportLibrary = true
+    }
+    flavorDimensions "default"
     configurations.all {
         resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
     }
-    
     dexOptions {
         maxProcessCount 4
     }
-
-    compileSdkVersion 25
-    buildToolsVersion '23.0.3'
+    compileSdkVersion 26
     defaultConfig {
         applicationId 'com.bodyweight.fitness'
-        minSdkVersion 16
-        targetSdkVersion 25
+        minSdkVersion 21
+        targetSdkVersion 26
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
@@ -43,15 +42,12 @@ android {
     productFlavors {
         pro {
             resValue "string", "file_provider", "com.bodyweight.fitness.pro.fileprovider"
-
             applicationId 'com.bodyweight.fitness.pro'
             versionCode 141
             versionName "1.4.1"
         }
-
         free {
             resValue "string", "file_provider", "com.bodyweight.fitness.free.fileprovider"
-
             applicationId 'com.bodyweight.fitness.free'
             versionCode 141
             versionName "1.4.1"
@@ -61,17 +57,14 @@ android {
         release {
             minifyEnabled false
         }
-
         debug {
             minifyEnabled false
             ext.enableCrashlytics = false
         }
     }
-
     sourceSets {
         main.java.srcDirs += 'src/main/java'
         main.java.srcDirs += 'src/main/kotlin'
-        androidTest.java.srcDirs += 'src/androidTest/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
     }
 }
@@ -85,70 +78,45 @@ configurations {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    testCompile 'org.jetbrains.spek:spek:1.0.9'
-    testCompile 'org.mockito:mockito-all:2.0.2-beta'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
-    androidTestCompile "com.android.support:support-annotations:$support_version"
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support.test:rules:0.5'
-    androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.2"
+    testImplementation 'org.jetbrains.spek:spek:1.0.9'
+    testImplementation 'org.mockito:mockito-all:2.0.2-beta'
 
-    compile "com.android.support:support-v4:$support_version"
-    compile "com.android.support:recyclerview-v7:$support_version"
-    compile "com.android.support:cardview-v7:$support_version"
-    compile "com.android.support:design:$support_version"
+    androidTestImplementation "com.android.support:support-annotations:$support_version"
+    androidTestImplementation 'com.android.support.test:runner:0.5'
+    androidTestImplementation 'com.android.support.test:rules:0.5'
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:2.2.2"
 
-    compile 'com.google.code.gson:gson:2.4'
+    implementation "com.android.support:support-v4:$support_version"
+    implementation "com.android.support:recyclerview-v7:$support_version"
+    implementation "com.android.support:cardview-v7:$support_version"
+    implementation "com.android.support:design:$support_version"
 
-    compile 'commons-io:commons-io:2.4'
-    compile 'net.danlew:android.joda:2.9.3'
+    implementation 'com.google.code.gson:gson:2.4'
 
-    compile 'com.netflix.rxjava:rxjava-core:0.20.7'
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.2.1'
+    implementation 'commons-io:commons-io:2.4'
+    implementation 'net.danlew:android.joda:2.9.3'
 
-    compile 'com.trello:rxlifecycle:0.8.0'
-    compile 'com.trello:rxlifecycle-components:0.8.0'
-    compile 'com.trello:rxlifecycle-kotlin:0.8.0'
+    implementation 'com.netflix.rxjava:rxjava-core:0.20.7'
+    implementation 'io.reactivex:rxandroid:1.2.1'
+    implementation 'io.reactivex:rxjava:1.2.1'
 
-    compile 'com.robinhood.spark:spark:1.1.2'
+    implementation 'com.trello:rxlifecycle:0.8.0'
+    implementation 'com.trello:rxlifecycle-components:0.8.0'
+    implementation 'com.trello:rxlifecycle-kotlin:0.8.0'
 
-    compile 'com.roughike:bottom-bar:2.0.2'
-    compile 'com.github.johnkil.android-robototextview:robototextview:2.5.1'
-    compile 'com.gordonwong:material-sheet-fab:1.2.1'
-    compile 'io.github.kobakei:ratethisapp:1.0.3'
-    compile 'com.github.paolorotolo:appintro:4.1.0'
+    implementation 'com.robinhood.spark:spark:1.2.0'
 
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
-        transitive = true;
+    implementation 'com.roughike:bottom-bar:2.0.2'
+    implementation 'com.github.johnkil.android-robototextview:robototextview:4.0.0'
+    implementation 'com.gordonwong:material-sheet-fab:1.2.1'
+    implementation 'io.github.kobakei:ratethisapp:1.0.3'
+    implementation 'com.github.paolorotolo:appintro:4.1.0'
+
+    implementation('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+        transitive = true
     }
-
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-}
-
-buildscript {
-    ext.support_version = '25.1.0'
-    ext.kotlin_version = '1.0.4'
-    repositories {
-        mavenCentral()
-        maven {
-            url "http://repository.jetbrains.com/all"
-        }
-        maven { url 'https://maven.fabric.io/public' }
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'io.fabric.tools:gradle:1.+'
-    }
-}
-
-repositories {
-    mavenCentral()
-    maven {
-        url "http://repository.jetbrains.com/all"
-    }
-    maven { url 'https://maven.fabric.io/public' }
 }

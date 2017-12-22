@@ -36,7 +36,7 @@
                 android:layout_gravity="center"
                 android:textSize="16dp"
                 android:textColor="#4D4D4D"
-                app:typeface="roboto_regular"/>
+                app:robotoTypeface="roboto_regular"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
                 android:id="@+id/exercise_level"
@@ -47,7 +47,7 @@
                 android:layout_gravity="center"
                 android:textSize="15dp"
                 android:textColor="#3C3C3C"
-                app:typeface="roboto_bold"/>
+                app:robotoTypeface="roboto_bold"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

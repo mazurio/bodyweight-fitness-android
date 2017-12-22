@@ -39,7 +39,7 @@
                 android:layout_gravity="center"
                 android:textSize="16dp"
                 android:textColor="#4D4D4D"
-                app:typeface="roboto_regular"/>
+                app:robotoTypeface="roboto_regular"/>
         </LinearLayout>
 
         <LinearLayout
@@ -69,7 +69,7 @@
                 android:layout_gravity="center"
                 android:textSize="16dp"
                 android:textColor="#4D4D4D"
-                app:typeface="roboto_regular"/>
+                app:robotoTypeface="roboto_regular"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

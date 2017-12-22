@@ -23,7 +23,7 @@
             android:gravity="center_horizontal"
             android:textColor="@color/black"
             android:textSize="15sp"
-            app:typeface="roboto_regular"/>
+            app:robotoTypeface="roboto_regular"/>
 
         <com.devspark.robototextview.widget.RobotoTextView
             android:id="@+id/day_2"
@@ -35,7 +35,7 @@
             android:gravity="center_horizontal"
             android:textColor="@color/black"
             android:textSize="15sp"
-            app:typeface="roboto_regular"/>
+            app:robotoTypeface="roboto_regular"/>
 
         <com.devspark.robototextview.widget.RobotoTextView
             android:id="@+id/day_3"
@@ -47,7 +47,7 @@
             android:gravity="center_horizontal"
             android:textColor="@color/black"
             android:textSize="15sp"
-            app:typeface="roboto_regular"/>
+            app:robotoTypeface="roboto_regular"/>
 
         <com.devspark.robototextview.widget.RobotoTextView
             android:id="@+id/day_4"
@@ -59,7 +59,7 @@
             android:gravity="center_horizontal"
             android:textColor="@color/black"
             android:textSize="15sp"
-            app:typeface="roboto_regular" />
+            app:robotoTypeface="roboto_regular" />
 
         <com.devspark.robototextview.widget.RobotoTextView
             android:id="@+id/day_5"
@@ -71,7 +71,7 @@
             android:gravity="center_horizontal"
             android:textColor="@color/black"
             android:textSize="15sp"
-            app:typeface="roboto_regular"/>
+            app:robotoTypeface="roboto_regular"/>
 
         <com.devspark.robototextview.widget.RobotoTextView
             android:id="@+id/day_6"
@@ -83,7 +83,7 @@
             android:gravity="center_horizontal"
             android:textColor="@color/black"
             android:textSize="15sp"
-            app:typeface="roboto_regular"/>
+            app:robotoTypeface="roboto_regular"/>
 
         <com.devspark.robototextview.widget.RobotoTextView
             android:id="@+id/day_7"
@@ -95,6 +95,6 @@
             android:gravity="center_horizontal"
             android:textColor="@color/black"
             android:textSize="15sp"
-            app:typeface="roboto_regular"/>
+            app:robotoTypeface="roboto_regular"/>
     </LinearLayout>
 </com.bodyweight.fitness.view.CalendarPageView>

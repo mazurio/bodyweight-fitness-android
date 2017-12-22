@@ -69,7 +69,6 @@ class ProgressExerciseActivity : RxAppCompatActivity() {
         graph_view.baseLineColor = Color.WHITE
         graph_view.scrubLineColor = Color.parseColor("#111111")
         graph_view.isScrubEnabled = true
-        graph_view.animateChanges = false
         graph_view.setScrubListener {
             val data = it as? DateTimeRepositorySet
 

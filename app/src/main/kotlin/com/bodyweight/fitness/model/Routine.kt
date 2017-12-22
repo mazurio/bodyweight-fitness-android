@@ -1,6 +1,6 @@
 package com.bodyweight.fitness.model
 
-import com.bodyweight.fitness.persistence.Glacier
+import com.bodyweight.fitness.utils.Preferences
 import java.io.Serializable
 import java.util.*
 
@@ -65,7 +65,7 @@ class Routine(JSONRoutine: JSONRoutine) : Serializable {
                 exercises.add(exercise)
 
                 if (currentSection.sectionMode === SectionMode.Levels || currentSection.sectionMode === SectionMode.Pick) {
-                    val currentExerciseId = Glacier.get(currentSection.sectionId, String::class.java)
+                    val currentExerciseId: String? = Preferences.getExerciseIdForSection(currentSection.sectionId)
 
                     if (currentExerciseId != null) {
                         if (exercise.exerciseId.matches(currentExerciseId.toRegex())) {
