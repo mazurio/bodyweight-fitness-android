@@ -101,6 +101,9 @@ object RoutineStream {
 
         exercise = chosenExercise
 
-        Glacier.put(chosenExercise.section!!.sectionId, chosenExercise.section!!.currentExercise.exerciseId)
+        val sectionId = chosenExercise.section!!.sectionId
+        val exerciseId = chosenExercise.section!!.currentExercise.exerciseId
+
+        Preferences.setExerciseIdForSection(sectionId, exerciseId)
     }
 }
