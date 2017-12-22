@@ -1,3 +1,5 @@
+app/free/*
+app/pro/*
 captures
 # Keys
 api.xml
