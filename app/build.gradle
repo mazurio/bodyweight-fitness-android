@@ -43,14 +43,14 @@ android {
         pro {
             resValue "string", "file_provider", "com.bodyweight.fitness.pro.fileprovider"
             applicationId 'com.bodyweight.fitness.pro'
-            versionCode 141
-            versionName "1.4.1"
+            versionCode 142
+            versionName "1.4.2"
         }
         free {
             resValue "string", "file_provider", "com.bodyweight.fitness.free.fileprovider"
             applicationId 'com.bodyweight.fitness.free'
-            versionCode 141
-            versionName "1.4.1"
+            versionCode 142
+            versionName "1.4.2"
         }
     }
     buildTypes {
