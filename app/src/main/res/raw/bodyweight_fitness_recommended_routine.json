@@ -264,6 +264,13 @@
       "defaultSet": "timed"
     },
     {
+      "sectionId": "section51",
+      "title": "Skin the cat Practise",
+      "description": "2-3 min",
+      "type": "section",
+      "mode": "levels"
+    },
+    {
       "categoryId": "category2",
       "title": "Strength Work",
       "type": "category"
