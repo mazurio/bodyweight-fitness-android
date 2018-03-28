@@ -265,10 +265,20 @@
     },
     {
       "sectionId": "section51",
-      "title": "Skin the cat Practise",
+      "title": "Skin the Cat Practise",
       "description": "2-3 min",
       "type": "section",
       "mode": "levels"
+    },
+    {
+      "exerciseId": "exercise52",
+      "level": "Level 1",
+      "title": "Skin the Cat Practise",
+      "description": "2-3 min",
+      "type": "exercise",
+      "youTubeId": "2T_wIiM8x8I",
+      "videoId": "bodyweight_fitness_skin_the_cat",
+      "defaultSet": "timed"
     },
     {
       "categoryId": "category2",
