@@ -61,6 +61,10 @@ android {
             minifyEnabled false
             ext.enableCrashlytics = false
         }
+
+        customDebugType {
+            debuggable true
+        }
     }
     sourceSets {
         main.java.srcDirs += 'src/main/java'

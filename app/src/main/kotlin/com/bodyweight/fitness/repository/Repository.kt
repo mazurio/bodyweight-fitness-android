@@ -5,6 +5,7 @@ import org.joda.time.DateTime
 import java.util.UUID
 
 import com.bodyweight.fitness.App
+import com.bodyweight.fitness.Constants
 import com.bodyweight.fitness.model.*
 import com.bodyweight.fitness.stream.RoutineStream
 
@@ -85,6 +86,7 @@ object Repository {
                         repositoryCategory.categoryId = exercise.category!!.categoryId
                         repositoryCategory.title = exercise.category!!.title
                         repositoryCategory.routine = repositoryRoutine
+                        repositoryCategory.bundle = null
 
                         it.categories.add(repositoryCategory)
                     }
@@ -96,6 +98,7 @@ object Repository {
                         repositorySection.mode = exercise.section!!.sectionMode.toString()
                         repositorySection.routine = repositoryRoutine
                         repositorySection.category = repositoryCategory
+                        repositorySection.sets = Constants.maximumNumberOfSets
 
                         it.sections.add(repositorySection)
                         repositoryCategory!!.sections.add(repositorySection)

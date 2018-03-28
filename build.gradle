@@ -37,6 +37,3 @@ allprojects {
         maven { url "http://dl.bintray.com/jetbrains/spek" }
     }
 }
-//task clean(type: Delete) {
-//    delete rootProject.buildDir
-//}

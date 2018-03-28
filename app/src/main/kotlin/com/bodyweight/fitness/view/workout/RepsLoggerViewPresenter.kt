@@ -63,8 +63,9 @@ class RepsLoggerPresenter : AbstractPresenter() {
                 it.exerciseId == RoutineStream.exercise.exerciseId
             }.firstOrNull()?.let {
                 val numberOfSets = it.sets.size
+                val maximumNumberOfSets: Int = if (it.section !== null) it.section?.sets!! else Constants.maximumNumberOfSets
 
-                if (numberOfSets < Constants.maximumNumberOfSets) {
+                if (numberOfSets < maximumNumberOfSets) {
                     val firstSet = it.sets.first()
 
                     if (numberOfSets == 1 && firstSet.reps == 0) {

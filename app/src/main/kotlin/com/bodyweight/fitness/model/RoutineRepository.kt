@@ -208,7 +208,8 @@ open class RepositoryCategory(
         open var routine: RepositoryRoutine? = null,
 
         open var sections: RealmList<RepositorySection> = RealmList(),
-        open var exercises: RealmList<RepositoryExercise> = RealmList()
+        open var exercises: RealmList<RepositoryExercise> = RealmList(),
+        open var bundle: Int? = null
 ) : RealmObject() {
     companion object {
         fun getCompletionRate(repositoryCategory: RepositoryCategory): CompletionRate {
@@ -241,7 +242,8 @@ open class RepositorySection(
         open var routine: RepositoryRoutine? = null,
         open var category: RepositoryCategory? = null,
 
-        open var exercises: RealmList<RepositoryExercise> = RealmList()
+        open var exercises: RealmList<RepositoryExercise> = RealmList(),
+        open var sets: Int = 1
 ) : RealmObject() {}
 
 open class RepositoryExercise(
