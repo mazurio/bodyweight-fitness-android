@@ -14,6 +14,7 @@
       "sectionId": "section0",
       "title": "Dynamic Stretches",
       "description": "Do all, 5-10 reps each",
+      "sets": 1,
       "type": "section",
       "mode": "all"
     },
@@ -102,6 +103,7 @@
       "sectionId": "section1",
       "title": "Bodyline Drills",
       "description": "Do all, 10-60s hold each",
+      "sets": 1,
       "type": "section",
       "mode": "all"
     },
@@ -163,6 +165,7 @@
       "sectionId": "section2",
       "title": "Activity",
       "description": "Pick one, 10-20 reps",
+      "sets": 1,
       "type": "section",
       "mode": "pick"
     },
@@ -193,6 +196,7 @@
       "sectionId": "section3",
       "title": "Handstand",
       "description": "5 min",
+      "sets": 1,
       "type": "section",
       "mode": "levels"
     },
@@ -230,6 +234,7 @@
       "sectionId": "section4",
       "title": "Support Practice",
       "description": "2-3 min",
+      "sets": 1,
       "type": "section",
       "mode": "levels"
     },
@@ -267,6 +272,7 @@
       "sectionId": "section51",
       "title": "Skin the Cat Practise",
       "description": "2-3 min",
+      "sets": 1,
       "type": "section",
       "mode": "levels"
     },
@@ -289,9 +295,11 @@
       "sectionId": "section5",
       "title": "Pull Up Progression",
       "description": "3x(5-8)",
+      "sets": 3,
       "type": "section",
       "mode": "levels",
-      "defaultSet": "weighted"
+      "defaultSet": "weighted",
+      "bundle": 1
     },
     {
       "exerciseId": "exercise20",
@@ -337,8 +345,10 @@
       "sectionId": "section6",
       "title": "Dipping Progression",
       "description": "3x(5-8)",
+      "sets": 3,
       "type": "section",
-      "mode": "levels"
+      "mode": "levels",
+      "bundle": 1
     },
     {
       "exerciseId": "exercise24",
@@ -374,8 +384,10 @@
       "sectionId": "section7",
       "title": "Squat Progression",
       "description": "3x(5-8)",
+      "sets": 3,
       "type": "section",
-      "mode": "levels"
+      "mode": "levels",
+      "bundle": 2
     },
     {
       "exerciseId": "exercise27",
@@ -408,11 +420,29 @@
       "defaultSet": "weighted"
     },
     {
+      "exerciseId": "exercise_4",
+      "level": "Level 4",
+      "title": "Shrimp Squat",
+      "description": "3x(5-8)",
+      "type": "exercise",
+      "defaultSet": "weighted"
+    },
+    {
+      "exerciseId": "exercise_5",
+      "level": "Level 5",
+      "title": "Pistol Squat",
+      "description": "3x(5-8)",
+      "type": "exercise",
+      "defaultSet": "weighted"
+    },
+    {
       "sectionId": "section8",
       "title": "L-Sit Progression",
       "description": "3x(10-30s)",
+      "sets": 3,
       "type": "section",
-      "mode": "levels"
+      "mode": "levels",
+      "bundle": 2
     },
     {
       "exerciseId": "exercise30",
@@ -458,8 +488,10 @@
       "sectionId": "section9",
       "title": "Pushing",
       "description": "3x(5-8)",
+      "sets": 3,
       "type": "section",
-      "mode": "levels"
+      "mode": "levels",
+      "bundle": 3
     },
     {
       "exerciseId": "exercise34",
@@ -555,8 +587,10 @@
       "sectionId": "section10",
       "title": "Row Progression",
       "description": "3x(5-8)",
+      "sets": 3,
       "type": "section",
-      "mode": "levels"
+      "mode": "levels",
+      "bundle": 3
     },
     {
       "exerciseId": "exercise43",
@@ -602,11 +636,11 @@
       "exerciseId": "exercise47",
       "level": "Level 5",
       "title": "Tuck Front Lever",
-      "description": "3x(5-8)",
+      "description": "3x(10-30)",
       "type": "exercise",
       "youTubeId": "tiST0765Sfo",
       "videoId": "bodyweight_fitness_tuck_front_lever",
-      "defaultSet": "weighted"
+      "defaultSet": "timed"
     },
     {
       "exerciseId": "exercise48",

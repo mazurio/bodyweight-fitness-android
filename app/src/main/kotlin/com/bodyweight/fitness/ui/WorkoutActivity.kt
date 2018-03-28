@@ -26,114 +26,114 @@ import com.trello.rxlifecycle.kotlin.bindUntilEvent
 import kotlinx.android.synthetic.main.activity_dashboard.*
 
 class WorkoutActivity : RxAppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
-    companion object {
-        fun start(context: Context) {
-            context.startActivity(Intent(context, WorkoutActivity::class.java))
-        }
+  companion object {
+    fun start(context: Context) {
+      context.startActivity(Intent(context, WorkoutActivity::class.java))
     }
+  }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_workout)
-        setToolbar()
+    setContentView(R.layout.activity_workout)
+    setToolbar()
 
-        keepScreenOnWhenAppIsRunning()
+    keepScreenOnWhenAppIsRunning()
 
-        Stream.menuObservable
-                .bindUntilEvent(this, ActivityEvent.DESTROY)
-                .filter { it == R.id.action_dashboard }
-                .subscribe {
-                    startActivity(Intent(this, DashboardActivity::class.java))
-                }
-
-        RoutineStream.exerciseObservable().bindUntilEvent(this, ActivityEvent.DESTROY).subscribe { exercise ->
-            supportActionBar?.let { toolbar ->
-                toolbar.title = exercise.title
-
-                exercise.section?.let {
-                    toolbar.subtitle = it.title + " " + exercise.description
-                }
+    Stream.menuObservable
+            .bindUntilEvent(this, ActivityEvent.DESTROY)
+            .filter { it == R.id.action_dashboard }
+            .subscribe {
+              startActivity(Intent(this, DashboardActivity::class.java))
             }
+
+    RoutineStream.exerciseObservable().bindUntilEvent(this, ActivityEvent.DESTROY).subscribe { exercise ->
+      supportActionBar?.let { toolbar ->
+        toolbar.title = exercise.title
+
+        exercise.section?.let {
+          toolbar.subtitle = it.title + " " + exercise.description
         }
+      }
     }
+  }
 
-    override fun onResume() {
-        super.onResume()
+  override fun onResume() {
+    super.onResume()
 
-        keepScreenOnWhenAppIsRunning()
+    keepScreenOnWhenAppIsRunning()
 
-        UiEvent.dialogObservable
-                .bindUntilEvent(this, ActivityEvent.PAUSE)
-                .subscribe {
-                    if (it.dialogType === DialogType.MainActivityLogWorkout) {
-                        val bundle = Bundle()
-                        bundle.putString(Constants.exerciseId, it.exerciseId)
+    UiEvent.dialogObservable
+            .bindUntilEvent(this, ActivityEvent.PAUSE)
+            .subscribe {
+              if (it.dialogType === DialogType.MainActivityLogWorkout) {
+                val bundle = Bundle()
+                bundle.putString(Constants.exerciseId, it.exerciseId)
 
-                        val logWorkoutDialog = LogWorkoutDialog()
-                        logWorkoutDialog.arguments = bundle
-                        logWorkoutDialog.show(supportFragmentManager, "logWorkoutDialog")
-                    } else if (it.dialogType === DialogType.Progress) {
-                        val bundle = Bundle()
-                        bundle.putString(Constants.exerciseId, it.exerciseId)
+                val logWorkoutDialog = LogWorkoutDialog()
+                logWorkoutDialog.arguments = bundle
+                logWorkoutDialog.show(supportFragmentManager, "logWorkoutDialog")
+              } else if (it.dialogType === DialogType.Progress) {
+                val bundle = Bundle()
+                bundle.putString(Constants.exerciseId, it.exerciseId)
 
-                        val progressDialog = ProgressDialog()
-                        progressDialog.arguments = bundle
-                        progressDialog.show(supportFragmentManager, "progressDialog")
-                    }
-                }
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        clearFlagKeepScreenOn()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Stream.setMenu(item.itemId)
-
-        when (item.itemId) {
-            android.R.id.home -> {
-                supportFinishAfterTransition()
-
-                return true
+                val progressDialog = ProgressDialog()
+                progressDialog.arguments = bundle
+                progressDialog.show(supportFragmentManager, "progressDialog")
+              }
             }
-        }
+  }
 
-        return super.onOptionsItemSelected(item)
+  override fun onStop() {
+    super.onStop()
+
+    clearFlagKeepScreenOn()
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    Stream.setMenu(item.itemId)
+
+    when (item.itemId) {
+      android.R.id.home -> {
+        supportFinishAfterTransition()
+
+        return true
+      }
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_workout, menu)
+    return super.onOptionsItemSelected(item)
+  }
 
-        return super.onPrepareOptionsMenu(menu)
+  override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.menu_workout, menu)
+
+    return super.onPrepareOptionsMenu(menu)
+  }
+
+  override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    keepScreenOnWhenAppIsRunning()
+  }
+
+  private fun setToolbar() {
+    setSupportActionBar(toolbar)
+
+    supportActionBar?.let {
+      it.elevation = 0f
+      it.displayOptions = ActionBar.DISPLAY_SHOW_HOME or ActionBar.DISPLAY_HOME_AS_UP or ActionBar.DISPLAY_SHOW_TITLE
+      it.setHomeButtonEnabled(true)
+      it.setDisplayHomeAsUpEnabled(true)
     }
+  }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        keepScreenOnWhenAppIsRunning()
+  private fun keepScreenOnWhenAppIsRunning() {
+    if (Preferences.keepScreenOnWhenAppIsRunning()) {
+      window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    } else {
+      clearFlagKeepScreenOn()
     }
+  }
 
-    private fun setToolbar() {
-        setSupportActionBar(toolbar)
-
-        supportActionBar?.let {
-            it.elevation = 0f
-            it.displayOptions = ActionBar.DISPLAY_SHOW_HOME or ActionBar.DISPLAY_HOME_AS_UP or ActionBar.DISPLAY_SHOW_TITLE
-            it.setHomeButtonEnabled(true)
-            it.setDisplayHomeAsUpEnabled(true)
-        }
-    }
-
-    private fun keepScreenOnWhenAppIsRunning() {
-        if (Preferences.keepScreenOnWhenAppIsRunning()) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        } else {
-            clearFlagKeepScreenOn()
-        }
-    }
-
-    private fun clearFlagKeepScreenOn() {
-        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-    }
+  private fun clearFlagKeepScreenOn() {
+    window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+  }
 }
