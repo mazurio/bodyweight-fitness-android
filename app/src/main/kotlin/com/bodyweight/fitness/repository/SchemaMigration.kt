@@ -5,55 +5,66 @@ import com.bodyweight.fitness.model.RepositoryRoutine
 import com.bodyweight.fitness.stream.RoutineStream
 
 class SchemaMigration {
-    fun migrateSchemaIfNeeded() {
-        if (Repository.repositoryRoutineForTodayExists()) {
-            val routine = RoutineStream.routine
-            val currentSchema = Repository.repositoryRoutineForToday
+  fun migrateSchemaIfNeeded() {
+    if (Repository.repositoryRoutineForTodayExists()) {
+      val routine = RoutineStream.routine
+      val currentSchema = Repository.repositoryRoutineForToday
 
-            migrateSchemaIfNeeded(routine, currentSchema)
-        }
+      migrateSchemaIfNeeded(routine, currentSchema)
     }
+  }
 
-    private fun migrateSchemaIfNeeded(routine: Routine, currentSchema: RepositoryRoutine) {
-        if (!(isValidSchema(routine, currentSchema))) {
-            val newSchema = Repository.buildRealmRoutine(routine)
+  private fun migrateSchemaIfNeeded(routine: Routine, currentSchema: RepositoryRoutine) {
+    if (!(isValidSchema(routine, currentSchema))) {
+      val newSchema = Repository.buildRealmRoutine(routine)
 
-            val realm = Repository.realm
+      val realm = Repository.realm
 
-            realm.executeTransaction {
-                newSchema.startTime = currentSchema.startTime
-                newSchema.lastUpdatedTime = currentSchema.lastUpdatedTime
+      realm.executeTransaction {
+        newSchema.startTime = currentSchema.startTime
+        newSchema.lastUpdatedTime = currentSchema.lastUpdatedTime
 
-                for (exercise in newSchema.exercises) {
-                    val currentExercise = currentSchema.exercises.filter {
-                        it.exerciseId == exercise.exerciseId
-                    }.firstOrNull()
+        for (exercise in newSchema.exercises) {
+          val currentExercise = currentSchema.exercises.filter {
+            it.exerciseId == exercise.exerciseId
+          }.firstOrNull()
 
-                    if (currentExercise != null) {
-                        exercise.sets.removeAll { true }
+          if (currentExercise != null) {
+            exercise.sets.removeAll { true }
 
-                        for (set in currentExercise.sets) {
-                            exercise.sets.add(set)
-                        }
-                    }
-                }
-
-                currentSchema.deleteFromRealm()
-
-                realm.copyToRealmOrUpdate(newSchema)
+            for (set in currentExercise.sets) {
+              exercise.sets.add(set)
             }
-        }
-    }
-
-    private fun isValidSchema(routine: Routine, currentSchema: RepositoryRoutine): Boolean {
-        for (exercise in routine.exercises) {
-            val contains = currentSchema.exercises.filter {
-                it.exerciseId == exercise.exerciseId
-            }.firstOrNull()
-
-            contains ?: return false
+          }
         }
 
-        return true
+//                for(section in newSchema.sections) {
+//                  val currentSection = currentSchema.sections.filter {
+//                    it.sectionId == section.sectionId
+//                  }.firstOrNull()
+//
+//                  if (currentSection != null) {
+//                    if (!currentSection.sets) {
+//                      currentSection.sets = 1
+//                    }
+//                  }
+//                }
+
+        currentSchema.deleteFromRealm()
+        realm.copyToRealmOrUpdate(newSchema)
+      }
     }
+  }
+
+  private fun isValidSchema(routine: Routine, currentSchema: RepositoryRoutine): Boolean {
+    for (exercise in routine.exercises) {
+      val contains = currentSchema.exercises.filter {
+        it.exerciseId == exercise.exerciseId
+      }.firstOrNull()
+
+      contains ?: return false
+    }
+
+    return true
+  }
 }
