@@ -254,7 +254,7 @@ class ProgressGeneralViewPresenter : AbstractPresenter() {
         completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("6M"))
         completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("1Y"))
 
-        completionRateTabLayout.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        completionRateTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 updateCompletionRateTitle()
 

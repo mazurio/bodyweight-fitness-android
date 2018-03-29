@@ -23,7 +23,7 @@ object Repository {
 
             val configuration = RealmConfiguration.Builder()
                     .name(realmName)
-                    .schemaVersion(2)
+                    .schemaVersion(Constants.SchemaVersion)
                     .migration { realm: DynamicRealm, oldVersion: Long, newVersion: Long ->
                         val schema = realm.schema
                         val routineSchema = schema.get("RepositoryRoutine")
