@@ -41,12 +41,12 @@ class Routine(JSONRoutine: JSONRoutine) : Serializable {
         linkedRoutine.add(currentCategory)
       } else if (JSONLinkedRoutine.routineType === RoutineType.Section) {
         currentSection = Section(
-                JSONLinkedRoutine.sectionId,
-                JSONLinkedRoutine.title,
-                JSONLinkedRoutine.description,
-                JSONLinkedRoutine.sets,
-                JSONLinkedRoutine.sectionMode,
-                JSONLinkedRoutine.bundle)
+          JSONLinkedRoutine.sectionId,
+          JSONLinkedRoutine.title,
+          JSONLinkedRoutine.description,
+          JSONLinkedRoutine.sets,
+          JSONLinkedRoutine.sectionMode,
+          JSONLinkedRoutine.bundle)
 
         currentCategory!!.insertSection(currentSection)
 
@@ -54,13 +54,13 @@ class Routine(JSONRoutine: JSONRoutine) : Serializable {
         linkedRoutine.add(currentSection)
       } else if (JSONLinkedRoutine.routineType === RoutineType.Exercise) {
         val exercise = Exercise(
-                JSONLinkedRoutine.exerciseId,
-                JSONLinkedRoutine.level,
-                JSONLinkedRoutine.title,
-                JSONLinkedRoutine.description,
-                JSONLinkedRoutine.youTubeId,
-                JSONLinkedRoutine.videoId,
-                JSONLinkedRoutine.defaultSet)
+          JSONLinkedRoutine.exerciseId,
+          JSONLinkedRoutine.level,
+          JSONLinkedRoutine.title,
+          JSONLinkedRoutine.description,
+          JSONLinkedRoutine.youTubeId,
+          JSONLinkedRoutine.videoId,
+          JSONLinkedRoutine.defaultSet)
 
         currentSection!!.insertExercise(exercise)
 
@@ -147,8 +147,8 @@ class Routine(JSONRoutine: JSONRoutine) : Serializable {
 }
 
 class Category(
-        val categoryId: String,
-        val categoryTitle: String
+  val categoryId: String,
+  val categoryTitle: String
 ) : LinkedRoutine(), Serializable {
   val sections = ArrayList<Section>()
 
@@ -163,12 +163,12 @@ class Category(
 }
 
 class Section(
-        val sectionId: String,
-        val sectionTitle: String,
-        val description: String,
-        val sets: Number,
-        val sectionMode: SectionMode,
-        val bundle: Number) : LinkedRoutine(), Serializable {
+  val sectionId: String,
+  val sectionTitle: String,
+  val description: String,
+  val sets: Number,
+  val sectionMode: SectionMode,
+  val bundle: Number) : LinkedRoutine(), Serializable {
 
   var category: Category? = null
   var currentLevel = 0
@@ -220,16 +220,34 @@ class Section(
 
   val currentExercise: Exercise
     get() = exercises[currentLevel]
+
+  val bundledExercise: Exercise?
+    get() {
+      val section = bundledSection
+
+      return section?.currentExercise
+    }
+
+  val bundledSection: Section?
+    get() {
+      var bundledSection: Section? = null
+
+      if (bundle.toInt() > 0) {
+        bundledSection = category!!.sections.find { it.bundle == bundle && it.sectionId !== sectionId }
+      }
+
+      return bundledSection
+    }
 }
 
 class Exercise(
-        val exerciseId: String,
-        val level: String,
-        val exerciseTitle: String,
-        val description: String,
-        val youTubeId: String,
-        val videoId: String,
-        val defaultSet: String) : LinkedRoutine(), Serializable {
+  val exerciseId: String,
+  val level: String,
+  val exerciseTitle: String,
+  val description: String,
+  val youTubeId: String,
+  val videoId: String,
+  val defaultSet: String) : LinkedRoutine(), Serializable {
 
   var category: Category? = null
   var section: Section? = null

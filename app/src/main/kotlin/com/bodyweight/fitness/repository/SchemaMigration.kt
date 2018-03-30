@@ -5,6 +5,7 @@ import com.bodyweight.fitness.model.RepositoryRoutine
 import com.bodyweight.fitness.stream.RoutineStream
 
 class SchemaMigration {
+
   fun migrateSchemaIfNeeded() {
     if (Repository.repositoryRoutineForTodayExists()) {
       val routine = RoutineStream.routine
@@ -38,18 +39,6 @@ class SchemaMigration {
           }
         }
 
-//                for(section in newSchema.sections) {
-//                  val currentSection = currentSchema.sections.filter {
-//                    it.sectionId == section.sectionId
-//                  }.firstOrNull()
-//
-//                  if (currentSection != null) {
-//                    if (!currentSection.sets) {
-//                      currentSection.sets = 1
-//                    }
-//                  }
-//                }
-
         currentSchema.deleteFromRealm()
         realm.copyToRealmOrUpdate(newSchema)
       }
@@ -57,6 +46,14 @@ class SchemaMigration {
   }
 
   private fun isValidSchema(routine: Routine, currentSchema: RepositoryRoutine): Boolean {
+    for (section in routine.sections) {
+      val contains = currentSchema.sections.filter {
+        it.sectionId == section.sectionId
+      }.firstOrNull()
+
+      contains ?: return false
+    }
+
     for (exercise in routine.exercises) {
       val contains = currentSchema.exercises.filter {
         it.exerciseId == exercise.exerciseId

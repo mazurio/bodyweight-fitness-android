@@ -29,329 +29,329 @@ import java.util.*
 import kotlin.properties.Delegates
 
 class ProgressGeneralViewPresenter : AbstractPresenter() {
-    var repositoryRoutine: RepositoryRoutine by Delegates.notNull()
+  var repositoryRoutine: RepositoryRoutine by Delegates.notNull()
 
-    val exercises by lazy {
-        RepositoryRoutine.getVisibleAndCompletedExercises(repositoryRoutine.exercises)
+  val exercises by lazy {
+    RepositoryRoutine.getVisibleAndCompletedExercises(repositoryRoutine.exercises)
+  }
+
+  val missedExercises by lazy {
+    RepositoryRoutine.getMissedExercises(repositoryRoutine.exercises)
+  }
+
+  val numberOfExercises by lazy {
+    RepositoryRoutine.getNumberOfExercises(exercises)
+  }
+
+  val numberOfCompletedExercises by lazy {
+    RepositoryRoutine.getNumberOfCompletedExercises(exercises)
+  }
+
+  val routineCompletionRate by lazy {
+    RepositoryRoutine.getCompletionRate(repositoryRoutine)
+  }
+
+  override fun updateView() {
+    super.updateView()
+
+    renderTime()
+    renderTodaysProgress()
+    renderMissedExercises()
+    renderWorkoutLengthHistoryGraph()
+    renderCompletionRateHistoryGraph()
+  }
+
+  fun renderTime() {
+    val view = getView() as ProgressGeneralView
+
+    view.start_time_value.text = RepositoryRoutine.getStartTime(repositoryRoutine)
+    view.end_time_value.text = RepositoryRoutine.getLastUpdatedTime(repositoryRoutine)
+    view.workout_length_value.text = RepositoryRoutine.getWorkoutLength(repositoryRoutine)
+
+    if (routineCompletionRate.percentage == 100) {
+      view.end_time_label.text = "End Time"
+    } else {
+      view.end_time_label.text = "Last Updated"
     }
+  }
 
-    val missedExercises by lazy {
-        RepositoryRoutine.getMissedExercises(repositoryRoutine.exercises)
+  fun renderTodaysProgress() {
+    val view = getView() as ProgressGeneralView
+
+    view.general_completed_exercises_value.text = "$numberOfCompletedExercises out of $numberOfExercises"
+    view.general_completion_rate_value.text = "${routineCompletionRate.percentage}%"
+
+    view.clearCategories()
+
+    for (category in repositoryRoutine.categories) {
+      val completionRate = RepositoryCategory.getCompletionRate(category)
+
+      view.createCategory(category.title, completionRate.label, calculateLayoutWeight(completionRate.percentage))
     }
+  }
 
-    val numberOfExercises by lazy {
-        RepositoryRoutine.getNumberOfExercises(exercises)
+  fun renderMissedExercises() {
+    val view = getView() as ProgressGeneralView
+    val parent = view.missed_exercises_layout
+
+    if (missedExercises.isNotEmpty()) {
+      view.missed_exercises_title.setVisible()
+      view.missed_exercises_card.setVisible()
+
+      for (exercise in missedExercises) {
+        val layout = parent.inflate(R.layout.activity_progress_general_exercise)
+
+        layout.exercise_title.text = exercise.title
+        layout.category_title.text = exercise.category?.title + " - " + exercise.section?.title
+
+        parent.addView(layout)
+      }
+    } else {
+      view.missed_exercises_title.setGone()
+      view.missed_exercises_card.setGone()
     }
+  }
 
-    val numberOfCompletedExercises by lazy {
-        RepositoryRoutine.getNumberOfCompletedExercises(exercises)
-    }
+  fun renderWorkoutLengthHistoryGraph() {
+    val view = getView() as ProgressGeneralView
 
-    val routineCompletionRate by lazy {
-        RepositoryRoutine.getCompletionRate(repositoryRoutine)
-    }
+    val workoutLengthGraphView = view.graph_workout_length_view
+    val workoutLengthTabLayout = view.graph_workout_length_tablayout
 
-    override fun updateView() {
-        super.updateView()
+    val workoutLengthAdapter = WorkoutLengthAdapter()
 
-        renderTime()
-        renderTodaysProgress()
-        renderMissedExercises()
-        renderWorkoutLengthHistoryGraph()
-        renderCompletionRateHistoryGraph()
-    }
-
-    fun renderTime() {
-        val view = getView() as ProgressGeneralView
-
-        view.start_time_value.text = RepositoryRoutine.getStartTime(repositoryRoutine)
-        view.end_time_value.text = RepositoryRoutine.getLastUpdatedTime(repositoryRoutine)
-        view.workout_length_value.text = RepositoryRoutine.getWorkoutLength(repositoryRoutine)
-
-        if (routineCompletionRate.percentage == 100) {
-            view.end_time_label.text = "End Time"
-        } else {
-            view.end_time_label.text = "Last Updated"
-        }
-    }
-
-    fun renderTodaysProgress() {
-        val view = getView() as ProgressGeneralView
-
-        view.general_completed_exercises_value.text = "$numberOfCompletedExercises out of $numberOfExercises"
-        view.general_completion_rate_value.text = "${routineCompletionRate.percentage}%"
-
-        view.clearCategories()
-
-        for (category in repositoryRoutine.categories) {
-            val completionRate = RepositoryCategory.getCompletionRate(category)
-
-            view.createCategory(category.title, completionRate.label, calculateLayoutWeight(completionRate.percentage))
-        }
-    }
-
-    fun renderMissedExercises() {
-        val view = getView() as ProgressGeneralView
-        val parent = view.missed_exercises_layout
-
-        if (missedExercises.isNotEmpty()) {
-            view.missed_exercises_title.setVisible()
-            view.missed_exercises_card.setVisible()
-
-            for (exercise in missedExercises) {
-                val layout = parent.inflate(R.layout.activity_progress_general_exercise)
-
-                layout.exercise_title.text = exercise.title
-                layout.category_title.text = exercise.category?.title + " - " + exercise.section?.title
-
-                parent.addView(layout)
-            }
-        } else {
-            view.missed_exercises_title.setGone()
-            view.missed_exercises_card.setGone()
-        }
-    }
-
-    fun renderWorkoutLengthHistoryGraph() {
-        val view = getView() as ProgressGeneralView
-
-        val workoutLengthGraphView = view.graph_workout_length_view
-        val workoutLengthTabLayout = view.graph_workout_length_tablayout
-
-        val workoutLengthAdapter = WorkoutLengthAdapter()
-
-        workoutLengthGraphView.adapter = workoutLengthAdapter
-        workoutLengthGraphView.baseLineColor = Color.WHITE
-        workoutLengthGraphView.scrubLineColor = Color.parseColor("#111111")
-        workoutLengthGraphView.isScrubEnabled = true
+    workoutLengthGraphView.adapter = workoutLengthAdapter
+    workoutLengthGraphView.baseLineColor = Color.WHITE
+    workoutLengthGraphView.scrubLineColor = Color.parseColor("#111111")
+    workoutLengthGraphView.isScrubEnabled = true
 //        workoutLengthGraphView.animateChanges = true
 
-        workoutLengthGraphView.setScrubListener {
-            val dateTimeWorkoutLength = it as? DateTimeWorkoutLength
+    workoutLengthGraphView.setScrubListener {
+      val dateTimeWorkoutLength = it as? DateTimeWorkoutLength
 
-            dateTimeWorkoutLength?.let {
-                view.graph_workout_length_title.text = it.dateTime.toString("dd MMMM, YYYY", Locale.ENGLISH)
+      dateTimeWorkoutLength?.let {
+        view.graph_workout_length_title.text = it.dateTime.toString("dd MMMM, YYYY", Locale.ENGLISH)
 
-                if (it.repositoryRoutine != null) {
-                    view.graph_workout_length_value.text = RepositoryRoutine.getWorkoutLength(it.repositoryRoutine)
-                } else {
-                    view.graph_workout_length_value.text = "Not Completed"
-                }
-            }
+        if (it.repositoryRoutine != null) {
+          view.graph_workout_length_value.text = RepositoryRoutine.getWorkoutLength(it.repositoryRoutine)
+        } else {
+          view.graph_workout_length_value.text = "Not Completed"
         }
+      }
+    }
 
-        workoutLengthTabLayout.addTab(workoutLengthTabLayout.newTab().setText("1W"))
-        workoutLengthTabLayout.addTab(workoutLengthTabLayout.newTab().setText("1M"))
-        workoutLengthTabLayout.addTab(workoutLengthTabLayout.newTab().setText("3M"))
-        workoutLengthTabLayout.addTab(workoutLengthTabLayout.newTab().setText("6M"))
-        workoutLengthTabLayout.addTab(workoutLengthTabLayout.newTab().setText("1Y"))
+    workoutLengthTabLayout.addTab(workoutLengthTabLayout.newTab().setText("1W"))
+    workoutLengthTabLayout.addTab(workoutLengthTabLayout.newTab().setText("1M"))
+    workoutLengthTabLayout.addTab(workoutLengthTabLayout.newTab().setText("3M"))
+    workoutLengthTabLayout.addTab(workoutLengthTabLayout.newTab().setText("6M"))
+    workoutLengthTabLayout.addTab(workoutLengthTabLayout.newTab().setText("1Y"))
 
-        workoutLengthTabLayout.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                updateWorkoutLengthTitle()
-
-                when (tab.position) {
-                    0 -> updateWorkoutLengthGraph(workoutLengthAdapter, 7)
-                    1 -> updateWorkoutLengthGraph(workoutLengthAdapter, 30)
-                    2 -> updateWorkoutLengthGraph(workoutLengthAdapter, 90)
-                    3 -> updateWorkoutLengthGraph(workoutLengthAdapter, 180)
-                    else -> updateWorkoutLengthGraph(workoutLengthAdapter, 360)
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-
-            }
-        })
-
-        updateWorkoutLengthGraph(workoutLengthAdapter, 7)
+    workoutLengthTabLayout.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+      override fun onTabSelected(tab: TabLayout.Tab) {
         updateWorkoutLengthTitle()
-    }
 
-    fun updateWorkoutLengthTitle() {
-        val view = getView() as ProgressGeneralView
+        when (tab.position) {
+          0 -> updateWorkoutLengthGraph(workoutLengthAdapter, 7)
+          1 -> updateWorkoutLengthGraph(workoutLengthAdapter, 30)
+          2 -> updateWorkoutLengthGraph(workoutLengthAdapter, 90)
+          3 -> updateWorkoutLengthGraph(workoutLengthAdapter, 180)
+          else -> updateWorkoutLengthGraph(workoutLengthAdapter, 360)
+        }
+      }
 
-        view.graph_workout_length_title.text = DateTime(repositoryRoutine.startTime).toString("dd MMMM, YYYY", Locale.ENGLISH)
-        view.graph_workout_length_value.text = "${RepositoryRoutine.getWorkoutLength(repositoryRoutine)}"
-    }
+      override fun onTabUnselected(tab: TabLayout.Tab) {
 
-    fun updateWorkoutLengthGraph(adapter: WorkoutLengthAdapter, minusDays: Int = 7) {
-        val start = DateTime.now().withTimeAtStartOfDay().minusDays(minusDays)
-        val end = DateTime.now()
+      }
 
-        Repository.realm.where(RepositoryRoutine::class.java)
-                .between("startTime", start.toDate(), end.toDate())
-                .findAllAsync()
-                .sort("startTime", Sort.DESCENDING)
-                .asObservable()
-                .filter { it.isLoaded }
-                .map {
-                    val dates = ArrayList<DateTimeWorkoutLength>()
+      override fun onTabReselected(tab: TabLayout.Tab) {
 
-                    for (index in 1..minusDays) {
-                        val date = start.plusDays(index)
+      }
+    })
 
-                        val repositoryRoutine = it.filter {
-                            val startTime = DateTime(it.startTime)
+    updateWorkoutLengthGraph(workoutLengthAdapter, 7)
+    updateWorkoutLengthTitle()
+  }
 
-                            date.dayOfMonth == startTime.dayOfMonth
-                                    && date.monthOfYear == startTime.monthOfYear
-                                    && date.year == startTime.year
-                        }.firstOrNull()
+  fun updateWorkoutLengthTitle() {
+    val view = getView() as ProgressGeneralView
 
-                        if (repositoryRoutine != null) {
-                            dates.add(DateTimeWorkoutLength(date, repositoryRoutine))
-                        } else {
-                            dates.add(DateTimeWorkoutLength(date, null))
-                        }
-                    }
+    view.graph_workout_length_title.text = DateTime(repositoryRoutine.startTime).toString("dd MMMM, YYYY", Locale.ENGLISH)
+    view.graph_workout_length_value.text = "${RepositoryRoutine.getWorkoutLength(repositoryRoutine)}"
+  }
 
-                    dates
-                }
-                .observeOn(AndroidSchedulers.mainThread())
-                .bindToLifecycle(getView())
-                .subscribe {
-                    adapter.changeData(it)
-                }
-    }
+  fun updateWorkoutLengthGraph(adapter: WorkoutLengthAdapter, minusDays: Int = 7) {
+    val start = DateTime.now().withTimeAtStartOfDay().minusDays(minusDays)
+    val end = DateTime.now()
 
-    fun renderCompletionRateHistoryGraph() {
-        val view = getView() as ProgressGeneralView
+    Repository.realm.where(RepositoryRoutine::class.java)
+      .between("startTime", start.toDate(), end.toDate())
+      .findAllAsync()
+      .sort("startTime", Sort.DESCENDING)
+      .asObservable()
+      .filter { it.isLoaded }
+      .map {
+        val dates = ArrayList<DateTimeWorkoutLength>()
 
-        val completionRateGraphView = view.graph_completion_rate_view
-        val completionRateTabLayout = view.graph_completion_rate_tablayout
+        for (index in 1..minusDays) {
+          val date = start.plusDays(index)
 
-        val completionRateAdapter = CompletionRateAdapter()
+          val repositoryRoutine = it.filter {
+            val startTime = DateTime(it.startTime)
 
-        completionRateGraphView.adapter = completionRateAdapter
-        completionRateGraphView.baseLineColor = Color.WHITE
-        completionRateGraphView.scrubLineColor = Color.parseColor("#111111")
-        completionRateGraphView.isScrubEnabled = true
+            date.dayOfMonth == startTime.dayOfMonth
+              && date.monthOfYear == startTime.monthOfYear
+              && date.year == startTime.year
+          }.firstOrNull()
 
-        completionRateGraphView.setScrubListener {
-            val dateTimeCompletionRate = it as? DateTimeCompletionRate
-
-            dateTimeCompletionRate?.let {
-                view.graph_completion_rate_title.text = it.dateTime.toString("dd MMMM, YYYY", Locale.ENGLISH)
-
-                if (it.repositoryRoutine != null) {
-                    val completionRate = RepositoryRoutine.getCompletionRate(it.repositoryRoutine)
-
-                    view.graph_completion_rate_value.text = "${completionRate.label}"
-                } else {
-                    view.graph_completion_rate_value.text = "Not Completed"
-                }
-            }
+          if (repositoryRoutine != null) {
+            dates.add(DateTimeWorkoutLength(date, repositoryRoutine))
+          } else {
+            dates.add(DateTimeWorkoutLength(date, null))
+          }
         }
 
-        completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("1W"))
-        completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("1M"))
-        completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("3M"))
-        completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("6M"))
-        completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("1Y"))
+        dates
+      }
+      .observeOn(AndroidSchedulers.mainThread())
+      .bindToLifecycle(getView())
+      .subscribe {
+        adapter.changeData(it)
+      }
+  }
 
-        completionRateTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                updateCompletionRateTitle()
+  fun renderCompletionRateHistoryGraph() {
+    val view = getView() as ProgressGeneralView
 
-                when (tab.position) {
-                    0 -> updateCompletionRateGraph(completionRateAdapter, 7)
-                    1 -> updateCompletionRateGraph(completionRateAdapter, 30)
-                    2 -> updateCompletionRateGraph(completionRateAdapter, 90)
-                    3 -> updateCompletionRateGraph(completionRateAdapter, 180)
-                    else -> updateCompletionRateGraph(completionRateAdapter, 360)
-                }
-            }
+    val completionRateGraphView = view.graph_completion_rate_view
+    val completionRateTabLayout = view.graph_completion_rate_tablayout
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
+    val completionRateAdapter = CompletionRateAdapter()
 
-            }
+    completionRateGraphView.adapter = completionRateAdapter
+    completionRateGraphView.baseLineColor = Color.WHITE
+    completionRateGraphView.scrubLineColor = Color.parseColor("#111111")
+    completionRateGraphView.isScrubEnabled = true
 
-            override fun onTabReselected(tab: TabLayout.Tab) {
+    completionRateGraphView.setScrubListener {
+      val dateTimeCompletionRate = it as? DateTimeCompletionRate
 
-            }
-        })
+      dateTimeCompletionRate?.let {
+        view.graph_completion_rate_title.text = it.dateTime.toString("dd MMMM, YYYY", Locale.ENGLISH)
 
-        updateCompletionRateGraph(completionRateAdapter, 7)
+        if (it.repositoryRoutine != null) {
+          val completionRate = RepositoryRoutine.getCompletionRate(it.repositoryRoutine)
+
+          view.graph_completion_rate_value.text = "${completionRate.label}"
+        } else {
+          view.graph_completion_rate_value.text = "Not Completed"
+        }
+      }
+    }
+
+    completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("1W"))
+    completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("1M"))
+    completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("3M"))
+    completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("6M"))
+    completionRateTabLayout.addTab(completionRateTabLayout.newTab().setText("1Y"))
+
+    completionRateTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+      override fun onTabSelected(tab: TabLayout.Tab) {
         updateCompletionRateTitle()
-    }
 
-    fun updateCompletionRateTitle() {
-        val view = getView() as ProgressGeneralView
+        when (tab.position) {
+          0 -> updateCompletionRateGraph(completionRateAdapter, 7)
+          1 -> updateCompletionRateGraph(completionRateAdapter, 30)
+          2 -> updateCompletionRateGraph(completionRateAdapter, 90)
+          3 -> updateCompletionRateGraph(completionRateAdapter, 180)
+          else -> updateCompletionRateGraph(completionRateAdapter, 360)
+        }
+      }
 
-        val completionRate = RepositoryRoutine.getCompletionRate(repositoryRoutine)
+      override fun onTabUnselected(tab: TabLayout.Tab) {
 
-        view.graph_completion_rate_title.text = DateTime(repositoryRoutine.startTime).toString("dd MMMM, YYYY", Locale.ENGLISH)
-        view.graph_completion_rate_value.text = "${completionRate.label}"
-    }
+      }
 
-    fun updateCompletionRateGraph(adapter: CompletionRateAdapter, minusDays: Int = 7) {
-        val start = DateTime.now().withTimeAtStartOfDay().minusDays(minusDays)
-        val end = DateTime.now()
+      override fun onTabReselected(tab: TabLayout.Tab) {
 
-        Repository.realm.where(RepositoryRoutine::class.java)
-                .between("startTime", start.toDate(), end.toDate())
-                .findAllAsync()
-                .sort("startTime", Sort.DESCENDING)
-                .asObservable()
-                .filter { it.isLoaded }
-                .map {
-                    val dates = ArrayList<DateTimeCompletionRate>()
+      }
+    })
 
-                    for (index in 1..minusDays) {
-                        val date = start.plusDays(index)
+    updateCompletionRateGraph(completionRateAdapter, 7)
+    updateCompletionRateTitle()
+  }
 
-                        val repositoryRoutine = it.filter {
-                            val startTime = DateTime(it.startTime)
+  fun updateCompletionRateTitle() {
+    val view = getView() as ProgressGeneralView
 
-                            date.dayOfMonth == startTime.dayOfMonth
-                                    && date.monthOfYear == startTime.monthOfYear
-                                    && date.year == startTime.year
-                        }.firstOrNull()
+    val completionRate = RepositoryRoutine.getCompletionRate(repositoryRoutine)
 
-                        if (repositoryRoutine != null) {
-                            dates.add(DateTimeCompletionRate(date, repositoryRoutine))
-                        } else {
-                            dates.add(DateTimeCompletionRate(date, null))
-                        }
-                    }
+    view.graph_completion_rate_title.text = DateTime(repositoryRoutine.startTime).toString("dd MMMM, YYYY", Locale.ENGLISH)
+    view.graph_completion_rate_value.text = "${completionRate.label}"
+  }
 
-                    dates
-                }
-                .observeOn(AndroidSchedulers.mainThread())
-                .bindToLifecycle(getView())
-                .subscribe {
-                    adapter.changeData(it)
-                }
-    }
+  fun updateCompletionRateGraph(adapter: CompletionRateAdapter, minusDays: Int = 7) {
+    val start = DateTime.now().withTimeAtStartOfDay().minusDays(minusDays)
+    val end = DateTime.now()
+
+    Repository.realm.where(RepositoryRoutine::class.java)
+      .between("startTime", start.toDate(), end.toDate())
+      .findAllAsync()
+      .sort("startTime", Sort.DESCENDING)
+      .asObservable()
+      .filter { it.isLoaded }
+      .map {
+        val dates = ArrayList<DateTimeCompletionRate>()
+
+        for (index in 1..minusDays) {
+          val date = start.plusDays(index)
+
+          val repositoryRoutine = it.filter {
+            val startTime = DateTime(it.startTime)
+
+            date.dayOfMonth == startTime.dayOfMonth
+              && date.monthOfYear == startTime.monthOfYear
+              && date.year == startTime.year
+          }.firstOrNull()
+
+          if (repositoryRoutine != null) {
+            dates.add(DateTimeCompletionRate(date, repositoryRoutine))
+          } else {
+            dates.add(DateTimeCompletionRate(date, null))
+          }
+        }
+
+        dates
+      }
+      .observeOn(AndroidSchedulers.mainThread())
+      .bindToLifecycle(getView())
+      .subscribe {
+        adapter.changeData(it)
+      }
+  }
 }
 
 open class ProgressGeneralView : AbstractView {
-    override var presenter: AbstractPresenter = ProgressGeneralViewPresenter()
+  override var presenter: AbstractPresenter = ProgressGeneralViewPresenter()
 
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+  constructor(context: Context) : super(context)
+  constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+  constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    override fun onCreateView() {
-        super.onCreateView()
-    }
+  override fun onCreateView() {
+    super.onCreateView()
+  }
 
-    fun clearCategories() {
-        category.removeAllViews()
-    }
+  fun clearCategories() {
+    category.removeAllViews()
+  }
 
-    fun createCategory(title: String, completionRateLabel: String, completionRateValue: Float) {
-        val new_category = category.inflate(R.layout.view_home_category)
+  fun createCategory(title: String, completionRateLabel: String, completionRateValue: Float) {
+    val new_category = category.inflate(R.layout.view_home_category)
 
-        new_category.title.text = title
-        new_category.completion_rate_label.text = completionRateLabel
-        new_category.completion_rate_value.setLayoutWeight(completionRateValue)
+    new_category.title.text = title
+    new_category.completion_rate_label.text = completionRateLabel
+    new_category.completion_rate_value.setLayoutWeight(completionRateValue)
 
-        category.addView(new_category)
-    }
+    category.addView(new_category)
+  }
 }

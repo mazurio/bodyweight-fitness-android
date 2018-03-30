@@ -15,156 +15,164 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 
 object Repository {
-    private val realmName = "bodyweight.fitness.realm"
+  private val realmName = "bodyweight.fitness.realm"
 
-    val realm: Realm
-        get() {
-            Realm.init(App.context)
+  val realm: Realm
+    get() {
+      Realm.init(App.context)
 
-            val configuration = RealmConfiguration.Builder()
-                    .name(realmName)
-                    .schemaVersion(Constants.SchemaVersion)
-                    .migration { realm: DynamicRealm, oldVersion: Long, newVersion: Long ->
-                        val schema = realm.schema
-                        val routineSchema = schema.get("RepositoryRoutine")
+      val configuration = RealmConfiguration.Builder()
+        .name(realmName)
+        .schemaVersion(Constants.SchemaVersion)
+        .migration { realm: DynamicRealm, oldVersion: Long, newVersion: Long ->
+          val schema = realm.schema
+          val routineSchema = schema.get("RepositoryRoutine")
+          val sectionSchema = schema.get("Section")
+          val exerciseSchema = schema.get("Exercise")
 
-                        if (oldVersion.toInt() == 1) {
-                            routineSchema
-                                    .addField("title", String::class.java)
-                                    .addField("subtitle", String::class.java)
-                                    .transform { obj: DynamicRealmObject ->
-                                        obj.set("title", "Bodyweight Fitness")
-                                        obj.set("subtitle", "Recommended Routine")
-                                    }
-                        }
-                    }
-                    .build()
+          if (oldVersion.toInt() == 1) {
+            routineSchema
+              .addField("title", String::class.java)
+              .addField("subtitle", String::class.java)
+              .transform { obj: DynamicRealmObject ->
+                obj.set("title", "Bodyweight Fitness")
+                obj.set("subtitle", "Recommended Routine")
+              }
+          }
 
-            return Realm.getInstance(configuration)
+          if (oldVersion.toInt() == 3) {
+            sectionSchema
+              .addField("bundle", Int::class.java)
+              .addField("sets", Int::class.java)
+          }
         }
+        .build()
 
-    fun buildRealmRoutine(routine: Routine): RepositoryRoutine {
-        var repositoryRoutine: RepositoryRoutine? = null
+      return Realm.getInstance(configuration)
+    }
 
-        realm.executeTransaction {
-            repositoryRoutine = realm.createObject(RepositoryRoutine::class.java, "Routine-" + UUID.randomUUID().toString())
-            repositoryRoutine?.let {
-                it.routineId = routine.routineId
-                it.title = routine.title
-                it.subtitle = routine.subtitle
-                it.startTime = DateTime().toDate()
-                it.lastUpdatedTime = DateTime().toDate()
+  fun buildRealmRoutine(routine: Routine): RepositoryRoutine {
+    var repositoryRoutine: RepositoryRoutine? = null
 
-                var repositoryCategory: RepositoryCategory? = null
-                var repositorySection: RepositorySection? = null
+    realm.executeTransaction {
+      repositoryRoutine = realm.createObject(RepositoryRoutine::class.java, "Routine-" + UUID.randomUUID().toString())
+      repositoryRoutine?.let {
+        it.routineId = routine.routineId
+        it.title = routine.title
+        it.subtitle = routine.subtitle
+        it.startTime = DateTime().toDate()
+        it.lastUpdatedTime = DateTime().toDate()
 
-                for (exercise in routine.exercises) {
-                    val repositoryExercise = realm.createObject(RepositoryExercise::class.java, "Exercise-" + UUID.randomUUID().toString())
-                    repositoryExercise.exerciseId = exercise.exerciseId
-                    repositoryExercise.title = exercise.title
-                    repositoryExercise.description = exercise.description
-                    repositoryExercise.defaultSet = exercise.defaultSet
+        var repositoryCategory: RepositoryCategory? = null
+        var repositorySection: RepositorySection? = null
 
-                    val repositorySetId = "Set-" + UUID.randomUUID().toString()
-                    val repositorySet = realm.createObject(RepositorySet::class.java, repositorySetId)
+        for (exercise in routine.exercises) {
+          val repositoryExercise = realm.createObject(RepositoryExercise::class.java, "Exercise-" + UUID.randomUUID().toString())
+          repositoryExercise.exerciseId = exercise.exerciseId
+          repositoryExercise.title = exercise.title
+          repositoryExercise.description = exercise.description
+          repositoryExercise.defaultSet = exercise.defaultSet
 
-                    if (exercise.defaultSet == "weighted") {
-                        repositorySet.isTimed = false
-                    } else {
-                        repositorySet.isTimed = true
-                    }
+          val repositorySetId = "Set-" + UUID.randomUUID().toString()
+          val repositorySet = realm.createObject(RepositorySet::class.java, repositorySetId)
 
-                    repositorySet.seconds = 0
-                    repositorySet.weight = 0.0
-                    repositorySet.reps = 0
-                    repositorySet.exercise = repositoryExercise
+          if (exercise.defaultSet == "weighted") {
+            repositorySet.isTimed = false
+          } else {
+            repositorySet.isTimed = true
+          }
 
-                    repositoryExercise.sets.add(repositorySet)
+          repositorySet.seconds = 0
+          repositorySet.weight = 0.0
+          repositorySet.reps = 0
+          repositorySet.exercise = repositoryExercise
 
-                    if (repositoryCategory == null || !repositoryCategory.title.equals(exercise.category!!.title, ignoreCase = true)) {
-                        repositoryCategory = realm.createObject(RepositoryCategory::class.java, "Category-" + UUID.randomUUID().toString())
-                        repositoryCategory.categoryId = exercise.category!!.categoryId
-                        repositoryCategory.title = exercise.category!!.title
-                        repositoryCategory.routine = repositoryRoutine
-                        repositoryCategory.bundle = null
+          repositoryExercise.sets.add(repositorySet)
 
-                        it.categories.add(repositoryCategory)
-                    }
+          if (repositoryCategory == null || !repositoryCategory.title.equals(exercise.category!!.title, ignoreCase = true)) {
+            repositoryCategory = realm.createObject(RepositoryCategory::class.java, "Category-" + UUID.randomUUID().toString())
+            repositoryCategory.categoryId = exercise.category!!.categoryId
+            repositoryCategory.title = exercise.category!!.title
+            repositoryCategory.routine = repositoryRoutine
+            repositoryCategory.bundle = null
 
-                    if (repositorySection == null || !repositorySection.title.equals(exercise.section!!.title, ignoreCase = true)) {
-                        repositorySection = realm.createObject(RepositorySection::class.java, "Section-" + UUID.randomUUID().toString())
-                        repositorySection.sectionId = exercise.section!!.sectionId
-                        repositorySection.title = exercise.section!!.title
-                        repositorySection.mode = exercise.section!!.sectionMode.toString()
-                        repositorySection.routine = repositoryRoutine
-                        repositorySection.category = repositoryCategory
-                        repositorySection.sets = Constants.maximumNumberOfSets
+            it.categories.add(repositoryCategory)
+          }
 
-                        it.sections.add(repositorySection)
-                        repositoryCategory!!.sections.add(repositorySection)
-                    }
+          if (repositorySection == null || !repositorySection.title.equals(exercise.section!!.title, ignoreCase = true)) {
+            repositorySection = realm.createObject(RepositorySection::class.java, "Section-" + UUID.randomUUID().toString())
+            repositorySection.sectionId = exercise.section!!.sectionId
+            repositorySection.title = exercise.section!!.title
+            repositorySection.mode = exercise.section!!.sectionMode.toString()
+            repositorySection.routine = repositoryRoutine
+            repositorySection.category = repositoryCategory
+            repositorySection.sets = Constants.maximumNumberOfSets
 
-                    repositoryExercise.routine = repositoryRoutine
-                    repositoryExercise.category = repositoryCategory
-                    repositoryExercise.section = repositorySection
+            it.sections.add(repositorySection)
+            repositoryCategory!!.sections.add(repositorySection)
+          }
 
-                    /**
-                     * Hide exercises not relevant to user level.
-                     */
-                    if (exercise.section!!.sectionMode == SectionMode.Levels || exercise.section!!.sectionMode == SectionMode.Pick) {
-                        if (exercise == exercise.section!!.currentExercise) {
-                            repositoryExercise.visible = true
-                        } else {
-                            repositoryExercise.visible = false
-                        }
-                    } else {
-                        repositoryExercise.visible = true
-                    }
+          repositoryExercise.routine = repositoryRoutine
+          repositoryExercise.category = repositoryCategory
+          repositoryExercise.section = repositorySection
 
-                    it.exercises.add(repositoryExercise)
-                    repositoryCategory!!.exercises.add(repositoryExercise)
-                    repositorySection!!.exercises.add(repositoryExercise)
-                }
+          /**
+           * Hide exercises not relevant to user level.
+           */
+          if (exercise.section!!.sectionMode == SectionMode.Levels || exercise.section!!.sectionMode == SectionMode.Pick) {
+            if (exercise == exercise.section!!.currentExercise) {
+              repositoryExercise.visible = true
+            } else {
+              repositoryExercise.visible = false
             }
+          } else {
+            repositoryExercise.visible = true
+          }
+
+          it.exercises.add(repositoryExercise)
+          repositoryCategory!!.exercises.add(repositoryExercise)
+          repositorySection!!.exercises.add(repositoryExercise)
         }
-
-        return repositoryRoutine!!
+      }
     }
 
-    fun getRepositoryRoutineForPrimaryKeyRoutineId(primaryKeyRoutineId: String): RepositoryRoutine {
-        return realm.where(RepositoryRoutine::class.java).equalTo("id", primaryKeyRoutineId).findFirst()
+    return repositoryRoutine!!
+  }
+
+  fun getRepositoryRoutineForPrimaryKeyRoutineId(primaryKeyRoutineId: String): RepositoryRoutine {
+    return realm.where(RepositoryRoutine::class.java).equalTo("id", primaryKeyRoutineId).findFirst()
+  }
+
+  val repositoryRoutineForToday: RepositoryRoutine
+    get() {
+      val start = DateTime().withTimeAtStartOfDay().toDate()
+      val end = DateTime().withTimeAtStartOfDay().plusDays(1).minusSeconds(1).toDate()
+
+      val routineId = RoutineStream.routine.routineId
+
+      var repositoryRoutine: RepositoryRoutine? = realm.where(RepositoryRoutine::class.java)
+        .between("startTime", start, end)
+        .equalTo("routineId", routineId)
+        .findFirst()
+
+      if (repositoryRoutine == null) {
+        repositoryRoutine = buildRealmRoutine(RoutineStream.routine)
+      }
+
+      return repositoryRoutine
     }
 
-    val repositoryRoutineForToday: RepositoryRoutine
-        get() {
-            val start = DateTime().withTimeAtStartOfDay().toDate()
-            val end = DateTime().withTimeAtStartOfDay().plusDays(1).minusSeconds(1).toDate()
+  fun repositoryRoutineForTodayExists(): Boolean {
+    val start = DateTime().withTimeAtStartOfDay().toDate()
+    val end = DateTime().withTimeAtStartOfDay().plusDays(1).minusSeconds(1).toDate()
 
-            val routineId = RoutineStream.routine.routineId
+    val routineId = RoutineStream.routine.routineId
 
-            var repositoryRoutine: RepositoryRoutine? = realm.where(RepositoryRoutine::class.java)
-                    .between("startTime", start, end)
-                    .equalTo("routineId", routineId)
-                    .findFirst()
+    realm.where(RepositoryRoutine::class.java)
+      .between("startTime", start, end)
+      .equalTo("routineId", routineId)
+      .findFirst() ?: return false
 
-            if (repositoryRoutine == null) {
-                repositoryRoutine = buildRealmRoutine(RoutineStream.routine)
-            }
-
-            return repositoryRoutine
-        }
-
-    fun repositoryRoutineForTodayExists(): Boolean {
-        val start = DateTime().withTimeAtStartOfDay().toDate()
-        val end = DateTime().withTimeAtStartOfDay().plusDays(1).minusSeconds(1).toDate()
-
-        val routineId = RoutineStream.routine.routineId
-
-        realm.where(RepositoryRoutine::class.java)
-                .between("startTime", start, end)
-                .equalTo("routineId", routineId)
-                .findFirst() ?: return false
-
-        return true
-    }
+    return true
+  }
 }

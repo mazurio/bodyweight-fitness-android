@@ -5,122 +5,111 @@ apply plugin: 'realm-android'
 apply plugin: 'io.fabric'
 
 android {
-    defaultConfig {
-        vectorDrawables.useSupportLibrary = true
+  defaultConfig {
+    vectorDrawables.useSupportLibrary = true
+  }
+  flavorDimensions "default"
+  configurations.all {
+    resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
+  }
+  dexOptions {
+    maxProcessCount 4
+  }
+  compileSdkVersion 26
+  defaultConfig {
+    applicationId 'com.bodyweight.fitness'
+    minSdkVersion 21
+    targetSdkVersion 26
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_6
+    targetCompatibility JavaVersion.VERSION_1_6
+  }
+  packagingOptions {
+    exclude 'META-INF/DEPENDENCIES.txt'
+    exclude 'META-INF/LICENSE.txt'
+    exclude 'META-INF/NOTICE.txt'
+    exclude 'META-INF/NOTICE'
+    exclude 'META-INF/LICENSE'
+    exclude 'META-INF/DEPENDENCIES'
+    exclude 'META-INF/notice.txt'
+    exclude 'META-INF/license.txt'
+    exclude 'META-INF/dependencies.txt'
+    exclude 'META-INF/LGPL2.1'
+    exclude 'META-INF/services/javax.annotation.processing.Processor'
+  }
+  productFlavors {
+    pro {
+      resValue "string", "file_provider", "com.bodyweight.fitness.pro.fileprovider"
+      applicationId 'com.bodyweight.fitness.pro'
+      versionCode 142
+      versionName "1.4.2"
     }
-    flavorDimensions "default"
-    configurations.all {
-        resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
+    free {
+      resValue "string", "file_provider", "com.bodyweight.fitness.free.fileprovider"
+      applicationId 'com.bodyweight.fitness.free'
+      versionCode 142
+      versionName "1.4.2"
     }
-    dexOptions {
-        maxProcessCount 4
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
     }
-    compileSdkVersion 26
-    defaultConfig {
-        applicationId 'com.bodyweight.fitness'
-        minSdkVersion 21
-        targetSdkVersion 26
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    debug {
+      minifyEnabled false
+      ext.enableCrashlytics = false
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_6
-        targetCompatibility JavaVersion.VERSION_1_6
-    }
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES.txt'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/dependencies.txt'
-        exclude 'META-INF/LGPL2.1'
-        exclude 'META-INF/services/javax.annotation.processing.Processor'
-    }
-    productFlavors {
-        pro {
-            resValue "string", "file_provider", "com.bodyweight.fitness.pro.fileprovider"
-            applicationId 'com.bodyweight.fitness.pro'
-            versionCode 142
-            versionName "1.4.2"
-        }
-        free {
-            resValue "string", "file_provider", "com.bodyweight.fitness.free.fileprovider"
-            applicationId 'com.bodyweight.fitness.free'
-            versionCode 142
-            versionName "1.4.2"
-        }
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-        }
-        debug {
-            minifyEnabled false
-            ext.enableCrashlytics = false
-        }
 
-        customDebugType {
-            debuggable true
-        }
+    customDebugType {
+      debuggable true
     }
-    sourceSets {
-        main.java.srcDirs += 'src/main/java'
-        main.java.srcDirs += 'src/main/kotlin'
-        test.java.srcDirs += 'src/test/kotlin'
-    }
+  }
+  sourceSets {
+    main.java.srcDirs += 'src/main/java'
+    main.java.srcDirs += 'src/main/kotlin'
+    test.java.srcDirs += 'src/test/kotlin'
+  }
 }
 
 kapt {
-    generateStubs = true
+  generateStubs = true
 }
 
 configurations {
-    all*.exclude group: 'io.reactivex', module: 'rxjava'
+  all*.exclude group: 'io.reactivex', module: 'rxjava'
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-
-    testImplementation 'org.jetbrains.spek:spek:1.0.9'
-    testImplementation 'org.mockito:mockito-all:2.0.2-beta'
-
-    androidTestImplementation "com.android.support:support-annotations:$support_version"
-    androidTestImplementation 'com.android.support.test:runner:0.5'
-    androidTestImplementation 'com.android.support.test:rules:0.5'
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:2.2.2"
-
-    implementation "com.android.support:support-v4:$support_version"
-    implementation "com.android.support:recyclerview-v7:$support_version"
-    implementation "com.android.support:cardview-v7:$support_version"
-    implementation "com.android.support:design:$support_version"
-
-    implementation 'com.google.code.gson:gson:2.4'
-
-    implementation 'commons-io:commons-io:2.4'
-    implementation 'net.danlew:android.joda:2.9.3'
-
-    implementation 'com.netflix.rxjava:rxjava-core:0.20.7'
-    implementation 'io.reactivex:rxandroid:1.2.1'
-    implementation 'io.reactivex:rxjava:1.2.1'
-
-    implementation 'com.trello:rxlifecycle:0.8.0'
-    implementation 'com.trello:rxlifecycle-components:0.8.0'
-    implementation 'com.trello:rxlifecycle-kotlin:0.8.0'
-
-    implementation 'com.robinhood.spark:spark:1.2.0'
-
-    implementation 'com.roughike:bottom-bar:2.0.2'
-    implementation 'com.github.johnkil.android-robototextview:robototextview:4.0.0'
-    implementation 'com.gordonwong:material-sheet-fab:1.2.1'
-    implementation 'io.github.kobakei:ratethisapp:1.0.3'
-    implementation 'com.github.paolorotolo:appintro:4.1.0'
-
-    implementation('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
-        transitive = true
-    }
+  implementation fileTree(include: ['*.jar'], dir: 'libs')
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+  testImplementation 'org.jetbrains.spek:spek:1.0.9'
+  testImplementation 'org.mockito:mockito-all:2.0.2-beta'
+  androidTestImplementation "com.android.support:support-annotations:$support_version"
+  androidTestImplementation 'com.android.support.test:runner:0.5'
+  androidTestImplementation 'com.android.support.test:rules:0.5'
+  androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
+  implementation "com.android.support:support-v4:$support_version"
+  implementation "com.android.support:recyclerview-v7:$support_version"
+  implementation "com.android.support:cardview-v7:$support_version"
+  implementation "com.android.support:design:$support_version"
+  implementation 'com.google.code.gson:gson:2.4'
+  implementation 'commons-io:commons-io:2.4'
+  implementation 'net.danlew:android.joda:2.9.3'
+  implementation 'com.netflix.rxjava:rxjava-core:0.20.7'
+  implementation 'io.reactivex:rxandroid:1.2.1'
+  implementation 'io.reactivex:rxjava:1.2.1'
+  implementation 'com.trello:rxlifecycle:0.8.0'
+  implementation 'com.trello:rxlifecycle-components:0.8.0'
+  implementation 'com.trello:rxlifecycle-kotlin:0.8.0'
+  implementation 'com.robinhood.spark:spark:1.2.0'
+  implementation 'com.roughike:bottom-bar:2.0.2'
+  implementation 'com.github.johnkil.android-robototextview:robototextview:4.0.0'
+  implementation 'com.gordonwong:material-sheet-fab:1.2.1'
+  implementation 'io.github.kobakei:ratethisapp:1.0.3'
+  implementation 'com.github.paolorotolo:appintro:4.1.0'
+  implementation('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+    transitive = true
+  }
 }

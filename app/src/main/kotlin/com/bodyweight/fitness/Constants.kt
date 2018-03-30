@@ -26,5 +26,5 @@ object Constants {
   val preferencesShowRestTimerAfterBodylineDrills = "PREFERENCE_SHOW_REST_TIMER_BODYLINE_DRILLS"
   val preferencesShowRestTimerAfterFlexibilityExercises = "PREFERENCE_SHOW_REST_TIMER_FLEXIBILITY_ROUTINES"
 
-  val SchemaVersion: Long = 3
+  val SchemaVersion: Long = 4
 }
