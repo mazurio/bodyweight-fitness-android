@@ -20,69 +20,69 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 
 class MainActivity : RxAppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_main)
-        setToolbar()
+    setContentView(R.layout.activity_main)
+    setToolbar()
 
-        val fragmentManager = fragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
+    val fragmentManager = fragmentManager
+    val fragmentTransaction = fragmentManager.beginTransaction()
 
-        fragmentTransaction.replace(R.id.view_settings, SettingsFragment(), "SettingsFragment")
-        fragmentTransaction.commit()
+    fragmentTransaction.replace(R.id.view_settings, SettingsFragment(), "SettingsFragment")
+    fragmentTransaction.commit()
 
-        Stream.drawerObservable()
-                .bindUntilEvent(this, ActivityEvent.DESTROY)
-                .subscribe {
-                    invalidateOptionsMenu()
-                }
+    Stream.drawerObservable()
+      .bindUntilEvent(this, ActivityEvent.DESTROY)
+      .subscribe {
+        invalidateOptionsMenu()
+      }
 
-        if (!Preferences.introductionShown) {
-            Preferences.introductionShown = true
+    if (!Preferences.introductionShown) {
+      Preferences.introductionShown = true
 
-            startActivity(Intent(this, IntroductionActivity::class.java))
-        }
+      startActivity(Intent(this, IntroductionActivity::class.java))
+    }
+  }
+
+  override fun onStart() {
+    super.onStart()
+
+    RateThisApp.onStart(this)
+    RateThisApp.showRateDialogIfNeeded(this)
+  }
+
+  override fun onStop() {
+    super.onStop()
+
+    Repository.realm.close()
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    Stream.setMenu(item.itemId)
+
+    return super.onOptionsItemSelected(item)
+  }
+
+  override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+    menu?.clear()
+
+    when (Stream.currentDrawerId) {
+      R.id.action_menu_workout_log -> menuInflater.inflate(R.menu.menu_log_workout, menu)
     }
 
-    override fun onStart() {
-        super.onStart()
+    return super.onPrepareOptionsMenu(menu)
+  }
 
-        RateThisApp.onStart(this)
-        RateThisApp.showRateDialogIfNeeded(this)
+  private fun setToolbar() {
+    setSupportActionBar(toolbar)
+
+    supportActionBar?.let {
+      it.elevation = 0f
     }
 
-    override fun onStop() {
-        super.onStop()
-
-        Repository.realm.close()
+    bottomBar.setOnTabSelectListener {
+      Stream.setDrawer(it)
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Stream.setMenu(item.itemId)
-
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menu?.clear()
-
-        when (Stream.currentDrawerId) {
-            R.id.action_menu_workout_log -> menuInflater.inflate(R.menu.menu_log_workout, menu)
-        }
-
-        return super.onPrepareOptionsMenu(menu)
-    }
-
-    private fun setToolbar() {
-        setSupportActionBar(toolbar)
-
-        supportActionBar?.let {
-            it.elevation = 0f
-        }
-
-        bottomBar.setOnTabSelectListener {
-            Stream.setDrawer(it)
-        }
-    }
+  }
 }

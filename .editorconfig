@@ -1,0 +1,44 @@
+# EditorConfig helps developers define and maintain consistent coding styles between different editors and IDEs
+# editorconfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+
+# We recommend you to keep these unchanged
+
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+
+# Use 2 spaces for indentation in HTML, JavaScript, Ruby, SCSS, and XML
+[*.{html,js,ts,rb,scss,xml, kt, jv, java}]
+indent_size = 2
+
+[Gemfile*]
+indent_size = 2
+
+[Rakefile]
+indent_size = 2
+
+[Makefile]
+indent_style = tab
+indent_size = 2
+
+# Use 4 spaces for indentation in c source files
+[*.c]
+indent_size = 4
+
+# Use 4 spaces for indentation in Markdown files
+[*.md]
+indent_size = 4
+trim_trailing_whitespace = false
+
+[gnome-terminal/**.xml]
+indent_style = tab
+indent_size = 4

@@ -169,7 +169,7 @@ class ProgressHeaderPresenter(itemView: View) : ProgressPresenter(itemView) {
             }
         }
 
-        completionRateTabLayout.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        completionRateTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 updateCompletionRateTitle()
 
